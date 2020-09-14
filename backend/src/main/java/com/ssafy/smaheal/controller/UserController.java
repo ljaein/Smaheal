@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.smaheal.exception.ResourceNotFoundException;
 import com.ssafy.smaheal.help.UserIdentityAvailability;
+import com.ssafy.smaheal.help.UserProfile;
 import com.ssafy.smaheal.model.MemberUser;
 import com.ssafy.smaheal.repository.UserRepository;
 
@@ -42,6 +43,14 @@ public class UserController {
                 .orElseThrow(() -> new ResourceNotFoundException("User", "num", num));
 
         return user;
+    }
+    
+    @GetMapping("/users/{userId}")
+    public UserProfile getUserProfile(@PathVariable(value = "userId") String userId) {
+        MemberUser user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "UserId", userId));
+        UserProfile userProfile = new UserProfile(user.getNum(), user.getUserId(), user.getName(), user.getNickName(), user.getBirth());
+        return userProfile;
     }
 
     @PutMapping("/{num}")

@@ -1,54 +1,66 @@
 package com.ssafy.smaheal.help;
 
-import java.time.Instant;
+import java.util.Date;
+
 /*
  UserProfile
 {id:"sdfs",username:"sdfsdfsdf", name:"ddssffsdfsffsdfs"}
  */
 public class UserProfile {
-    private Long id;
-    private String username;
-    private String name;
-    private Instant joinedAt;
-   
-    public UserProfile(Long id, String username, String name, Instant joinedAt) {
-        this.id = id;
-        this.username = username;
-        this.name = name;
-        this.joinedAt = joinedAt;
-    }
 
-    public Long getId() {
-        return id;
-    }
+	private Long num;
+	private String userId;
+	private String name;
+	private String nickName;
+	private Date birth;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public UserProfile(Long num, String userId, String name, String nickName, Date birth) {
+		super();
+		this.num = num;
+		this.userId = userId;
+		this.name = name;
+		this.nickName = nickName;
+		this.birth = birth;
+	}
 
-    public String getUsername() {
-        return username;
-    }
+	public Long getNum() {
+		return num;
+	}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	public void setNum(Long num) {
+		this.num = num;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getUserId() {
+		return userId;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 
-    public Instant getJoinedAt() {
-        return joinedAt;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setJoinedAt(Instant joinedAt) {
-        this.joinedAt = joinedAt;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
+	public Date getBirth() {
+		return birth;
+	}
+
+	public void setBirth(Date birth) {
+		this.birth = birth;
+	}
+
 }
