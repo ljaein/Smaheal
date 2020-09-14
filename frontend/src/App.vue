@@ -24,6 +24,13 @@
       <v-spacer></v-spacer>
 
       <v-btn
+        text
+      >
+        <span class="mr-2">test</span>
+        <v-icon>mdi-open-in-new</v-icon>
+      </v-btn>
+
+      <v-btn
         @click="goDonationBoardDetail()"
         text
       >
