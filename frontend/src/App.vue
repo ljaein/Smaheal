@@ -30,6 +30,7 @@
       >
         <span class="mr-2">ai_video test</span>
         <v-icon>mdi-open-in-new</v-icon>
+      </v-btn>
       <v-btn @click="goLogin" text>
         <span class="mr-2">Login</span>
       </v-btn>
@@ -57,8 +58,7 @@ export default {
     goDonationBoardDetail: function() {
       // 경로 중복 문제가 콘솔에 안 뜨게 하기 위해서 catch 이용
       this.$router.push("/donationDetail").catch(() => {});
-      }
-
+    },
     goLogin() {
       this.$router.push('/login'); 
     }
