@@ -23,34 +23,45 @@
 
       <v-spacer></v-spacer>
 
+
       <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
+        @click="goDonationBoardDetail()"
         text
       >
-        <span class="mr-2">Latest Release</span>
+        <span class="mr-2">ai_video test</span>
         <v-icon>mdi-open-in-new</v-icon>
+      </v-btn>
+      <v-btn @click="goLogin" text>
+        <span class="mr-2">Login</span>
       </v-btn>
     </v-app-bar>
 
     <v-main>
-      <HelloWorld />
+      <router-view />
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld";
 
 export default {
   name: "App",
 
   components: {
-    HelloWorld
+    
   },
 
   data: () => ({
     //
-  })
+  }),
+  methods: {
+    goDonationBoardDetail: function() {
+      // 경로 중복 문제가 콘솔에 안 뜨게 하기 위해서 catch 이용
+      this.$router.push("/donationDetail").catch(() => {});
+    },
+    goLogin() {
+      this.$router.push('/login'); 
+    }
+  }
 };
 </script>
