@@ -1,8 +1,8 @@
 import axios from "axios";
 
-// axios 객체 생성
 export default axios.create({
-    baseURL: "http://localhost:8080/api",
+    //baseURL: "http://192.168.28.129:8397/api/auth",
+    baseURL: "http://localhost:8080/api/auth",
     headers: {
         "Content-type": "application/json"
     }
