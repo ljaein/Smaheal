@@ -23,7 +23,7 @@ export default {
   },
   methods: {
       showCam: function() {
-          http.get("/video")
+          http.get("/emotion/video")
           .then(response => {
               console.log(response)
           })
