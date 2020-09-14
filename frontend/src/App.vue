@@ -33,21 +33,18 @@
     </v-app-bar>
 
     <v-main>
-      <DonationDetailCompVue />
+      <router-view />
     </v-main>
   </v-app>
 </template>
 
 <script>
-import DonationDetailCompVue from './components/board/DonationDetailComp.vue';
-// import HelloWorld from "./components/HelloWorld";
 
 export default {
   name: "App",
 
   components: {
-    // HelloWorld
-    DonationDetailCompVue
+    
   },
 
   data: () => ({
@@ -55,7 +52,8 @@ export default {
   }),
   methods: {
     goDonationBoardDetail: function() {
-      this.$router.push("/ai");
+      // 경로 중복 문제가 콘솔에 안 뜨게 하기 위해서 catch 이용
+      this.$router.push("/donationDetail").catch(() => {});
     }
   }
 };
