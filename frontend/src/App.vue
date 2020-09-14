@@ -1,25 +1,26 @@
 <template>
-  <v-app>
-    <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
 
+  <v-app>
+    <v-app-bar
+      app
+      color="white"
+      height="100"
+    >
+      <v-avatar
+        class="mr-3"
+        color="grey lighten-5"
+        size="70"
+      >
         <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
           contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
+          max-height="70%"
+          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
+        ></v-img>
+      </v-avatar>
+
+      <v-toolbar-title class="font-weight-black headline">
+        VUETIFY
+      </v-toolbar-title>
 
       <v-spacer></v-spacer>
 
@@ -29,10 +30,26 @@
         text
       >
         <span class="mr-2">ai_video test</span>
-        <v-icon>mdi-open-in-new</v-icon>
       </v-btn>
+
       <v-btn @click="goLogin" text>
         <span class="mr-2">Login</span>
+      </v-btn>
+
+      <v-btn text>
+        <span class="mr-2">공지사항</span>
+      </v-btn>
+
+      <v-btn text>
+        <span class="mr-2">기부 게시판</span>
+      </v-btn>
+
+      <v-btn text>
+        <span class="mr-2">후기 게시판</span>
+      </v-btn>
+
+      <v-btn text>
+        <span class="mr-2">my page</span>
       </v-btn>
     </v-app-bar>
 
