@@ -22,7 +22,7 @@ import com.ssafy.smaheal.repository.UserRepository;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 public class UserController {
 
     @Autowired
@@ -30,13 +30,13 @@ public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    @GetMapping("/user/checkUsernameAvailability")
+    @GetMapping("/checkUsernameAvailability")
     public UserIdentityAvailability checkUsernameAvailability(@RequestParam(value = "username") String username) {
         Boolean isAvailable = !userRepository.existsByNickName(username);
         return new UserIdentityAvailability(isAvailable);
     }
 
-    @GetMapping("/users/get/{num}")
+    @GetMapping("/get/{num}")
     public MemberUser getUserProfileByNum(@PathVariable(value = "num") Long num) {
         MemberUser user = userRepository.findByNum(num)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "num", num));
@@ -44,7 +44,7 @@ public class UserController {
         return user;
     }
 
-    @PutMapping("/users/{num}")
+    @PutMapping("/{num}")
     public ResponseEntity<String> modifyUserProfile(@RequestBody MemberUser memberUser, @PathVariable(value = "num") Long num) {
     	MemberUser user = null;
     	
@@ -62,7 +62,7 @@ public class UserController {
         return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
     }
     
-    @DeleteMapping("/users/delete/{num}")
+    @DeleteMapping("/delete/{num}")
     public ResponseEntity<?> deleteUser(@PathVariable("num") Long num) {
       try {
 
