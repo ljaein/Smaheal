@@ -1,16 +1,7 @@
 <template>
-
   <v-app>
-    <v-app-bar
-      app
-      color="white"
-      height="100"
-    >
-      <v-avatar
-        class="mr-3"
-        color="grey lighten-5"
-        size="70"
-      >
+    <v-app-bar app color="white" height="100">
+      <v-avatar class="mr-3" color="grey lighten-5" size="70">
         <v-img
           contain
           max-height="70%"
@@ -18,17 +9,11 @@
         ></v-img>
       </v-avatar>
 
-      <v-btn @click="goHome()" class="headline" text>
-          SmaHeal
-      </v-btn>
+      <v-btn @click="goHome()" class="headline" text>SmaHeal</v-btn>
 
       <v-spacer></v-spacer>
 
-
-      <v-btn
-        @click="goDonationBoardDetail()"
-        text
-      >
+      <v-btn @click="goDonationBoardDetail()" text>
         <span class="mr-2">ai_video test</span>
       </v-btn>
 
@@ -37,11 +22,10 @@
       </v-btn>
 
       <v-btn @click="goNotice()" text>
-      <v-btn text>
         <span class="mr-2">공지사항</span>
       </v-btn>
 
-      <v-btn text>
+      <v-btn @click="goDonationList()" text>
         <span class="mr-2">기부 게시판</span>
       </v-btn>
 
@@ -60,14 +44,20 @@
       <v-btn v-else @click="goLogin" text>
         <span class="mr-2">Login</span>
       </v-btn>
-
     </v-app-bar>
 
     <v-main>
       <router-view />
     </v-main>
 
-    <v-snackbar style="font-family: 'Nanum Gothic';" shaped color="teal" elevation="24" v-model="loginSuccess" timeout="3000">
+    <v-snackbar
+      style="font-family: 'Nanum Gothic';"
+      shaped
+      color="teal"
+      elevation="24"
+      v-model="loginSuccess"
+      timeout="3000"
+    >
       <v-icon color="white">mdi-emoticon-excited-outline</v-icon>
       {{ getProfile + "님 반갑습니다." }}
       <template v-slot:action="{ attrs }">
@@ -75,9 +65,15 @@
       </template>
     </v-snackbar>
 
-    <v-snackbar style="font-family: 'Nanum Gothic';" shaped color="teal" elevation="24" v-model="logoutSuccess" timeout="3000">
-      <v-icon color="white">mdi-check-bold</v-icon>
-      정상적으로 로그아웃 되었습니다.
+    <v-snackbar
+      style="font-family: 'Nanum Gothic';"
+      shaped
+      color="teal"
+      elevation="24"
+      v-model="logoutSuccess"
+      timeout="3000"
+    >
+      <v-icon color="white">mdi-check-bold</v-icon>정상적으로 로그아웃 되었습니다.
       <template v-slot:action="{ attrs }">
         <v-btn color="white" text v-bind="attrs" @click="logoutSuccess = false">Close</v-btn>
       </template>
@@ -113,7 +109,10 @@ export default {
     },
     goHome() {
       this.$router.push('/')
-    }
+    },
+    goDonationList(){
+      this.$router.push('/donationList')
+    },
     logout: function() {
       this.$store.dispatch(AUTH_LOGOUT).then(() => {
         this.drawer = false;
