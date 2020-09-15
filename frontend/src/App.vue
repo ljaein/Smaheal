@@ -18,9 +18,9 @@
         ></v-img>
       </v-avatar>
 
-      <v-toolbar-title class="font-weight-black headline">
-        VUETIFY
-      </v-toolbar-title>
+      <v-btn @click="goHome()" class="headline" text>
+          SmaHeal
+      </v-btn>
 
       <v-spacer></v-spacer>
 
@@ -32,6 +32,11 @@
         <span class="mr-2">ai_video test</span>
       </v-btn>
 
+      <v-btn @click="goLogin" text>
+        <span class="mr-2">Login</span>
+      </v-btn>
+
+      <v-btn @click="goNotice()" text>
       <v-btn text>
         <span class="mr-2">공지사항</span>
       </v-btn>
@@ -103,6 +108,12 @@ export default {
     goLogin() {
       this.$router.push('/login'); 
     },
+    goNotice() {
+      this.$router.push('/notice')
+    },
+    goHome() {
+      this.$router.push('/')
+    }
     logout: function() {
       this.$store.dispatch(AUTH_LOGOUT).then(() => {
         this.drawer = false;
