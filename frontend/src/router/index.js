@@ -4,6 +4,8 @@ import Home from "../views/Home.vue";
 import DonationDetail from "../views/donation/DonationDetail.vue"
 import DonationList from "../views/donation/DonationList.vue"
 import Login from "../views/account/Login.vue";
+import ReviewDetail from "../views/review/ReviewDetail.vue";
+import ReviewList from "../views/review/ReviewList.vue";
 import noticeList from "../views/notice/noticeList.vue"
 import DonationRequestDetail from "../views/donation/DonationRequestDetail.vue"
 
@@ -35,7 +37,16 @@ const routes = [{
         name: "Login",
         component: Login
     },
-
+    {
+        path: "/reviewDetail/:num",
+        name: "ReviewDetail",
+        component: ReviewDetail
+    },
+    {
+        path: "/reviewList",
+        name: "ReviewList",
+        component: ReviewList
+    },
     {
         path: "/notice",
         name: "noticeList",
