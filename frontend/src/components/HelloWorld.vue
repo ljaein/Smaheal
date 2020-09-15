@@ -1,6 +1,6 @@
 <template>
   <v-container fluid class="pa-0">
-    <v-content class="pa-0">
+    <v-main class="pa-0">
       <section id="hero">
         <v-row no-gutters>
           <v-img
@@ -314,7 +314,7 @@
 
         <div class="py-12"></div>
       </v-sheet>
-    </v-content>
+    </v-main>
 
     <v-footer
       class="justify-center"
