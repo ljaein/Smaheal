@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import DonationDetail from "../views/donation/DonationDetail.vue"
+import DonationList from "../views/donation/DonationList.vue"
 import Login from "../views/account/Login.vue";
 import DonationRequestDetail from "../views/donation/DonationRequestDetail.vue"
 
@@ -11,6 +12,11 @@ const routes = [{
         path: "/",
         name: "Home",
         component: Home
+    },
+    {
+        path: "/donationList",
+        name: "DonationList",
+        component: DonationList
     },
     {
         path: "/donationDetail",
