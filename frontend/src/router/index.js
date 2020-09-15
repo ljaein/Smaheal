@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import DonationDetail from "../views/donation/DonationDetail.vue"
 import Login from "../views/account/Login.vue";
+import noticeList from "../views/notice/noticeList.vue"
 import DonationRequestDetail from "../views/donation/DonationRequestDetail.vue"
 
 Vue.use(VueRouter);
@@ -27,6 +28,12 @@ const routes = [{
         path: "/login",
         name: "Login",
         component: Login
+    },
+
+    {
+        path: "/notice",
+        name: "noticeList",
+        component: noticeList
     },
 ];
 
