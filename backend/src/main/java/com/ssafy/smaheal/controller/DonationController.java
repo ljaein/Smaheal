@@ -69,6 +69,7 @@ public class DonationController {
             donation.setWriter(request.getWriter());
             donation.setSdate(request.getSdate());
             donation.setEdate(request.getEdate());
+            donation.setCategory(request.getCategory());
             donation.setMaxcnt(request.getMaxcnt());
             donation.setReceiver(request.getReceiver());
             donation.setAddress(request.getAddress());
@@ -91,6 +92,7 @@ public class DonationController {
             donation.setWriter(request.getWriter());
             donation.setSdate(request.getSdate());
             donation.setEdate(request.getEdate());
+            donation.setCategory(request.getCategory());
             donation.setMaxcnt(request.getMaxcnt());
             donation.setReceiver(request.getReceiver());
             donation.setAddress(request.getAddress());
@@ -129,6 +131,7 @@ public class DonationController {
                 donation.setWriter(request.getWriter());
                 donation.setSdate(request.getSdate());
                 donation.setEdate(request.getEdate());
+                donation.setCategory(request.getCategory());
                 donation.setMaxcnt(request.getMaxcnt());
                 donation.setReceiver(request.getReceiver());
                 donation.setAddress(request.getAddress());
