@@ -36,6 +36,7 @@ public class DonationController {
         try {
             List<Donation> donationList = donationRepository.findByApprovalAndTempOrderByCreatedateDesc(1,0);
             if (donationList != null) {
+                System.out.println(donationList);
                 return new ResponseEntity<>(donationList, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
