@@ -30,11 +30,41 @@ public class DonationController {
     @Autowired
     private DonationRepository donationRepository;
 
-    @GetMapping("/getList/{approval}")
-    @ApiOperation(value = "기부 게시판 리스트(승인1 or 대기0)")
-    public Object getDonationList(@PathVariable int approval) throws SQLException, IOException {
+    @GetMapping("/getList")
+    @ApiOperation(value = "기부 게시판 리스트(승인)")
+    public Object getDonationList() throws SQLException, IOException {
         try {
-            List<Donation> donationList = donationRepository.findByApprovalAndTempOrderByCreatedateDesc(approval,0);
+            List<Donation> donationList = donationRepository.findByApprovalAndTempOrderByCreatedateDesc(1,0);
+            if (donationList != null) {
+                return new ResponseEntity<>(donationList, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/getCategoryList/{category}")
+    @ApiOperation(value = "기부 게시판 카테고리 별 리스트(승인)")
+    public Object getDonationList(@PathVariable String category) throws SQLException, IOException {
+        try {
+            List<Donation> donationList = donationRepository.findByCategoryAndApprovalAndTempOrderByCreatedateDesc(category,1,0);
+            if (donationList != null) {
+                return new ResponseEntity<>(donationList, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/getWaitList")
+    @ApiOperation(value = "기부 게시판 리스트(대기)")
+    public Object getWaitDonationList() throws SQLException, IOException {
+        try {
+            List<Donation> donationList = donationRepository.findByApprovalAndTempOrderByCreatedateDesc(0,0);
             if (donationList != null) {
                 return new ResponseEntity<>(donationList, HttpStatus.OK);
             } else {
