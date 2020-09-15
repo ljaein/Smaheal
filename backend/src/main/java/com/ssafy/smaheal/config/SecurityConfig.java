@@ -95,6 +95,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .permitAll()
                 	.antMatchers(HttpMethod.DELETE, "/api/users/delete/**")
                         .permitAll()
+                    .antMatchers("/api/review/**")
+                        .permitAll()
                     .anyRequest()
                         .authenticated();
 
