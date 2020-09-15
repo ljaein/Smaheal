@@ -26,14 +26,14 @@ public class Review extends DateAudit{
 		super();
 	}
 
-	public Review(Long num, String nickName, String title, String content, String img, Long like, Long visit) {
+	public Review(Long num, String nickName, String title, String content, String img, Long likeCnt, Long visit) {
 		super();
 		this.num = num;
 		this.nickName = nickName;
 		this.title = title;
 		this.content = content;
 		this.img = img;
-		this.likeCnt = like;
+		this.likeCnt = likeCnt;
 		this.visit = visit;
 	}
 
@@ -77,12 +77,12 @@ public class Review extends DateAudit{
 		this.img = img;
 	}
 
-	public Long getLike() {
+	public Long getLikeCnt() {
 		return likeCnt;
 	}
 
-	public void setLike(Long like) {
-		this.likeCnt = like;
+	public void setLikeCnt(Long likeCnt) {
+		this.likeCnt = likeCnt;
 	}
 
 	public Long getVisit() {

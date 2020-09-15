@@ -41,7 +41,7 @@
       </v-btn>
 
       <v-btn text>
-        <span class="mr-2">후기 게시판</span>
+        <span class="mr-2" @click="goReviewList">후기 게시판</span>
       </v-btn>
 
       <v-btn text>
@@ -108,6 +108,9 @@ export default {
         this.drawer = false;
       });
       this.$router.push("/");
+    },
+    goReviewList() {
+      this.$router.push('/reviewList'); 
     },
   },
   computed: {
