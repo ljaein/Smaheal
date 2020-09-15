@@ -31,7 +31,7 @@ public class ReviewController {
 
 	@PostMapping("/regist")
 	public ResponseEntity<String> registReview(@RequestBody Review review) {
-		review.setLike((long) 0);
+		review.setLikeCnt((long) 0);
 		review.setVisit((long) 0);
 		reviewRepository.save(review);
 
