@@ -27,6 +27,8 @@ public class Donation {
     private String writer;
     private LocalDate sdate;
     private LocalDate edate;
+    private String category;
+    private int nowcnt;
     private int maxcnt;
     private String receiver;
     private String address;
