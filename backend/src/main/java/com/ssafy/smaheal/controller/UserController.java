@@ -17,12 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.smaheal.exception.ResourceNotFoundException;
 import com.ssafy.smaheal.help.UserIdentityAvailability;
+import com.ssafy.smaheal.help.UserProfile;
 import com.ssafy.smaheal.model.MemberUser;
 import com.ssafy.smaheal.repository.UserRepository;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 public class UserController {
 
     @Autowired
@@ -30,21 +31,29 @@ public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    @GetMapping("/user/checkUsernameAvailability")
+    @GetMapping("/checkUsernameAvailability")
     public UserIdentityAvailability checkUsernameAvailability(@RequestParam(value = "username") String username) {
         Boolean isAvailable = !userRepository.existsByNickName(username);
         return new UserIdentityAvailability(isAvailable);
     }
 
-    @GetMapping("/users/get/{num}")
+    @GetMapping("/get/{num}")
     public MemberUser getUserProfileByNum(@PathVariable(value = "num") Long num) {
         MemberUser user = userRepository.findByNum(num)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "num", num));
 
         return user;
     }
+    
+    @GetMapping("/users/{userId}")
+    public UserProfile getUserProfile(@PathVariable(value = "userId") String userId) {
+        MemberUser user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "UserId", userId));
+        UserProfile userProfile = new UserProfile(user.getNum(), user.getUserId(), user.getName(), user.getNickName(), user.getBirth());
+        return userProfile;
+    }
 
-    @PutMapping("/users/{num}")
+    @PutMapping("/{num}")
     public ResponseEntity<String> modifyUserProfile(@RequestBody MemberUser memberUser, @PathVariable(value = "num") Long num) {
     	MemberUser user = null;
     	
@@ -62,7 +71,7 @@ public class UserController {
         return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
     }
     
-    @DeleteMapping("/users/delete/{num}")
+    @DeleteMapping("/delete/{num}")
     public ResponseEntity<?> deleteUser(@PathVariable("num") Long num) {
       try {
 

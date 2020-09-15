@@ -13,6 +13,8 @@ public interface UserRepository extends JpaRepository<MemberUser, Long> {
     
     Optional<MemberUser> findByNum(Long num);
     
+    Optional<MemberUser> findByUserId(String userId);
+    
     List<MemberUser> findByNumIn(List<Long> userIds);
 
     Optional<MemberUser> findByNickName(String nickName);
