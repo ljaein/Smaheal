@@ -15,5 +15,5 @@ public interface DonationRepository extends JpaRepository<Donation, Long> {
 
     List<Donation> findByTempOrderByCreatedateDesc(int temp);
 
-    
+    List<Donation> findByCategoryAndApprovalAndTempOrderByCreatedateDesc(String category, int approval, int temp);
 }
