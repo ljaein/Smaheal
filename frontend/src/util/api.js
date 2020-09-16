@@ -7,7 +7,7 @@ const apiCall = ({...args }) =>
         axios
             .post("http://localhost:8080/api/auth/signin", args["data"])
             .then(({ data }) => {
-                //console.log(data)
+                // console.log(data)
                 resolve(data);
             })
             .catch(error => {

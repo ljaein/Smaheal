@@ -72,7 +72,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and()
-                .authorizeRequests()
+				.authorizeRequests()
+					.antMatchers("/swagger-ui.html", "/swagger-resources/**", "/v2/**")
+						.permitAll()
                     .antMatchers("/",
                         "/favicon.ico",
                         "/**/*.png",
@@ -86,14 +88,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/api/auth/**")
                         .permitAll()
                     .antMatchers("/api/**")
-                    	.permitAll()
+                       .permitAll()
                     .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
                         .permitAll()
                     .antMatchers(HttpMethod.GET, "/api/polls/**", "/api/users/**")
                         .permitAll()
                     .antMatchers(HttpMethod.PUT, "/api/users/**")
                         .permitAll()
-                	.antMatchers(HttpMethod.DELETE, "/api/users/delete/**")
+                   .antMatchers(HttpMethod.DELETE, "/api/users/delete/**")
+                        .permitAll()
+                    .antMatchers("/api/review/**")
                         .permitAll()
                     .anyRequest()
                         .authenticated();

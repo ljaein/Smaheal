@@ -1,14 +1,12 @@
 <template>
   <div id="app">
     <v-app id="inspire">
-      <v-form ref="form" v-model="valid" lazy-validation>
-        <v-text-field v-model="userId" :counter="15" :rules="idRules" label="아이디" required></v-text-field>
+      <v-form ref="form" lazy-validation>
+        <v-text-field v-model="userId" label="아이디" required></v-text-field>
 
-        <v-text-field v-model="password" :rules="passwordRules" label="비밀번호" required></v-text-field>
+        <v-text-field v-model="password" type="password" label="비밀번호" required></v-text-field>
 
-        <v-btn :disabled="!valid" color="success" class="mr-4" @click="loginRequest">로그인</v-btn>
-
-        <v-btn color="warning" @click="resetValidation">회원가입</v-btn>
+        <v-btn color="success" class="mr-4" @click="loginRequest">로그인</v-btn>
       </v-form>
     </v-app>
   </div>
