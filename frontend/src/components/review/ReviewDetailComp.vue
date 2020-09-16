@@ -4,7 +4,7 @@
     <td class="text-center">{{ title }}</td>
     <td class="text-center">{{ content }}</td>
     <td class="text-center">{{ nickName }}</td>
-    <td class="text-center">{{ img }}</td>
+    <v-img :src="`${publicPath}reviewImage/${img}`"></v-img>
     <td class="text-center">{{ likeCnt }}</td>
     <td class="text-center">{{ visit }}</td>
     <td class="text-center">{{ getFormatDate(createdAt) }}</td>
@@ -16,6 +16,11 @@ import moment from "moment";
 
 export default {
   name: "ReviewListComp",
+  data(){
+    return{
+      publicPath: process.env.BASE_URL
+    }
+  },
   props: {
     num: { type: Number },
     nickName: { type: String },

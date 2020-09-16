@@ -17,10 +17,6 @@
         <span class="mr-2">ai_video test</span>
       </v-btn>
 
-      <v-btn @click="goLogin" text>
-        <span class="mr-2">Login</span>
-      </v-btn>
-
       <v-btn @click="goNotice()" text>
         <span class="mr-2">공지사항</span>
       </v-btn>

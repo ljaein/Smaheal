@@ -1,5 +1,6 @@
 package com.ssafy.smaheal.controller;
 
+import java.io.File;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.smaheal.exception.ResourceNotFoundException;
 import com.ssafy.smaheal.model.Review;
@@ -66,4 +69,33 @@ public class ReviewController {
 		return ResponseEntity.ok(SUCCESS);
 	}
 
+	@PostMapping("/img")
+	   public ResponseEntity<String> uploadImgs(@RequestPart MultipartFile img) throws Exception {
+	       String workspacePath = System.getProperty("user.dir");
+	      String[] pathSplited = workspacePath.split("/");
+	      if (pathSplited[pathSplited.length - 1].equals("target")) {
+	         String newPath = pathSplited[0];
+	         for (int i = 1; i < pathSplited.length - 1; i++) {
+	            newPath += "/" + pathSplited[i];
+	         }
+	         workspacePath = newPath;
+	      }
+	      String baseDir = workspacePath+ "/../frontend/public/reviewImage/";
+	      String originalFileName = img.getOriginalFilename();
+	      File dest = new File(baseDir + originalFileName);
+	      
+	      String newName = originalFileName;
+	      String realName = originalFileName.split("\\.")[0];
+	      String extension = originalFileName.split("\\.")[1];
+	      int index = 0;
+	      while(dest.exists()) {
+	         index++;
+	         newName = realName + "(" + index + ")." + extension;
+	         dest = new File(baseDir + newName);
+	      }
+	      
+	      img.transferTo(dest);
+	   
+	      return ResponseEntity.ok(newName);
+	   }
 }

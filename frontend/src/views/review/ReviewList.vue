@@ -29,12 +29,14 @@
         </tbody>
       </template>
     </v-simple-table>
+    <v-btn v-if="getProfile" @click="goReviewWrite">후기 등록</v-btn>
   </div>
 </template>
 
 <script>
 import http from "@/util/http-common.js";
 import ReviewListComp from "@/components/review/ReviewListComp.vue";
+import { mapGetters } from "vuex";
 
 export default {
   name: "ReviewList",
@@ -55,6 +57,14 @@ export default {
       .catch(err => {
         console.log(err);
       });
+  },
+  computed: {
+    ...mapGetters(["getProfile"])
+  },
+  methods: {
+    goReviewWrite() {
+      this.$router.push(`/reviewWrite`);
+    }
   }
 };
 </script>
