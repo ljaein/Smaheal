@@ -7,6 +7,8 @@ import Login from "../views/account/Login.vue";
 import ReviewDetail from "../views/review/ReviewDetail.vue";
 import ReviewList from "../views/review/ReviewList.vue";
 import noticeList from "../views/notice/noticeList.vue"
+import noticeWrite from "../views/notice/noticeWrite.vue"
+import noticeDetail from "../views/notice/noticeDetail.vue"
 import DonationRequestDetail from "../views/donation/DonationRequestDetail.vue"
 
 Vue.use(VueRouter);
@@ -51,6 +53,18 @@ const routes = [{
         path: "/notice",
         name: "noticeList",
         component: noticeList
+    },
+
+    {
+        path: "/notice/write",
+        name: "noticeWrite",
+        component: noticeWrite
+    },
+
+    {
+        path: "/notice/detail/:noticeid",
+        name: "noticeDetail",
+        component: noticeDetail
     },
 ];
 
