@@ -70,4 +70,13 @@ public class NoticeController {
 		return ResponseEntity.ok(SUCCESS);
 	}
 	
+	@GetMapping("/search/{title}")
+	public List<Notices> noticeSearch(@PathVariable(value = "title")
+	String title) {
+		
+		List<Notices> searchNotice = noticeRepository.findByTitleContaining(title);
+		
+		return searchNotice;
+	}
+	
 }

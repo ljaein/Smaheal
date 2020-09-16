@@ -54,6 +54,11 @@
       />
     </div>
     <v-row>
+        <v-col>
+            <v-btn @click="goBack()" outlined>
+                전체 목록보기
+            </v-btn>
+        </v-col>
       <v-col class="text-right">
         <v-btn @click="goNoticeRegist()" outlined>
         글 작성하기
@@ -67,7 +72,7 @@
 import moment from "moment";
 
 export default {
-  name: "noticeListComp",
+  name: "noticeSearchComp",
   props: {
     propItems: {type: Array},
   },
@@ -89,6 +94,9 @@ export default {
       },
       getFormatDate: function(regtime) {
         return moment(new Date(regtime)).format("YYYY년 MM월 DD일");
+      },
+      goBack: function() {
+          this.$router.push('/notice')
       }
   },
 };
