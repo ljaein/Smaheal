@@ -36,12 +36,19 @@ public class NoticeController {
         return ResponseEntity.ok(SUCCESS);
 	}
 	
-	@GetMapping("/findAll")
-	public List<Notices> findAllNotice() {
+	@GetMapping("/findAll/{limit}")
+	public List<Notices> findAllNotice(@PathVariable(value="limit") int limit) {
 		
-		List<Notices> list = noticeRepository.findAllByOrderByNoticeidDesc();
+		List<Notices> list = noticeRepository.findByNoticeidPaging(limit);
 		
 		return list;
+	}
+	
+	@GetMapping("/getCount")
+	public long totalCountNotice() {
+		
+		return noticeRepository.count();
+		
 	}
 	
 	@GetMapping("/find/{noticeid}")
@@ -56,6 +63,7 @@ public class NoticeController {
 	public ResponseEntity<String> modifyNoticeByNum(@PathVariable(value = "noticeid")
 	Long noticeid, @RequestBody Notices notice) {
 		
+		notice.setNoticeid(noticeid);
 		noticeRepository.save(notice);
 		
 		return ResponseEntity.ok(SUCCESS);		
