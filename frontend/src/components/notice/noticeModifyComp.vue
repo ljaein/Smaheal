@@ -2,7 +2,7 @@
   <v-container class="pa-0">
     <v-sheet class="pa-6 mt-4 mb-5" dark>
       <v-icon class="mr-2">mdi-clipboard-edit-outline</v-icon>
-      공지사항 작성페이지
+      공지사항 수정페이지
     </v-sheet>
     <v-sheet dark class="pa-5 mb-5">
         <v-text-field
@@ -38,50 +38,22 @@
             <v-btn class="mr-5" @click="goBack()" outlined>
                 취소
             </v-btn>
-            <v-btn @click="noticeRegist()" outlined>
-                등록
+            <v-btn @click="noticeModify()" outlined>
+                수정
             </v-btn>
         </v-col>
     </v-row>
 
-    <v-dialog dark v-model="temp" max-width="400">
-      <v-card>
-        <v-card-title class="headline">글을 임시저장하시겠습니까?</v-card-title>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-
-          <v-btn text @click="cancelTemp()">취소</v-btn>
-
-          <v-btn text @click="noticeTempRegistHandler()">확인</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-
-    <v-dialog dark v-model="tempLoad" max-width="400">
-      <v-card>
-        <v-card-title class="headline">임시저장한 글이 있습니다. 불러오겠습니까?</v-card-title>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-
-          <v-btn text @click="cancelTempLoad()">취소</v-btn>
-
-          <v-btn text @click="noticeTempLoadHandler()">확인</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-
     <v-dialog dark v-model="regist" max-width="400">
       <v-card>
-        <v-card-title class="headline">공지사항을 등록하겠습니까?</v-card-title>
+        <v-card-title class="headline">공지사항을 수정하겠습니까?</v-card-title>
 
         <v-card-actions>
           <v-spacer></v-spacer>
 
           <v-btn text @click="cancelRegist()">취소</v-btn>
 
-          <v-btn text @click="noticeRegistHandler()">확인</v-btn>
+          <v-btn text @click="noticeModifyHandler()">확인</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -92,14 +64,15 @@
 import http from "@/util/http-common.js";
 
 export default {
-  name: "noticeWriteComp",
+  name: "noticeModifyComp",
+  props: {
+      propItems: {type: Object},
+  },
   data(){
    return {
-       title: "",
-       content: "",
+       title: this.propItems.title,
+       content: this.propItems.content,
        regist: false,
-       temp: false,
-       tempLoad: false,
        alertMsg: "",
        alert: false,
        titleRules: [
@@ -111,7 +84,7 @@ export default {
    };
   },
   methods: {
-      noticeRegist: function() {
+      noticeModify: function() {
           let err = true;
           let msg = "";
 
@@ -127,8 +100,9 @@ export default {
               this.regist = true;
           }
       },
-      noticeRegistHandler: function() {
-          http.post("/notice/write", {
+      noticeModifyHandler: function() {
+          http.put(`/notice/update/${this.propItems.noticeid}`, {
+              noticeid: this.propItems.noticeid,
               title: this.title,
               content: this.content,
           })
@@ -143,34 +117,14 @@ export default {
           })
       },
       noticeTempRegist: function() {
-          this.temp = true;
-      },
-      noticeTempRegistHandler: function() {
-        localStorage.setItem("title", this.title);
-        localStorage.setItem("content", this.content);
-        this.temp = false;
-      },
-      noticeTempLoadHandler: function() {
-        this.title = localStorage.getItem("title");
-        this.content = localStorage.getItem("content");
-        localStorage.removeItem("title");
-        localStorage.removeItem("content");
-        this.tempLoad = false;
+
       },
       goBack: function() {
           this.$router.push('/notice').catch(() => {})
       },
-      cancelTemp: function() {
-        this.temp = false;
-      },
-      cancelTempLoad: function() {
-        this.tempLoad = false;
-      },
+      cancelRegist: function() {
+          this.regist = false
+      }
   },
-  created() {
-    if (localStorage.getItem("title") !== null) {
-      this.tempLoad = true;
-    }
-  }
 };
 </script>

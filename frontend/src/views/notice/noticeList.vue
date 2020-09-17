@@ -23,10 +23,10 @@ export default {
   },
   created() {
     http
-    .get('/notice/findAll')
+    .get(`/notice/findAll/0`)
     .then(({data}) => {
       this.items = data;
-    })
+    });
   }
 };
 </script>

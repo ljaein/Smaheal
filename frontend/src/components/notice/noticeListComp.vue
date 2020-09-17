@@ -1,6 +1,6 @@
 <template>
   <v-container class="pa-0">
-    <v-sheet class="pa-6 mt-4" dark>
+    <v-sheet class="pa-6 mt-4" color="amber lighten-3">
       <v-icon class="mr-2">mdi-clipboard-alert-outline</v-icon>
       공지사항
     </v-sheet>
@@ -55,9 +55,9 @@
     </div>
     <v-row>
       <v-col class="text-right">
-        <v-btn @click="goNoticeRegist()" outlined>
+        <v-btn @click="goNoticeRegist()" outlined v-if="getUserID == 'admin'">
         글 작성하기
-      </v-btn>
+        </v-btn>
       </v-col>
     </v-row>
   </v-container>
@@ -65,6 +65,8 @@
 
 <script>
 import moment from "moment";
+import http from "@/util/http-common.js";
+import { mapGetters, mapState } from "vuex";
 
 export default {
   name: "noticeListComp",
@@ -74,10 +76,11 @@ export default {
   data(){
    return {
      items: this.propItems,
+     previousPage: 0,
      currentPage: 1,
-     dataPerPage: 7,
-     totalPage: 5,
+     totalPage: this.propCount,
      visibleCnt: 5,
+     limit: 0,
    };
   },
   methods: {
@@ -90,6 +93,50 @@ export default {
       getFormatDate: function(regtime) {
         return moment(new Date(regtime)).format("YYYY년 MM월 DD일");
       }
+  },
+  watch: {
+    currentPage: function(currentPage) {
+      this.previousPage = currentPage - 1;
+      this.limit = this.previousPage * 6;
+
+      http.get(`/notice/findAll/${this.limit}`)
+      .then(({data}) => {
+        this.items = data;
+      })
+      .catch(e => {
+        console.log(e);
+      })
+    },
+  },
+  created() {
+    http
+    .get('/notice/getCount')
+    .then(({data}) => {
+      if (data % 6 == 0) {
+        this.totalPage = Math.floor((data) / 6);
+      } else {
+        this.totalPage = Math.floor((data) / 6) + 1;
+      }
+    });
+  },
+  computed: {
+    ...mapGetters([
+      "isAuthenticated",
+      "isProfileLoaded",
+      "getProfile",
+      "getRealName",
+      "getUserNum",
+      "getUserID",
+      "getUserBirth",
+    ]),
+    ...mapState({
+      authLoading: state => state.auth.status === "loading",
+      uname: state => `${state.user.getProfile}`,
+      userNum: state => `${state.user.getUserNum}`,
+      userName: state => `${state.user.getRealName}`,
+      userID: state => `${state.user.getUserID}`,
+      userBirth: state => `${state.user.getUserBirth}`,
+    }),
   },
 };
 </script>
