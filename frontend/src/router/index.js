@@ -8,13 +8,19 @@ import ReviewDetail from "../views/review/ReviewDetail.vue";
 import ReviewList from "../views/review/ReviewList.vue";
 import noticeList from "../views/notice/noticeList.vue"
 import DonationRequestDetail from "../views/donation/DonationRequestDetail.vue"
-
+import DonationRequestCreate from "../views/donation/DonationRequestCreate.vue"
+import imageTest from "../views/donation/imagetest.vue";
 Vue.use(VueRouter);
 
 const routes = [{
         path: "/",
         name: "Home",
         component: Home
+    },
+    {
+        path: "/imagetest",
+        name: "imagetest",
+        component: imageTest
     },
     {
         path: "/donationList",
@@ -30,6 +36,11 @@ const routes = [{
         path: "/donationRequestDetail/:ID",
         name: "DonationRequestDetail",
         component: DonationRequestDetail
+    },
+    {
+        path: "/donationRequestCreate",
+        name: "DonationRequestCreate",
+        component: DonationRequestCreate
     },
 
     {
