@@ -10,11 +10,12 @@
       :visit="item.visit"
       :createdAt="item.createdAt"
     />
-    <div v-if="isWriter" style="width:100%; text-align:center;">
-      <v-btn @click="moveModify" outlined>수정</v-btn>
-      <v-btn @click="deleteReview" outlined>삭제</v-btn>
+    <div style="width:100%; text-align:center;">
+      <v-btn v-if="isWriter" @click="moveModify" outlined>수정</v-btn>
+      <v-btn v-if="isWriter" @click="deleteReview" outlined>삭제</v-btn>
       <v-btn @click="goBack" outlined>뒤로가기</v-btn>
     </div>
+    
     <br>
   </div>
 </template>
