@@ -11,9 +11,9 @@
       <div class="text-right pb-5">
         {{getFormatDate(this.item.createdAt)}}
       </div>
-      <div class="pa-7">
-          {{this.item.content}}
-      </div>
+      <v-textarea readonly outlined
+      :label="this.item.content">
+      </v-textarea>
     </v-sheet>
     <v-row>
       <v-col>

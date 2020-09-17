@@ -44,6 +44,34 @@
         </v-col>
     </v-row>
 
+    <v-dialog dark v-model="temp" max-width="400">
+      <v-card>
+        <v-card-title class="headline">글을 임시저장하시겠습니까?</v-card-title>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn text @click="cancelTemp()">취소</v-btn>
+
+          <v-btn text @click="noticeTempRegistHandler()">확인</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog dark v-model="tempLoad" max-width="400">
+      <v-card>
+        <v-card-title class="headline">임시저장한 글이 있습니다. 불러오겠습니까?</v-card-title>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn text @click="cancelTempLoad()">취소</v-btn>
+
+          <v-btn text @click="noticeTempLoadHandler()">확인</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <v-dialog dark v-model="regist" max-width="400">
       <v-card>
         <v-card-title class="headline">공지사항을 등록하겠습니까?</v-card-title>
@@ -70,6 +98,8 @@ export default {
        title: "",
        content: "",
        regist: false,
+       temp: false,
+       tempLoad: false,
        alertMsg: "",
        alert: false,
        titleRules: [
@@ -113,14 +143,34 @@ export default {
           })
       },
       noticeTempRegist: function() {
-
+          this.temp = true;
+      },
+      noticeTempRegistHandler: function() {
+        localStorage.setItem("title", this.title);
+        localStorage.setItem("content", this.content);
+        this.temp = false;
+      },
+      noticeTempLoadHandler: function() {
+        this.title = localStorage.getItem("title");
+        this.content = localStorage.getItem("content");
+        localStorage.removeItem("title");
+        localStorage.removeItem("content");
+        this.tempLoad = false;
       },
       goBack: function() {
           this.$router.push('/notice').catch(() => {})
       },
-      cancelRegist: function() {
-          this.regist = false
-      }
+      cancelTemp: function() {
+        this.temp = false;
+      },
+      cancelTempLoad: function() {
+        this.tempLoad = false;
+      },
   },
+  created() {
+    if (localStorage.getItem("title") !== null) {
+      this.tempLoad = true;
+    }
+  }
 };
 </script>

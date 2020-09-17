@@ -1,6 +1,6 @@
 <template>
   <v-container class="pa-0">
-    <v-sheet class="pa-6 mt-4" dark>
+    <v-sheet class="pa-6 mt-4" color="amber lighten-3">
       <v-icon class="mr-2">mdi-clipboard-alert-outline</v-icon>
       공지사항
     </v-sheet>
