@@ -37,9 +37,9 @@
       </v-btn>
 
       <v-btn @click="goNotice()" text>
-      <v-btn text>
         <span class="mr-2">공지사항</span>
       </v-btn>
+      
 
       <v-btn text>
         <span class="mr-2">기부 게시판</span>
@@ -113,7 +113,7 @@ export default {
     },
     goHome() {
       this.$router.push('/')
-    }
+    },
     logout: function() {
       this.$store.dispatch(AUTH_LOGOUT).then(() => {
         this.drawer = false;

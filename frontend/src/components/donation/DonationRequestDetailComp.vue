@@ -131,7 +131,7 @@
           <v-list-item three-line>
             <v-list-item-content>
               <div class="overline mb-4">To. {{ donation.receiver }}</div>
-              <v-list-item-title class="headline mb-1">{{ donation.nowcnt / donation.maxcnt }}%</v-list-item-title>
+              <v-list-item-title class="headline mb-1">{{slider}}%</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <br />
@@ -160,6 +160,17 @@
         <template v-slot:action="{ attrs }">
           <v-btn text v-bind="attrs" @click="goLogin">
             Login
+          </v-btn>
+        </template>
+      </v-snackbar>
+    </div>
+
+    <div class="text-center ma-2">
+      <v-snackbar v-model="msgFlag" top right :timeout="3000" color="error">
+        메세지를 입력해주세요.
+        <template v-slot:action="{ attrs }">
+          <v-btn text v-bind="attrs" @click="msgFlag=false">
+            Close
           </v-btn>
         </template>
       </v-snackbar>
@@ -193,6 +204,7 @@ export default {
       modifyFlag: false,
       tempMsg: [],
       temp:'',
+      msgFlag:false,
     };
   },
 
@@ -209,7 +221,7 @@ export default {
         .get('/donation/detail/' + this.donationid)
         .then((res) => {
           this.donation = res.data;
-          this.slider = (this.donation.nowcnt / this.donation.maxcnt);
+          this.slider = (this.donation.nowcnt * 100) / this.donation.maxcnt;
           this.calDay();
           this.photoInsert();
         })
@@ -244,9 +256,9 @@ export default {
       window.scrollTo({ top: location + 790, behavior: 'smooth' });
     },
     msgSubmit() {
-      console.log(this.uid)
       if (this.uid != '') {
-        http
+        if(this.cheerup != '') {
+          http
           .post('/cheerup/writeMsg', {
             donationid: this.donationid,
             msg: this.cheerup,
@@ -260,6 +272,9 @@ export default {
           .catch((err) => {
             console.log(err);
           });
+        } else {
+          this.msgFlag = true;
+        }
       } else {
         this.cheerup = '';
         this.alertFlag = true;
@@ -289,7 +304,8 @@ export default {
     },
     modifyMsg(v) {
       this.modifyFlag = false;
-      http
+      if(v.msg != '') {
+        http
         .put('/cheerup/modifyMsg/', {
           donationid:v.donationid,
           cheerupid:v.cheerupid,
@@ -303,9 +319,17 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+      } else {
+        this.msgFlag=true;
+        this.getMsg();
+      }
     },
     goDonation() {
-      alert('기부하러 가기 구현');
+      if(this.uid != '') {
+        this.$router.push('/smileCreate');
+      } else {
+        this.alertFlag = true;
+      }
     },
     goLogin() {
       this.alertFlag = false;

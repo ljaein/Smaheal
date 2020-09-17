@@ -6,6 +6,7 @@ import DonationList from "../views/donation/DonationList.vue"
 import Login from "../views/account/Login.vue";
 import noticeList from "../views/notice/noticeList.vue"
 import DonationRequestDetail from "../views/donation/DonationRequestDetail.vue"
+import SmileCreate from "../views/smile/SmileCreate.vue"
 
 Vue.use(VueRouter);
 
@@ -40,6 +41,11 @@ const routes = [{
         path: "/notice",
         name: "noticeList",
         component: noticeList
+    },
+    {
+        path: "/smileCreate",
+        name: "SmileCreate",
+        component: SmileCreate
     },
 ];
 
