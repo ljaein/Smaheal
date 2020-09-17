@@ -17,11 +17,11 @@ import io.swagger.annotations.ApiOperation;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.ssafy.smaheal.model.Donation;
 import com.ssafy.smaheal.repository.DonationRepository;
-
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -34,9 +34,8 @@ public class DonationController {
     @ApiOperation(value = "기부 게시판 리스트(승인)")
     public Object getDonationList() throws SQLException, IOException {
         try {
-            List<Donation> donationList = donationRepository.findByApprovalAndTempOrderByCreatedateDesc(1,0);
+            List<Donation> donationList = donationRepository.findByApprovalAndTempOrderByCreatedateDesc(1, 0);
             if (donationList != null) {
-                System.out.println(donationList);
                 return new ResponseEntity<>(donationList, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -48,9 +47,10 @@ public class DonationController {
 
     @GetMapping("/getCategoryList/{category}")
     @ApiOperation(value = "기부 게시판 카테고리 별 리스트(승인)")
-    public Object getDonationList(@PathVariable String category) throws SQLException, IOException {
+    public Object getCategoryDonationList(@PathVariable String category) throws SQLException, IOException {
         try {
-            List<Donation> donationList = donationRepository.findByCategoryAndApprovalAndTempOrderByCreatedateDesc(category,1,0);
+            List<Donation> donationList = donationRepository
+                    .findByCategoryAndApprovalAndTempOrderByCreatedateDesc(category, 1, 0);
             if (donationList != null) {
                 return new ResponseEntity<>(donationList, HttpStatus.OK);
             } else {
@@ -61,11 +61,42 @@ public class DonationController {
         }
     }
 
+    @GetMapping("/getCategoryList2")
+    @ApiOperation(value = "기부 게시판 카테고리 별 리스트(승인)")
+    public Object getCategoryDonationList2() throws SQLException, IOException {
+        try {
+            List<Donation>[] categoryList = new List[7];
+            for (int i = 0; i < 7; i++) {
+                categoryList[i] = new LinkedList<>();
+            }
+            List<Donation> all = donationRepository.findByApprovalAndTempOrderByCreatedateDesc(1, 0);
+            categoryList[0] = all;
+            for (Donation dona : all) {
+                if (dona.getCategory().equals("아동,청소년"))
+                    categoryList[1].add(dona);
+                else if (dona.getCategory().equals("어르신"))
+                    categoryList[2].add(dona);
+                else if (dona.getCategory().equals("장애인"))
+                    categoryList[3].add(dona);
+                else if (dona.getCategory().equals("가족,여성"))
+                    categoryList[4].add(dona);
+                else if (dona.getCategory().equals("다문화"))
+                    categoryList[5].add(dona);
+                else if (dona.getCategory().equals("기타"))
+                    categoryList[6].add(dona);
+            }
+            return new ResponseEntity<>(categoryList, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/getWaitList")
     @ApiOperation(value = "기부 게시판 리스트(대기)")
     public Object getWaitDonationList() throws SQLException, IOException {
         try {
-            List<Donation> donationList = donationRepository.findByApprovalAndTempOrderByCreatedateDesc(0,0);
+            List<Donation> donationList = donationRepository.findByApprovalAndTempOrderByCreatedateDesc(0, 0);
             if (donationList != null) {
                 return new ResponseEntity<>(donationList, HttpStatus.OK);
             } else {
@@ -98,15 +129,15 @@ public class DonationController {
             Donation donation = new Donation();
             donation.setTitle(request.getTitle());
             donation.setWriter(request.getWriter());
-            donation.setSdate(request.getSdate());
             donation.setEdate(request.getEdate());
             donation.setCategory(request.getCategory());
             donation.setMaxcnt(request.getMaxcnt());
             donation.setReceiver(request.getReceiver());
             donation.setAddress(request.getAddress());
             donation.setContent(request.getContent());
-            donation.setApproval(0); //아직 승인되지 않은 게시물
-            donation.setTemp(0); //임시저장이 아닌 게시물
+            donation.setImg(request.getImg());
+            donation.setApproval(0); // 아직 승인되지 않은 게시물
+            donation.setTemp(0); // 임시저장이 아닌 게시물
             donationRepository.save(donation);
             return new ResponseEntity<>(donation, HttpStatus.OK);
         } catch (Exception e) {
@@ -127,8 +158,10 @@ public class DonationController {
             donation.setMaxcnt(request.getMaxcnt());
             donation.setReceiver(request.getReceiver());
             donation.setAddress(request.getAddress());
-            donation.setApproval(0); //아직 승인되지 않은 게시물
-            donation.setTemp(1); //임시저장인 게시물
+            donation.setContent(request.getContent());
+            donation.setImg(request.getImg());
+            donation.setApproval(0); // 아직 승인되지 않은 게시물
+            donation.setTemp(1); // 임시저장인 게시물
             donationRepository.save(donation);
             return new ResponseEntity<>(donation, HttpStatus.OK);
         } catch (Exception e) {
@@ -168,7 +201,7 @@ public class DonationController {
                 donation.setAddress(request.getAddress());
                 donationRepository.save(donation);
                 return new ResponseEntity<>(donation, HttpStatus.OK);
-            }else{
+            } else {
                 return new ResponseEntity<>(donation, HttpStatus.BAD_REQUEST);
             }
 
@@ -186,7 +219,7 @@ public class DonationController {
                 donation.setApproval(1);
                 donationRepository.save(donation);
                 return new ResponseEntity<>(donation, HttpStatus.OK);
-            }else{
+            } else {
                 return new ResponseEntity<>(donation, HttpStatus.BAD_REQUEST);
             }
 

@@ -43,26 +43,40 @@
     <v-tabs-items v-model="tab">
       <v-tab-item class="row justify-content-left p-3" v-for="i in 7" :key="i" :value="'tab-' + i">
         <!-- 게시물 -->
-        <div class="col-12 col-sm-6 col-md-3" v-for="donation in 9" :key="donation">
+        <div
+          class="col-12 col-sm-6 col-md-3"
+          v-for="(donation,index) in donationList[i-1]"
+          :key="index"
+        >
           <v-card max-width="400" style="overflow:hidden;">
-            <div style="overflow:hidden">
-              <v-img
-                class="donation-img white--text align-end"
-                height="200px"
-                src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-                @click="getDetail(12)"
-              ></v-img>
+            <div style="height:200px;width:100%;">
+              <img
+                class="donation-img white--text"
+                :src="getImg(donation.img)"
+                @click="getDetail(donation.donationid)"
+              >
             </div>
-            <v-card-title class="pb-0" @click="getDetail(12)" style="cursor:pointer;">재인이에게 웃음이 필요해요</v-card-title>
+            <v-card-title
+              class="pb-0 mb-1 donation-title"
+              @click="getDetail(donation.donationid)"
+            >{{donation.title}}</v-card-title>
 
             <v-card-text class="text--primary">
-              <div class="mb-3">싸피복지기관</div>
+              <div class="mb-3">{{donation.receiver}}</div>
 
-              <v-progress-linear rounded value="30" height="10" color="yellow darken-2"></v-progress-linear>
+              <v-progress-linear
+                rounded
+                :value="toPercent(donation.nowcnt,donation.maxcnt)"
+                height="10"
+                color="yellow darken-2"
+              ></v-progress-linear>
 
               <div class="d-flex justify-content-between mt-2">
-                <div class="d-flex" style="font-size:large; color:#F9A825">10%</div>
-                <div class="d-flex" style="font-size:large;">22장</div>
+                <div
+                  class="d-flex"
+                  style="font-size:large; color:#F9A825"
+                >{{toPercent(donation.nowcnt,donation.maxcnt)}}%</div>
+                <div class="d-flex" style="font-size:large;">{{donation.nowcnt}}장</div>
               </div>
             </v-card-text>
           </v-card>
@@ -82,7 +96,13 @@ export default {
     return {
       tab: null,
       donationList: [],
-      category: ""
+      all: [],
+      child: [],
+      senior: [],
+      disabled: [],
+      woman: [],
+      multic: [],
+      others: []
     };
   },
 
@@ -93,8 +113,9 @@ export default {
   methods: {
     init() {
       http
-        .get("/donation/getList")
+        .get("/donation/getCategoryList2")
         .then(res => {
+          console.log(res.data);
           this.donationList = res.data;
         })
         .catch(err => {
@@ -102,48 +123,29 @@ export default {
         });
     },
     getDetail(donationid) {
+      scroll(0,0)
       this.$router.push({
         name: "DonationRequestDetail",
         params: { ID: donationid }
       });
     },
-    listByCategory(i) {
-      if (i == 1) {
-        http
-          .get("/donation/getList")
-          .then(res => {
-            this.donationList = res.data;
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      } else {
-        if (i == 2) this.category = "아동/청소년";
-        else if (i == 3) this.category = "어르신";
-        else if (i == 4) this.category = "장애인";
-        else if (i == 5) this.category = "가족/여성";
-        else if (i == 6) this.category = "다문화";
-        else if (i == 7) this.category = "기타";
-        http
-          .get("/donation/getCategoryList/" + this.category)
-          .then(res => {
-            this.donationList = res.data;
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      }
-      return this.donationList;
-    }
+    toPercent(now, max) {
+      var percent = (now / max) * 100;
+      return Math.round(percent * 10) / 10.0;
+    },
+    getImg(img){
+      img = img.split("|")[0];
+      return "../../../contents/" + img;
+    },
   },
   watch: {}
 };
 </script>
 <style scoped>
 .donation-img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
+  height: 200px !important;
+  width: 100% !important;
+  /* object-fit: cover; */
   transform: scale(1);
   transition: all 0.3s ease-in-out;
 }
@@ -152,5 +154,14 @@ export default {
   transform: scale(1.1);
   transition: all 0.3s ease-in-out;
   cursor: pointer;
+}
+
+.donation-title {
+  cursor: pointer;
+  height: 70px;
+  align-items: baseline;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  line-height: 1.8rem;
 }
 </style>

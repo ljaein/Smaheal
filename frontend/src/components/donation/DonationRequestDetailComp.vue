@@ -1,16 +1,16 @@
 <template>
   <v-container fluid class="mt-5 px-0">
     <!-- 카테고리 -->
-    <v-row>
-      <v-col cols="12" class="pb-0 ml-5">
+    <v-row justify="center">
+      <v-col cols="10" class="pb-0 ml-5">
         <h4>
           {{ donation.category }}
         </h4>
       </v-col>
     </v-row>
     <!-- 제목 -->
-    <v-row>
-      <v-col cols="12" class="pt-0 ml-5">
+    <v-row justify="center">
+      <v-col cols="10" class="pt-0 ml-5">
         <h1>
           {{ donation.title }}
         </h1>
@@ -18,9 +18,11 @@
     </v-row>
     <!-- 사진 carousel -->
     <v-row justify="center" style="margin-bottom:100px;">
-      <v-col cols="12" class="px-0">
+      <v-col cols="10" class="p-0">
         <v-carousel width="100%">
-          <v-carousel-item :src="photo" reverse-transition="fade-transition" transition="fade-transition"></v-carousel-item>
+          <v-carousel-item v-for="(item,i) in images" :key="i" reverse-transition="fade-transition" transition="fade-transition">
+            <img :src="getImg(item)" style="height:100%; width:100%;" />
+          </v-carousel-item>
         </v-carousel>
       </v-col>
     </v-row>
@@ -189,8 +191,8 @@ export default {
     return {
       donation: [],
       donationid: 0,
+      images:[],
       title: '',
-      photo: '',
       satisfactionEmojis: ['😐', '🙂', '😊', '😁', '😁', '😄', '😄', '😍'],
       slider: 0,
       Dday: 0,
@@ -222,8 +224,8 @@ export default {
         .then((res) => {
           this.donation = res.data;
           this.slider = (this.donation.nowcnt * 100) / this.donation.maxcnt;
+          this.images = this.donation.img.substring(0,this.donation.img.length-1).split("|");
           this.calDay();
-          this.photoInsert();
         })
         .catch((err) => {
           console.log(err);
@@ -245,9 +247,6 @@ export default {
       var newEnd = new Date(endDate[0], Number(endDate[1]) - 1, endDate[2]);
       var gap = Math.ceil((newEnd.getTime() - now.getTime()) / 1000 / 60 / 60 / 24);
       this.Dday = gap;
-    },
-    photoInsert() {
-      this.photo = this.donation.img;
     },
     scrollSpy(evt) {
       evt.preventDefault();
@@ -334,6 +333,9 @@ export default {
     goLogin() {
       this.alertFlag = false;
       this.$router.push('/login');
+    },
+    getImg(img){
+      return "../../../contents/" + img;
     },
   },
   watch: {},

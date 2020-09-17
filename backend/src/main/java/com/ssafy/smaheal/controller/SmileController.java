@@ -13,16 +13,26 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.ApiOperation;
+
+import com.ssafy.smaheal.model.Smile;
+import com.ssafy.smaheal.repository.SmileRepository;
 
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/smile")
 public class SmileController {
     
+    @Autowired
+    private SmileRepository smileRepository;
     public static List list = new LinkedList<>();
 
     @GetMapping("/cameraOn")
@@ -41,6 +51,24 @@ public class SmileController {
                 e.printStackTrace();
             }
             return new ResponseEntity<>(list, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/regist")
+    @ApiOperation(value = "웃음 기부 등록")
+    public Object registDonation(@RequestBody Smile request) throws SQLException, IOException {
+        try {
+            Smile smile = new Smile();
+            smile.setUser_id(request.getUser_id());
+            smile.setDonationid(request.getDonationid());
+            smile.setPhoto(request.getPhoto());
+            smile.setSmileper(request.getSmileper());
+            smile.setComment(request.getComment());
+            smile.setAgreement(request.getAgreement());
+            smileRepository.save(smile);
+            return new ResponseEntity<>(smile, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
