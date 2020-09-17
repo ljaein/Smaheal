@@ -161,7 +161,7 @@ export default {
     return {
       uid: "",
       inputFiles: [],
-      items: ["아동/청소년", "어르신", "장애인", "가족/여성", "다문화", "기타"],
+      items: ["아동,청소년", "어르신", "장애인", "가족,여성", "다문화", "기타"],
       menu2: false,
       addr: "",
       addrDetail: "",
