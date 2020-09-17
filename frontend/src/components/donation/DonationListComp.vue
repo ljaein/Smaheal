@@ -49,18 +49,16 @@
           :key="index"
         >
           <v-card max-width="400" style="overflow:hidden;">
-            <div style="overflow:hidden">
-              <v-img
-                class="donation-img white--text align-end"
-                height="200px"
-                src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+            <div style="height:200px;width:100%;">
+              <img
+                class="donation-img white--text"
+                :src="getImg(donation.img)"
                 @click="getDetail(donation.donationid)"
-              ></v-img>
+              >
             </div>
             <v-card-title
-              class="pb-0"
+              class="pb-0 mb-1 donation-title"
               @click="getDetail(donation.donationid)"
-              style="cursor:pointer;"
             >{{donation.title}}</v-card-title>
 
             <v-card-text class="text--primary">
@@ -125,6 +123,7 @@ export default {
         });
     },
     getDetail(donationid) {
+      scroll(0,0)
       this.$router.push({
         name: "DonationRequestDetail",
         params: { ID: donationid }
@@ -133,16 +132,20 @@ export default {
     toPercent(now, max) {
       var percent = (now / max) * 100;
       return Math.round(percent * 10) / 10.0;
-    }
+    },
+    getImg(img){
+      img = img.split("|")[0];
+      return "../../../contents/" + img;
+    },
   },
   watch: {}
 };
 </script>
 <style scoped>
 .donation-img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
+  height: 200px !important;
+  width: 100% !important;
+  /* object-fit: cover; */
   transform: scale(1);
   transition: all 0.3s ease-in-out;
 }
@@ -151,5 +154,14 @@ export default {
   transform: scale(1.1);
   transition: all 0.3s ease-in-out;
   cursor: pointer;
+}
+
+.donation-title {
+  cursor: pointer;
+  height: 70px;
+  align-items: baseline;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  line-height: 1.8rem;
 }
 </style>

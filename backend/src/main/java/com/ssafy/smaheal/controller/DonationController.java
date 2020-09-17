@@ -129,13 +129,13 @@ public class DonationController {
             Donation donation = new Donation();
             donation.setTitle(request.getTitle());
             donation.setWriter(request.getWriter());
-            donation.setSdate(request.getSdate());
             donation.setEdate(request.getEdate());
             donation.setCategory(request.getCategory());
             donation.setMaxcnt(request.getMaxcnt());
             donation.setReceiver(request.getReceiver());
             donation.setAddress(request.getAddress());
             donation.setContent(request.getContent());
+            donation.setImg(request.getImg());
             donation.setApproval(0); // 아직 승인되지 않은 게시물
             donation.setTemp(0); // 임시저장이 아닌 게시물
             donationRepository.save(donation);
@@ -158,6 +158,8 @@ public class DonationController {
             donation.setMaxcnt(request.getMaxcnt());
             donation.setReceiver(request.getReceiver());
             donation.setAddress(request.getAddress());
+            donation.setContent(request.getContent());
+            donation.setImg(request.getImg());
             donation.setApproval(0); // 아직 승인되지 않은 게시물
             donation.setTemp(1); // 임시저장인 게시물
             donationRepository.save(donation);
