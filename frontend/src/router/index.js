@@ -69,7 +69,7 @@ const routes = [{
         component: noticeList
     },
     {
-        path: "/smileCreate",
+        path: "/smileCreate/:ID",
         name: "SmileCreate",
         component: SmileCreate
     },

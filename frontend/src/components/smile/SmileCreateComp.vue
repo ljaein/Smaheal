@@ -57,7 +57,7 @@
     </v-row>
 
     <v-row style="height:300px"></v-row>
-    {{ camOn }}
+
     <!-- 캡쳐 종류 선택 -->
     <v-row style="height:700px;" class="d-flex justify-content-center pt-15">
       <v-col cols="10">
@@ -174,11 +174,12 @@
                 <v-btn color="success" class="m-2 col-md-2 col-sm-4 col-10" @click="init(), (camOn = true)">start</v-btn>
                 <v-btn color="success" class="m-2 col-md-2 col-sm-4 col-10" @click="stop">stop</v-btn>
                 <v-btn color="success" class="m-2 col-md-2 col-sm-4 col-10" @click="capture">capture</v-btn>
-                <v-btn color="success" class="m-2 col-md-2 col-sm-4 col-10" @click="save">save</v-btn>
+                <v-btn color="success" class="m-2 col-md-2 col-sm-4 col-10" @click="check">check</v-btn>
               </v-row>
               <div class="container" style="height:250px;text-align:center">
                 <canvas height="200%" width="200%"></canvas>
                 <img id="myImage" />
+                {{selfieCapture}}
               </div>
               <!-- 사진 사용 여부 -->
               <v-row>
@@ -221,11 +222,17 @@
 
 <script>
 import http from '@/util/http-common.js';
+import { mapGetters, mapState } from 'vuex';
 
 export default {
-  created() {},
+  created() {
+    this.donationid = this.$route.params.ID;
+    this.uid = this.getUserID;
+  },
   data() {
     return {
+      donationid: 0,
+      uid: '',
       e1: 1,
       log: '',
       value: 0,
@@ -242,12 +249,20 @@ export default {
       commentRules:[
         v => v.length <= 20 || "ss"
       ],
+      selfieCapture:[]
     };
   },
   methods: {
-    save() {
+    check() {
       var myImage = document.querySelector('canvas').toDataURL();
-      console.log(myImage);
+      //btoa
+      http.post(`/smile/smileCheck`, myImage)
+      .then(res => {
+        this.selfieCapture = res.data;
+      })
+      .catch(err => {
+        console.log(err);
+      })
     },
     capture() {
       const picture = document.querySelector('canvas');
@@ -309,8 +324,32 @@ export default {
       }, 300);
     },
     donation() {
-      alert('기부 완료');
+      // alert('기부 완료');
+      if(this.selfieCapture[2] < 30) {
+        alert("웃음 지수가 너무 낮습니다.");
+      } else {
+        http.post("/smile/regist", {
+          user_id: this.uid,
+          donationid: this.donationid,
+          photo: this.selfieCapture[0],
+          smileper: this.selfieCapture[2],
+          comment: this.comment,
+          agreement: this.kingFlag ? 1 : 0,
+        })
+        .then(res => {
+          console.log(res.data)
+        })
+        .catch(err => {
+          console.log(err);
+        })
+      }
     },
+  },
+  computed: {
+    ...mapGetters(['getUserID']),
+    ...mapState({
+      userID: (state) => `${state.user.getUserID}`,
+    }),
   },
 };
 </script>
