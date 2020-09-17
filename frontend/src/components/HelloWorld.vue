@@ -5,7 +5,7 @@
         <v-row no-gutters>
           <v-img
             :min-height="'calc(100vh - ' + $vuetify.application.top + 'px)'"
-            src="https://images.unsplash.com/photo-1487017159836-4e23ece2e4cf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1951&q=80"
+            :src="require(`@/assets/main-smile.jpg`)"
           >
             <v-theme-provider dark>
               <v-container fill-height>
@@ -32,7 +32,7 @@
                       :class="[$vuetify.breakpoint.smAndDown ? 'display-3': 'display-4']"
                       class="font-weight-black"
                     >
-                      VUETIFY
+                      SMAHEAL
                     </span>
 
                   </v-col>
@@ -56,7 +56,7 @@
         <div class="py-12"></div>
 
         <v-container class="text-center">
-          <h2 class="display-2 font-weight-bold mb-3">ABOUT ME</h2>
+          <h2 class="display-2 font-weight-bold mb-3">ABOUT US</h2>
 
           <v-responsive
             class="mx-auto mb-8"
@@ -78,21 +78,10 @@
             class="elevation-12 mb-12"
             size="128"
           >
-            <v-img src="https://cdn.vuetifyjs.com/images/john.png"></v-img>
+            <v-img :src="require(`@/assets/smile-avatar.jpg`)"></v-img>
           </v-avatar>
 
           <div></div>
-
-          <v-btn
-            color="grey"
-            href="https://vuetifyjs.com"
-            outlined
-            large
-          >
-            <span class="grey--text text--darken-1 font-weight-bold">
-              Vuetify Documentation
-            </span>
-          </v-btn>
         </v-container>
 
         <div class="py-12"></div>
@@ -105,7 +94,7 @@
         <div class="py-12"></div>
 
         <v-container class="text-center">
-          <h2 class="display-2 font-weight-bold mb-3">VUETIFY FEATURES</h2>
+          <h2 class="display-2 font-weight-bold mb-3">SMAHEAL FEATURES</h2>
 
           <v-responsive
             class="mx-auto mb-12"
@@ -131,7 +120,7 @@
                 <v-theme-provider dark>
                   <div>
                     <v-avatar
-                      color="primary"
+                      color="amber accent-4"
                       size="88"
                     >
                       <v-icon
@@ -163,7 +152,7 @@
       <section id="stats">
         <v-parallax
           :height="$vuetify.breakpoint.smAndDown ? 700 : 500"
-          src="https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80"
+          :src="require(`@/assets/main-happy.jpg`)"
         >
           <v-container fill-height>
             <v-row class="mx-auto">
@@ -251,7 +240,7 @@
       >
         <div class="py-12"></div>
 
-        <v-container>
+        <!-- <v-container>
           <h2 class="display-2 font-weight-bold mb-3 text-uppercase text-center">Contact Me</h2>
 
           <v-responsive
@@ -310,7 +299,7 @@
               </v-col>
             </v-row>
           </v-theme-provider>
-        </v-container>
+        </v-container> -->
 
         <div class="py-12"></div>
       </v-sheet>
@@ -322,7 +311,7 @@
       height="100"
     >
       <div class="title font-weight-light grey--text text--lighten-1 text-center">
-        &copy; {{ (new Date()).getFullYear() }} — Vuetify, LLC — Made with 💜 by John Leider
+        &copy; {{ (new Date()).getFullYear() }} — SmaHeal — Made with 💜 by 미찾사
       </div>
     </v-footer>
   </v-container>
@@ -353,18 +342,18 @@ export default {
         features: [
           {
             icon: 'mdi-account-group-outline',
-            title: 'Vibrant Community',
-            text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto cupiditate sint possimus quidem atque harum excepturi nemo velit tempora! Enim inventore fuga, qui ipsum eveniet facilis obcaecati corrupti asperiores nam',
+            title: '사람들과 함께 웃음을 기부해요',
+            text: 'SMAHEAL에서는 다양한 사람들과 함께 웃음을 기부할 수 있습니다. 혼자만의 기부가 아닌 같이하는 기부를 SMAHEAL에서 직접 느낄 수 있습니다. 웃음을 기부하여 기쁨을 함께 느껴보세요 !',
           },
           {
-            icon: 'mdi-update',
-            title: 'Frequent Updates',
-            text: 'Sed ut elementum justo. Suspendisse non justo enim. Vestibulum cursus mauris dui, a luctus ex blandit. Lorem ipsum dolor sit amet consectetur adipisicing elit. qui ipsum eveniet facilis obcaecati corrupti consectetur adipisicing elit.',
+            icon: 'mdi-emoticon-excited-outline',
+            title: '즐기면서 기부해요',
+            text: '당신은 기부를 위한 형식적인 웃음을 지어도 되지 않습니다. SMAHEAL에서 행복하고 건강한 웃음을 기부할 수 있게 도와드립니다. 각종 미디어를 통해서 즐거움도 느끼고 웃음 기부도 실천해보세요 !',
           },
           {
-            icon: 'mdi-shield-outline',
-            title: 'Long-term Support',
-            text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto cupiditate sint possimus quidem atque harum excepturi nemo velit tempora! Enim inventore fuga, qui ipsum eveniet facilis obcaecati corrupti asperiores nam',
+            icon: 'mdi-monitor-dashboard',
+            title: '다양한 템플릿으로 웃음을 나눠요',
+            text: '웃음 기부를 신청한 당신은 템플릿이 적용된 기부를 받을 수 있습니다. SMAHEAL에서는 웃음 기부를 모아서 다양한 템플릿을 적용해 단체 혹은 개인에게 전달해드립니다. 지금 당장 신청해보세요 !',
           },
         ],
         stats: [

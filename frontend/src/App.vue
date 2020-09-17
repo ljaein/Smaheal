@@ -1,15 +1,15 @@
 <template>
   <v-app>
     <v-app-bar app color="white" height="100">
-      <v-avatar class="mr-3" color="grey lighten-5" size="70">
+      <!-- <v-avatar class="mr-3" color="grey lighten-5" size="70">
         <v-img
           contain
           max-height="70%"
           src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
         ></v-img>
-      </v-avatar>
+      </v-avatar> -->
 
-      <v-btn @click="goHome()" class="headline" text>SmaHeal</v-btn>
+      <v-btn @click="goHome()" class="headline" color="amber accent-4" text>SmaHeal</v-btn>
 
       <v-spacer></v-spacer>
 
@@ -108,7 +108,7 @@ export default {
       this.$router.push('/notice')
     },
     goHome() {
-      this.$router.push('/')
+      this.$router.push('/').catch(() => {})
     },
     goDonationList(){
       this.$router.push('/donationList')
