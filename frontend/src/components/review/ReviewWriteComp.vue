@@ -1,22 +1,21 @@
 <template>
   <div>
     <v-form>
-      <v-container>
-        <v-row>
+      <v-container fluid>
+        <v-row justify="space-around">
           <v-col cols="12" md="6">
             <v-text-field v-model="title" label="제목" required></v-text-field>
+            <input ref="imageInput" type="file" hidden @change="onChangeImages" />
+            <v-btn
+              class="mt-2"
+              style="font-family: 'Nanum Gothic';"
+              type="button"
+              @click="onClickImageUpload"
+              outlined
+            >이미지 업로드</v-btn>
           </v-col>
         </v-row>
-        <v-row>
-          <input ref="imageInput" type="file" hidden @change="onChangeImages" />
-          <v-btn
-            class="mt-2"
-            style="font-family: 'Nanum Gothic';"
-            type="button"
-            @click="onClickImageUpload"
-          >이미지 업로드</v-btn>
-        </v-row>
-        <v-row>
+        <v-row justify="space-around">
           <v-col cols="12" md="6">
             <v-textarea
               auto-grow
@@ -31,9 +30,11 @@
         </v-row>
       </v-container>
     </v-form>
-    <v-btn v-if="isModify" @click="updateReview">수정</v-btn>
-    <v-btn v-else @click="writeReview">등록</v-btn>
-    <v-btn @click="goBack">뒤로가기</v-btn>
+    <div style="text-align:center;">
+      <v-btn v-if="isModify" @click="updateReview" outlined>수정</v-btn>
+      <v-btn v-else @click="writeReview" outlined>등록</v-btn>
+      <v-btn @click="goBack" outlined>뒤로가기</v-btn>
+    </div>
   </div>
 </template>
 
@@ -88,7 +89,7 @@ export default {
           img: data
         })
         .then(({ data }) => {
-            console.log(data);
+          console.log(data);
           if (data == "success") {
             alert("성공적으로 등록 되었습니다.");
             this.$router.push(`/reviewList`);
@@ -99,7 +100,7 @@ export default {
         });
     },
     writeReview() {
-      if (this.fileInfo != null) {
+      if (this.fileInfo != "") {
         var formData = new FormData();
         formData.append("img", this.fileInfo);
         http3
@@ -144,7 +145,7 @@ export default {
         });
     },
     updateReview() {
-      if (this.fileInfo != null) {
+      if (this.fileInfo != "") {
         var formData = new FormData();
         formData.append("img", this.fileInfo);
         http3
@@ -175,52 +176,6 @@ export default {
     },
     onClickImageUpload() {
       this.$refs.imageInput.click();
-    },
-
-    modifyHandler: function() {
-      if (this.fileInfo != null) {
-        var formData = new FormData();
-        formData.append("img", this.fileInfo);
-        http3
-          .post(`/user/img`, formData)
-          .then(({ data }) => {
-            http
-              .put(`/users/${this.getUserNum}`, {
-                name: this.name,
-                nickname: this.nickName,
-                intro: this.intro,
-                imagesrc: data
-              })
-              .then(({ data1 }) => {
-                let msg = "수정 처리시 문제가 발생했습니다.";
-                if (data1 === "success") {
-                  msg = "수정이 완료되었습니다.";
-                  this.$router.go();
-                }
-                this.alertMsg = msg;
-                this.alert = true;
-              })
-              .catch(e => {
-                if (e.request.status === 404) {
-                  this.alertMsg = "탈퇴 처리시 에러가 발생했습니다.";
-                  this.alert = true;
-                } else {
-                  this.$emit("closeLoginModal");
-                  this.$router.push(`/apierror/${e.request.status}/`);
-                }
-                console.log(e.request.status);
-              });
-          })
-          .catch(e => {
-            if (e.request.status === 404) {
-              this.alertMsg = "등록 처리시 에러가 발생했습니다.";
-              this.alert = true;
-            } else {
-              this.$router.push(`/apierror/${e.request.status}/`);
-            }
-            console.log(e.request.status);
-          });
-      }
     }
   }
 };

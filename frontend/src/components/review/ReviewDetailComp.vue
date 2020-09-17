@@ -1,22 +1,28 @@
 <template>
   <div>
-    <div>
-      <br />
-      <h1 class="text-center">{{title}}</h1>
-      <div style="width:100%; text-align:right;">
-        <h4 style="display: inline-block;  cursor:pointer">by {{nickName}}</h4>
-      </div>
-      <p class="text-right" style="color:gray">{{getFormatDate(createdAt)}}</p>
-    </div>
-    <div align="center">
-      <v-img :src="`${publicPath}reviewImage/${img}`" width="50%"></v-img>
-      <td class="text-center">{{ content }}</td>
-    </div>
-    <p>
-      <v-btn @click="upLike">{{ likeCnt }} likes</v-btn>
-      {{ visit }} views
-    </p>
-    <p></p>
+    <v-container fluid>
+      <v-row justify="space-around">
+        <v-col cols="12" md="8">
+          <br />
+          <h1 class="text-center">{{title}}</h1>
+          <div style="width:100%; text-align:right;">
+            <h4 style="display: inline-block;  cursor:pointer">by {{nickName}}</h4>
+          </div>
+          <p class="text-right" style="color:gray">{{ visit }} views · {{getFormatDate(createdAt)}}</p>
+        </v-col>
+      </v-row>
+      <v-row justify="space-around">
+        <v-col cols="12" md="8">
+          <v-img :src="`${publicPath}reviewImage/${img}`" width="100%"></v-img>
+          <v-textarea auto-grow v-model="content" readonly solo flat></v-textarea>
+        </v-col>
+      </v-row>
+      <v-row justify="space-around">
+        <v-col cols="12" md="8">
+          <v-btn @click="upLike" outlined>{{ likeCnt }} likes</v-btn>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 

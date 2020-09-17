@@ -98,7 +98,7 @@ export default {
       this.$router.push("/donationDetail").catch(() => {});
     },
     goLogin() {
-      this.$router.push('/login'); 
+      this.$router.push('/login').catch(() => {}); 
     },
     goNotice() {
       this.$router.push('/notice')
@@ -116,7 +116,7 @@ export default {
       this.$router.push("/");
     },
     goReviewList() {
-      this.$router.push('/reviewList'); 
+      this.$router.push('/reviewList').catch(() => {}); 
     },
   },
   computed: {

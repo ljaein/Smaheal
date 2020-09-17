@@ -10,13 +10,12 @@
       :visit="item.visit"
       :createdAt="item.createdAt"
     />
-    <div v-if="isWriter" style="width:100%; text-align:right;">
-      <v-btn @click="moveModify">수정</v-btn>
-      <v-btn @click="deleteReview">삭제</v-btn>
+    <div v-if="isWriter" style="width:100%; text-align:center;">
+      <v-btn @click="moveModify" outlined>수정</v-btn>
+      <v-btn @click="deleteReview" outlined>삭제</v-btn>
+      <v-btn @click="goBack" outlined>뒤로가기</v-btn>
     </div>
-    <div style="width:100%; text-align:right;">
-    <v-btn @click="goBack">뒤로가기</v-btn>
-    </div>
+    <br>
   </div>
 </template>
 
@@ -41,10 +40,10 @@ export default {
       .get(`/review/get/${this.$route.params.num}`)
       .then(({ data }) => {
         this.item = data;
-        this.item.visit += 1;
         if (this.getProfile == this.item.nickName) {
           this.isWriter = true;
         } else {
+          this.item.visit += 1;
           http
             .put(`/review/update/${this.$route.params.num}`, {
               num: this.item.num,

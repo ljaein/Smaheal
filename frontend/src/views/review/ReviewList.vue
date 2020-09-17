@@ -2,7 +2,7 @@
   <div>
     <br />
     <h1 align="center">후기 게시판</h1>
-    <v-container fluid v-if="items.length != 0">
+    <v-container fluid>
       <v-row>
         <v-col cols="12">
           <v-row align="stretch" justify="space-around">
@@ -23,7 +23,10 @@
       </v-row>
     </v-container>
     <v-pagination v-model="page" :length="length" :page="page" :total-visible="totalVisible"></v-pagination>
-    <v-btn v-if="getProfile" @click="goReviewWrite">후기 등록</v-btn>
+    <div style="text-align:center;">
+      <v-btn v-if="getProfile" @click="goReviewWrite" outlined>후기 등록</v-btn>
+    </div>
+    <br>
   </div>
 </template>
 
@@ -38,7 +41,7 @@ export default {
     return {
       items: [],
       page: 1,
-      length: 10,
+      length: 0,
       totalVisible: 10
     };
   },
@@ -47,7 +50,7 @@ export default {
   },
   created() {
     http
-      .get(`/review/getList/1`)
+      .get(`/review/getList/0`)
       .then(({ data }) => {
         this.items = data;
       })
@@ -57,7 +60,11 @@ export default {
     http
       .get(`/review/getListCnt`)
       .then(({ data }) => {
-        this.length = data/8 + 1;
+        if (data % 8 == 0) {
+          this.length = Math.floor(data / 8);
+        } else {
+          this.length = Math.floor(data / 8) + 1;
+        }
       })
       .catch(err => {
         console.log(err);
