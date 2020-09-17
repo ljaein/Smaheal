@@ -4,7 +4,7 @@
     :propItems="items"
     :propCount="totalCnt"
     :propKeyword="keyword"
-    v-if="items.length !== 0"
+    v-if="items.length !== 0 && totalCnt !== 0"
     />
   </div>
 </template>
@@ -34,8 +34,8 @@ export default {
       this.items = data;
 
       http.get(`/notice/search/getCount/${this.keyword}`)
-      .then(({count}) => {
-        this.totalCnt = count;
+      .then(({data}) => {
+        this.totalCnt = data;
       })
     })
   }

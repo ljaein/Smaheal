@@ -26,8 +26,8 @@ public interface NoticeRepository extends JpaRepository<Notices, Long> {
     @Modifying
     void deleteByNoticeid(Long noticeid);
     
-    @Query(nativeQuery = true, value = "select * from notices where title like '%:title%' order by noticeid desc limit :limit, 6")
-    List<Notices> findByTitleContainingOrderByNoticeidDesc(String title, @Param("limit") int limit);
+    @Query(nativeQuery = true, value = "select * from notices where title like %:title% order by noticeid desc limit :limit, 6")
+    List<Notices> findByTitleContainingOrderByNoticeidDesc(@Param("title") String title, @Param("limit") int limit);
     
     long countFindByTitleContainingOrderByNoticeidDesc(String title);
 }
