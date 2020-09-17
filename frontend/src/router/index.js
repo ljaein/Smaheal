@@ -18,6 +18,7 @@ import DonationRequestCreate from "../views/donation/DonationRequestCreate.vue"
 import imageTest from "../views/donation/imagetest.vue"
 import noticeSearch from "../views/notice/noticeSearch.vue"
 import noticeModify from "../views/notice/noticeModify.vue"
+import signUp from "@/components/account/SignUp.vue"
 
 Vue.use(VueRouter);
 
@@ -114,6 +115,12 @@ const routes = [{
         path: "/notice/modify/:noticeid",
         name: "noticeModify",
         component: noticeModify
+    },
+
+    {
+        path: "/signup",
+        name: "signUp",
+        component: signUp,
     },
 ];
 
