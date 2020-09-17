@@ -2,6 +2,8 @@
   <div>
     <noticeSearchComp
     :propItems="items"
+    :propCount="totalCnt"
+    :propKeyword="keyword"
     v-if="items.length !== 0"
     />
   </div>
@@ -20,15 +22,21 @@ export default {
     return {
         keyword: "",
         items: [],
+        totalCnt: 0,
     }
   },
   created() {
     this.keyword = this.$route.query.title;
 
     http
-    .get(`/notice/search/${this.keyword}`)
+    .get(`/notice/search/${this.keyword}/0`)
     .then(({data}) => {
-    this.items = data;
+      this.items = data;
+
+      http.get(`/notice/search/getCount/${this.keyword}`)
+      .then(({count}) => {
+        this.totalCnt = count;
+      })
     })
   }
 };

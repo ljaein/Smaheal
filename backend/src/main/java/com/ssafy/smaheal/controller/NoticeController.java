@@ -78,13 +78,20 @@ public class NoticeController {
 		return ResponseEntity.ok(SUCCESS);
 	}
 	
-	@GetMapping("/search/{title}")
+	@GetMapping("/search/{title}/{limit}")
 	public List<Notices> noticeSearch(@PathVariable(value = "title")
-	String title) {
+	String title, @PathVariable(value = "limit") int limit) {
 		
-		List<Notices> searchNotice = noticeRepository.findByTitleContainingOrderByNoticeidDesc(title);
+		List<Notices> searchNotice = noticeRepository.findByTitleContainingOrderByNoticeidDesc(title, limit);
 		
 		return searchNotice;
+	}
+	
+	@GetMapping("/search/getCount/{title}")
+	public long searchTotalCount(@PathVariable(value = "title") String title) {
+		
+		return noticeRepository.countFindByTitleContainingOrderByNoticeidDesc(title);
+		
 	}
 	
 }
