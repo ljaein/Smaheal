@@ -325,7 +325,10 @@ export default {
     },
     goDonation() {
       if(this.uid != '') {
-        this.$router.push('/smileCreate');
+        this.$router.push({
+          name: "SmileCreate",
+          params: { ID: this.donationid }
+        });
       } else {
         this.alertFlag = true;
       }
