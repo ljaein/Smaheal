@@ -1,36 +1,40 @@
 <template>
   <v-container fluid class="mt-5 pl-15 pr-15">
     <!-- 카테고리 -->
-    <v-toolbar color dark flat prominent>
-      <v-row class="d-flex align-items-center mt-5">
-        <v-col cols="3"></v-col>
-        <v-col cols="6" class="d-flex justify-content-center">
-          <v-text-field
-            flat
-            hide-details
-            label="Search"
-            prepend-inner-icon="mdi-magnify"
-            solo-inverted
-          ></v-text-field>
+    <v-card color="basil">
+      <v-card-title class="text-center justify-center py-6">
+        <v-col cols="12" class="d-flex justify-content-end">
+            <v-btn
+              cols="3"
+              @click="goCreate()"
+              class="mr-2"
+              style="background-color:#356859; color:white; font-weight:bold;"
+            >등록 요청</v-btn>
         </v-col>
-        <v-col cols="3" class="d-flex justify-content-end">
-          <v-btn @click="goCreate()" class="mr-2">게시물 작성</v-btn>
+        <v-col cols="12" class="d-flex justify-content-center align-items-center p-0">
+          <v-col cols="6" class="pt-0">
+            <v-text-field
+              flat
+              hide-details
+              label="Search"
+              prepend-inner-icon="mdi-magnify"
+              solo-inverted
+            ></v-text-field>
+          </v-col>
         </v-col>
-      </v-row>
-
-      <template v-slot:extension>
-        <v-tabs v-model="tab" icons-and-text centered hover:false>
-          <v-tabs-slider></v-tabs-slider>
-          <v-tab href="#tab-1" @click="infiniteId+=1">전체</v-tab>
-          <v-tab href="#tab-2" @click="infiniteId+=1">아동/청소년</v-tab>
-          <v-tab href="#tab-3" @click="infiniteId+=1">어르신</v-tab>
-          <v-tab href="#tab-4" @click="infiniteId+=1">장애인</v-tab>
-          <v-tab href="#tab-5" @click="infiniteId+=1">가족/여성</v-tab>
-          <v-tab href="#tab-6" @click="infiniteId+=1">다문화</v-tab>
-          <v-tab href="#tab-7" @click="infiniteId+=1">기타</v-tab>
-        </v-tabs>
-      </template>
-    </v-toolbar>
+        <!-- <h1 class="font-weight-bold display-3 basil--text">BASiL</h1> -->
+      </v-card-title>
+      <v-tabs v-model="tab" background-color="transparent" color="basil" class="basil--text" grow>
+        <!-- <v-tabs-slider></v-tabs-slider> -->
+        <v-tab href="#tab-1" @click="infiniteId+=1" class="tab-text basil--text">all</v-tab>
+        <v-tab href="#tab-2" @click="infiniteId+=1" class="tab-text">아동/청소년</v-tab>
+        <v-tab href="#tab-3" @click="infiniteId+=1" class="tab-text">어르신</v-tab>
+        <v-tab href="#tab-4" @click="infiniteId+=1" class="tab-text">장애인</v-tab>
+        <v-tab href="#tab-5" @click="infiniteId+=1" class="tab-text">가족/여성</v-tab>
+        <v-tab href="#tab-6" @click="infiniteId+=1" class="tab-text">다문화</v-tab>
+        <v-tab href="#tab-7" @click="infiniteId+=1" class="tab-text">기타</v-tab>
+      </v-tabs>
+    </v-card>
 
     <v-tabs-items v-model="tab">
       <v-tab-item class="row justify-content-left p-3" value="tab-1">
@@ -352,42 +356,42 @@ export default {
                   if (this.all.length / 8 < 1) {
                     $state.complete();
                   }
-                }else if (curTab == 1) {
+                } else if (curTab == 1) {
                   this.child = this.child.concat(res.data);
                   $state.loaded();
                   this.page[curTab] += 1;
                   if (this.child.length / 8 < 1) {
                     $state.complete();
                   }
-                }else if (curTab == 2) {
+                } else if (curTab == 2) {
                   this.old = this.old.concat(res.data);
                   $state.loaded();
                   this.page[curTab] += 1;
                   if (this.old.length / 8 < 1) {
                     $state.complete();
                   }
-                }else if (curTab == 3) {
+                } else if (curTab == 3) {
                   this.disabled = this.disabled.concat(res.data);
                   $state.loaded();
                   this.page[curTab] += 1;
                   if (this.disabled.length / 8 < 1) {
                     $state.complete();
                   }
-                }else if (curTab == 4) {
+                } else if (curTab == 4) {
                   this.woman = this.woman.concat(res.data);
                   $state.loaded();
                   this.page[curTab] += 1;
                   if (this.woman.length / 8 < 1) {
                     $state.complete();
                   }
-                }else if (curTab == 5) {
+                } else if (curTab == 5) {
                   this.multi = this.multi.concat(res.data);
                   $state.loaded();
                   this.page[curTab] += 1;
                   if (this.multi.length / 8 < 1) {
                     $state.complete();
                   }
-                }else {
+                } else {
                   this.others = this.others.concat(res.data);
                   $state.loaded();
                   this.page[curTab] += 1;
@@ -451,5 +455,15 @@ export default {
   text-overflow: ellipsis;
   overflow: hidden;
   line-height: 1.8rem;
+}
+.basil {
+  background-color: #fffbe6 !important;
+}
+.basil--text {
+  color: #356859 !important;
+}
+.tab-text {
+  font-weight: bold;
+  text-decoration: none;
 }
 </style>

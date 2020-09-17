@@ -13,33 +13,32 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn @click="goDonationBoardDetail()" text>
+      <!-- <v-btn @click="goDonationBoardDetail()" text>
         <span class="mr-2">ai_video test</span>
+      </v-btn> -->
+
+      <v-btn @click="goDonationList()" text>
+        <span class="mr-2 font-weight-bold">기부 게시판</span>
+      </v-btn>
+
+      <v-btn @click="goReviewList()" text>
+        <span class="mr-2 font-weight-bold">후기 게시판</span>
       </v-btn>
 
       <v-btn @click="goNotice()" text>
-        <span class="mr-2">공지사항</span>
-      </v-btn>
-      
-
-      <v-btn @click="goDonationList()" text>
-        <span class="mr-2">기부 게시판</span>
-      </v-btn>
-
-      <v-btn text>
-        <span class="mr-2" @click="goReviewList">후기 게시판</span>
+        <span class="mr-2 font-weight-bold">공지사항</span>
       </v-btn>
 
       <v-btn v-if="getProfile" @click="goMyPage" text>
-        <span class="mr-2">my page</span>
+        <span class="mr-2 font-weight-bold">MYPAGE</span>
       </v-btn>
 
       <v-btn v-if="getProfile" @click="logout" text>
-        <span class="mr-2">LogOut</span>
+        <span class="mr-2 font-weight-bold">LOGOUT</span>
       </v-btn>
 
       <v-btn v-else @click="goLogin" text>
-        <span class="mr-2">Login</span>
+        <span class="mr-2 font-weight-bold">LOGIN</span>
       </v-btn>
     </v-app-bar>
 
@@ -157,3 +156,9 @@ export default {
   }
 };
 </script>
+<style>
+#app{
+  font-family: 'Nanum Gothic', sans-serif;
+  font-weight:bold;
+}
+</style>

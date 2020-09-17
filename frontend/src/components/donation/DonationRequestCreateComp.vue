@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="mt-5 px-0 col-md-10">
+  <v-container fluid class="pt-5 px-0 col-md-10" style="background-color:#fffbe6;">
     <v-row class="d-flex justify-content-center">
       <v-col cols="5" class="mr-2">
         <v-carousel style="width:30rem;height:23rem;">
@@ -9,26 +9,24 @@
         </v-carousel>
       </v-col>
       <v-col cols="5">
-        <label>
-          <v-icon>mdi-camera</v-icon>이미지
-        </label>
+        이미지
         <v-file-input
           ref="file"
           accept="image/png, image/jpeg, image/bmp"
           v-model="inputFiles"
-          color="deep-purple accent-4"
+          color="#356859"
           counter
           multiple
           prepend-icon
           outlined
         >
           <template v-slot:selection="{ text }">
-            <v-chip color="deep-purple accent-4" dark label small>{{ text }}</v-chip>
+            <v-chip color="#356859" dark label small>{{ text }}</v-chip>
             <!-- 파일 개수 제한 추가 구현하기 -->
           </template>
         </v-file-input>
         <!-- 제목 -->
-        <v-icon>mdi-format-title</v-icon>제목
+        제목
         <v-text-field
           v-model="DonationCreate.title"
           outlined
@@ -39,7 +37,7 @@
         <v-col class="d-flex justify-content-between p-0">
           <!-- 카테고리 -->
           <v-col class="p-0 mr-3">
-            <v-icon>mdi-format-list-bulleted-type</v-icon>카테고리
+            카테고리
             <v-select
               v-model="DonationCreate.category"
               :items="items"
@@ -51,7 +49,7 @@
           </v-col>
           <!-- 기부 대상 -->
           <v-col class="p-0">
-            <v-icon>mdi-human-male-female</v-icon>기부대상
+            기부대상
             <v-text-field
               v-model="DonationCreate.receiver"
               outlined
@@ -65,7 +63,7 @@
         <v-col class="d-flex justify-content-between p-0">
           <!-- 마감일 -->
           <v-col class="p-0 mr-3">
-            <v-icon>mdi-calendar-clock</v-icon>마감일
+            마감일
             <v-menu
               v-model="menu2"
               :close-on-content-click="false"
@@ -90,7 +88,7 @@
           </v-col>
           <!--마감개수-->
           <v-col class="p-0">
-            <v-icon>mdi-emoticon-happy-outline</v-icon>마감개수
+            마감개수
             <v-col class="d-flex p-0">
               <v-btn icon color="lightgray">
                 <v-icon>mdi-arrow-up-drop-circle</v-icon>
@@ -114,18 +112,27 @@
     <v-row class="d-flex justify-content-center p-0">
       <!-- 대상 주소 -->
       <v-col cols="10" class="pt-0 pb-0">
-        <v-icon>mdi-home-city</v-icon>주소
+        주소
         <v-col class="d-flex justify-content-between p-0 align-items-top">
-          <v-btn class="mr-2" @click="searchAddr" depressed>우편번호 찾기</v-btn>
           <v-text-field v-model="addr" outlined dense class="mr-2"></v-text-field>
-          <v-text-field v-model="addrDetail" label="상세주소" outlined dense></v-text-field>
+          <v-text-field v-model="addrDetail" label="상세주소" outlined dense class="mr-2"></v-text-field>
+          <v-btn
+            @click="searchAddr()"
+            outlined
+            style="border:2px solid lightgray; font-weight:bold; margin-top:2px; border-radius:15px;"
+          >우편번호 찾기</v-btn>
         </v-col>
+      </v-col>
+    </v-row>
+    <v-row class="d-flex justify-content-center p-0">
+      <v-col cols="10" class="p-0">
+        <hr />
       </v-col>
     </v-row>
     <!-- 상세내용 -->
     <v-row class="d-flex justify-content-center">
       <v-col cols="10" class="pt-0 pb-0">
-        <v-icon>mdi-note-outline</v-icon>상세내용
+        <span>상세내용</span>
         <v-textarea
           v-model="DonationCreate.content"
           auto-grow
@@ -136,8 +143,8 @@
       </v-col>
     </v-row>
     <v-row cols="8" class="d-flex justify-content-center">
-      <v-btn @click="saveDonation()" depressed class="mr-3">임시저장</v-btn>
-      <v-btn @click="registDonation()" depressed>등록</v-btn>
+      <v-btn @click="saveDonation()" class="green-mbtn mr-3">임시저장</v-btn>
+      <v-btn @click="registDonation()" class="green-mbtn">등록</v-btn>
     </v-row>
   </v-container>
 </template>
@@ -265,3 +272,10 @@ export default {
   }
 };
 </script>
+<style>
+.green-mbtn {
+  background-color: #356859 !important;
+  color: white !important;
+  font-weight: bold !important;
+}
+</style>
