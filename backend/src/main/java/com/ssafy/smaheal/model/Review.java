@@ -1,5 +1,7 @@
 package com.ssafy.smaheal.model;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,7 +12,7 @@ import com.ssafy.smaheal.model.audit.DateAudit;
 
 @Entity
 @Table(name = "review")
-public class Review extends DateAudit{
+public class Review {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,12 +23,14 @@ public class Review extends DateAudit{
 	private String img;
 	private Long likeCnt;
 	private Long visit;
+	private Date CreatedAt;
 
 	public Review() {
 		super();
 	}
 
-	public Review(Long num, String nickName, String title, String content, String img, Long likeCnt, Long visit) {
+	public Review(Long num, String nickName, String title, String content, String img, Long likeCnt, Long visit,
+			Date createdAt) {
 		super();
 		this.num = num;
 		this.nickName = nickName;
@@ -35,6 +39,7 @@ public class Review extends DateAudit{
 		this.img = img;
 		this.likeCnt = likeCnt;
 		this.visit = visit;
+		CreatedAt = createdAt;
 	}
 
 	public Long getNum() {
@@ -93,10 +98,18 @@ public class Review extends DateAudit{
 		this.visit = visit;
 	}
 
+	public Date getCreatedAt() {
+		return CreatedAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		CreatedAt = createdAt;
+	}
+
 	@Override
 	public String toString() {
 		return "Review [num=" + num + ", nickName=" + nickName + ", title=" + title + ", content=" + content + ", img="
-				+ img + ", likeCnt=" + likeCnt + ", visit=" + visit + "]";
+				+ img + ", likeCnt=" + likeCnt + ", visit=" + visit + ", CreatedAt=" + CreatedAt + "]";
 	}
 
 }

@@ -6,6 +6,8 @@ import DonationList from "../views/donation/DonationList.vue"
 import Login from "../views/account/Login.vue";
 import ReviewDetail from "../views/review/ReviewDetail.vue";
 import ReviewList from "../views/review/ReviewList.vue";
+import ReviewWrite from "../views/review/ReviewWrite.vue";
+import ReviewModify from "../views/review/ReviewModify.vue";
 import noticeList from "../views/notice/noticeList.vue"
 import noticeWrite from "../views/notice/noticeWrite.vue"
 import noticeDetail from "../views/notice/noticeDetail.vue"
@@ -62,6 +64,16 @@ const routes = [{
         path: "/reviewList",
         name: "ReviewList",
         component: ReviewList
+    },
+    {
+        path: "/reviewWrite",
+        name: "ReviewWrite",
+        component: ReviewWrite
+    },
+    {
+        path: "/reviewModify/:num",
+        name: "ReviewModify",
+        component: ReviewModify
     },
     {
         path: "/notice",

@@ -88,18 +88,8 @@ export default {
             response.data.success == true ||
             response.data.success == "true"
           ) {
-            this.alertMsg =
-              "성공적으로 가입 하였습니다. 이메일인증을 해주세요.";
-            this.alert = true;
-            this.visablelogin = true;
-            this.submitted = true;
-            this.newCustomer();
-            this.$router.push("/emailauth");
-          } else {
-            this.alertMsg = response.data.message;
-            this.alert = true;
-            this.visablelogin = false;
-            this.submitted = false;
+            alert("성공적으로 가입 하였습니다.");
+            this.$router.push("/");
           }
         })
         .catch(e => {
