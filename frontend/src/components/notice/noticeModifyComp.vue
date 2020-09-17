@@ -1,13 +1,13 @@
 <template>
   <v-container class="pa-0">
-    <v-sheet class="pa-6 mt-4 mb-5" dark>
-      <v-icon class="mr-2">mdi-clipboard-edit-outline</v-icon>
+    <v-sheet class="pa-6 mt-4" color="#fffbe6">
+      <v-icon class="mr-2" color="#356859">mdi-clipboard-edit-outline</v-icon>
       공지사항 수정페이지
     </v-sheet>
-    <v-sheet dark class="pa-5 mb-5">
+    <v-sheet color="#fffbe6" class="pa-5 mb-5">
         <v-text-field
         placeholder="제목을 입력하세요."
-        color="white"
+        color="#356859"
         v-model="title"
         ref="title"
         class="headline"
@@ -18,7 +18,7 @@
         />
         <v-textarea
         placeholder="공지사항 내용을 입력하세요."
-        color="white"
+        color="#356859"
         v-model="content"
         ref="content"
         outlined
@@ -30,15 +30,15 @@
     </v-sheet>
     <v-row>
         <v-col>
-            <v-btn @click="noticeTempRegist()" outlined>
+            <v-btn @click="noticeTempRegist()" color="#356859" dark>
                 임시저장
             </v-btn>
         </v-col>
         <v-col class="text-right">
-            <v-btn class="mr-5" @click="goBack()" outlined>
+            <v-btn class="mr-5" @click="goBack()" color="#356859" dark>
                 취소
             </v-btn>
-            <v-btn @click="noticeModify()" outlined>
+            <v-btn @click="noticeModify()" color="#356859" dark>
                 수정
             </v-btn>
         </v-col>
