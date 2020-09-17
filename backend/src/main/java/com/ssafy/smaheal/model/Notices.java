@@ -27,14 +27,14 @@ public class Notices extends DateAudit {
 
 
 	@NotBlank
-    @Size(max = 50)
+    @Size(max = 1000)
     private String content;
     
 	public Notices() {
 		
 	}
 	
-	public Notices(Long noticeid, @NotBlank @Size(max = 50) String title, @NotBlank @Size(max = 50) String content) {
+	public Notices(Long noticeid, @NotBlank @Size(max = 50) String title, @NotBlank @Size(max = 1000) String content) {
 		super();
 		this.noticeid = noticeid;
 		this.title = title;

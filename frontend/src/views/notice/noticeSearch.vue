@@ -1,6 +1,6 @@
 <template>
   <div>
-    <noticeListComp
+    <noticeSearchComp
     :propItems="items"
     v-if="items.length !== 0"
     />
@@ -8,24 +8,27 @@
 </template>
 
 <script>
-import noticeListComp from "@/components/notice/noticeListComp.vue";
+import noticeSearchComp from "@/components/notice/noticeSearchComp.vue";
 import http from "@/util/http-common.js";
 
 export default {
-  name: "noticeList",
+  name: "noticeSearch",
   components: {
-    noticeListComp
+    noticeSearchComp
   },
   data: function() {
     return {
-      items: [],
+        keyword: "",
+        items: [],
     }
   },
   created() {
+    this.keyword = this.$route.query.title;
+
     http
-    .get('/notice/findAll')
+    .get(`/notice/search/${this.keyword}`)
     .then(({data}) => {
-      this.items = data;
+    this.items = data;
     })
   }
 };
