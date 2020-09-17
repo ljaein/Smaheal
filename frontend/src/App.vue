@@ -24,6 +24,7 @@
       <v-btn @click="goNotice()" text>
         <span class="mr-2">공지사항</span>
       </v-btn>
+      
 
       <v-btn @click="goDonationList()" text>
         <span class="mr-2">기부 게시판</span>

@@ -10,6 +10,7 @@ import noticeList from "../views/notice/noticeList.vue"
 import noticeWrite from "../views/notice/noticeWrite.vue"
 import noticeDetail from "../views/notice/noticeDetail.vue"
 import DonationRequestDetail from "../views/donation/DonationRequestDetail.vue"
+import SmileCreate from "../views/smile/SmileCreate.vue"
 import DonationRequestCreate from "../views/donation/DonationRequestCreate.vue"
 import imageTest from "../views/donation/imagetest.vue"
 import noticeSearch from "../views/notice/noticeSearch.vue"
@@ -67,7 +68,11 @@ const routes = [{
         name: "noticeList",
         component: noticeList
     },
-
+    {
+        path: "/smileCreate",
+        name: "SmileCreate",
+        component: SmileCreate
+    },
     {
         path: "/notice/write",
         name: "noticeWrite",
