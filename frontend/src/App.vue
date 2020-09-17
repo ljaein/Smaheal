@@ -105,7 +105,7 @@ export default {
       this.$router.push('/login'); 
     },
     goNotice() {
-      this.$router.push('/notice')
+      this.$router.push('/notice').catch(() => {})
     },
     goHome() {
       this.$router.push('/')

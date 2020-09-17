@@ -60,7 +60,7 @@
             </v-btn>
         </v-col>
       <v-col class="text-right">
-        <v-btn @click="goNoticeRegist()" outlined>
+        <v-btn @click="goNoticeRegist()" outlined v-if="getUserID == 'admin'">
         글 작성하기
       </v-btn>
       </v-col>
@@ -70,6 +70,7 @@
 
 <script>
 import moment from "moment";
+import { mapGetters, mapState } from "vuex";
 
 export default {
   name: "noticeSearchComp",
@@ -96,8 +97,27 @@ export default {
         return moment(new Date(regtime)).format("YYYY년 MM월 DD일");
       },
       goBack: function() {
-          this.$router.push('/notice')
+          this.$router.push('/notice').catch(() => {})
       }
+  },
+  computed: {
+    ...mapGetters([
+      "isAuthenticated",
+      "isProfileLoaded",
+      "getProfile",
+      "getRealName",
+      "getUserNum",
+      "getUserID",
+      "getUserBirth",
+    ]),
+    ...mapState({
+      authLoading: state => state.auth.status === "loading",
+      uname: state => `${state.user.getProfile}`,
+      userNum: state => `${state.user.getUserNum}`,
+      userName: state => `${state.user.getRealName}`,
+      userID: state => `${state.user.getUserID}`,
+      userBirth: state => `${state.user.getUserBirth}`,
+    }),
   },
 };
 </script>

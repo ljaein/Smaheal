@@ -116,7 +116,7 @@ export default {
 
       },
       goBack: function() {
-          this.$router.push('/notice')
+          this.$router.push('/notice').catch(() => {})
       },
       cancelRegist: function() {
           this.regist = false
