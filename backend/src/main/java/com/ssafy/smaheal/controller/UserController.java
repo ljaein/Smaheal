@@ -19,7 +19,9 @@ import com.ssafy.smaheal.exception.ResourceNotFoundException;
 import com.ssafy.smaheal.help.UserIdentityAvailability;
 import com.ssafy.smaheal.help.UserProfile;
 import com.ssafy.smaheal.model.MemberUser;
+import com.ssafy.smaheal.model.UserRoles;
 import com.ssafy.smaheal.repository.UserRepository;
+import com.ssafy.smaheal.repository.UserRolesRepository;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -28,6 +30,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private UserRolesRepository userRolesRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -61,8 +66,9 @@ public class UserController {
         try {
         	user = userRepository.findByNum(num)
         			.orElseThrow(() -> new ResourceNotFoundException("User", "num", num));
-        	user.setUserId(memberUser.getUserId());
+        	user.setName(memberUser.getName());
         	user.setNickName(memberUser.getNickName());
+        	user.setBirth(memberUser.getBirth());
         } catch (Exception e) {
         	return null;
         }
@@ -73,8 +79,9 @@ public class UserController {
     
     @DeleteMapping("/delete/{num}")
     public ResponseEntity<?> deleteUser(@PathVariable("num") Long num) {
+    	UserRoles userRoles = userRolesRepository.findByUserNum(num);
+    	userRolesRepository.delete(userRoles);
       try {
-
     	  MemberUser user = userRepository.findByNum(num)
         			.orElseThrow(() -> new ResourceNotFoundException("User", "num", num));
     	  userRepository.delete(user);
