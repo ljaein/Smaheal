@@ -11,8 +11,8 @@
       <div class="text-right pb-5">
         {{getFormatDate(this.item.createdAt)}}
       </div>
-      <v-textarea readonly outlined
-      :label="this.item.content">
+      <v-textarea readonly auto-grow solo flat
+      :value="this.item.content">
       </v-textarea>
     </v-sheet>
     <v-row>
