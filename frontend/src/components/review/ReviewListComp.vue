@@ -1,11 +1,13 @@
 <template>
   <div>
-    <v-card width="310px" style="background: white;">
-      <v-img @click="goDetail" :src="`${publicPath}reviewImage/${img}`"></v-img>
+    <v-card max-width="400px" style="overflow:hidden;">
+      <div style="height:200px;width:100%;">
+      <img @click="goDetail" class="review-img" :src="`${publicPath}reviewImage/${img}`">
+      </div>
     </v-card>
     <div class="aInfo">
-      <strong @click="goDetail">{{title}}</strong>
-      <p>{{visit}} views · {{setTime()}}</p>
+      <div class="review-title" @click="goDetail">{{title}}</div>
+      <p class="m-0">{{visit}} views · {{setTime()}}</p>
     </div>
   </div>
 </template>
@@ -74,4 +76,23 @@ export default {
 </script>
 
 <style>
+.review-img{
+  height: 200px !important;
+  width: 100% !important;
+  /* object-fit: cover; */
+  transform: scale(1);
+  transition: all 0.3s ease-in-out;
+}
+.review-img:hover {
+  transform: scale(1.1);
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+.review-title{
+  cursor: pointer;
+  height: 50px;
+  align-items: baseline;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 </style>
