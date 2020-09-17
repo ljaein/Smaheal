@@ -50,7 +50,7 @@
             <v-card-title
               class="pb-0 mb-1 donation-title"
               @click="getDetail(donation.donationid)"
-            >{{donation.title}}{{donationList[0].length}}</v-card-title>
+            >{{donation.title}}</v-card-title>
             <v-card-text class="text--primary">
               <div class="mb-3">{{donation.receiver}}</div>
               <v-progress-linear
@@ -83,7 +83,7 @@
             <v-card-title
               class="pb-0 mb-1 donation-title"
               @click="getDetail(donation.donationid)"
-            >{{donation.title}}{{donationList[0].length}}</v-card-title>
+            >{{donation.title}}</v-card-title>
             <v-card-text class="text--primary">
               <div class="mb-3">{{donation.receiver}}</div>
               <v-progress-linear
@@ -116,7 +116,7 @@
             <v-card-title
               class="pb-0 mb-1 donation-title"
               @click="getDetail(donation.donationid)"
-            >{{donation.title}}{{donationList[0].length}}</v-card-title>
+            >{{donation.title}}</v-card-title>
             <v-card-text class="text--primary">
               <div class="mb-3">{{donation.receiver}}</div>
               <v-progress-linear
@@ -149,7 +149,7 @@
             <v-card-title
               class="pb-0 mb-1 donation-title"
               @click="getDetail(donation.donationid)"
-            >{{donation.title}}{{donationList[0].length}}</v-card-title>
+            >{{donation.title}}</v-card-title>
             <v-card-text class="text--primary">
               <div class="mb-3">{{donation.receiver}}</div>
               <v-progress-linear
@@ -182,7 +182,7 @@
             <v-card-title
               class="pb-0 mb-1 donation-title"
               @click="getDetail(donation.donationid)"
-            >{{donation.title}}{{donationList[0].length}}</v-card-title>
+            >{{donation.title}}</v-card-title>
             <v-card-text class="text--primary">
               <div class="mb-3">{{donation.receiver}}</div>
               <v-progress-linear
@@ -215,7 +215,7 @@
             <v-card-title
               class="pb-0 mb-1 donation-title"
               @click="getDetail(donation.donationid)"
-            >{{donation.title}}{{donationList[0].length}}</v-card-title>
+            >{{donation.title}}</v-card-title>
             <v-card-text class="text--primary">
               <div class="mb-3">{{donation.receiver}}</div>
               <v-progress-linear
@@ -248,7 +248,7 @@
             <v-card-title
               class="pb-0 mb-1 donation-title"
               @click="getDetail(donation.donationid)"
-            >{{donation.title}}{{donationList[0].length}}</v-card-title>
+            >{{donation.title}}</v-card-title>
             <v-card-text class="text--primary">
               <div class="mb-3">{{donation.receiver}}</div>
               <v-progress-linear
