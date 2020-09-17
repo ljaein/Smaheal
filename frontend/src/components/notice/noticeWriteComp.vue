@@ -1,13 +1,13 @@
 <template>
   <v-container class="pa-0">
-    <v-sheet class="pa-6 mt-4 mb-5" dark>
-      <v-icon class="mr-2">mdi-clipboard-edit-outline</v-icon>
+    <v-sheet class="pa-6 mt-4" color="#fffbe6">
+      <v-icon class="mr-2" color="#356859">mdi-clipboard-edit-outline</v-icon>
       공지사항 작성페이지
     </v-sheet>
-    <v-sheet dark class="pa-5 mb-5">
+    <v-sheet color="#fffbe6" class="pa-5 mb-5">
         <v-text-field
         placeholder="제목을 입력하세요."
-        color="white"
+        color="#356859"
         v-model="title"
         ref="title"
         class="headline"
@@ -18,7 +18,7 @@
         />
         <v-textarea
         placeholder="공지사항 내용을 입력하세요."
-        color="white"
+        color="#356859"
         v-model="content"
         ref="content"
         outlined
@@ -30,58 +30,58 @@
     </v-sheet>
     <v-row>
         <v-col>
-            <v-btn @click="noticeTempRegist()" outlined>
+            <v-btn @click="noticeTempRegist()" color="#356859" dark>
                 임시저장
             </v-btn>
         </v-col>
         <v-col class="text-right">
-            <v-btn class="mr-5" @click="goBack()" outlined>
+            <v-btn class="mr-5" @click="goBack()" color="#356859" dark>
                 취소
             </v-btn>
-            <v-btn @click="noticeRegist()" outlined>
+            <v-btn @click="noticeRegist()" color="#356859" dark>
                 등록
             </v-btn>
         </v-col>
     </v-row>
 
-    <v-dialog dark v-model="temp" max-width="400">
+    <v-dialog v-model="temp" max-width="400">
       <v-card>
         <v-card-title class="headline">글을 임시저장하시겠습니까?</v-card-title>
 
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn text @click="cancelTemp()">취소</v-btn>
+          <v-btn color="#356859" dark @click="cancelTemp()">취소</v-btn>
 
-          <v-btn text @click="noticeTempRegistHandler()">확인</v-btn>
+          <v-btn color="#356859" dark @click="noticeTempRegistHandler()">확인</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
 
-    <v-dialog dark v-model="tempLoad" max-width="400">
+    <v-dialog v-model="tempLoad" max-width="400">
       <v-card>
         <v-card-title class="headline">임시저장한 글이 있습니다. 불러오겠습니까?</v-card-title>
 
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn text @click="cancelTempLoad()">취소</v-btn>
+          <v-btn color="#356859" dark @click="cancelTempLoad()">취소</v-btn>
 
-          <v-btn text @click="noticeTempLoadHandler()">확인</v-btn>
+          <v-btn color="#356859" dark @click="noticeTempLoadHandler()">확인</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
 
-    <v-dialog dark v-model="regist" max-width="400">
+    <v-dialog v-model="regist" max-width="400">
       <v-card>
         <v-card-title class="headline">공지사항을 등록하겠습니까?</v-card-title>
 
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn text @click="cancelRegist()">취소</v-btn>
+          <v-btn color="#356859" dark @click="cancelRegist()">취소</v-btn>
 
-          <v-btn text @click="noticeRegistHandler()">확인</v-btn>
+          <v-btn color="#356859" dark @click="noticeRegistHandler()">확인</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -166,6 +166,9 @@ export default {
       cancelTempLoad: function() {
         this.tempLoad = false;
       },
+      cancelRegist: function() {
+        this.regist = false;
+      }
   },
   created() {
     if (localStorage.getItem("title") !== null) {

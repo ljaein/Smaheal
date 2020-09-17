@@ -1,31 +1,34 @@
 <template>
   <v-container class="pa-0">
-    <v-sheet class="pa-6 mt-4 mb-5" dark>
-      <v-icon class="mr-2">mdi-clipboard-alert-outline</v-icon>
+    <v-sheet class="pa-6 mt-4" color="#fffbe6">
+      <v-icon class="mr-2" color="#356859">mdi-clipboard-alert-outline</v-icon>
       공지사항
     </v-sheet>
-    <v-sheet dark class="pa-5 mb-5">
-      <div class="headline pa-7">
+    <v-sheet color="#fffbe6" class="pa-5 mb-5">
+      <div class="headline pa-4 text-center">
         {{this.item.title}}
       </div>
       <div class="text-right pb-5">
         {{getFormatDate(this.item.createdAt)}}
       </div>
-      <v-textarea readonly auto-grow solo flat
+      <v-divider></v-divider>
+      <v-textarea readonly auto-grow solo
+      flat background-color="#fffbe6"
+      class="pa-3"
       :value="this.item.content">
       </v-textarea>
     </v-sheet>
     <v-row>
       <v-col>
-        <v-btn class="mr-5" @click="goWrite()" outlined v-if="getUserID == 'admin'">
+        <v-btn class="mr-5" @click="goWrite()" color="#356859" dark v-if="getUserID == 'admin'">
           수정
         </v-btn>
-        <v-btn class="mr-5" @click="deleteNotice()" outlined v-if="getUserID == 'admin'">
+        <v-btn class="mr-5" @click="deleteNotice()" color="#356859" dark v-if="getUserID == 'admin'">
           삭제
         </v-btn>
       </v-col>
       <v-col class="text-right">
-        <v-btn @click="goBack()" outlined>
+        <v-btn @click="goBack()" color="#356859" dark>
             목록으로 가기
         </v-btn>
       </v-col>

@@ -1,7 +1,7 @@
 <template>
   <v-container class="pa-0">
-    <v-sheet class="pa-6 mt-4" color="amber lighten-3">
-      <v-icon class="mr-2">mdi-clipboard-alert-outline</v-icon>
+    <v-sheet class="pa-6 mt-4" color="#fffbe6">
+      <v-icon class="mr-2" color="#356859">mdi-clipboard-alert-outline</v-icon>
       공지사항
     </v-sheet>
     <v-row>
@@ -13,7 +13,7 @@
           <v-text-field
             placeholder="제목으로 검색됩니다. 검색어를 입력하세요."
             outlined
-            color="black"
+            color="#356859"
             clearable
             name="title"
             prepend-inner-icon="mdi-text-search"
@@ -23,22 +23,22 @@
     </v-row>
     <v-row>
       <v-col>
-        <v-simple-table dark>
+        <v-simple-table>
           <template v-slot:default>
             <thead>
               <tr>
-                <th class="text-left">No</th>
-                <th class="text-left">제목</th>
-                <th class="text-left">작성자</th>
-                <th class="text-left">작성 날짜</th>
+                <th class="text-center">No</th>
+                <th class="text-center">제목</th>
+                <th class="text-center">작성자</th>
+                <th class="text-center">작성 날짜</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(item, index) in items" :key="index">
-                <td>{{item.noticeid}}</td>
-                <td @click="goDetail(item.noticeid)">{{item.title}}</td>
-                <td>관리자</td>
-                <td>{{getFormatDate(item.createdAt)}}</td>
+                <td class="text-center">{{item.noticeid}}</td>
+                <td class="text-center" @click="goDetail(item.noticeid)">{{item.title}}</td>
+                <td class="text-center">관리자</td>
+                <td class="text-center">{{getFormatDate(item.createdAt)}}</td>
               </tr>
             </tbody>
           </template>
@@ -50,12 +50,12 @@
       v-model="currentPage"
       :length="totalPage"
       :total-visible="visibleCnt"
-      color="black"
+      color="#356859"
       />
     </div>
     <v-row>
       <v-col class="text-right">
-        <v-btn @click="goNoticeRegist()" outlined v-if="getUserID == 'admin'">
+        <v-btn @click="goNoticeRegist()" color="#356859" dark v-if="getUserID == 'admin'">
         글 작성하기
         </v-btn>
       </v-col>
