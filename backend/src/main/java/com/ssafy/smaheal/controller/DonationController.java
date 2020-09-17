@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.PageRequest;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -30,62 +31,59 @@ public class DonationController {
     @Autowired
     private DonationRepository donationRepository;
 
-    @GetMapping("/getList")
-    @ApiOperation(value = "기부 게시판 리스트(승인)")
-    public Object getDonationList() throws SQLException, IOException {
+    @GetMapping("/getList/{page}")
+    @ApiOperation(value = "기부 게시판 초기 리스트(승인)")
+    public Object getList(@PathVariable int page) throws SQLException, IOException {
         try {
-            List<Donation> donationList = donationRepository.findByApprovalAndTempOrderByCreatedateDesc(1, 0);
-            if (donationList != null) {
-                return new ResponseEntity<>(donationList, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping("/getCategoryList/{category}")
-    @ApiOperation(value = "기부 게시판 카테고리 별 리스트(승인)")
-    public Object getCategoryDonationList(@PathVariable String category) throws SQLException, IOException {
-        try {
-            List<Donation> donationList = donationRepository
-                    .findByCategoryAndApprovalAndTempOrderByCreatedateDesc(category, 1, 0);
-            if (donationList != null) {
-                return new ResponseEntity<>(donationList, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping("/getCategoryList2")
-    @ApiOperation(value = "기부 게시판 카테고리 별 리스트(승인)")
-    public Object getCategoryDonationList2() throws SQLException, IOException {
-        try {
-            List<Donation>[] categoryList = new List[7];
-            for (int i = 0; i < 7; i++) {
-                categoryList[i] = new LinkedList<>();
-            }
-            List<Donation> all = donationRepository.findByApprovalAndTempOrderByCreatedateDesc(1, 0);
-            categoryList[0] = all;
-            for (Donation dona : all) {
-                if (dona.getCategory().equals("아동,청소년"))
-                    categoryList[1].add(dona);
-                else if (dona.getCategory().equals("어르신"))
-                    categoryList[2].add(dona);
-                else if (dona.getCategory().equals("장애인"))
-                    categoryList[3].add(dona);
-                else if (dona.getCategory().equals("가족,여성"))
-                    categoryList[4].add(dona);
-                else if (dona.getCategory().equals("다문화"))
-                    categoryList[5].add(dona);
-                else if (dona.getCategory().equals("기타"))
-                    categoryList[6].add(dona);
-            }
+            List<List<Donation>> categoryList = new LinkedList<>();
+            categoryList.add(donationRepository.findByApprovalAndTempOrderByCreatedateDesc(1, 0,
+                    PageRequest.of(page, 8)));
+            categoryList.add(donationRepository.findByCategoryAndApprovalAndTempOrderByCreatedateDesc("아동,청소년", 1, 0,
+                    PageRequest.of(page, 8)));
+            categoryList.add(donationRepository.findByCategoryAndApprovalAndTempOrderByCreatedateDesc("어르신", 1, 0,
+                    PageRequest.of(page, 8)));
+            categoryList.add(donationRepository.findByCategoryAndApprovalAndTempOrderByCreatedateDesc("장애인", 1, 0,
+                    PageRequest.of(page, 8)));
+            categoryList.add(donationRepository.findByCategoryAndApprovalAndTempOrderByCreatedateDesc("가족,여성", 1, 0,
+                    PageRequest.of(page, 8)));
+            categoryList.add(donationRepository.findByCategoryAndApprovalAndTempOrderByCreatedateDesc("다문화", 1, 0,
+                    PageRequest.of(page, 8)));
+            categoryList.add(donationRepository.findByCategoryAndApprovalAndTempOrderByCreatedateDesc("기타", 1, 0,
+                    PageRequest.of(page, 8)));
             return new ResponseEntity<>(categoryList, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/getCategoryList/{category}/{page}")
+    @ApiOperation(value = "기부 게시판 카테고리 별 리스트(승인)")
+    public Object getCategoryDonationList(@PathVariable int category, @PathVariable int page)
+            throws SQLException, IOException {
+        try {
+            List<Donation> list = new LinkedList<>();
+            if (category == 0)
+                list = donationRepository.findByApprovalAndTempOrderByCreatedateDesc(1, 0, PageRequest.of(page, 8));
+            else if (category == 1)
+                list = donationRepository.findByCategoryAndApprovalAndTempOrderByCreatedateDesc("아동,청소년", 1, 0,
+                        PageRequest.of(page, 8));
+            else if (category == 2)
+                list = donationRepository.findByCategoryAndApprovalAndTempOrderByCreatedateDesc("어르신", 1, 0,
+                        PageRequest.of(page, 8));
+            else if (category == 3)
+                list = donationRepository.findByCategoryAndApprovalAndTempOrderByCreatedateDesc("장애인", 1, 0,
+                        PageRequest.of(page, 8));
+            else if (category == 4)
+                list = donationRepository.findByCategoryAndApprovalAndTempOrderByCreatedateDesc("가족,여성", 1, 0,
+                        PageRequest.of(page, 8));
+            else if (category == 5)
+                list = donationRepository.findByCategoryAndApprovalAndTempOrderByCreatedateDesc("다문화", 1, 0,
+                        PageRequest.of(page, 8));
+            else if (category == 6)
+                list = donationRepository.findByCategoryAndApprovalAndTempOrderByCreatedateDesc("기타", 1, 0,
+                        PageRequest.of(page, 8));
+            return new ResponseEntity<>(list, HttpStatus.OK);
 
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
