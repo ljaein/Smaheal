@@ -10,11 +10,13 @@
       :visit="item.visit"
       :createdAt="item.createdAt"
     />
-    <div v-if="isWriter">
+    <div v-if="isWriter" style="width:100%; text-align:right;">
       <v-btn @click="moveModify">수정</v-btn>
       <v-btn @click="deleteReview">삭제</v-btn>
     </div>
+    <div style="width:100%; text-align:right;">
     <v-btn @click="goBack">뒤로가기</v-btn>
+    </div>
   </div>
 </template>
 
@@ -31,7 +33,7 @@ export default {
   data() {
     return {
       item: {},
-      isWriter: false,
+      isWriter: false
     };
   },
   created() {
@@ -39,8 +41,24 @@ export default {
       .get(`/review/get/${this.$route.params.num}`)
       .then(({ data }) => {
         this.item = data;
-        if(this.getProfile == this.item.nickName){
+        this.item.visit += 1;
+        if (this.getProfile == this.item.nickName) {
           this.isWriter = true;
+        } else {
+          http
+            .put(`/review/update/${this.$route.params.num}`, {
+              num: this.item.num,
+              title: this.item.title,
+              content: this.item.content,
+              nickName: this.item.nickName,
+              img: this.item.img,
+              likeCnt: this.item.likeCnt,
+              visit: this.item.visit,
+              createdAt: this.item.createdAt
+            })
+            .catch(err => {
+              console.log(err);
+            });
         }
       })
       .catch(err => {
@@ -48,28 +66,26 @@ export default {
       });
   },
   computed: {
-    ...mapGetters([
-      "getProfile"
-    ])
+    ...mapGetters(["getProfile"])
   },
   methods: {
-    deleteReview(){
+    deleteReview() {
       http
-      .delete(`/review/delete/${this.$route.params.num}`)
-      .then(({ data }) => {
-        if(data == "success"){
-          alert("성공적으로 삭제되었습니다.");
-          this.$router.push(`/reviewList`);
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
+        .delete(`/review/delete/${this.$route.params.num}`)
+        .then(({ data }) => {
+          if (data == "success") {
+            alert("성공적으로 삭제되었습니다.");
+            this.$router.push(`/reviewList`);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     moveModify() {
       this.$router.push(`/reviewModify/${this.$route.params.num}`);
     },
-    goBack(){
+    goBack() {
       this.$router.push(`/reviewList`);
     }
   }

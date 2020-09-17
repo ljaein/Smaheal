@@ -1,12 +1,13 @@
 <template>
-  <tr @click="goDetail">
-    <td class="text-center">{{ num }}</td>
-    <td class="text-center">{{ title }}</td>
-    <td class="text-center">{{ nickName }}</td>
-    <td class="text-center">{{ likeCnt }}</td>
-    <td class="text-center">{{ visit }}</td>
-    <td class="text-center">{{ getFormatDate(createdAt) }}</td>
-  </tr>
+  <div>
+    <v-card :class="{ 'on-hover': hover }" width="310px" style="background: white;">
+      <v-img @click="goDetail" :src="`${publicPath}reviewImage/${img}`"></v-img>
+    </v-card>
+    <div class="aInfo">
+      <strong @click="goDetail">{{title}}</strong>
+      <p >{{visit}} views · {{getFormatDate(createdAt)}}</p>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -24,13 +25,18 @@ export default {
     visit: { type: Number },
     createdAt: { type: String }
   },
-  methods:{
-    goDetail(){
+  data() {
+    return {
+      publicPath: process.env.BASE_URL
+    };
+  },
+  methods: {
+    goDetail() {
       this.$router.push(`/reviewDetail/${this.num}`);
     },
     getFormatDate(regtime) {
       return moment(new Date(regtime)).format("YYYY년 MM월 DD일");
-    },
+    }
   }
 };
 </script>

@@ -41,10 +41,16 @@ public class ReviewController {
 		return ResponseEntity.ok(SUCCESS);
 	}
 
-	@GetMapping("/getList")
-	public List<Review> findReviewAll() {
-		List<Review> list = reviewRepository.findAll();
+	@GetMapping("/getList/{limit}")
+	public List<Review> findReviewAll(@PathVariable(value = "limit") int limit) {
+		List<Review> list = reviewRepository.findByAllPaging(limit);
 		return list;
+	}
+	
+	@GetMapping("/getListCnt")
+	public long findReviewCnt() {
+		long paging = reviewRepository.count();
+		return paging;
 	}
 
 	@GetMapping("/get/{num}")
