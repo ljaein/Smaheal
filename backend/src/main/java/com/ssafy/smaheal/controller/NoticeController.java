@@ -39,7 +39,7 @@ public class NoticeController {
 	@GetMapping("/findAll")
 	public List<Notices> findAllNotice() {
 		
-		List<Notices> list = noticeRepository.findAll();
+		List<Notices> list = noticeRepository.findAllByOrderByNoticeidDesc();
 		
 		return list;
 	}
@@ -68,6 +68,15 @@ public class NoticeController {
 		noticeRepository.deleteByNoticeid(noticeid);
 		
 		return ResponseEntity.ok(SUCCESS);
+	}
+	
+	@GetMapping("/search/{title}")
+	public List<Notices> noticeSearch(@PathVariable(value = "title")
+	String title) {
+		
+		List<Notices> searchNotice = noticeRepository.findByTitleContainingOrderByNoticeidDesc(title);
+		
+		return searchNotice;
 	}
 	
 }

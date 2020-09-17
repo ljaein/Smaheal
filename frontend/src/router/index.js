@@ -10,6 +10,7 @@ import noticeList from "../views/notice/noticeList.vue"
 import noticeWrite from "../views/notice/noticeWrite.vue"
 import noticeDetail from "../views/notice/noticeDetail.vue"
 import DonationRequestDetail from "../views/donation/DonationRequestDetail.vue"
+import noticeSearch from "../views/notice/noticeSearch.vue"
 
 Vue.use(VueRouter);
 
@@ -65,6 +66,12 @@ const routes = [{
         path: "/notice/detail/:noticeid",
         name: "noticeDetail",
         component: noticeDetail
+    },
+
+    {
+        path: "/notice/search",
+        name: "noticeSearch",
+        component: noticeSearch
     },
 ];
 
