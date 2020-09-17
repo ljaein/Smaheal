@@ -30,7 +30,7 @@
         <span class="mr-2" @click="goReviewList">후기 게시판</span>
       </v-btn>
 
-      <v-btn text>
+      <v-btn v-if="getProfile" @click="goMyPage" text>
         <span class="mr-2">my page</span>
       </v-btn>
 
@@ -81,6 +81,7 @@
 <script>
 import { mapGetters, mapState } from "vuex";
 import { AUTH_LOGOUT } from "./store/actions/auth";
+import { USER_UPDATE } from "@/store/actions/user";
 
 export default {
   name: "App",
@@ -92,6 +93,9 @@ export default {
       logoutSuccess: false,
       loginSuccess: false,
     }
+  },
+  created(){
+    this.$store.dispatch(USER_UPDATE, this.getUserID).then(() => {});
   },
   methods: {
     goDonationBoardDetail: function() {
@@ -119,6 +123,9 @@ export default {
     goReviewList() {
       this.$router.push('/reviewList').catch(() => {}); 
     },
+    goMyPage(){
+      this.$router.push('/myPage').catch(() => {}); 
+    }
   },
   computed: {
     ...mapGetters([
