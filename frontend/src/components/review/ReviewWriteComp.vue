@@ -4,15 +4,18 @@
       <v-container fluid>
         <v-row justify="space-around">
           <v-col cols="12" md="6">
-            <v-text-field v-model="title" label="제목" required></v-text-field>
             <input ref="imageInput" type="file" hidden @change="onChangeImages" />
             <v-btn
-              class="mt-2"
-              style="font-family: 'Nanum Gothic';"
+              class="mb-2"
+               style="border:2px solid lightgray; font-weight:bold; border-radius:15px;"
               type="button"
               @click="onClickImageUpload"
               outlined
             >이미지 업로드</v-btn>
+            <div style="width:20rem;height:15rem;border-radius:5px;border:1px solid lightgray">
+              <img v-if="imageUrl" :src="imageUrl" style="width:20rem;height:15rem;border-radius:5px;" />
+            </div>
+            <v-text-field v-model="title" label="제목" required></v-text-field>
           </v-col>
         </v-row>
         <v-row justify="space-around">
@@ -32,8 +35,8 @@
     </v-form>
     <div style="text-align:center;">
       <v-btn v-if="isModify" @click="updateReview" outlined>수정</v-btn>
-      <v-btn v-else @click="writeReview" outlined>등록</v-btn>
-      <v-btn @click="goBack" outlined>뒤로가기</v-btn>
+      <v-btn v-else @click="writeReview" class="green-mbtn mr-2">등록</v-btn>
+      <v-btn @click="goBack"  class="green-mbtn">뒤로가기</v-btn>
     </div>
   </div>
 </template>

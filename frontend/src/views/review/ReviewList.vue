@@ -1,31 +1,25 @@
 <template>
   <div>
-    <br />
-    <h1 align="center">후기 게시판</h1>
-    <v-container fluid>
+    <v-container fluid class="mt-5 pl-15 pr-15">
+      <div style="text-align:right;">
+        <v-btn v-if="getProfile" class="green-mbtn" @click="goReviewWrite" outlined>후기 등록</v-btn>
+      </div>
       <v-row>
-        <v-col cols="12">
-          <v-row align="stretch" justify="space-around">
-            <ReviewListComp
-              v-for="(item, index) in items"
-              :key="index"
-              :num="item.num"
-              :nickName="item.nickName"
-              :title="item.title"
-              :content="item.content"
-              :img="item.img"
-              :likeCnt="item.likeCnt"
-              :visit="item.visit"
-              :createdAt="item.createdAt"
-            />
-          </v-row>
-        </v-col>
+        <div class="col-12 col-sm-6 col-md-3" v-for="(item, index) in items" :key="index">
+          <ReviewListComp
+            :num="item.num"
+            :nickName="item.nickName"
+            :title="item.title"
+            :content="item.content"
+            :img="item.img"
+            :likeCnt="item.likeCnt"
+            :visit="item.visit"
+            :createdAt="item.createdAt"
+          />
+        </div>
       </v-row>
     </v-container>
     <v-pagination v-model="page" :length="length" :page="page" :total-visible="totalVisible"></v-pagination>
-    <div style="text-align:center;">
-      <v-btn v-if="getProfile" @click="goReviewWrite" outlined>후기 등록</v-btn>
-    </div>
     <br>
   </div>
 </template>
