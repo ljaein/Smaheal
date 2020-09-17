@@ -64,17 +64,17 @@
         <v-card>
           <v-tabs v-model="tab" background-color="deep-purple accent-4" centered dark icons-and-text>
             <v-tabs-slider></v-tabs-slider>
-            <v-tab href="#tab-picture" @click="(videoFlag = false), (selfFlag = false), (value = 0), (overlay = false), stop()">
+            <v-tab href="#tab-picture" @click="(videoFlag = false), (selfFlag = false), (value = 0), (overlay = false), (selfieCapture = []), stop()">
               Picture
               <v-icon>mdi-image-multiple</v-icon>
             </v-tab>
 
-            <v-tab href="#tab-video" @click="(pictureFlag = false), (selfFlag = false), (value = 0), (overlay = false), stop()">
+            <v-tab href="#tab-video" @click="(pictureFlag = false), (selfFlag = false), (value = 0), (overlay = false), (selfieCapture = []), stop()">
               Video
               <v-icon>mdi-video</v-icon>
             </v-tab>
 
-            <v-tab href="#tab-self" @click="(videoFlag = false), (pictureFlag = false), (value = 0), (overlay = false), stop()">
+            <v-tab href="#tab-self" @click="(videoFlag = false), (pictureFlag = false), (value = 0), (overlay = false), (selfieCapture = []), stop()">
               Selfie
               <v-icon>mdi-account-box</v-icon>
             </v-tab>
@@ -171,30 +171,35 @@
                 <video src="" autoplay class="feed" width="100%" height="100%" id="webcam" @click="init(), (camOn = true)"></video>
               </div>
               <v-row class="d-flex justify-content-center">
-                <v-btn color="success" class="m-2 col-md-2 col-sm-4 col-10" @click="init(), (camOn = true)">start</v-btn>
-                <v-btn color="success" class="m-2 col-md-2 col-sm-4 col-10" @click="stop">stop</v-btn>
-                <v-btn color="success" class="m-2 col-md-2 col-sm-4 col-10" @click="capture">capture</v-btn>
-                <v-btn color="success" class="m-2 col-md-2 col-sm-4 col-10" @click="check">check</v-btn>
+                <v-btn color="success" class="m-2 col-md-2 col-sm-4 col-10" v-if="startFlag" @click="init(), (camOn = true), (startFlag = false), (endFlag = true)">start</v-btn>
+                <v-btn color="success" class="m-2 col-md-2 col-sm-4 col-10" v-if="endFlag" @click="stop(), (startFlag = true), (endFlag = false), (checkFlag = false)">stop</v-btn>
+                <v-btn color="success" class="m-2 col-md-2 col-sm-4 col-10" v-if="endFlag" @click="capture(), (checkFlag = true)">capture</v-btn>
+                <v-btn color="success" class="m-2 col-md-2 col-sm-4 col-10" v-if="checkFlag" @click="check">check</v-btn>
               </v-row>
-              <div class="container" style="height:250px;text-align:center">
-                <canvas height="200%" width="200%"></canvas>
-                <img id="myImage" />
-                {{selfieCapture}}
+              
+              <div v-if="!startFlag">
+                <div class="container" style="height:250px;text-align:center">
+                  <canvas height="200%" width="200%"></canvas>
+                  <img id="myImage" />
+                  {{ selfieCapture }}
+                </div>
+                <div>
+                  <!-- 사진 사용 여부 -->
+                  <v-row>
+                    <v-switch style="margin:0 auto" v-model="kingFlag" inset :label="`사진 허용 `"></v-switch>
+                  </v-row>
+                  <!-- 한줄 코멘트 -->
+                  <v-row class="justify-content-center">
+                    <v-col cols="6">
+                      <v-text-field v-model="comment" :rules="commentRules" :counter="20" label="한 줄 메세지"></v-text-field>
+                    </v-col>
+                  </v-row>
+                  <!-- 기부하기 -->
+                  <v-row>
+                    <v-btn style="margin:0 auto 50px auto;" class="col-3" color="success" @click="donation">기부하기</v-btn>
+                  </v-row>
+                </div>
               </div>
-              <!-- 사진 사용 여부 -->
-              <v-row>
-                <v-switch style="margin:0 auto" v-model="kingFlag" inset :label="`사진 허용 `"></v-switch>
-              </v-row>
-              <!-- 한줄 코멘트 -->
-              <v-row class="justify-content-center">
-                <v-col cols="6">
-                  <v-text-field v-model="comment" :rules="commentRules" :counter="20" label="한 줄 메세지"></v-text-field>
-                </v-col>
-              </v-row>
-              <!-- 기부하기 -->
-              <v-row>
-                <v-btn style="margin:0 auto 50px auto;" class="col-3" color="success" @click="donation">기부하기</v-btn>
-              </v-row>
             </v-tab-item>
           </v-tabs-items>
         </v-card>
@@ -236,7 +241,7 @@ export default {
       e1: 1,
       log: '',
       value: 0,
-      comment:'',
+      comment: '',
       interval: {},
       tab: null,
       overlay: false,
@@ -246,23 +251,28 @@ export default {
       captureFlag: false,
       kingFlag: false,
       camOn: false,
-      commentRules:[
-        v => v.length <= 20 || "ss"
-      ],
-      selfieCapture:[]
+      startFlag: true,
+      endFlag: false,
+      checkFlag: false,
+      commentRules: [(v) => v.length <= 20 || '20자 이내로 써주세요.'],
+      selfieCapture: [],
     };
   },
   methods: {
     check() {
       var myImage = document.querySelector('canvas').toDataURL();
       //btoa
-      http.post(`/smile/smileCheck`, myImage)
-      .then(res => {
-        this.selfieCapture = res.data;
-      })
-      .catch(err => {
-        console.log(err);
-      })
+      http
+        .post(`/smile/smileCheck`, myImage)
+        .then((res) => {
+          this.selfieCapture = res.data;
+          if (this.selfieCapture == 'findFail') {
+            alert('얼굴 인식 못함');
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     capture() {
       const picture = document.querySelector('canvas');
@@ -324,24 +334,28 @@ export default {
       }, 300);
     },
     donation() {
-      // alert('기부 완료');
-      if(this.selfieCapture[2] < 30) {
-        alert("웃음 지수가 너무 낮습니다.");
+      if (this.selfieCapture == 'findFail') {
+        alert('사진 다시 찍어주세요');
       } else {
-        http.post("/smile/regist", {
-          user_id: this.uid,
-          donationid: this.donationid,
-          photo: this.selfieCapture[0],
-          smileper: this.selfieCapture[2],
-          comment: this.comment,
-          agreement: this.kingFlag ? 1 : 0,
-        })
-        .then(res => {
-          console.log(res.data)
-        })
-        .catch(err => {
-          console.log(err);
-        })
+        if (this.selfieCapture[2] < 30) {
+          alert('웃음 지수가 너무 낮습니다.');
+        } else {
+          http
+            .post('/smile/regist', {
+              user_id: this.uid,
+              donationid: this.donationid,
+              photo: this.selfieCapture[0],
+              smileper: this.selfieCapture[2],
+              comment: this.comment,
+              agreement: this.kingFlag ? 1 : 0,
+            })
+            .then((res) => {
+              console.log(res.data);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
       }
     },
   },

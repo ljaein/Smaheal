@@ -113,7 +113,7 @@ public class SmileController {
                 
                 return new ResponseEntity<>(selfList, HttpStatus.OK);
             } catch (Exception e) {
-                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+                return "findFail";
             }
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -175,6 +175,7 @@ public class SmileController {
     public static String createFile(String filename) throws FileNotFoundException {
         long time = System.currentTimeMillis();
         String name = Long.toString(time);
+        // 경로 정해주기
         File file = new File("C:/textFile/" + name);
         String str = filename;
 

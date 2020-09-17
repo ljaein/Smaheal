@@ -6,6 +6,7 @@ from keras.models import load_model
 import base64
 
 def main(argv):
+    # 경로 정해주기
     r = open('C:/textFile/' + argv[1], mode='rt', encoding='utf-8')
     raw = ""
     for line in r:
