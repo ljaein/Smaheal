@@ -62,19 +62,19 @@
     <v-row style="height:700px;" class="d-flex justify-content-center pt-15">
       <v-col cols="10">
         <v-card>
-          <v-tabs v-model="tab" background-color="deep-purple accent-4" centered dark icons-and-text>
+          <v-tabs v-model="tab" background-color="#fffbe3" color="basil" class="basil--text" centered icons-and-text>
             <v-tabs-slider></v-tabs-slider>
-            <v-tab href="#tab-picture" @click="(videoFlag = false), (selfFlag = false), (value = 0), (overlay = false), (selfieCapture = []), stop()">
+            <v-tab class="tab-text" href="#tab-picture" @click="(videoFlag = false), (selfFlag = false), (value = 0), (overlay = false), (selfieCapture = []), stop()">
               Picture
               <v-icon>mdi-image-multiple</v-icon>
             </v-tab>
 
-            <v-tab href="#tab-video" @click="(pictureFlag = false), (selfFlag = false), (value = 0), (overlay = false), (selfieCapture = []), stop()">
+            <v-tab class="tab-text" href="#tab-video" @click="(pictureFlag = false), (selfFlag = false), (value = 0), (overlay = false), (selfieCapture = []), stop()">
               Video
               <v-icon>mdi-video</v-icon>
             </v-tab>
 
-            <v-tab href="#tab-self" @click="(videoFlag = false), (pictureFlag = false), (value = 0), (overlay = false), (selfieCapture = []), stop()">
+            <v-tab class="tab-text" href="#tab-self" @click="(videoFlag = false), (pictureFlag = false), (value = 0), (overlay = false), (selfieCapture = []), stop()">
               Selfie
               <v-icon>mdi-account-box</v-icon>
             </v-tab>
@@ -84,7 +84,7 @@
             <!-- 사진 -->
             <v-tab-item v-if="!pictureFlag" id="tab-picture">
               <div class="container" style="height:500px;text-align:center;">
-                <v-btn color="success" class="col-2" style="top:220px;" @click="(pictureFlag = true), cameraOn()">start</v-btn>
+                <v-btn color="#356859" class="col-2" style="top:220px;color:white;" @click="(pictureFlag = true), cameraOn()">start</v-btn>
               </div>
             </v-tab-item>
 
@@ -127,14 +127,14 @@
               </v-row>
               <!-- 기부하기 -->
               <v-row>
-                <v-btn style="margin:0 auto 50px auto;" class="col-3" color="success" @click="donation">기부하기</v-btn>
+                <v-btn style="margin:0 auto 50px auto;color:white;" class="col-3" color="#356859" @click="donation">기부하기</v-btn>
               </v-row>
             </v-tab-item>
 
             <!-- 동영상 -->
             <v-tab-item v-if="!videoFlag" id="tab-video">
               <div class="container" style="height:500px;text-align:center">
-                <v-btn color="success" class="col-2" style="top:220px;" @click="(videoFlag = true), cameraOn()">start</v-btn>
+                <v-btn color="#356859" class="col-2" style="top:220px;color:white;" @click="(videoFlag = true), cameraOn()">start</v-btn>
               </div>
             </v-tab-item>
             <v-tab-item v-if="videoFlag" id="tab-video">
@@ -156,14 +156,14 @@
               </v-row>
               <!-- 기부하기 -->
               <v-row>
-                <v-btn style="margin:0 auto 50px auto;" class="col-3" color="success" @click="donation">기부하기</v-btn>
+                <v-btn style="margin:0 auto 50px auto;color:white" class="col-3" color="#356859" @click="donation">기부하기</v-btn>
               </v-row>
             </v-tab-item>
 
             <!-- 셀카 -->
             <v-tab-item v-if="!selfFlag" id="tab-self">
               <div class="container" style="height:500px;text-align:center">
-                <v-btn color="success" class="col-2" style="top:220px;" @click="selfFlag = true">start</v-btn>
+                <v-btn color="#356859" class="col-2" style="top:220px;color:white;" @click="selfFlag = true">start</v-btn>
               </div>
             </v-tab-item>
             <v-tab-item v-if="selfFlag" id="tab-self">
@@ -171,17 +171,17 @@
                 <video src="" autoplay class="feed" width="100%" height="100%" id="webcam" @click="init(), (camOn = true)"></video>
               </div>
               <v-row class="d-flex justify-content-center">
-                <v-btn color="success" class="m-2 col-md-2 col-sm-4 col-10" v-if="startFlag" @click="init(), (camOn = true), (startFlag = false), (endFlag = true)">start</v-btn>
-                <v-btn color="success" class="m-2 col-md-2 col-sm-4 col-10" v-if="endFlag" @click="stop(), (startFlag = true), (endFlag = false), (checkFlag = false)">stop</v-btn>
-                <v-btn color="success" class="m-2 col-md-2 col-sm-4 col-10" v-if="endFlag" @click="capture(), (checkFlag = true)">capture</v-btn>
-                <v-btn color="success" class="m-2 col-md-2 col-sm-4 col-10" v-if="checkFlag" @click="check">check</v-btn>
+                <v-btn color="#356859" class="m-2 col-md-2 col-sm-4 col-10" style="color:white;" v-if="startFlag" @click="init(), (camOn = true), (startFlag = false), (endFlag = true)">start</v-btn>
+                <v-btn color="#356859" class="m-2 col-md-2 col-sm-4 col-10" style="color:white;" v-if="endFlag" @click="stop(), (startFlag = true), (endFlag = false), (checkFlag = false)">stop</v-btn>
+                <v-btn color="#356859" class="m-2 col-md-2 col-sm-4 col-10" style="color:white;" v-if="endFlag" @click="capture(), (checkFlag = true)">capture</v-btn>
+                <v-btn color="#356859" class="m-2 col-md-2 col-sm-4 col-10" style="color:white;" v-if="checkFlag" @click="check">check</v-btn>
               </v-row>
               
               <div v-if="!startFlag">
                 <div class="container" style="height:250px;text-align:center">
                   <canvas height="200%" width="200%"></canvas>
                   <img id="myImage" />
-                  {{ selfieCapture }}
+                  <!-- {{ selfieCapture }} -->
                 </div>
                 <div>
                   <!-- 사진 사용 여부 -->
@@ -196,7 +196,7 @@
                   </v-row>
                   <!-- 기부하기 -->
                   <v-row>
-                    <v-btn style="margin:0 auto 50px auto;" class="col-3" color="success" @click="donation">기부하기</v-btn>
+                    <v-btn style="margin:0 auto 50px auto;color:white;" class="col-3" color="#356859" @click="donation">기부하기</v-btn>
                   </v-row>
                 </div>
               </div>
@@ -368,10 +368,7 @@ export default {
 };
 </script>
 
-<style>
-html {
-  scroll-behavior: smooth;
-}
+<style scoped>
 .camera {
   width: 100vw;
   height: 100vh;
@@ -387,5 +384,12 @@ html {
 
   background-color: #171717;
   box-shadow: 6px 6px 12px 0px rgba(0, 0, 0, 0.35);
+}
+.basil--text {
+  color: #356859 !important;
+}
+.tab-text {
+  font-weight: bold;
+  text-decoration: none;
 }
 </style>
