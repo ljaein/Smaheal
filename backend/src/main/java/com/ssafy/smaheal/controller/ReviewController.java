@@ -86,7 +86,13 @@ public class ReviewController {
 	         }
 	         workspacePath = newPath;
 	      }
-	      String baseDir = workspacePath+ "/../frontend/public/reviewImage/";
+	      
+	      String baseDir = null;
+	      if(workspacePath.indexOf("backend") != -1) {
+	    	  baseDir = workspacePath+ "/../frontend/public/reviewImage/";
+	      }else {
+	    	  baseDir = workspacePath+ "/frontend/public/reviewImage/";
+	      }
 	      String originalFileName = img.getOriginalFilename();
 	      File dest = new File(baseDir + originalFileName);
 	      
