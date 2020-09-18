@@ -9,7 +9,7 @@
           <v-form ref="form" v-model="valid">
 
             <v-row justify="center">
-              <v-col cols="2" class="text-center pt-8">
+              <v-col cols="2" class="text-left pt-8">
                 * 아이디
               </v-col>
               <v-col>
@@ -19,7 +19,7 @@
             </v-row>
 
             <v-row justify="center">
-              <v-col cols="2" class="text-center pt-8">
+              <v-col cols="2" class="text-left pt-8">
                 * 비밀번호
               </v-col>
               <v-col>
@@ -37,7 +37,7 @@
             </v-row>
 
             <v-row justify="center">
-              <v-col cols="2" class="text-center pt-8">
+              <v-col cols="2" class="text-left pt-8">
                 * 비밀번호 재입력
               </v-col>
               <v-col>
@@ -55,7 +55,7 @@
             </v-row>
 
             <v-row justify="center">
-              <v-col cols="2" class="text-center pt-8">
+              <v-col cols="2" class="text-left pt-8">
                 * 이름
               </v-col>
               <v-col>
@@ -64,22 +64,23 @@
             </v-row>
 
             <v-row justify="center">
-              <v-col cols="2" class="text-center pt-8">
+              <v-col cols="2" class="text-left pt-8">
                 * 별명
               </v-col>
               <v-col>
                 <v-text-field v-model="nickName" :counter="10" :rules="nickNameRules" placeholder="사용할 별명을 입력해주세요.(10자 내외)" color="#356859" required clearable></v-text-field>
               </v-col>
             </v-row>
-            
-            <v-col>
-              * 하단 달력에서 생일을 입력해주세요.
+            <v-row justify="center">
+            <v-col class="text-left pt-8">
+              * 달력에서 생일을 선택하세요.
             </v-col>
+            </v-row>
             <v-col>
               <v-date-picker v-model="birth" color="#356859"></v-date-picker>
             </v-col>
 
-            <v-btn class="pa-5" :disabled="!valid" color="#356859" dark width="100%" @click="validate">회원가입</v-btn>
+            <v-btn class="pa-5 " :disabled="!valid" color="#356859" dark width="100%" @click="validate">회원가입</v-btn>
           </v-form>
           <div style="text-align: right">
             <v-btn text class="mt-3" @click="goLogin()">뒤로 가기</v-btn>

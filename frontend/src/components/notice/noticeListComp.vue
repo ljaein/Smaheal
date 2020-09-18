@@ -3,7 +3,6 @@
     <v-sheet class="pa-6 mt-4" color="#fffbe6">
       <v-icon class="mr-2" color="#356859">mdi-clipboard-alert-outline</v-icon>
       공지사항
-    </v-sheet>
     <v-row>
       <v-col>
         <v-spacer/>
@@ -21,6 +20,7 @@
         </v-form>
       </v-col>
     </v-row>
+    </v-sheet>
     <v-row>
       <v-col>
         <v-simple-table>

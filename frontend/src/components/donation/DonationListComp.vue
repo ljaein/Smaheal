@@ -26,7 +26,7 @@
       </v-card-title>
       <v-tabs v-model="tab" background-color="transparent" color="basil" class="basil--text" grow>
         <!-- <v-tabs-slider></v-tabs-slider> -->
-        <v-tab href="#tab-1" @click="infiniteId+=1" class="tab-text basil--text">all</v-tab>
+        <v-tab href="#tab-1" @click="infiniteId+=1" class="tab-text">all</v-tab>
         <v-tab href="#tab-2" @click="infiniteId+=1" class="tab-text">아동/청소년</v-tab>
         <v-tab href="#tab-3" @click="infiniteId+=1" class="tab-text">어르신</v-tab>
         <v-tab href="#tab-4" @click="infiniteId+=1" class="tab-text">장애인</v-tab>

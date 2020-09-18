@@ -49,12 +49,12 @@
     <v-snackbar
       style="font-family: 'Nanum Gothic';"
       shaped
-      color="teal"
+      color="#356859"
       elevation="24"
       v-model="loginSuccess"
       timeout="3000"
     >
-      <v-icon color="white">mdi-emoticon-excited-outline</v-icon>
+      <v-icon color="white" class="mr-1">mdi-emoticon-excited-outline</v-icon>
       {{ getProfile + "님 반갑습니다." }}
       <template v-slot:action="{ attrs }">
         <v-btn color="white" text v-bind="attrs" @click="loginSuccess = false">Close</v-btn>
@@ -64,12 +64,12 @@
     <v-snackbar
       style="font-family: 'Nanum Gothic';"
       shaped
-      color="teal"
+      color="#356859"
       elevation="24"
       v-model="logoutSuccess"
       timeout="3000"
     >
-      <v-icon color="white">mdi-check-bold</v-icon>정상적으로 로그아웃 되었습니다.
+      <v-icon color="white" class="mr-1">mdi-check-bold</v-icon>정상적으로 로그아웃 되었습니다.
       <template v-slot:action="{ attrs }">
         <v-btn color="white" text v-bind="attrs" @click="logoutSuccess = false">Close</v-btn>
       </template>
@@ -160,5 +160,8 @@ export default {
 #app{
   font-family: 'Nanum Gothic', sans-serif;
   font-weight:bold;
+}
+html{
+  scroll-behavior: smooth;
 }
 </style>
