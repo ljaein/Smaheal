@@ -1,36 +1,93 @@
 <template>
-  <div id="app">
-    <v-app id="inspire">
-      <v-form ref="form" v-model="valid" lazy-validation>
-        <v-text-field v-model="id" :counter="15" :rules="idRules" label="아이디" required></v-text-field>
+  <v-container id="inspire" class="pr-15 pl-15">
+    <v-row class="pa-0" no-gutters>
+      <v-col class="pa-15">
+        <v-sheet class="text-left text-h2 amber--text mb-7">
+          SMAHEAL
+        </v-sheet>
+        <v-col class="pr-10 pl-10">
+          <v-form ref="form" v-model="valid">
 
-        <v-text-field
-          v-model="password1"
-          type="password"
-          :counter="20"
-          :rules="passwordRules"
-          label="비밀번호"
-          required
-        ></v-text-field>
+            <v-row justify="center">
+              <v-col cols="2" class="text-center pt-8">
+                * 아이디
+              </v-col>
+              <v-col>
+                <v-text-field v-model="id" :counter="15" :rules="idRules" color="#356859"
+                placeholder="사용할 아이디를 입력해주세요." required clearable></v-text-field>
+              </v-col>
+            </v-row>
 
-        <v-text-field
-          v-model="password2"
-          type="password"
-          :counter="20"
-          :rules="passwordRules"
-          label="비밀번호 확인"
-          required
-        ></v-text-field>
+            <v-row justify="center">
+              <v-col cols="2" class="text-center pt-8">
+                * 비밀번호
+              </v-col>
+              <v-col>
+                <v-text-field
+                  v-model="password1"
+                  type="password"
+                  :counter="20"
+                  :rules="passwordRules"
+                  placeholder="비밀번호(영문자, 숫자 포함 8자 이상 입력해주세요.)"
+                  required
+                  clearable
+                  color="#356859"
+                ></v-text-field>
+              </v-col>
+            </v-row>
 
-        <v-text-field v-model="name" :counter="15" :rules="nameRules" label="이름" required></v-text-field>
+            <v-row justify="center">
+              <v-col cols="2" class="text-center pt-8">
+                * 비밀번호 재입력
+              </v-col>
+              <v-col>
+                <v-text-field
+                  v-model="password2"
+                  type="password"
+                  :counter="20"
+                  :rules="passwordRules"
+                  placeholder="비밀번호를 재입력해주세요."
+                  required
+                  clearable
+                  color="#356859"
+                ></v-text-field>
+              </v-col>
+            </v-row>
 
-        <v-text-field v-model="nickName" :counter="10" :rules="nickNameRules" label="별명" required></v-text-field>생일
-        <v-date-picker v-model="birth"></v-date-picker>
+            <v-row justify="center">
+              <v-col cols="2" class="text-center pt-8">
+                * 이름
+              </v-col>
+              <v-col>
+                <v-text-field v-model="name" :counter="15" :rules="nameRules" placeholder="이름을 입력해주세요." color="#356859" required clearable></v-text-field>
+              </v-col>
+            </v-row>
 
-        <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">회원가입</v-btn>
-      </v-form>
-    </v-app>
-  </div>
+            <v-row justify="center">
+              <v-col cols="2" class="text-center pt-8">
+                * 별명
+              </v-col>
+              <v-col>
+                <v-text-field v-model="nickName" :counter="10" :rules="nickNameRules" placeholder="사용할 별명을 입력해주세요.(10자 내외)" color="#356859" required clearable></v-text-field>
+              </v-col>
+            </v-row>
+            
+            <v-col>
+              * 하단 달력에서 생일을 입력해주세요.
+            </v-col>
+            <v-col>
+              <v-date-picker v-model="birth" color="#356859"></v-date-picker>
+            </v-col>
+
+            <v-btn class="pa-5" :disabled="!valid" color="#356859" dark width="100%" @click="validate">회원가입</v-btn>
+          </v-form>
+          <div style="text-align: right">
+            <v-btn text class="mt-3" @click="goLogin()">뒤로 가기</v-btn>
+          </div>
+        </v-col>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -104,6 +161,9 @@ export default {
           }
           console.log(e.request.status);
         });
+    },
+    goLogin: function() {
+      this.$router.push('/login')
     }
   }
 };
