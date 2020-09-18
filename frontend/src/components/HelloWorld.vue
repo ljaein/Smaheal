@@ -1,83 +1,319 @@
 <template>
-  <v-container>
-    <v-row class="text-center">
-      <v-col cols="12">
-        <v-img
-          :src="require('../assets/logo.svg')"
-          class="my-3"
-          contain
-          height="200"
-        />
-      </v-col>
-
-      <v-col class="mb-4">
-        <h1 class="display-2 font-weight-bold mb-3">
-          Welcome to Vuetify
-        </h1>
-
-        <p class="subheading font-weight-regular">
-          For help and collaboration with other Vuetify developers,
-          <br />please join our online
-          <a href="https://community.vuetifyjs.com" target="_blank"
-            >Discord Community</a
+  <v-container fluid class="pa-0">
+    <v-main class="pa-0">
+      <section id="hero">
+        <v-row no-gutters>
+          <v-img
+            :min-height="'calc(100vh - ' + $vuetify.application.top + 'px)'"
+            :src="require(`@/assets/main-smile.jpg`)"
           >
-        </p>
-      </v-col>
+            <v-theme-provider dark>
+              <v-container fill-height>
+                <v-row
+                  align="center"
+                  class="white--text mx-auto"
+                  justify="center"
+                >
+                  <v-col
+                    class="white--text text-center"
+                    cols="12"
+                    tag="h1"
+                  >
+                    <span
+                    :class="[$vuetify.breakpoint.smAndDown ? 'display-1' : 'display-2']"
+                      class="font-weight-light"
+                    >
+                      WELCOME TO
+                    </span>
 
-      <v-col class="mb-5" cols="12">
-        <h2 class="headline font-weight-bold mb-3">
-          What's next?
-        </h2>
+                    <br>
 
-        <v-row justify="center">
-          <a
-            v-for="(next, i) in whatsNext"
-            :key="i"
-            :href="next.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ next.text }}
-          </a>
+                    <span
+                      :class="[$vuetify.breakpoint.smAndDown ? 'display-3': 'display-4']"
+                      class="font-weight-black"
+                    >
+                      SMAHEAL
+                    </span>
+
+                  </v-col>
+
+                  <v-btn
+                    class="align-self-end"
+                    fab
+                    outlined
+                    @click="$vuetify.goTo('#about-me')"
+                  >
+                    <v-icon>mdi-chevron-double-down</v-icon>
+                  </v-btn>
+                </v-row>
+              </v-container>
+            </v-theme-provider>
+          </v-img>
         </v-row>
-      </v-col>
+      </section>
 
-      <v-col class="mb-5" cols="12">
-        <h2 class="headline font-weight-bold mb-3">
-          Important Links
-        </h2>
+      <section id="about-me">
+        <div class="py-12"></div>
 
-        <v-row justify="center">
-          <a
-            v-for="(link, i) in importantLinks"
-            :key="i"
-            :href="link.href"
-            class="subheading mx-3"
-            target="_blank"
+        <v-container class="text-center">
+          <h2 class="display-2 font-weight-bold mb-3">ABOUT US</h2>
+
+          <v-responsive
+            class="mx-auto mb-8"
+            width="56"
           >
-            {{ link.text }}
-          </a>
-        </v-row>
-      </v-col>
+            <v-divider class="mb-1"></v-divider>
 
-      <v-col class="mb-5" cols="12">
-        <h2 class="headline font-weight-bold mb-3">
-          Ecosystem
-        </h2>
+            <v-divider></v-divider>
+          </v-responsive>
 
-        <v-row justify="center">
-          <a
-            v-for="(eco, i) in ecosystem"
-            :key="i"
-            :href="eco.href"
-            class="subheading mx-3"
-            target="_blank"
+          <v-responsive
+            class="mx-auto title font-weight-light mb-8"
+            max-width="720"
           >
-            {{ eco.text }}
-          </a>
-        </v-row>
-      </v-col>
-    </v-row>
+            Vuetify is the #1 component library for Vue.js and has been in active development since 2016. The goal of the project is to provide users with everything that is needed to build rich and engaging web applications using the Material Design specification. It accomplishes that with a consistent update cycle, Long-term Support (LTS) for previous versions, responsive community engagement, a vast ecosystem of resources and a dedication to quality components.
+          </v-responsive>
+
+          <v-avatar
+            class="elevation-12 mb-12"
+            size="128"
+          >
+            <v-img :src="require(`@/assets/smile-avatar.jpg`)"></v-img>
+          </v-avatar>
+
+          <div></div>
+        </v-container>
+
+        <div class="py-12"></div>
+      </section>
+
+      <section
+        id="features"
+        class="grey lighten-3"
+      >
+        <div class="py-12"></div>
+
+        <v-container class="text-center">
+          <h2 class="display-2 font-weight-bold mb-3">SMAHEAL FEATURES</h2>
+
+          <v-responsive
+            class="mx-auto mb-12"
+            width="56"
+          >
+            <v-divider class="mb-1"></v-divider>
+
+            <v-divider></v-divider>
+          </v-responsive>
+
+          <v-row>
+            <v-col
+              v-for="({ icon, title, text }, i) in features"
+              :key="i"
+              cols="12"
+              md="4"
+            >
+              <v-card
+                class="py-12 px-4"
+                color="grey lighten-5"
+                flat
+              >
+                <v-theme-provider dark>
+                  <div>
+                    <v-avatar
+                      color="amber accent-4"
+                      size="88"
+                    >
+                      <v-icon
+                        large
+                        v-text="icon"
+                      ></v-icon>
+                    </v-avatar>
+                  </div>
+                </v-theme-provider>
+
+                <v-card-title
+                  class="justify-center font-weight-black text-uppercase"
+                  v-text="title"
+                ></v-card-title>
+
+                <v-card-text
+                  class="subtitle-1"
+                  v-text="text"
+                >
+                </v-card-text>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-container>
+
+        <div class="py-12"></div>
+      </section>
+
+      <section id="stats">
+        <v-parallax
+          :height="$vuetify.breakpoint.smAndDown ? 700 : 500"
+          :src="require(`@/assets/main-happy.jpg`)"
+        >
+          <v-container fill-height>
+            <v-row class="mx-auto">
+              <v-col
+                v-for="[value, title] of stats"
+                :key="title"
+                cols="12"
+                md="3"
+              >
+                <div class="text-center">
+                  <div
+                    class="display-3 font-weight-black mb-4"
+                    v-text="value"
+                  ></div>
+
+                  <div
+                    class="title font-weight-regular text-uppercase"
+                    v-text="title"
+                  ></div>
+                </div>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-parallax>
+      </section>
+
+      <section id="blog">
+        <div class="py-12"></div>
+
+        <v-container>
+          <h2 class="display-2 font-weight-bold mb-3 text-uppercase text-center">Blog</h2>
+
+          <v-responsive
+            class="mx-auto mb-12"
+            width="56"
+          >
+            <v-divider class="mb-1"></v-divider>
+
+            <v-divider></v-divider>
+          </v-responsive>
+
+          <v-row>
+            <v-col
+              v-for="({ src, text, title }, i) in articles"
+              :key="i"
+              cols="12"
+              md="4"
+            >
+              <v-img
+                :src="src"
+                class="mb-4"
+                height="275"
+                max-width="100%"
+              ></v-img>
+
+              <h3
+                class="font-weight-black mb-4 text-uppercase"
+                v-text="title"
+              ></h3>
+
+              <div
+                class="title font-weight-light mb-5"
+                v-text="text"
+              ></div>
+
+              <v-btn
+                class="ml-n4 font-weight-black"
+                text
+              >
+                Continue Reading
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-container>
+
+        <div class="py-12"></div>
+      </section>
+
+      <v-sheet
+        id="contact"
+        color="#333333"
+        dark
+        tag="section"
+        tile
+      >
+        <div class="py-12"></div>
+
+        <!-- <v-container>
+          <h2 class="display-2 font-weight-bold mb-3 text-uppercase text-center">Contact Me</h2>
+
+          <v-responsive
+            class="mx-auto mb-12"
+            width="56"
+          >
+            <v-divider class="mb-1"></v-divider>
+
+            <v-divider></v-divider>
+          </v-responsive>
+
+          <v-theme-provider light>
+            <v-row>
+              <v-col cols="12">
+                <v-text-field
+                  flat
+                  label="Name*"
+                  solo
+                ></v-text-field>
+              </v-col>
+
+              <v-col cols="12">
+                <v-text-field
+                  flat
+                  label="Email*"
+                  solo
+                ></v-text-field>
+              </v-col>
+
+              <v-col cols="12">
+                <v-text-field
+                  flat
+                  label="Subject*"
+                  solo
+                ></v-text-field>
+              </v-col>
+
+              <v-col cols="12">
+                <v-textarea
+                  flat
+                  label="Message*"
+                  solo
+                ></v-textarea>
+              </v-col>
+
+              <v-col
+                class="mx-auto"
+                cols="auto"
+              >
+                <v-btn
+                  color="accent"
+                  x-large
+                >
+                  Submit
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-theme-provider>
+        </v-container> -->
+
+        <div class="py-12"></div>
+      </v-sheet>
+    </v-main>
+
+    <v-footer
+      class="justify-center"
+      color="#292929"
+      height="100"
+    >
+      <div class="title font-weight-light grey--text text--lighten-1 text-center">
+        &copy; {{ (new Date()).getFullYear() }} — SmaHeal — Made with 💜 by 미찾사
+      </div>
+    </v-footer>
   </v-container>
 </template>
 
@@ -86,56 +322,46 @@ export default {
   name: "HelloWorld",
 
   data: () => ({
-    ecosystem: [
-      {
-        text: "vuetify-loader",
-        href: "https://github.com/vuetifyjs/vuetify-loader"
-      },
-      {
-        text: "github",
-        href: "https://github.com/vuetifyjs/vuetify"
-      },
-      {
-        text: "awesome-vuetify",
-        href: "https://github.com/vuetifyjs/awesome-vuetify"
-      }
-    ],
-    importantLinks: [
-      {
-        text: "Documentation",
-        href: "https://vuetifyjs.com"
-      },
-      {
-        text: "Chat",
-        href: "https://community.vuetifyjs.com"
-      },
-      {
-        text: "Made with Vuetify",
-        href: "https://madewithvuejs.com/vuetify"
-      },
-      {
-        text: "Twitter",
-        href: "https://twitter.com/vuetifyjs"
-      },
-      {
-        text: "Articles",
-        href: "https://medium.com/vuetify"
-      }
-    ],
-    whatsNext: [
-      {
-        text: "Explore components",
-        href: "https://vuetifyjs.com/components/api-explorer"
-      },
-      {
-        text: "Select a layout",
-        href: "https://vuetifyjs.com/getting-started/pre-made-layouts"
-      },
-      {
-        text: "Frequently Asked Questions",
-        href: "https://vuetifyjs.com/getting-started/frequently-asked-questions"
-      }
-    ]
+    articles: [
+          {
+            src: 'https://images.unsplash.com/photo-1423784346385-c1d4dac9893a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80',
+            title: 'Mobile first & Responsive',
+            text: 'Phasellus lorem enim, luctus ut velit eget, convallis egestas eros. Sed ornare ligula eget tortor tempor, quis porta tellus dictum.',
+          },
+          {
+            src: 'https://images.unsplash.com/photo-1475938476802-32a7e851dad1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80',
+            title: 'Think outside the box',
+            text: 'Nam ut leo ipsum. Maecenas pretium aliquam feugiat. Aenean vel tempor est, vitae tincidunt risus. Sed sodales vestibulum nibh.',
+          },
+          {
+            src: 'https://images.unsplash.com/photo-1416339442236-8ceb164046f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1892&q=80',
+            title: 'Small changes, big difference',
+            text: 'Vestibulum in dictum velit, in rhoncus nibh. Maecenas neque libero, interdum a dignissim in, aliquet vitae lectus. Phasellus lorem enim, luctus ut velit eget.',
+          },
+        ],
+        features: [
+          {
+            icon: 'mdi-account-group-outline',
+            title: '사람들과 함께 웃음을 기부해요',
+            text: 'SMAHEAL에서는 다양한 사람들과 함께 웃음을 기부할 수 있습니다. 혼자만의 기부가 아닌 같이하는 기부를 SMAHEAL에서 직접 느낄 수 있습니다. 웃음을 기부하여 기쁨을 함께 느껴보세요 !',
+          },
+          {
+            icon: 'mdi-emoticon-excited-outline',
+            title: '즐기면서 기부해요',
+            text: '당신은 기부를 위한 형식적인 웃음을 지어도 되지 않습니다. SMAHEAL에서 행복하고 건강한 웃음을 기부할 수 있게 도와드립니다. 각종 미디어를 통해서 즐거움도 느끼고 웃음 기부도 실천해보세요 !',
+          },
+          {
+            icon: 'mdi-monitor-dashboard',
+            title: '다양한 템플릿으로 웃음을 나눠요',
+            text: '웃음 기부를 신청한 당신은 템플릿이 적용된 기부를 받을 수 있습니다. SMAHEAL에서는 웃음 기부를 모아서 다양한 템플릿을 적용해 단체 혹은 개인에게 전달해드립니다. 지금 당장 신청해보세요 !',
+          },
+        ],
+        stats: [
+          ['24k', 'Github Stars'],
+          ['330+', 'Releases'],
+          ['1m', 'Downloads/mo'],
+          ['5m', 'Total Downloads'],
+        ],
   })
 };
 </script>

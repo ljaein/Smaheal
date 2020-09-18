@@ -1,0 +1,43 @@
+<template>
+  <div>
+    <noticeSearchComp
+    :propItems="items"
+    :propCount="totalCnt"
+    :propKeyword="keyword"
+    v-if="items.length !== 0 && totalCnt !== 0"
+    />
+  </div>
+</template>
+
+<script>
+import noticeSearchComp from "@/components/notice/noticeSearchComp.vue";
+import http from "@/util/http-common.js";
+
+export default {
+  name: "noticeSearch",
+  components: {
+    noticeSearchComp
+  },
+  data: function() {
+    return {
+        keyword: "",
+        items: [],
+        totalCnt: 0,
+    }
+  },
+  created() {
+    this.keyword = this.$route.query.title;
+
+    http
+    .get(`/notice/search/${this.keyword}/0`)
+    .then(({data}) => {
+      this.items = data;
+
+      http.get(`/notice/search/getCount/${this.keyword}`)
+      .then(({data}) => {
+        this.totalCnt = data;
+      })
+    })
+  }
+};
+</script>
