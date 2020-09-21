@@ -1,13 +1,13 @@
 import cv2, os, sys
 import numpy as np
-import datetime
+import time
 from keras.preprocessing.image import img_to_array
 from keras.models import load_model
 import base64
 
 def main(argv):
     # 경로 정해주기
-    r = open('C:/textFile/' + argv[1], mode='rt', encoding='utf-8')
+    r = open('C:\\AI108\\s03p23b108\\frontend\\public\\textFiles\\' + argv[1], mode='rt', encoding='utf-8')
     raw = ""
     for line in r:
         raw += line
@@ -23,6 +23,7 @@ def main(argv):
     np_data = np.fromstring(decoded_data,np.uint8)
     color = cv2.imdecode(np_data,cv2.IMREAD_UNCHANGED)
 
+    # 경로 확인
     face_detection = cv2.CascadeClassifier('C:/Users/multicampus/files/haarcascade_frontalface_default.xml')
     emotion_classifier = load_model('C:/Users/multicampus/files/emotion_model.hdf5', compile=False)
     EMOTIONS = ["Angry" ,"Disgusting","Fearful", "Happy", "Sad", "Surpring", "Neutral"]
@@ -58,15 +59,17 @@ def main(argv):
     print(str(format(round(preds[3] * 100),".0f")))
     print(label)
 
-    now = datetime.datetime.now().strftime("%y%m%d%H%M%S")
+    now = int(round(time.time() * 1000))
     filename = str(now) + '.png'
 
     # if(label == "Happy"):
     #     cv2.imwrite("C:/image/" + filename, color)
     #     print(filename)
     #     print("true")
+    # cv2.imwrite("C:/image/" + filename, frame)
 
-    cv2.imwrite("C:/image/" + filename, color)
+    # 경로 확인
+    cv2.imwrite("C:\\AI108\\s03p23b108\\frontend\\public\\images\\" + filename, color)
     print(filename)
 
     # cv2.imshow('Sample', color)

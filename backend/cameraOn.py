@@ -1,6 +1,6 @@
 import sys
 import cv2
-import datetime
+import time
 import numpy as np   
 from keras.preprocessing.image import img_to_array
 from keras.models import load_model
@@ -14,6 +14,7 @@ def main(argv):
     # sum(argv[1], argv[2])
 
     # Face detection XML load and trained model loading
+    # 경로 확인
     face_detection = cv2.CascadeClassifier('C:/Users/multicampus/files/haarcascade_frontalface_default.xml')
     emotion_classifier = load_model('C:/Users/multicampus/files/emotion_model.hdf5', compile=False)
     EMOTIONS = ["Angry" ,"Disgusting","Fearful", "Happy", "Sad", "Surpring", "Neutral"]
@@ -67,9 +68,11 @@ def main(argv):
 
             # c or smile to capture
             if cv2.waitKey(33) & 0xFF == ord('c') or preds[3] > 0.6:
-                now = datetime.datetime.now().strftime("%y%m%d%H%M%S")
+                now = int(round(time.time() * 1000))
                 filename = str(now) + ".png"
-                cv2.imwrite("C:/image/" + filename, frame)
+                # cv2.imwrite("C:/image/" + filename, frame)
+                # 경로 확인
+                cv2.imwrite("C:\\AI108\\s03p23b108\\frontend\\public\\images\\" + filename, frame)
                 print(filename)
                 print(round(emotion_probability * 100))
                 break
@@ -78,8 +81,8 @@ def main(argv):
         # Open two windows
         ## Display image ("Emotion Recognition")
         ## Display probabilities of emotion
-        cv2.imshow('Emotion Recognition', frame)
-        cv2.imshow("Probabilities", canvas)
+        # cv2.imshow('Emotion Recognition', frame)
+        # cv2.imshow("Probabilities", canvas)
         
         # q to quit
         if cv2.waitKey(33) & 0xFF == ord('q') or cv2.waitKey(33) == 27:
@@ -91,4 +94,5 @@ def main(argv):
     
 
 if __name__ == "__main__":
+    cv2.destroyAllWindows()
     main(sys.argv)
