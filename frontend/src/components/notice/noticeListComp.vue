@@ -10,7 +10,7 @@
       <v-col>
         <v-form action="/notice/search">
           <v-text-field
-            placeholder="제목으로 검색됩니다. 검색어를 입력하세요."
+            placeholder="제목으로 검색됩니다.. 검색어를 입력하세요."
             outlined
             color="#356859"
             clearable
