@@ -64,126 +64,129 @@
         <v-card>
           <v-tabs v-model="tab" background-color="#fffbe3" color="basil" class="basil--text" centered icons-and-text>
             <v-tabs-slider></v-tabs-slider>
-            <v-tab class="tab-text" href="#tab-picture" @click="(videoFlag = false), (selfFlag = false), (value = 0), (overlay = false), (selfieCapture = []), stop()">
-              Picture
-              <v-icon>mdi-image-multiple</v-icon>
+            <v-tab class="tab-text" href="#tab-contents" @click="someContents()">
+              Contents
+              <v-icon>mdi-animation</v-icon>
             </v-tab>
 
-            <v-tab class="tab-text" href="#tab-video" @click="(pictureFlag = false), (selfFlag = false), (value = 0), (overlay = false), (selfieCapture = []), stop()">
-              Video
-              <v-icon>mdi-video</v-icon>
-            </v-tab>
-
-            <v-tab class="tab-text" href="#tab-self" @click="(videoFlag = false), (pictureFlag = false), (value = 0), (overlay = false), (selfieCapture = []), stop()">
+            <v-tab class="tab-text" href="#tab-self" @click="selfieContents()">
               Selfie
               <v-icon>mdi-account-box</v-icon>
             </v-tab>
           </v-tabs>
 
           <v-tabs-items v-model="tab">
-            <!-- 사진 -->
-            <v-tab-item v-if="!pictureFlag" id="tab-picture">
-              <div class="container" style="height:500px;text-align:center;">
-                <v-btn color="#356859" class="col-2" style="top:220px;color:white;" @click="(pictureFlag = true), cameraOn()">start</v-btn>
+            <!-- 콘텐츠 -->
+            <v-tab-item v-if="!contentsFlag" id="tab-contents">
+              <div class="container" style="height:400px;text-align:center">
+                <v-btn color="#356859" class="col-2" style="top:170px;color:white;" @click="(contentsFlag = true), cameraOn()">start</v-btn>
               </div>
             </v-tab-item>
+            <v-tab-item v-if="contentsFlag" id="tab-contents">
+              <v-row align="center" class="container m-0">
+                <v-item-group v-model="window" class="shrink" mandatory tag="v-flex">
+                  <!-- 사진 -->
+                  <v-item v-slot:default="{ active, toggle }" class="mb-5">
+                    <div>
+                      <v-btn :input-value="active" icon @click="toggle">
+                        <v-icon>mdi-image-multiple</v-icon>
+                      </v-btn>
+                    </div>
+                  </v-item>
+                  <!-- 영상 -->
+                  <v-item v-slot:default="{ active, toggle }">
+                    <div>
+                      <v-btn :input-value="active" icon @click="toggle">
+                        <v-icon>mdi-video</v-icon>
+                      </v-btn>
+                    </div>
+                  </v-item>
+                </v-item-group>
 
-            <v-tab-item v-if="pictureFlag" id="tab-picture">
-              <div class="container" style="height:100%;text-align:center">
-                <v-carousel>
-                  <v-carousel-item reverse-transition="fade-transition" transition="fade-transition">
-                    <img
-                      src="https://s-i.huffpost.com/gen/3948866/thumbs/o-PEPE-THE-FROG-570.jpg?3"
-                      style="max-width:100%;width:500px;height:90%;"
-                      alt=""
-                    />
-                  </v-carousel-item>
-                  <v-carousel-item reverse-transition="fade-transition" transition="fade-transition">
-                    <img
-                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQaqQZ3o8bafo4ngTZFIM2vxkSXTBcSr_osfQ&usqp=CAU"
-                      style="max-width:100%;width:500px;height:90%;"
-                      alt=""
-                    />
-                  </v-carousel-item>
-                  <v-carousel-item reverse-transition="fade-transition" transition="fade-transition">
-                    <img
-                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTCdSE06g-wWMbwV39-LgNCI23dcrefSkhosA&usqp=CAU"
-                      style="max-width:100%;width:500px;height:90%;"
-                      alt=""
-                    />
-                  </v-carousel-item>
-                </v-carousel>
-              </div>
-              <div class="container" style="height:300px;text-align:center">
-                <img
-                  src="https://s-i.huffpost.com/gen/3948866/thumbs/o-PEPE-THE-FROG-570.jpg?3"
-                  style="max-width:100%;width:300px;height:100%"
-                  alt="캡쳐된 이미지 나올 자리"
-                />
-              </div>
-              <!-- 사진 사용 여부 -->
-              <v-row>
-                <v-switch style="margin:0 auto" v-model="kingFlag" inset :label="`사진 허용 `"></v-switch>
-              </v-row>
-              <!-- 기부하기 -->
-              <v-row>
-                <v-btn style="margin:0 auto 50px auto;color:white;" class="col-3" color="#356859" @click="donation">기부하기</v-btn>
-              </v-row>
-            </v-tab-item>
-
-            <!-- 동영상 -->
-            <v-tab-item v-if="!videoFlag" id="tab-video">
-              <div class="container" style="height:500px;text-align:center">
-                <v-btn color="#356859" class="col-2" style="top:220px;color:white;" @click="(videoFlag = true), cameraOn()">start</v-btn>
-              </div>
-            </v-tab-item>
-            <v-tab-item v-if="videoFlag" id="tab-video">
-              <div class="container" style="height:500px;text-align:center">
-                <video controls height="100%" width="100%">
-                  <source src="../../../public/video/video1.mp4" type="video/mp4" />
-                </video>
-              </div>
-              <div class="container" style="height:300px;text-align:center">
-                <img
-                  src="https://s-i.huffpost.com/gen/3948866/thumbs/o-PEPE-THE-FROG-570.jpg?3"
-                  style="max-width:100%;width:300px;height:100%"
-                  alt="캡쳐된 이미지 나올 자리"
-                />
-              </div>
-              <!-- 사진 사용 여부 -->
-              <v-row>
-                <v-switch style="margin:0 auto" v-model="kingFlag" inset :label="`사진 허용 `"></v-switch>
-              </v-row>
-              <!-- 기부하기 -->
-              <v-row>
-                <v-btn style="margin:0 auto 50px auto;color:white" class="col-3" color="#356859" @click="donation">기부하기</v-btn>
+                <!-- 컨텐츠 내용 -->
+                <v-col>
+                  <v-window v-model="window" class="elevation-1" vertical>
+                    <!-- 사진 -->
+                    <v-window-item>
+                      <v-card flat>
+                        <v-card-text>
+                          <div class="container" style="height:400px;text-align:center">
+                            <v-carousel style="height:100%;">
+                              <v-carousel-item reverse-transition="fade-transition" transition="fade-transition">
+                                <img
+                                  src="https://s-i.huffpost.com/gen/3948866/thumbs/o-PEPE-THE-FROG-570.jpg?3"
+                                  style="max-width:100%;width:400px;height:65%;"
+                                  alt=""
+                                />
+                              </v-carousel-item>
+                              <v-carousel-item reverse-transition="fade-transition" transition="fade-transition">
+                                <img
+                                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQaqQZ3o8bafo4ngTZFIM2vxkSXTBcSr_osfQ&usqp=CAU"
+                                  style="max-width:100%;width:400px;height:65%;"
+                                  alt=""
+                                />
+                              </v-carousel-item>
+                              <v-carousel-item reverse-transition="fade-transition" transition="fade-transition">
+                                <img
+                                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTCdSE06g-wWMbwV39-LgNCI23dcrefSkhosA&usqp=CAU"
+                                  style="max-width:100%;width:400px;height:65%;"
+                                  alt=""
+                                />
+                              </v-carousel-item>
+                            </v-carousel>
+                          </div>
+                        </v-card-text>
+                      </v-card>
+                    </v-window-item>
+                    <!-- 영상 -->
+                    <v-window-item>
+                      <v-card flat>
+                        <v-card-text>
+                          <div class="container" style="height:400px;text-align:center">
+                            <video controls height="100%" width="100%">
+                              <source src="../../../public/video/video1.mp4" type="video/mp4" />
+                            </video>
+                          </div>
+                        </v-card-text>
+                      </v-card>
+                    </v-window-item>
+                  </v-window>
+                </v-col>
               </v-row>
             </v-tab-item>
 
             <!-- 셀카 -->
             <v-tab-item v-if="!selfFlag" id="tab-self">
-              <div class="container" style="height:500px;text-align:center">
-                <v-btn color="#356859" class="col-2" style="top:220px;color:white;" @click="selfFlag = true">start</v-btn>
+              <div class="container" style="height:400px;text-align:center">
+                <v-btn color="#356859" class="col-2" style="top:170px;color:white;" @click="selfieInit()">start</v-btn>
               </div>
             </v-tab-item>
             <v-tab-item v-if="selfFlag" id="tab-self">
-              <div class="container" style="height:500px;text-align:center">
+              <div class="container" style="height:400px;text-align:center">
                 <video src="" autoplay class="feed" width="100%" height="100%" id="webcam" @click="init(), (camOn = true)"></video>
               </div>
               <v-row class="d-flex justify-content-center">
-                <v-btn color="#356859" class="m-2 col-md-2 col-sm-4 col-10" style="color:white;" v-if="startFlag" @click="init(), (camOn = true), (startFlag = false), (endFlag = true)">start</v-btn>
-                <v-btn color="#356859" class="m-2 col-md-2 col-sm-4 col-10" style="color:white;" v-if="endFlag" @click="stop(), (startFlag = true), (endFlag = false), (checkFlag = false)">stop</v-btn>
-                <v-btn color="#356859" class="m-2 col-md-2 col-sm-4 col-10" style="color:white;" v-if="endFlag" @click="capture(), (checkFlag = true)">capture</v-btn>
-                <v-btn color="#356859" class="m-2 col-md-2 col-sm-4 col-10" style="color:white;" v-if="checkFlag" @click="check">check</v-btn>
+                <v-btn color="#356859" class="m-2 col-md-2 col-sm-4 col-10" style="color:white;" v-if="startFlag" @click="selfieStart()"
+                  >start</v-btn
+                >
+                <v-btn color="#356859" class="m-2 col-md-2 col-sm-4 col-10" style="color:white;" v-if="endFlag" @click="selfieStop()"
+                  >stop</v-btn
+                >
+                <v-btn color="#356859" class="m-2 col-md-2 col-sm-4 col-10" style="color:white;" v-if="endFlag" @click="selfieCap()"
+                  >capture</v-btn
+                >
+                <v-btn color="#356859" class="m-2 col-md-2 col-sm-4 col-10" style="color:white;" v-if="checkFlag" @click="check()"
+                  >check</v-btn
+                >
               </v-row>
-              
+
               <div v-if="!startFlag">
                 <div class="container" style="height:250px;text-align:center">
                   <canvas height="200%" width="200%"></canvas>
                   <img id="myImage" />
                   <!-- {{ selfieCapture }} -->
                 </div>
-                <div>
+                <div v-if="selCapFlag">
                   <!-- 사진 사용 여부 -->
                   <v-row>
                     <v-switch style="margin:0 auto" v-model="kingFlag" inset :label="`사진 허용 `"></v-switch>
@@ -196,7 +199,9 @@
                   </v-row>
                   <!-- 기부하기 -->
                   <v-row>
-                    <v-btn style="margin:0 auto 50px auto;color:white;" class="col-3" color="#356859" @click="donation">기부하기</v-btn>
+                    <v-btn style="margin:0 auto 50px auto;color:white;" class="col-3" color="#356859" @click="donationSelfie"
+                      >기부하기</v-btn
+                    >
                   </v-row>
                 </div>
               </div>
@@ -205,6 +210,43 @@
         </v-card>
       </v-col>
     </v-row>
+    <div v-if="autoCapFlag">
+      <v-row>
+        <v-card style="margin:0 auto;">
+          <img :src="getImg(autoCapture[0])" alt="캡쳐된 이미지" />
+          <!-- <v-img src="../../../public/images/1600678282188.png" alt="autoCapture"></v-img> -->
+        </v-card>
+      </v-row>
+      <v-row class="justify-content-center">
+        <v-btn
+          class="col-lg-2 col-md-2 col-sm-5 col-5 mx-10 my-5"
+          color="#356859"
+          style="color:white;"
+          @click="(contentsFlag = false), (autoCapFlag = false), stepEnd()"
+          >다시찍기</v-btn
+        >
+        <v-btn class="col-lg-2 col-md-2 col-sm-5 col-5 mx-10 my-5" color="#356859" style="color:white;" @click="selectFlag = true"
+          >사진확정</v-btn
+        >
+      </v-row>
+    </div>
+
+    <div v-if="autoCapFlag">
+      <!-- 사진 사용 여부 -->
+      <v-row class="col-4 p-0 mt-5" style="margin:0 auto;">
+        <v-switch v-model="kingFlag" inset label="사진 허용" style="margin:0 auto;"></v-switch>
+      </v-row>
+      <!-- 한줄 코멘트 -->
+      <v-row class="justify-content-center">
+        <v-col cols="6">
+          <v-text-field v-model="comment" :rules="commentRules" :counter="20" label="한 줄 메세지"></v-text-field>
+        </v-col>
+      </v-row>
+      <!-- 기부하기 -->
+      <v-row class="col-4 mb-10" style="margin:0 auto;">
+        <v-btn v-if="selectFlag" color="#356859" @click="donationContents" style="margin:0 auto;color:white;">기부하기</v-btn>
+      </v-row>
+    </div>
 
     <!-- 로딩 오버레이 -->
     <v-overlay :value="overlay">
@@ -222,6 +264,21 @@
         </v-btn>
       </template>
     </v-snackbar>
+
+    <!-- 기부 알림 -->
+    <v-snackbar v-model="donationFlag" top right :timeout="3000" color="error">
+      기부되었습니다.
+      <template v-slot:action="{ attrs }">
+        <v-btn text v-bind="attrs" @click="donationFlag = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
+
+    <!-- 로딩 오버레이 -->
+    <v-overlay :value="donationFlag">
+      <v-progress-circular :size="70" width="6" indeterminate color="amber" style="margin-left:50%"></v-progress-circular>
+    </v-overlay>
   </div>
 </template>
 
@@ -231,6 +288,7 @@ import { mapGetters, mapState } from 'vuex';
 
 export default {
   created() {
+    scroll(0, 0);
     this.donationid = this.$route.params.ID;
     this.uid = this.getUserID;
   },
@@ -243,18 +301,24 @@ export default {
       value: 0,
       comment: '',
       interval: {},
+      length: 2,
+      window: 0,
       tab: null,
       overlay: false,
-      pictureFlag: false,
-      videoFlag: false,
+      contentsFlag: false,
       selfFlag: false,
       captureFlag: false,
+      autoCapFlag: false,
       kingFlag: false,
       camOn: false,
       startFlag: true,
       endFlag: false,
       checkFlag: false,
+      selCapFlag: false,
+      selectFlag: false,
+      donationFlag: false,
       commentRules: [(v) => v.length <= 20 || '20자 이내로 써주세요.'],
+      autoCapture: [],
       selfieCapture: [],
     };
   },
@@ -268,6 +332,9 @@ export default {
           this.selfieCapture = res.data;
           if (this.selfieCapture == 'findFail') {
             alert('얼굴 인식 못함');
+          } else {
+            this.selCapFlag = true;
+            alert('얼굴 인식 성공');
           }
         })
         .catch((err) => {
@@ -307,20 +374,36 @@ export default {
       }
     },
     stepEnd() {
-      scroll(0, 970);
+      scroll(0, 920);
     },
     cameraOn() {
       this.loading();
       http
         .get('/smile/cameraOn')
         .then((res) => {
-          this.captureFlag = true;
-          this.log = res.data;
-          scroll(0, 1500);
+          if (res.data[0] != 'cancel') {
+            this.captureFlag = true;
+            this.autoCapFlag = true;
+            this.autoCapture = res.data;
+            scroll(0, 1700);
+          }
         })
         .catch((err) => {
           console.log(err);
         });
+    },
+    cameraOff() {
+      http
+        .get('/smile/cameraOff')
+        .then((res) => {
+          this.log = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    getImg(img) {
+      return '../../../images/' + img;
     },
     loading() {
       this.overlay = true;
@@ -333,7 +416,7 @@ export default {
         this.value += 10;
       }, 300);
     },
-    donation() {
+    donationSelfie() {
       if (this.selfieCapture == 'findFail') {
         alert('사진 다시 찍어주세요');
       } else {
@@ -350,13 +433,87 @@ export default {
               agreement: this.kingFlag ? 1 : 0,
             })
             .then((res) => {
-              console.log(res.data);
+              this.stop();
+              this.log = res.data;
+              this.donationFlag = true;
+              let x = this;
+              setTimeout(function() {
+                x.$router.push('/donationlist');
+              }, 1500);
             })
             .catch((err) => {
               console.log(err);
             });
         }
       }
+    },
+    donationContents() {
+      http
+        .post('/smile/regist', {
+          user_id: this.uid,
+          donationid: this.donationid,
+          photo: this.autoCapture[0],
+          smileper: this.autoCapture[1],
+          comment: this.comment,
+          agreement: this.kingFlag ? 1 : 0,
+        })
+        .then((res) => {
+          this.log = res.data;
+          this.donationFlag = true;
+          let x = this;
+          setTimeout(function() {
+            x.$router.push('/donationlist');
+          }, 1500);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    selfieInit() {
+      this.selfFlag = true;
+      this.checkFlag = false;
+      this.selCapFlag = false;
+      this.endFlag = false;
+    },
+    selfieStart() {
+      this.init();
+      this.camOn = true;
+      this.startFlag = false;
+      this.endFlag = true;
+    },
+    selfieStop() {
+      this.stop();
+      this.startFlag = true;
+      this.endFlag = false;
+      this.checkFlag = false;
+      this.selCapFlag = false;
+      this.selfieCapture = [];
+    },
+    selfieCap() {
+      this.capture();
+      this.selfieCapture = [];
+      this.checkFlag = true;
+    },
+    selfieContents() {
+      this.autoCapFlag = false;
+      this.startFlag = true;
+      this.contentsFlag = false;
+      this.checkFlag = false;
+      this.selCapFlag = false;
+      this.endFlag = false;
+      this.selfFlag = false;
+      this.value = 0;
+      this.overlay = false;
+      this.selfieCapture = [];
+      this.stop();
+      this.cameraOff();
+    },
+    someContents() {
+      this.selfFlag = false;
+      this.value = 0;
+      this.overlay = false;
+      this.selfieCapture = [];
+      this.stop();
     },
   },
   computed: {
