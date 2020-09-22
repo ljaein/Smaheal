@@ -30,6 +30,13 @@
             <v-btn @click="signOut" color="#356859" style="color:white;">탈퇴</v-btn>
           </v-col>
         </v-row>
+
+        <!-- 유튜브 크롤링 임시 -->
+        <div class="col-4" style="margin:0 auto;text-align:center;">
+          <v-text-field v-model="word" label="검색어" id="id"></v-text-field>
+          <v-text-field v-model="age" label="나이" id="id"></v-text-field>
+          <v-btn color="#356859" style="color:white;" @click="crawling">크롤링</v-btn>
+        </div>
       </v-container>
     </v-form>
   </div>
@@ -45,6 +52,8 @@ export default {
   name: 'MyPageComp',
   data() {
     return {
+      word: '',
+      age: '',
       name: '',
       nickName: '',
       birth: new Date().toISOString().substr(0, 10),
@@ -59,6 +68,15 @@ export default {
     this.birth = this.getFormatDate(this.getUserBirth);
   },
   methods: {
+    crawling() {
+      http.post(`/crawling/youtube?search=${this.word}&age=${this.age}`)
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    },
     getFormatDate(joinedAt) {
       return new Date(joinedAt).toISOString().substr(0, 10);
     },

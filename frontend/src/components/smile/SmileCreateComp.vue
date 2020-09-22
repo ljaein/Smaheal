@@ -142,11 +142,7 @@
                     <v-window-item>
                       <v-card flat>
                         <v-card-text>
-                          <div class="container" style="height:400px;text-align:center">
-                            <video controls height="100%" width="100%">
-                              <source src="../../../public/video/video1.mp4" type="video/mp4" />
-                            </video>
-                          </div>
+                            <LazyYoutubeVideo :src="makeUrl(videos[1].videoId)" style="width:100%;height:100%;"/>
                         </v-card-text>
                       </v-card>
                     </v-window-item>
@@ -285,12 +281,19 @@
 <script>
 import http from '@/util/http-common.js';
 import { mapGetters, mapState } from 'vuex';
+import LazyYoutubeVideo from 'vue-lazy-youtube-video';
+// npm install --save vue-lazy-youtube-video
 
 export default {
+  components: {
+    LazyYoutubeVideo,
+  },
   created() {
     scroll(0, 0);
+    this.cameraOff();
     this.donationid = this.$route.params.ID;
     this.uid = this.getUserID;
+    this.getVideos();
   },
   data() {
     return {
@@ -320,9 +323,22 @@ export default {
       commentRules: [(v) => v.length <= 20 || '20자 이내로 써주세요.'],
       autoCapture: [],
       selfieCapture: [],
+      videos: [],
     };
   },
   methods: {
+    getVideos() {
+      http.get("/crawling/getVideos")
+      .then(res => {
+        this.videos = res.data;
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    }, 
+    playing() {
+      console.log('we are watching!!!');
+    },
     check() {
       var myImage = document.querySelector('canvas').toDataURL();
       //btoa
@@ -404,6 +420,9 @@ export default {
     },
     getImg(img) {
       return '../../../images/' + img;
+    },
+    makeUrl(url) {
+      return "https://www.youtube.com/embed/" + url;
     },
     loading() {
       this.overlay = true;
