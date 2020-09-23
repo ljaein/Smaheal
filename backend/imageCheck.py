@@ -7,7 +7,7 @@ import base64
 
 def main(argv):
     # 경로 정해주기
-    r = open('C:\\AI108\\s03p23b108\\frontend\\public\\textFiles\\' + argv[1], mode='rt', encoding='utf-8')
+    r = open('./frontend/public/textFiles/' + argv[1], mode='rt', encoding='utf-8')
     raw = ""
     for line in r:
         raw += line
@@ -24,8 +24,8 @@ def main(argv):
     color = cv2.imdecode(np_data,cv2.IMREAD_UNCHANGED)
 
     # 경로 확인
-    face_detection = cv2.CascadeClassifier('C:/Users/multicampus/files/haarcascade_frontalface_default.xml')
-    emotion_classifier = load_model('C:/Users/multicampus/files/emotion_model.hdf5', compile=False)
+    face_detection = cv2.CascadeClassifier('./backend/files/haarcascade_frontalface_default.xml')
+    emotion_classifier = load_model('./backend/files/emotion_model.hdf5', compile=False)
     EMOTIONS = ["Angry" ,"Disgusting","Fearful", "Happy", "Sad", "Surpring", "Neutral"]
 
     # Convert color to gray scale
@@ -69,7 +69,7 @@ def main(argv):
     # cv2.imwrite("C:/image/" + filename, frame)
 
     # 경로 확인
-    cv2.imwrite("C:\\AI108\\s03p23b108\\frontend\\public\\images\\" + filename, color)
+    cv2.imwrite("./frontend/public/images/" + filename, color)
     print(filename)
 
     # cv2.imshow('Sample', color)
