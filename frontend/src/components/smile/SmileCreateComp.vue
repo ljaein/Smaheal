@@ -293,12 +293,13 @@ export default {
     this.cameraOff();
     this.donationid = this.$route.params.ID;
     this.uid = this.getUserID;
-    this.getVideos();
+    this.getAge();
   },
   data() {
     return {
       donationid: 0,
       uid: '',
+      uage: '',
       e1: 1,
       log: '',
       value: 0,
@@ -327,8 +328,17 @@ export default {
     };
   },
   methods: {
+    getAge() {
+      this.uage = new Date().getFullYear() - this.getUserBirth.substr(0, 4);
+      if(this.uage < 10) {
+        this.uage = 1;
+      } else {
+        this.uage = this.uage - (this.uage % 10);
+      }
+      this.getVideos();
+    },
     getVideos() {
-      http.get("/crawling/getVideos")
+      http.get(`/crawling/getVideosByAge/${this.uage}`)
       .then(res => {
         this.videos = res.data;
       })
@@ -536,9 +546,10 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['getUserID']),
+    ...mapGetters(['getUserID', "getUserBirth",]),
     ...mapState({
       userID: (state) => `${state.user.getUserID}`,
+      userBirth: state => `${state.user.getUserBirth}`,
     }),
   },
 };
