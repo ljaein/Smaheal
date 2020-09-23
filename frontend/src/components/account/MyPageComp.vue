@@ -32,7 +32,7 @@
         </v-row>
 
         <!-- 유튜브 크롤링 임시 -->
-        <div class="col-4" style="margin:0 auto;text-align:center;">
+        <div v-if="uid == 'admin'" class="col-4" style="margin:0 auto;text-align:center;">
           <v-text-field v-model="word" label="검색어" id="id"></v-text-field>
           <v-text-field v-model="age" label="나이" id="id"></v-text-field>
           <v-btn color="#356859" style="color:white;" @click="crawling">크롤링</v-btn>
@@ -54,12 +54,14 @@ export default {
     return {
       word: '',
       age: '',
+      uid: '',
       name: '',
       nickName: '',
       birth: new Date().toISOString().substr(0, 10),
     };
   },
   created() {
+    this.uid = this.getUserID;
     this.$store.dispatch(USER_UPDATE, this.getUserID).then(() => {});
   },
   mounted() {
