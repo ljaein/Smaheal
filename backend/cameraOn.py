@@ -15,8 +15,8 @@ def main(argv):
 
     # Face detection XML load and trained model loading
     # 경로 확인
-    face_detection = cv2.CascadeClassifier('C:/Users/multicampus/files/haarcascade_frontalface_default.xml')
-    emotion_classifier = load_model('C:/Users/multicampus/files/emotion_model.hdf5', compile=False)
+    face_detection = cv2.CascadeClassifier('backend/files/haarcascade_frontalface_default.xml')
+    emotion_classifier = load_model('backend/files/emotion_model.hdf5', compile=False)
     EMOTIONS = ["Angry" ,"Disgusting","Fearful", "Happy", "Sad", "Surpring", "Neutral"]
 
     # Video capture using webcam
