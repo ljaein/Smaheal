@@ -1,8 +1,11 @@
 <template>
   <div>
-    <audio id="audio" autoplay></audio>
-    <v-btn v-if="!micOn" @click="start">Start</v-btn>
-    <v-btn v-else @click="stop">Stop</v-btn>
+    <div>
+      <audio ref="outputAudioTag" controls autoplay></audio>
+      <button ref="microphonebutton" color="success" @click="recordFromMicrophone">Start</button>
+      <button @click="stop">stop</button>
+      <button @click="loadTransform">play</button>
+    </div>
   </div>
 </template>
 
@@ -11,63 +14,80 @@ export default {
   name: "VoiceComp",
   data() {
     return {
-      micOn: false
+      currentlyRecording: false,
+      maxRecordingSeconds: 5 * 60,
+      globalAudioBuffer: null,
     };
   },
   created() {},
   methods: {
-    start() {
-      navigator.mediaDevices
-        .getUserMedia({ audio: true })
-        .then(this.handleSuccess);
-    },
-    handleSuccess(stream) {
-      document.getElementById("audio").srcObject = stream;
-      this.micOn = true;
-    },
-    stop() {
-      if (this.micOn) {
-        if (document.getElementById("audio") != null) {
-          const stream = document.getElementById("audio").srcObject;
-          const tracks = stream.getTracks();
-          tracks.forEach(function(track) {
-            track.stop();
-          });
-
-          document.getElementById("audio").srcObject = null;
-        }
-        this.micOn = false;
+    async recordFromMicrophone() {
+      if (this.currentlyRecording) {
+        return;
       }
+      this.currentlyRecording = true;
+
+      let chunks = [];
+      let stream = await navigator.mediaDevices.getUserMedia({
+        audio: true,
+        video: false
+      });
+      let mediaRecorder = new MediaRecorder(stream, { mimeType: "video/webm" });
+
+      mediaRecorder.start();
+
+      mediaRecorder.ondataavailable = function(e) {
+        chunks.push(e.data);
+      };
+
+      mediaRecorder.onstart = function() {
+        console.log("Started, state = ", mediaRecorder.state);
+      };
+
+      let stopFn = function() {
+        mediaRecorder.stop();
+      };
+
+      this.$refs.microphonebutton.addEventListener("click", stopFn);
+
+      mediaRecorder.onstop = async function() {
+        console.log("Stopped, state = " + mediaRecorder.state);
+
+        let blob = new Blob(chunks, { type: mediaRecorder.mimeType }); //+'; codecs=opus' });//
+        let audioURL = window.URL.createObjectURL(blob);
+
+        let audio = document.createElement("audio");
+        audio.src = audioURL;
+        document.body.appendChild(audio);
+        audio.play();
+
+        let arrayBuffer = await (await fetch(audioURL)).arrayBuffer();
+
+        this.globalAudioBuffer = await new AudioContext().decodeAudioData(
+          arrayBuffer
+        );
+
+        this.currentlyRecording = false;
+      };
     },
 
-    // self.AudioContext = (self.AudioContext || self.webkitAudioContext);
-    async churchTransform(audioBuffer) {
-      let ctx = new OfflineAudioContext(
-        audioBuffer.numberOfChannels,
-        audioBuffer.length,
-        audioBuffer.sampleRate
-      );
+    async loadTransform() {
+      console.dir(this.globalAudioBuffer);
+      //   if (this.currentlyRecording) {
+      //     alert(
+      //       'You\'re currently recording a clip using your microphone. Please click the red "stop recording" button at the top of the page to finalize the recording, then you can click one of the voice transformers to get your transformed audio file.'
+      //     );
+      //     return;
+      //   }
 
-      // Source
-      let source = ctx.createBufferSource();
-      source.buffer = audioBuffer;
-
-      // Reverb
-      let convolver = ctx.createConvolver();
-      convolver.buffer = await ctx.decodeAudioData(
-        await (await fetch("/audio/impulse-responses/church.wav")).arrayBuffer()
-      );
-
-      // Create graph
-      source.connect(convolver);
-      convolver.connect(ctx.destination);
-
-      // Render
-      source.start();
-      let outputAudioBuffer = await ctx.startRendering();
-      return outputAudioBuffer;
+      let outputAudioBuffer = this.megaphoneTransform(this.globalAudioBuffer);
+      //   let outputWavBlob = await audioBufferToWaveBlob(outputAudioBuffer);
+      //   let audioUrl = window.URL.createObjectURL(outputAudioBuffer);
+      let audioTag = this.$refs.outputAudioTag;
+      audioTag.src = outputAudioBuffer;
+      audioTag.play();
     },
-    
+
     async megaphoneTransform(audioBuffer) {
       let ctx = new OfflineAudioContext(
         audioBuffer.numberOfChannels,
