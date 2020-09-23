@@ -70,7 +70,7 @@ public class CrawlingController {
             System.out.println(vid);
             System.out.println(thumbnail);
 
-            if(youtubeRepository.findByVideoId(vid) == null) {
+            if(youtubeRepository.findByVideoIdAndAges(vid, age) == null) {
                 Youtube youtube = new Youtube();
                 youtube.setVideoId(vid);
                 youtube.setThumbnail(thumbnail);

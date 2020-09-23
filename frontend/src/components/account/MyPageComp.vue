@@ -6,13 +6,13 @@
         <v-row>
           <v-col class="px-7 mt-14 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
             <v-row justify="space-around">
-                <v-text-field class="mb-12" v-model="getUserID" outlined color="#356859" label="아이디" readonly></v-text-field>
+              <v-text-field class="mb-12" v-model="getUserID" outlined color="#356859" label="아이디" readonly></v-text-field>
             </v-row>
             <v-row justify="space-around">
-                <v-text-field class="mb-12" v-model="name" outlined color="#356859" label="이름"></v-text-field>
+              <v-text-field class="mb-12" v-model="name" outlined color="#356859" label="이름"></v-text-field>
             </v-row>
             <v-row justify="space-around">
-                <v-text-field v-model="nickName" outlined color="#356859" label="별명"></v-text-field>
+              <v-text-field v-model="nickName" outlined color="#356859" label="별명"></v-text-field>
             </v-row>
           </v-col>
           <v-col class="px-7 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
@@ -32,9 +32,10 @@
         </v-row>
 
         <!-- 유튜브 크롤링 임시 -->
-        <div v-if="uid == 'admin'" class="col-4" style="margin:0 auto;text-align:center;">
+        <div v-if="uid == 'admin'" class="col-12 col-md-4 col-lg-4 col-sm-6" style="margin:100px auto 0 auto;text-align:center;border:1px solid black">
+          영상 크롤링
           <v-text-field v-model="word" label="검색어" id="id"></v-text-field>
-          <v-text-field v-model="age" label="나이" id="id"></v-text-field>
+          <v-select :items="items" label="연령대" dense outlined v-model="age"></v-select>
           <v-btn color="#356859" style="color:white;" @click="crawling">크롤링</v-btn>
         </div>
       </v-container>
@@ -53,10 +54,12 @@ export default {
   data() {
     return {
       word: '',
-      age: '',
+      age: 0,
       uid: '',
       name: '',
+      log: '',
       nickName: '',
+      items: [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
       birth: new Date().toISOString().substr(0, 10),
     };
   },
@@ -71,13 +74,20 @@ export default {
   },
   methods: {
     crawling() {
-      http.post(`/crawling/youtube?search=${this.word}&age=${this.age}`)
-      .then(res => {
-        console.log(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      })
+      if (this.age == 0 || this.word == '') {
+        alert('크롤링 정보를 입력하세요.');
+      } else {
+        http
+          .post(`/crawling/youtube?search=${this.word}&age=${this.age}`)
+          .then((res) => {
+            this.log = res.data;
+            this.word = '';
+            this.age = 0;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     },
     getFormatDate(joinedAt) {
       return new Date(joinedAt).toISOString().substr(0, 10);
