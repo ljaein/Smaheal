@@ -15,8 +15,8 @@ def main(argv):
 
     # Face detection XML load and trained model loading
     # 경로 확인
-    face_detection = cv2.CascadeClassifier('backend/files/haarcascade_frontalface_default.xml')
-    emotion_classifier = load_model('backend/files/emotion_model.hdf5', compile=False)
+    face_detection = cv2.CascadeClassifier('./backend/files/haarcascade_frontalface_default.xml')
+    emotion_classifier = load_model('./backend/files/emotion_model.hdf5', compile=False)
     EMOTIONS = ["Angry" ,"Disgusting","Fearful", "Happy", "Sad", "Surpring", "Neutral"]
 
     # Video capture using webcam
@@ -72,7 +72,7 @@ def main(argv):
                 filename = str(now) + ".png"
                 # cv2.imwrite("C:/image/" + filename, frame)
                 # 경로 확인
-                cv2.imwrite("C:\\AI108\\s03p23b108\\frontend\\public\\images\\" + filename, frame)
+                cv2.imwrite("./frontend/public/images/" + filename, frame)
                 print(filename)
                 print(round(emotion_probability * 100))
                 break
@@ -81,7 +81,7 @@ def main(argv):
         # Open two windows
         ## Display image ("Emotion Recognition")
         ## Display probabilities of emotion
-        # cv2.imshow('Emotion Recognition', frame)
+        cv2.imshow('Emotion Recognition', frame)
         # cv2.imshow("Probabilities", canvas)
         
         # q to quit
