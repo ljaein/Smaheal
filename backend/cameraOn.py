@@ -2,8 +2,8 @@ import sys
 import cv2
 import time
 import numpy as np   
-from keras.preprocessing.image import img_to_array
-from keras.models import load_model
+# from keras.preprocessing.image import img_to_array
+# from keras.models import load_model
 
 # def sum(v1, v2):
 #     result = int(v1) + int(v2)
@@ -12,8 +12,6 @@ from keras.models import load_model
 
 def main(argv):
     # sum(argv[1], argv[2])
-    print(argv[1])
-    print(argv[2])
     # Face detection XML load and trained model loading
     # 경로 확인
     # face_detection = cv2.CascadeClassifier('./var/lib/jenkins/workspace/maven-test/backend/files/haarcascade_frontalface_default.xml')
@@ -24,6 +22,7 @@ def main(argv):
 
     # # Video capture using webcam
     # camera = cv2.VideoCapture(0)
+    print(123)
 
     # while True:
     #     # Capture image from camera
