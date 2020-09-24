@@ -162,19 +162,19 @@ public class SmileController {
         int result = executor.execute(commandLine);
         System.out.println("result: " + result);
         
-        // String[] outputList = outputStream.toString().split("\n");
-        // int len = outputList.length;
-        // if(outputList[len - 1].length() < 6) {
-        //     String fileName = outputList[len - 2].trim();
-        //     String percent = outputList[len - 1].trim();
-        //     camList.clear();
-        //     camList.add(fileName);
-        //     camList.add(percent);
-        //     System.out.println(fileName);
-        //     System.out.println(percent);
-        // } else {
-        //     camList.add("cancel");
-        // }
+        String[] outputList = outputStream.toString().split("\n");
+        int len = outputList.length;
+        if(outputList[len - 1].length() < 6) {
+            String fileName = outputList[len - 2].trim();
+            String percent = outputList[len - 1].trim();
+            camList.clear();
+            camList.add(fileName);
+            camList.add(percent);
+            System.out.println(fileName);
+            System.out.println(percent);
+        } else {
+            camList.add("cancel");
+        }
         // System.out.println("output: " + outputStream.toString().split("\n")[0]);
     }
 
