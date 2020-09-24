@@ -1,22 +1,26 @@
 <template>
   <div>
     <div>
-      <audio ref="outputAudioTag" controls autoplay></audio>
+      <audio id="audio" ref="outputAudioTag" controls></audio>
       <button ref="microphonebutton" color="success" @click="recordFromMicrophone">Start</button>
-      <button @click="stop">stop</button>
+      <br />
+      <button ref="stop" @click="stop">stop</button>
+      <br />
       <button @click="loadTransform">play</button>
+      <br />
     </div>
   </div>
 </template>
 
 <script>
+import bufferToWav from "audiobuffer-to-wav";
+
 export default {
   name: "VoiceComp",
   data() {
     return {
       currentlyRecording: false,
-      maxRecordingSeconds: 5 * 60,
-      globalAudioBuffer: null,
+      globalAudioBuffer: null
     };
   },
   created() {},
@@ -48,44 +52,43 @@ export default {
         mediaRecorder.stop();
       };
 
-      this.$refs.microphonebutton.addEventListener("click", stopFn);
+      this.$refs.stop.addEventListener("click", stopFn);
 
       mediaRecorder.onstop = async function() {
         console.log("Stopped, state = " + mediaRecorder.state);
 
-        let blob = new Blob(chunks, { type: mediaRecorder.mimeType }); //+'; codecs=opus' });//
+        let blob = new Blob(chunks, { type: mediaRecorder.mimeType });
         let audioURL = window.URL.createObjectURL(blob);
 
-        let audio = document.createElement("audio");
+        let audio = document.getElementById("audio");
         audio.src = audioURL;
-        document.body.appendChild(audio);
-        audio.play();
-
-        let arrayBuffer = await (await fetch(audioURL)).arrayBuffer();
-
-        this.globalAudioBuffer = await new AudioContext().decodeAudioData(
-          arrayBuffer
-        );
-
-        this.currentlyRecording = false;
       };
+    },
+    stop() {
+      this.currentlyRecording = false;
     },
 
     async loadTransform() {
-      console.dir(this.globalAudioBuffer);
-      //   if (this.currentlyRecording) {
-      //     alert(
-      //       'You\'re currently recording a clip using your microphone. Please click the red "stop recording" button at the top of the page to finalize the recording, then you can click one of the voice transformers to get your transformed audio file.'
-      //     );
-      //     return;
-      //   }
+      let audio = document.getElementById("audio");
+      let arrayBuffer = await (await fetch(audio.src)).arrayBuffer();
 
-      let outputAudioBuffer = this.megaphoneTransform(this.globalAudioBuffer);
-      //   let outputWavBlob = await audioBufferToWaveBlob(outputAudioBuffer);
-      //   let audioUrl = window.URL.createObjectURL(outputAudioBuffer);
-      let audioTag = this.$refs.outputAudioTag;
-      audioTag.src = outputAudioBuffer;
-      audioTag.play();
+      this.globalAudioBuffer = await new AudioContext().decodeAudioData(
+        arrayBuffer
+      );
+
+      let outputAudioBuffer = this.vibratoTransform(this.globalAudioBuffer);
+      outputAudioBuffer.then(function(result) {
+        var anchor = document.getElementById("audio");
+
+        var wav = bufferToWav(result);
+        var blob = new window.Blob([new DataView(wav)], {
+          type: "audio/wav"
+        });
+
+        var url = window.URL.createObjectURL(blob);
+        anchor.src = url;
+        anchor.play();
+      });
     },
 
     async megaphoneTransform(audioBuffer) {
@@ -137,6 +140,42 @@ export default {
 
       source.start(0);
       return await ctx.startRendering();
+    },
+
+    async vibratoTransform(audioBuffer) {
+      let ctx = new OfflineAudioContext(
+        audioBuffer.numberOfChannels,
+        audioBuffer.length,
+        audioBuffer.sampleRate
+      );
+
+      // Input
+      let inputNode = ctx.createBufferSource();
+      inputNode.buffer = audioBuffer;
+
+      // Delay
+      let delayNode = ctx.createDelay();
+      delayNode.delayTime.value = 0.03;
+
+      let osc = ctx.createOscillator();
+      let gain = ctx.createGain();
+      let wetGain = ctx.createGain();
+
+      gain.gain.value = 0.002; // depth of change to the delay:
+
+      osc.type = "sine";
+      osc.frequency.value = 4.5;
+
+      osc.connect(gain);
+      gain.connect(delayNode.delayTime);
+      inputNode.connect(delayNode);
+      delayNode.connect(wetGain);
+      wetGain.connect(ctx.destination);
+
+      osc.start(0);
+      inputNode.start(0);
+      let outputAudioBuffer = await ctx.startRendering();
+      return outputAudioBuffer;
     }
   }
 };
