@@ -53,7 +53,6 @@ public class SmileController {
             command[1] = System.getProperty("user.home") + "/s03p23b108/backend/cameraOn.py";
             command[2] = System.getProperty("user.home") + "/s03p23b108/backend/files/haarcascade_frontalface_default.xml";
             command[3] = System.getProperty("user.home") + "/s03p23b108/backend/files/emotion_model.hdf5";
-            
             try {
                 execPython(command);
             } catch (Exception e) {
@@ -61,7 +60,10 @@ public class SmileController {
             }
             return new ResponseEntity<>(camList, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(System.getProperty("user.home"), HttpStatus.INTERNAL_SERVER_ERROR);
+            List<String> list = new LinkedList<>();
+            list.add(System.getProperty("user.dir"));
+            list.add(System.getProperty("user.home"));
+            return new ResponseEntity<>(list, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
