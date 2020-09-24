@@ -1,7 +1,7 @@
 from konlpy.tag import Mecab
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-from tensorflow.keras.models import load_model
+from keras.models import load_model
 
 def sentiment_predict(loaded_model, new_sentence):
     mecab = Mecab()
@@ -18,5 +18,5 @@ def sentiment_predict(loaded_model, new_sentence):
         print("{:.2f}% 확률로 부정 메세지입니다.".format((1 - score) * 100))
 
 if __name__ == "__main__":
-    loaded_model = load_model('./backend/files/sentiment_model.hdf5')
+    loaded_model = load_model('./backend/files/sentiment_analysis_model.h5')
     sentiment_predict(loaded_model,'이 상품 진짜 좋아요... 저는 강추합니다. 대박')
