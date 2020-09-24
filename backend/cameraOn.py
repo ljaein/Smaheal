@@ -15,8 +15,10 @@ def main(argv):
 
     # Face detection XML load and trained model loading
     # 경로 확인
-    face_detection = cv2.CascadeClassifier('/var/lib/jenkins/workspace/maven-test/backend/files/haarcascade_frontalface_default.xml')
-    emotion_classifier = load_model('/var/lib/jenkins/workspace/maven-test/backend/files/emotion_model.hdf5', compile=False)
+    # face_detection = cv2.CascadeClassifier('./var/lib/jenkins/workspace/maven-test/backend/files/haarcascade_frontalface_default.xml')
+    # emotion_classifier = load_model('./var/lib/jenkins/workspace/maven-test/backend/files/emotion_model.hdf5', compile=False)
+    face_detection = cv2.CascadeClassifier(argv[1], compile=False)
+    emotion_classifier = load_model(argv[2], compile=False)
     EMOTIONS = ["Angry" ,"Disgusting","Fearful", "Happy", "Sad", "Surpring", "Neutral"]
 
     # Video capture using webcam
@@ -72,7 +74,7 @@ def main(argv):
                 filename = str(now) + ".png"
                 # cv2.imwrite("C:/image/" + filename, frame)
                 # 경로 확인
-                cv2.imwrite("/var/lib/jenkins/workspace/maven-test/frontend/public/images/" + filename, frame)
+                cv2.imwrite("./var/lib/jenkins/workspace/Gitlab/frontend/public/images/" + filename, frame)
                 print(filename)
                 print(round(emotion_probability * 100))
                 break
