@@ -50,7 +50,9 @@
       </v-col>
     </v-row>
 
-    <v-row style="height:300px"></v-row>
+    <v-row style="height:300px">
+      <button @click="texttest">감성분석</button>
+    </v-row>
 
     <!-- 캡쳐 종류 선택 -->
     <v-row style="height:700px;" class="d-flex justify-content-center pt-15">
@@ -526,30 +528,22 @@ export default {
           alert("웃음 지수가 너무 낮습니다.");
         } else {
           http
-            .get("/smile/textCheck")
+            .post("/smile/regist", {
+              user_id: this.uid,
+              donationid: this.donationid,
+              photo: this.selfieCapture[0],
+              smileper: this.selfieCapture[2],
+              comment: this.comment,
+              agreement: this.kingFlag ? 1 : 0
+            })
             .then(res => {
-              console.log(res.data);
-              // http
-              //   .post("/smile/regist", {
-              //     user_id: this.uid,
-              //     donationid: this.donationid,
-              //     photo: this.selfieCapture[0],
-              //     smileper: this.selfieCapture[2],
-              //     comment: this.comment,
-              //     agreement: this.kingFlag ? 1 : 0
-              //   })
-              //   .then(res => {
-              //     this.stop();
-              //     this.log = res.data;
-              //     this.donationFlag = true;
-              //     let x = this;
-              //     setTimeout(function() {
-              //       x.$router.push("/donationlist");
-              //     }, 1500);
-              //   })
-              //   .catch(err => {
-              //     console.log(err);
-              //   });
+              this.stop();
+              this.log = res.data;
+              this.donationFlag = true;
+              let x = this;
+              setTimeout(function() {
+                x.$router.push("/donationlist");
+              }, 1500);
             })
             .catch(err => {
               console.log(err);
@@ -624,6 +618,16 @@ export default {
       this.overlay = false;
       this.selfieCapture = [];
       this.stop();
+    },
+    texttest() {
+      http
+        .get("/smile/textCheck")
+        .then(res => {
+          console.log(res.data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   },
   computed: {
