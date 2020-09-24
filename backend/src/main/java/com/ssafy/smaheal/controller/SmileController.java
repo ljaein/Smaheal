@@ -49,26 +49,17 @@ public class SmileController {
             String[] command = new String[2];
             command[0] = "python";
             // 경로 확인
-            String workspacePath = System.getProperty("user.dir");
-            String[] pathSplited = workspacePath.split("/");
-            if (pathSplited[pathSplited.length - 1].equals("target")) {
-                String newPath = pathSplited[0];
-                for (int i = 1; i < pathSplited.length - 1; i++) {
-                    newPath += "/" + pathSplited[i];
-                }
-                workspacePath = newPath;
-            }
-            command[1] = workspacePath + "/cameraOn.py";
-            // command[2] = workspacePath + "/files/haarcascade_frontalface_default.xml";
-            // command[3] = workspacePath + "/files/emotion_model.hdf5";
+            command[1] = "./backend/cameraOn.py";
+            // command[2] = "./backend/files/haarcascade_frontalface_default.xml";
+            // command[3] = "./backend/files/emotion_model.hdf5";
             try {
                 execPython(command);
             } catch (Exception e) {
-                return new ResponseEntity<>("!@#", HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
             }
             return new ResponseEntity<>(camList, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("123", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
@@ -110,7 +101,7 @@ public class SmileController {
             String[] command = new String[3];
             command[0] = "python";
             // 경로 확인
-            command[1] = System.getProperty("user.home") + "/s03p23b108/backend/imageCheck.py";
+            command[1] = "./backend/imageCheck.py";
             command[2] = tempFileName;
             try {
                 execPythonSmileCheck(command);
@@ -162,27 +153,27 @@ public class SmileController {
         int result = executor.execute(commandLine);
         System.out.println("result: " + result);
         
-        // String[] outputList = outputStream.toString().split("\n");
-        // int len = outputList.length;
-        // if(outputList[len - 1].length() < 6) {
-        //     String fileName = outputList[len - 2].trim();
-        //     String percent = outputList[len - 1].trim();
-        //     camList.clear();
-        //     camList.add(fileName);
-        //     camList.add(percent);
-        //     System.out.println(fileName);
-        //     System.out.println(percent);
-        // } else {
-        //     camList.add("cancel");
-        // }
-        // System.out.println("output: " + outputStream.toString().split("\n")[0]);
+        String[] outputList = outputStream.toString().split("\n");
+        int len = outputList.length;
+        if(outputList[len - 1].length() < 6) {
+            String fileName = outputList[len - 2].trim();
+            String percent = outputList[len - 1].trim();
+            camList.clear();
+            camList.add(fileName);
+            camList.add(percent);
+            System.out.println(fileName);
+            System.out.println(percent);
+        } else {
+            camList.add("cancel");
+        }
+        System.out.println("output: " + outputStream.toString().split("\n")[0]);
     }
 
     public static String createFile(String filename) throws FileNotFoundException {
         long time = System.currentTimeMillis();
         String name = Long.toString(time);
         // 경로 정해주기
-        File file = new File("./var/lib/jenkins/workspace/Gitlab/frontend/public/textFiles/" + name);
+        File file = new File("./frontend/public/textFiles/" + name);
         String str = filename;
 
         try {
