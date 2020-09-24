@@ -1,3 +1,4 @@
 {
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "python.pythonPath": "C:\\ProgramData\\Anaconda3\\envs\\AI108\\python.exe"
 }
