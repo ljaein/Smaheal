@@ -46,10 +46,13 @@ public class SmileController {
     public Object cameraOn() throws SQLException, IOException {
         try {
             System.out.println("Camera on Python Call");
-            String[] command = new String[2];
+            String[] command = new String[4];
             command[0] = "python";
             // 경로 확인
-            command[1] = "/var/lib/jenkins/workspace/maven-test/backend/cameraOn.py";
+            System.getProperty("user.dir");
+            command[1] = System.getProperty("user.home") + "/s03p23b108/backend/cameraOn.py";
+            command[2] = System.getProperty("user.home") + "/s03p23b108/backend/files/haarcascade_frontalface_default.xml";
+            command[3] = System.getProperty("user.home") + "/s03p23b108/backend/files/emotion_model.hdf5";
             
             try {
                 execPython(command);
@@ -100,7 +103,7 @@ public class SmileController {
             String[] command = new String[3];
             command[0] = "python";
             // 경로 확인
-            command[1] = "/var/lib/jenkins/workspace/maven-test/backend/imageCheck.py";
+            command[1] = System.getProperty("user.home") + "/s03p23b108/backend/imageCheck.py";
             command[2] = tempFileName;
             try {
                 execPythonSmileCheck(command);
@@ -172,7 +175,7 @@ public class SmileController {
         long time = System.currentTimeMillis();
         String name = Long.toString(time);
         // 경로 정해주기
-        File file = new File("/var/lib/jenkins/workspace/maven-test/frontend/public/textFiles/" + name);
+        File file = new File("./var/lib/jenkins/workspace/Gitlab/frontend/public/textFiles/" + name);
         String str = filename;
 
         try {
