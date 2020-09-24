@@ -39,6 +39,7 @@ public class SmileController {
     private SmileRepository smileRepository;
     public static List camList = new LinkedList<>();
     public static List selfList = new LinkedList<>();
+    public static List textList = new LinkedList<>();
 
     @GetMapping("/cameraOn")
     @ApiOperation(value = "웹캠 on")
@@ -198,7 +199,7 @@ public class SmileController {
             } catch (Exception e) {
                 return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
             }
-            return new ResponseEntity<>(camList, HttpStatus.OK);
+            return new ResponseEntity<>(textList, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -216,20 +217,10 @@ public class SmileController {
         executor.setStreamHandler(pumpStreamHandler);
         int result = executor.execute(commandLine);
         System.out.println("result: " + result);
-        
-        // String[] outputList = outputStream.toString().split("\n");
-        // int len = outputList.length;
-        // if(outputList[len - 1].length() < 6) {
-        //     String fileName = outputList[len - 2].trim();
-        //     String percent = outputList[len - 1].trim();
-        //     camList.clear();
-        //     camList.add(fileName);
-        //     camList.add(percent);
-        //     System.out.println(fileName);
-        //     System.out.println(percent);
-        // } else {
-        //     camList.add("cancel");
-        // }
+        String[] outputList = outputStream.toString().split("\n");
+        for(String s : outputList){
+            textList.add(s);
+        }
         System.out.println("output: " + outputStream.toString().split("\n")[0]);
     }
 }
