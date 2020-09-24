@@ -1,7 +1,7 @@
 import sys
 import cv2
-import time
-import numpy as np   
+# import time
+# import numpy as np   
 # from keras.preprocessing.image import img_to_array
 # from keras.models import load_model
 
@@ -28,7 +28,7 @@ def main(argv):
         ret, frame = camera.read()
         
         # Convert color to gray scale
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         
         # Face detection in frame
         # faces = face_detection.detectMultiScale(gray,
@@ -37,7 +37,7 @@ def main(argv):
         #                                         minSize=(30,30))
         
         # Create empty image
-        canvas = np.zeros((250, 300, 3), dtype="uint8")
+        # canvas = np.zeros((250, 300, 3), dtype="uint8")
         
         # Perform emotion recognition only when face is detected
         # if len(faces) > 0:
@@ -83,7 +83,7 @@ def main(argv):
         ## Display image ("Emotion Recognition")
         ## Display probabilities of emotion
         cv2.imshow('Emotion Recognition', frame)
-        cv2.imshow("Probabilities", canvas)
+        # cv2.imshow("Probabilities", canvas)
         
         # q to quit
         if cv2.waitKey(33) & 0xFF == ord('q') or cv2.waitKey(33) == 27:
