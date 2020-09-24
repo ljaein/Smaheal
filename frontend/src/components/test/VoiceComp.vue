@@ -1,14 +1,37 @@
 <template>
-  <div>
-    <div>
-      <audio id="audio" ref="outputAudioTag" controls></audio>
-      <button ref="microphonebutton" color="success" @click="recordFromMicrophone">Start</button>
-      <br />
-      <button ref="stop" @click="stop">stop</button>
-      <br />
-      <button @click="loadTransform">play</button>
-      <br />
-    </div>
+  <div align="center">
+    <v-card width="400px">
+      <v-container>
+        <v-row>
+          <v-col>
+            <audio id="audio"></audio>
+            <audio id="convert" controls></audio>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <button v-if="!currentlyRecording" @click="recordFromMicrophone">녹음 시작</button>
+            <button v-else ref="stop" @click="stop">중지</button>
+          </v-col>
+        </v-row>
+        <v-row v-if="bufferIs">
+          <v-col>
+            <button @click="loadTransform(0)">비브라토</button>
+            <br />
+            <button @click="loadTransform(1)">메가폰</button>
+            <br />
+            <button @click="loadTransform(2)">느린</button>
+            <br />
+            <button @click="loadTransform(3)">로꾸꺼</button>
+            <br />
+            <button @click="loadTransform(4)">외계생명체</button>
+            <br />
+            <button @click="loadTransform(5)">autowah</button>
+            <br />
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-card>
   </div>
 </template>
 
@@ -20,7 +43,8 @@ export default {
   data() {
     return {
       currentlyRecording: false,
-      globalAudioBuffer: null
+      globalAudioBuffer: null,
+      bufferIs: false
     };
   },
   created() {},
@@ -44,19 +68,15 @@ export default {
         chunks.push(e.data);
       };
 
-      mediaRecorder.onstart = function() {
-        console.log("Started, state = ", mediaRecorder.state);
-      };
-
       let stopFn = function() {
-        mediaRecorder.stop();
+        if (mediaRecorder.state != "inactive") {
+          mediaRecorder.stop();
+        }
       };
 
       this.$refs.stop.addEventListener("click", stopFn);
 
       mediaRecorder.onstop = async function() {
-        console.log("Stopped, state = " + mediaRecorder.state);
-
         let blob = new Blob(chunks, { type: mediaRecorder.mimeType });
         let audioURL = window.URL.createObjectURL(blob);
 
@@ -66,9 +86,10 @@ export default {
     },
     stop() {
       this.currentlyRecording = false;
+      this.bufferIs = true;
     },
 
-    async loadTransform() {
+    async loadTransform(num) {
       let audio = document.getElementById("audio");
       let arrayBuffer = await (await fetch(audio.src)).arrayBuffer();
 
@@ -76,19 +97,51 @@ export default {
         arrayBuffer
       );
 
-      let outputAudioBuffer = this.vibratoTransform(this.globalAudioBuffer);
-      outputAudioBuffer.then(function(result) {
-        var anchor = document.getElementById("audio");
+      let outputAudioBuffer = null;
 
-        var wav = bufferToWav(result);
-        var blob = new window.Blob([new DataView(wav)], {
-          type: "audio/wav"
+      switch (num) {
+        case 0:
+          outputAudioBuffer = this.vibratoTransform(this.globalAudioBuffer);
+          break;
+
+        case 1:
+          outputAudioBuffer = this.megaphoneTransform(this.globalAudioBuffer);
+          break;
+
+        case 2:
+          outputAudioBuffer = this.slowWobbleTransform(this.globalAudioBuffer);
+          break;
+
+        case 3:
+          outputAudioBuffer = this.reverseTimeTransform(this.globalAudioBuffer);
+          break;
+
+        case 4:
+          outputAudioBuffer = this.alienRobot1Transform(this.globalAudioBuffer);
+          break;
+
+        case 5:
+          outputAudioBuffer = this.autowahTransform(this.globalAudioBuffer);
+          break;
+
+        default:
+          break;
+      }
+
+      if (outputAudioBuffer != null) {
+        outputAudioBuffer.then(function(result) {
+          var anchor = document.getElementById("convert");
+
+          var wav = bufferToWav(result);
+          var blob = new window.Blob([new DataView(wav)], {
+            type: "audio/wav"
+          });
+
+          var url = window.URL.createObjectURL(blob);
+          anchor.src = url;
+          anchor.play();
         });
-
-        var url = window.URL.createObjectURL(blob);
-        anchor.src = url;
-        anchor.play();
-      });
+      }
     },
 
     async megaphoneTransform(audioBuffer) {
@@ -173,6 +226,150 @@ export default {
       wetGain.connect(ctx.destination);
 
       osc.start(0);
+      inputNode.start(0);
+      let outputAudioBuffer = await ctx.startRendering();
+      return outputAudioBuffer;
+    },
+
+    async slowWobbleTransform(audioBuffer) {
+      let ctx = new OfflineAudioContext(
+        audioBuffer.numberOfChannels,
+        audioBuffer.length,
+        audioBuffer.sampleRate
+      );
+
+      let source = ctx.createBufferSource();
+      source.buffer = audioBuffer;
+
+      let oscillator = ctx.createOscillator();
+      oscillator.frequency.value = 1;
+      oscillator.type = "sine";
+
+      let oscillatorGain = ctx.createGain();
+      oscillatorGain.gain.value = 0.05;
+
+      let delay = ctx.createDelay();
+      delay.delayTime.value = 0.05;
+
+      // source --> delay --> ctx.destination
+      // oscillator --> oscillatorGain --> delay.delayTime --> ctx.destination
+
+      source.connect(delay);
+      delay.connect(ctx.destination);
+
+      oscillator.connect(oscillatorGain);
+      oscillatorGain.connect(delay.delayTime);
+
+      oscillator.start();
+      source.start();
+
+      let outputAudioBuffer = await ctx.startRendering();
+      return outputAudioBuffer;
+    },
+
+    async reverseTimeTransform(audioBuffer) {
+      let ctx = new AudioContext();
+
+      // copy audiobuffer
+      let outputAudioBuffer = ctx.createBuffer(
+        audioBuffer.numberOfChannels,
+        audioBuffer.length,
+        audioBuffer.sampleRate
+      );
+      for (let i = 0; i < audioBuffer.numberOfChannels; i++) {
+        outputAudioBuffer.copyToChannel(audioBuffer.getChannelData(i), i);
+      }
+
+      // reverse new audiobuffer
+      for (let i = 0; i < outputAudioBuffer.numberOfChannels; i++) {
+        outputAudioBuffer.getChannelData(i).reverse();
+      }
+
+      return outputAudioBuffer;
+    },
+
+    async alienRobot1Transform(audioBuffer) {
+      let ctx = new OfflineAudioContext(
+        audioBuffer.numberOfChannels,
+        audioBuffer.length,
+        audioBuffer.sampleRate
+      );
+
+      let source = ctx.createBufferSource();
+      source.buffer = audioBuffer;
+
+      let oscillator = ctx.createOscillator();
+      oscillator.frequency.value = 40;
+      oscillator.type = "sine";
+
+      let oscillatorGain = ctx.createGain();
+      oscillatorGain.gain.value = 0.015;
+
+      let delay = ctx.createDelay();
+      delay.delayTime.value = 0.05;
+
+      // source --> delay --> ctx.destination
+      // oscillator --> oscillatorGain --> delay.delayTime --> ctx.destination
+
+      source.connect(delay);
+      delay.connect(ctx.destination);
+
+      oscillator.connect(oscillatorGain);
+      oscillatorGain.connect(delay.delayTime);
+
+      oscillator.start();
+      source.start();
+
+      let outputAudioBuffer = await ctx.startRendering();
+      return outputAudioBuffer;
+    },
+    async autowahTransform(audioBuffer) {
+      let ctx = new OfflineAudioContext(
+        audioBuffer.numberOfChannels,
+        audioBuffer.length,
+        audioBuffer.sampleRate
+      );
+
+      let inputNode = ctx.createBufferSource();
+      inputNode.buffer = audioBuffer;
+
+      let waveshaper = ctx.createWaveShaper();
+      let awFollower = ctx.createBiquadFilter();
+      awFollower.type = "lowpass";
+      awFollower.frequency.value = 10.0;
+
+      let curve = new Float32Array(65536);
+      for (let i = -32768; i < 32768; i++) {
+        curve[i + 32768] = (i > 0 ? i : -i) / 32768;
+      }
+      waveshaper.curve = curve;
+      waveshaper.connect(awFollower);
+
+      let wetGain = ctx.createGain();
+      wetGain.gain.value = 1;
+
+      let compressor = ctx.createDynamicsCompressor();
+      compressor.threshold.value = -20;
+      compressor.ratio.value = 16;
+
+      let awDepth = ctx.createGain();
+      awDepth.gain.value = 11585;
+      awFollower.connect(awDepth);
+
+      let awFilter = ctx.createBiquadFilter();
+      awFilter.type = "lowpass";
+      awFilter.Q.value = 15;
+      awFilter.frequency.value = 50;
+      awDepth.connect(awFilter.frequency);
+      awFilter.connect(wetGain);
+
+      inputNode.connect(waveshaper);
+      inputNode.connect(awFilter);
+
+      waveshaper.connect(compressor);
+      wetGain.connect(compressor);
+      compressor.connect(ctx.destination);
+
       inputNode.start(0);
       let outputAudioBuffer = await ctx.startRendering();
       return outputAudioBuffer;
