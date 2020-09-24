@@ -190,17 +190,20 @@ public class SmileController {
     public Object textCheck() throws SQLException, IOException {
         try {
             System.out.println("Text Check Python Call");
-            String[] command = new String[2];
+            String[] command = new String[3];
             command[0] = "python";
             // 경로 확인
-            command[1] = "./backend/textCheck.py";
+            command[1] = "backend/textCheck.py";
+            command[2] = "wow hey";
             try {
                 execPython2(command);
             } catch (Exception e) {
+                System.out.println("여기서 오류");
                 return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
             }
             return new ResponseEntity<>(textList, HttpStatus.OK);
         } catch (Exception e) {
+            System.out.println("저기서 오류");
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -210,7 +213,6 @@ public class SmileController {
         for (int i = 1, n = command.length; i < n; i++) {
             commandLine.addArgument(command[i]);
         }
-
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         PumpStreamHandler pumpStreamHandler = new PumpStreamHandler(outputStream);
         DefaultExecutor executor = new DefaultExecutor();
@@ -220,7 +222,7 @@ public class SmileController {
         String[] outputList = outputStream.toString().split("\n");
         for(String s : outputList){
             textList.add(s);
+            System.out.println(s);
         }
-        System.out.println("output: " + outputStream.toString().split("\n")[0]);
     }
 }
