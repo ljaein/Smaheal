@@ -57,11 +57,11 @@ public class SmileController {
             try {
                 execPython(command);
             } catch (Exception e) {
-                return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<>(System.getProperty("user.home"), HttpStatus.INTERNAL_SERVER_ERROR);
             }
             return new ResponseEntity<>(camList, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(System.getProperty("user.home"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
