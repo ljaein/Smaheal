@@ -4,8 +4,7 @@
 # import numpy as np   
 # from keras.preprocessing.image import img_to_array
 # from keras.models import load_model
-import tensorflow
-import keras
+
 # def sum(v1, v2):
 #     result = int(v1) + int(v2)
 #     print(result)
