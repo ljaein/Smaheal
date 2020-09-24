@@ -1,16 +1,17 @@
-import sys
+# import sys
 # import cv2
 # import time
 # import numpy as np   
-from keras.preprocessing.image import img_to_array
-from keras.models import load_model
-
+# from keras.preprocessing.image import img_to_array
+# from keras.models import load_model
+import tensorflow
+import keras
 # def sum(v1, v2):
 #     result = int(v1) + int(v2)
 #     print(result)
 
 
-def main(argv):
+def main():
     print(1)
     print(0)
     print(1)
@@ -104,4 +105,4 @@ def main(argv):
 
 if __name__ == "__main__":
     # cv2.destroyAllWindows()
-    main(sys.argv)
+    main()
