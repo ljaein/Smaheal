@@ -73,6 +73,11 @@
               Selfie
               <v-icon>mdi-account-box</v-icon>
             </v-tab>
+
+            <v-tab class="tab-text" href="#tab-file" @click="selfieContents()">
+              Upload
+              <v-icon>mdi-file-upload</v-icon>
+            </v-tab>
           </v-tabs>
 
           <v-tabs-items v-model="tab">
@@ -142,7 +147,7 @@
                     <v-window-item>
                       <v-card flat>
                         <v-card-text>
-                            <LazyYoutubeVideo :src="makeUrl(videos[1].videoId)" style="width:100%;height:100%;"/>
+                          <LazyYoutubeVideo :src="makeUrl(videos[1].videoId)" style="width:100%;height:100%;" />
                         </v-card-text>
                       </v-card>
                     </v-window-item>
@@ -200,6 +205,60 @@
                     >
                   </v-row>
                 </div>
+              </div>
+            </v-tab-item>
+
+            <!-- 파일 업로드 -->
+            <v-tab-item v-if="!fileFlag" id="tab-file">
+              <div class="container" style="height:400px;text-align:center">
+                <v-btn color="#356859" class="col-2" style="top:170px;color:white;" @click="uploadInit()">start</v-btn>
+              </div>
+            </v-tab-item>
+            <v-tab-item v-if="fileFlag" id="tab-file">
+              <div class="container" style="height:250px;text-align:center">
+                <canvas height="200%" width="200%"></canvas>
+                <img id="myImage" />
+                <!-- {{ selfieCapture }} -->
+              </div>
+              <v-carousel style="width:30rem;height:23rem;">
+                <v-carousel-item v-for="(item,i) in inputFile" :key="i - 1">
+                  <img :src="preImg(item)" style="width:30rem;height:23rem;" />
+                </v-carousel-item>
+              </v-carousel>
+              <!-- <div v-for="(item,i) in inputFile" :key="i" style="width:30rem;height:23rem;"> -->
+                <!-- {{inputFile}} -->
+              <!-- </div> -->
+              <div class="col-lg-6 col-md-6 col-sm-8 col-10" style="margin:0 auto;">
+                파일 업로드
+                <v-file-input
+                  ref="file"
+                  accept="image/png, image/jpeg, image/bmp"
+                  v-model="inputFile"
+                  color="#356859"
+                  counter
+                  prepend-icon
+                  outlined
+                >
+                  <template v-slot:selection="{ text }">
+                    <v-chip color="#356859" dark label small>{{ text }}</v-chip>
+                  </template>
+                </v-file-input>
+              </div>
+              <div>
+                <!-- 사진 사용 여부 -->
+                <v-row>
+                  <v-switch style="margin:0 auto" v-model="kingFlag" inset :label="`사진 허용 `"></v-switch>
+                </v-row>
+                <!-- 한줄 코멘트 -->
+                <v-row class="justify-content-center">
+                  <v-col cols="6">
+                    <v-text-field v-model="comment" :rules="commentRules" :counter="20" label="한 줄 메세지"></v-text-field>
+                  </v-col>
+                </v-row>
+                <!-- 기부하기 -->
+                <v-row>
+                  <v-btn style="margin:0 auto 50px auto;color:white;" class="col-3" color="#356859" @click="donationSelfie">기부하기</v-btn>
+                </v-row>
               </div>
             </v-tab-item>
           </v-tabs-items>
@@ -321,16 +380,18 @@ export default {
       selCapFlag: false,
       selectFlag: false,
       donationFlag: false,
+      fileFlag: false,
       commentRules: [(v) => v.length <= 20 || '20자 이내로 써주세요.'],
       autoCapture: [],
       selfieCapture: [],
       videos: [],
+      inputFile: [],
     };
   },
   methods: {
     getAge() {
       this.uage = new Date().getFullYear() - this.getUserBirth.substr(0, 4);
-      if(this.uage < 10) {
+      if (this.uage < 10) {
         this.uage = 1;
       } else {
         this.uage = this.uage - (this.uage % 10);
@@ -338,14 +399,15 @@ export default {
       this.getVideos();
     },
     getVideos() {
-      http.get(`/crawling/getVideosByAge/${this.uage}`)
-      .then(res => {
-        this.videos = res.data;
-      })
-      .catch(err => {
-        console.log(err);
-      })
-    }, 
+      http
+        .get(`/crawling/getVideosByAge/${this.uage}`)
+        .then((res) => {
+          this.videos = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     playing() {
       console.log('we are watching!!!');
     },
@@ -432,7 +494,7 @@ export default {
       return '../../../images/' + img;
     },
     makeUrl(url) {
-      return "https://www.youtube.com/embed/" + url;
+      return 'https://www.youtube.com/embed/' + url;
     },
     loading() {
       this.overlay = true;
@@ -533,6 +595,7 @@ export default {
       this.selfFlag = false;
       this.value = 0;
       this.overlay = false;
+      this.fileFlag = false;
       this.selfieCapture = [];
       this.stop();
       this.cameraOff();
@@ -541,15 +604,26 @@ export default {
       this.selfFlag = false;
       this.value = 0;
       this.overlay = false;
+      this.fileFlag = false;
       this.selfieCapture = [];
       this.stop();
     },
+    uploadInit() {
+      this.selfFlag = false;
+      this.contentsFlag = false;
+      this.fileFlag = true;
+      this.stop();
+    },
+    preImg(img) {
+      console.log(this.inputFile)
+      return URL.createObjectURL(img);
+    },
   },
   computed: {
-    ...mapGetters(['getUserID', "getUserBirth",]),
+    ...mapGetters(['getUserID', 'getUserBirth']),
     ...mapState({
       userID: (state) => `${state.user.getUserID}`,
-      userBirth: state => `${state.user.getUserBirth}`,
+      userBirth: (state) => `${state.user.getUserBirth}`,
     }),
   },
 };
