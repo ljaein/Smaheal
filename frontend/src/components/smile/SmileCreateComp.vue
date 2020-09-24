@@ -220,14 +220,11 @@
                 <img id="myImage" />
                 <!-- {{ selfieCapture }} -->
               </div>
-              <v-carousel style="width:30rem;height:23rem;">
-                <v-carousel-item v-for="(item,i) in inputFile" :key="i - 1">
-                  <img :src="preImg(item)" style="width:30rem;height:23rem;" />
-                </v-carousel-item>
-              </v-carousel>
-              <!-- <div v-for="(item,i) in inputFile" :key="i" style="width:30rem;height:23rem;"> -->
-                <!-- {{inputFile}} -->
-              <!-- </div> -->
+
+              <div v-if="inputFile != ''" style="margin:0 auto;">
+                <img :src="preImg(inputFile)" style="max-width:100%;width:400px;height:65%;" />
+              </div>
+
               <div class="col-lg-6 col-md-6 col-sm-8 col-10" style="margin:0 auto;">
                 파일 업로드
                 <v-file-input
@@ -451,6 +448,7 @@ export default {
       }
     },
     init() {
+      console.log(navigator)
       if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
         navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
           const videoPlayer = document.getElementById('webcam');
@@ -615,8 +613,9 @@ export default {
       this.stop();
     },
     preImg(img) {
-      console.log(this.inputFile)
-      return URL.createObjectURL(img);
+      if (img != null) {
+        return URL.createObjectURL(img);
+      }
     },
   },
   computed: {
@@ -625,6 +624,11 @@ export default {
       userID: (state) => `${state.user.getUserID}`,
       userBirth: (state) => `${state.user.getUserBirth}`,
     }),
+  },
+  watch: {
+    inputFile: function() {
+      console.log(this.inputFile);
+    },
   },
 };
 </script>
