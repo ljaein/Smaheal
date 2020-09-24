@@ -46,7 +46,7 @@ public class SmileController {
     public Object cameraOn() throws SQLException, IOException {
         try {
             System.out.println("Camera on Python Call");
-            String[] command = new String[4];
+            String[] command = new String[2];
             command[0] = "python";
             // 경로 확인
             String workspacePath = System.getProperty("user.dir");
@@ -59,16 +59,16 @@ public class SmileController {
                 workspacePath = newPath;
             }
             command[1] = workspacePath + "/cameraOn.py";
-            command[2] = workspacePath + "/files/haarcascade_frontalface_default.xml";
-            command[3] = workspacePath + "/files/emotion_model.hdf5";
+            // command[2] = workspacePath + "/files/haarcascade_frontalface_default.xml";
+            // command[3] = workspacePath + "/files/emotion_model.hdf5";
             try {
                 execPython(command);
             } catch (Exception e) {
-                return new ResponseEntity<>(workspacePath, HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<>("!@#", HttpStatus.INTERNAL_SERVER_ERROR);
             }
             return new ResponseEntity<>(camList, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(System.getProperty("user.dir"), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("123", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
@@ -162,19 +162,19 @@ public class SmileController {
         int result = executor.execute(commandLine);
         System.out.println("result: " + result);
         
-        String[] outputList = outputStream.toString().split("\n");
-        int len = outputList.length;
-        if(outputList[len - 1].length() < 6) {
-            String fileName = outputList[len - 2].trim();
-            String percent = outputList[len - 1].trim();
-            camList.clear();
-            camList.add(fileName);
-            camList.add(percent);
-            System.out.println(fileName);
-            System.out.println(percent);
-        } else {
-            camList.add("cancel");
-        }
+        // String[] outputList = outputStream.toString().split("\n");
+        // int len = outputList.length;
+        // if(outputList[len - 1].length() < 6) {
+        //     String fileName = outputList[len - 2].trim();
+        //     String percent = outputList[len - 1].trim();
+        //     camList.clear();
+        //     camList.add(fileName);
+        //     camList.add(percent);
+        //     System.out.println(fileName);
+        //     System.out.println(percent);
+        // } else {
+        //     camList.add("cancel");
+        // }
         // System.out.println("output: " + outputStream.toString().split("\n")[0]);
     }
 
