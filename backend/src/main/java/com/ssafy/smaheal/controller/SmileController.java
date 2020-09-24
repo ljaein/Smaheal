@@ -49,21 +49,17 @@ public class SmileController {
             String[] command = new String[4];
             command[0] = "python";
             // 경로 확인
-            System.getProperty("user.dir");
             command[1] = System.getProperty("user.home") + "/s03p23b108/backend/cameraOn.py";
             command[2] = System.getProperty("user.home") + "/s03p23b108/backend/files/haarcascade_frontalface_default.xml";
             command[3] = System.getProperty("user.home") + "/s03p23b108/backend/files/emotion_model.hdf5";
             try {
                 execPython(command);
             } catch (Exception e) {
-                return new ResponseEntity<>(System.getProperty("user.home"), HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<>(System.getProperty("user.dir"), HttpStatus.INTERNAL_SERVER_ERROR);
             }
             return new ResponseEntity<>(camList, HttpStatus.OK);
         } catch (Exception e) {
-            List<String> list = new LinkedList<>();
-            list.add(System.getProperty("user.dir"));
-            list.add(System.getProperty("user.home"));
-            return new ResponseEntity<>(list, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(System.getProperty("user.dir"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
