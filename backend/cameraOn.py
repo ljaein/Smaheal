@@ -1,7 +1,7 @@
 import sys
 import cv2
 # import time
-# import numpy as np   
+import numpy as np   
 # from keras.preprocessing.image import img_to_array
 # from keras.models import load_model
 
@@ -11,6 +11,14 @@ import cv2
 
 
 def main(argv):
+    print(1)
+    print(0)
+    print(1)
+    print(2)
+    print(3)
+    print(4)
+    print(5)
+    print(6)
     # sum(argv[1], argv[2])
     # Face detection XML load and trained model loading
     # 경로 확인
@@ -21,7 +29,7 @@ def main(argv):
     # EMOTIONS = ["Angry" ,"Disgusting","Fearful", "Happy", "Sad", "Surpring", "Neutral"]
 
     # # Video capture using webcam
-    camera = cv2.VideoCapture
+    camera = cv2.VideoCapture(0)
 
     while True:
         # Capture image from camera
