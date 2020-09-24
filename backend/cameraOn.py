@@ -1,5 +1,5 @@
 import sys
-import cv2
+# import cv2
 # import time
 # import numpy as np   
 # from keras.preprocessing.image import img_to_array
@@ -11,6 +11,8 @@ import cv2
 
 
 def main(argv):
+    print(argv[0])
+    print("hello")
     # sum(argv[1], argv[2])
     # Face detection XML load and trained model loading
     # 경로 확인
@@ -21,11 +23,11 @@ def main(argv):
     # EMOTIONS = ["Angry" ,"Disgusting","Fearful", "Happy", "Sad", "Surpring", "Neutral"]
 
     # # Video capture using webcam
-    camera = cv2.VideoCapture(0)
+    # camera = cv2.VideoCapture(0)
 
-    while True:
+    # while True:
         # Capture image from camera
-        ret, frame = camera.read()
+        # ret, frame = camera.read()
         
         # Convert color to gray scale
         # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -82,18 +84,18 @@ def main(argv):
         # Open two windows
         ## Display image ("Emotion Recognition")
         ## Display probabilities of emotion
-        cv2.imshow('Emotion Recognition', frame)
+        # cv2.imshow('Emotion Recognition', frame)
         # cv2.imshow("Probabilities", canvas)
         
         # q to quit
-        if cv2.waitKey(33) & 0xFF == ord('q') or cv2.waitKey(33) == 27:
-            break
+        # if cv2.waitKey(33) & 0xFF == ord('q') or cv2.waitKey(33) == 27:
+            # break
 
     # Clear program and close windows
-    camera.release()
-    cv2.destroyAllWindows()
+    # camera.release()
+    # cv2.destroyAllWindows()
     
 
 if __name__ == "__main__":
-    cv2.destroyAllWindows()
+    # cv2.destroyAllWindows()
     main(sys.argv)
