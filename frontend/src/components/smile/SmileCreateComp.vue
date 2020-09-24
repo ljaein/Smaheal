@@ -23,9 +23,7 @@
                   <li>셀카모드로 직접 웃는 사진을 캡쳐한다.</li>
                 </ol>
               </v-card>
-              <v-btn color="primary" @click="e1 = 2">
-                Continue
-              </v-btn>
+              <v-btn color="primary" @click="e1 = 2">Continue</v-btn>
             </v-stepper-content>
 
             <v-stepper-content step="2">
@@ -34,9 +32,7 @@
                 <p>셀카모드는 얼굴을 보면서 직접 캡쳐하여 웃음을 인증 받은 후에 기부가 진행됩니다.</p>
                 <p>카메라와 너무 멀리 떨어져 있으면 캡쳐가 안될 수 있어요.</p>
               </v-card>
-              <v-btn color="primary" @click="e1 = 3">
-                Continue
-              </v-btn>
+              <v-btn color="primary" @click="e1 = 3">Continue</v-btn>
               <v-btn text @click="e1 = 1">Back</v-btn>
             </v-stepper-content>
 
@@ -46,9 +42,7 @@
                 <p>어렵지 않죠?</p>
                 <p>그러면 웃음 기부를 시작해볼까요?</p>
               </v-card>
-              <v-btn color="primary" @click="stepEnd">
-                Complete
-              </v-btn>
+              <v-btn color="primary" @click="stepEnd">Complete</v-btn>
               <v-btn text @click="e1 = 2">Back</v-btn>
             </v-stepper-content>
           </v-stepper-items>
@@ -62,7 +56,14 @@
     <v-row style="height:700px;" class="d-flex justify-content-center pt-15">
       <v-col cols="10">
         <v-card>
-          <v-tabs v-model="tab" background-color="#fffbe3" color="basil" class="basil--text" centered icons-and-text>
+          <v-tabs
+            v-model="tab"
+            background-color="#fffbe3"
+            color="basil"
+            class="basil--text"
+            centered
+            icons-and-text
+          >
             <v-tabs-slider></v-tabs-slider>
             <v-tab class="tab-text" href="#tab-contents" @click="someContents()">
               Contents
@@ -84,7 +85,12 @@
             <!-- 콘텐츠 -->
             <v-tab-item v-if="!contentsFlag" id="tab-contents">
               <div class="container" style="height:400px;text-align:center">
-                <v-btn color="#356859" class="col-2" style="top:170px;color:white;" @click="(contentsFlag = true), cameraOn()">start</v-btn>
+                <v-btn
+                  color="#356859"
+                  class="col-2"
+                  style="top:170px;color:white;"
+                  @click="(contentsFlag = true), cameraOn()"
+                >start</v-btn>
               </div>
             </v-tab-item>
             <v-tab-item v-if="contentsFlag" id="tab-contents">
@@ -117,25 +123,34 @@
                         <v-card-text>
                           <div class="container" style="height:400px;text-align:center">
                             <v-carousel style="height:100%;">
-                              <v-carousel-item reverse-transition="fade-transition" transition="fade-transition">
+                              <v-carousel-item
+                                reverse-transition="fade-transition"
+                                transition="fade-transition"
+                              >
                                 <img
                                   src="https://s-i.huffpost.com/gen/3948866/thumbs/o-PEPE-THE-FROG-570.jpg?3"
                                   style="max-width:100%;width:400px;height:65%;"
-                                  alt=""
+                                  alt
                                 />
                               </v-carousel-item>
-                              <v-carousel-item reverse-transition="fade-transition" transition="fade-transition">
+                              <v-carousel-item
+                                reverse-transition="fade-transition"
+                                transition="fade-transition"
+                              >
                                 <img
                                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQaqQZ3o8bafo4ngTZFIM2vxkSXTBcSr_osfQ&usqp=CAU"
                                   style="max-width:100%;width:400px;height:65%;"
-                                  alt=""
+                                  alt
                                 />
                               </v-carousel-item>
-                              <v-carousel-item reverse-transition="fade-transition" transition="fade-transition">
+                              <v-carousel-item
+                                reverse-transition="fade-transition"
+                                transition="fade-transition"
+                              >
                                 <img
                                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTCdSE06g-wWMbwV39-LgNCI23dcrefSkhosA&usqp=CAU"
                                   style="max-width:100%;width:400px;height:65%;"
-                                  alt=""
+                                  alt
                                 />
                               </v-carousel-item>
                             </v-carousel>
@@ -159,26 +174,55 @@
             <!-- 셀카 -->
             <v-tab-item v-if="!selfFlag" id="tab-self">
               <div class="container" style="height:400px;text-align:center">
-                <v-btn color="#356859" class="col-2" style="top:170px;color:white;" @click="selfieInit()">start</v-btn>
+                <v-btn
+                  color="#356859"
+                  class="col-2"
+                  style="top:170px;color:white;"
+                  @click="selfieInit()"
+                >start</v-btn>
               </div>
             </v-tab-item>
             <v-tab-item v-if="selfFlag" id="tab-self">
               <div class="container" style="height:400px;text-align:center">
-                <video src="" autoplay class="feed" width="100%" height="100%" id="webcam" @click="init(), (camOn = true)"></video>
+                <video
+                  src
+                  autoplay
+                  class="feed"
+                  width="100%"
+                  height="100%"
+                  id="webcam"
+                  @click="init(), (camOn = true)"
+                ></video>
               </div>
               <v-row class="d-flex justify-content-center">
-                <v-btn color="#356859" class="m-2 col-md-2 col-sm-4 col-10" style="color:white;" v-if="startFlag" @click="selfieStart()"
-                  >start</v-btn
-                >
-                <v-btn color="#356859" class="m-2 col-md-2 col-sm-4 col-10" style="color:white;" v-if="endFlag" @click="selfieStop()"
-                  >stop</v-btn
-                >
-                <v-btn color="#356859" class="m-2 col-md-2 col-sm-4 col-10" style="color:white;" v-if="endFlag" @click="selfieCap()"
-                  >capture</v-btn
-                >
-                <v-btn color="#356859" class="m-2 col-md-2 col-sm-4 col-10" style="color:white;" v-if="checkFlag" @click="check()"
-                  >check</v-btn
-                >
+                <v-btn
+                  color="#356859"
+                  class="m-2 col-md-2 col-sm-4 col-10"
+                  style="color:white;"
+                  v-if="startFlag"
+                  @click="selfieStart()"
+                >start</v-btn>
+                <v-btn
+                  color="#356859"
+                  class="m-2 col-md-2 col-sm-4 col-10"
+                  style="color:white;"
+                  v-if="endFlag"
+                  @click="selfieStop()"
+                >stop</v-btn>
+                <v-btn
+                  color="#356859"
+                  class="m-2 col-md-2 col-sm-4 col-10"
+                  style="color:white;"
+                  v-if="endFlag"
+                  @click="selfieCap()"
+                >capture</v-btn>
+                <v-btn
+                  color="#356859"
+                  class="m-2 col-md-2 col-sm-4 col-10"
+                  style="color:white;"
+                  v-if="checkFlag"
+                  @click="check()"
+                >check</v-btn>
               </v-row>
 
               <div v-if="!startFlag">
@@ -195,14 +239,22 @@
                   <!-- 한줄 코멘트 -->
                   <v-row class="justify-content-center">
                     <v-col cols="6">
-                      <v-text-field v-model="comment" :rules="commentRules" :counter="20" label="한 줄 메세지"></v-text-field>
+                      <v-text-field
+                        v-model="comment"
+                        :rules="commentRules"
+                        :counter="20"
+                        label="한 줄 메세지"
+                      ></v-text-field>
                     </v-col>
                   </v-row>
                   <!-- 기부하기 -->
                   <v-row>
-                    <v-btn style="margin:0 auto 50px auto;color:white;" class="col-3" color="#356859" @click="donationSelfie"
-                      >기부하기</v-btn
-                    >
+                    <v-btn
+                      style="margin:0 auto 50px auto;color:white;"
+                      class="col-3"
+                      color="#356859"
+                      @click="donationSelfie"
+                    >기부하기</v-btn>
                   </v-row>
                 </div>
               </div>
@@ -275,11 +327,13 @@
           color="#356859"
           style="color:white;"
           @click="(contentsFlag = false), (autoCapFlag = false), stepEnd()"
-          >다시찍기</v-btn
-        >
-        <v-btn class="col-lg-2 col-md-2 col-sm-5 col-5 mx-10 my-5" color="#356859" style="color:white;" @click="selectFlag = true"
-          >사진확정</v-btn
-        >
+        >다시찍기</v-btn>
+        <v-btn
+          class="col-lg-2 col-md-2 col-sm-5 col-5 mx-10 my-5"
+          color="#356859"
+          style="color:white;"
+          @click="selectFlag = true"
+        >사진확정</v-btn>
       </v-row>
     </div>
 
@@ -296,24 +350,32 @@
       </v-row>
       <!-- 기부하기 -->
       <v-row class="col-4 mb-10" style="margin:0 auto;">
-        <v-btn v-if="selectFlag" color="#356859" @click="donationContents" style="margin:0 auto;color:white;">기부하기</v-btn>
+        <v-btn
+          v-if="selectFlag"
+          color="#356859"
+          @click="donationContents"
+          style="margin:0 auto;color:white;"
+        >기부하기</v-btn>
       </v-row>
     </div>
 
     <!-- 로딩 오버레이 -->
     <v-overlay :value="overlay">
-      <v-progress-circular v-if="(value > 0) & (value < 100)" :rotate="-90" :size="100" :width="15" :value="value" color="white">
-        {{ value }}
-      </v-progress-circular>
+      <v-progress-circular
+        v-if="(value > 0) & (value < 100)"
+        :rotate="-90"
+        :size="100"
+        :width="15"
+        :value="value"
+        color="white"
+      >{{ value }}</v-progress-circular>
     </v-overlay>
 
     <!-- 캡쳐 알림 -->
     <v-snackbar v-model="captureFlag" top right :timeout="3000" color="error">
       캡쳐되었습니다.
       <template v-slot:action="{ attrs }">
-        <v-btn text v-bind="attrs" @click="captureFlag = false">
-          Close
-        </v-btn>
+        <v-btn text v-bind="attrs" @click="captureFlag = false">Close</v-btn>
       </template>
     </v-snackbar>
 
@@ -321,9 +383,7 @@
     <v-snackbar v-model="donationFlag" top right :timeout="3000" color="error">
       기부되었습니다.
       <template v-slot:action="{ attrs }">
-        <v-btn text v-bind="attrs" @click="donationFlag = false">
-          Close
-        </v-btn>
+        <v-btn text v-bind="attrs" @click="donationFlag = false">Close</v-btn>
       </template>
     </v-snackbar>
 
@@ -335,14 +395,14 @@
 </template>
 
 <script>
-import http from '@/util/http-common.js';
-import { mapGetters, mapState } from 'vuex';
-import LazyYoutubeVideo from 'vue-lazy-youtube-video';
+import http from "@/util/http-common.js";
+import { mapGetters, mapState } from "vuex";
+import LazyYoutubeVideo from "vue-lazy-youtube-video";
 // npm install --save vue-lazy-youtube-video
 
 export default {
   components: {
-    LazyYoutubeVideo,
+    LazyYoutubeVideo
   },
   created() {
     scroll(0, 0);
@@ -354,12 +414,12 @@ export default {
   data() {
     return {
       donationid: 0,
-      uid: '',
-      uage: '',
+      uid: "",
+      uage: "",
       e1: 1,
-      log: '',
+      log: "",
       value: 0,
-      comment: '',
+      comment: "",
       interval: {},
       length: 2,
       window: 0,
@@ -398,51 +458,57 @@ export default {
     getVideos() {
       http
         .get(`/crawling/getVideosByAge/${this.uage}`)
-        .then((res) => {
+        .then(res => {
           this.videos = res.data;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
     playing() {
-      console.log('we are watching!!!');
+      console.log("we are watching!!!");
     },
     check() {
-      var myImage = document.querySelector('canvas').toDataURL();
+      var myImage = document.querySelector("canvas").toDataURL();
       //btoa
       http
         .post(`/smile/smileCheck`, myImage)
-        .then((res) => {
+        .then(res => {
           this.selfieCapture = res.data;
-          if (this.selfieCapture == 'findFail') {
-            alert('얼굴 인식 못함');
+          if (this.selfieCapture == "findFail") {
+            alert("얼굴 인식 못함");
           } else {
             this.selCapFlag = true;
-            alert('얼굴 인식 성공');
+            alert("얼굴 인식 성공");
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
     capture() {
-      const picture = document.querySelector('canvas');
-      const ctx = picture.getContext('2d');
+      const picture = document.querySelector("canvas");
+      const ctx = picture.getContext("2d");
       ctx.imageSmoothingEnabled = true;
-      ctx.imageSmoothingQuality = 'high';
-      ctx.drawImage(document.getElementById('webcam'), 0, 0, picture.width, picture.height);
+      ctx.imageSmoothingQuality = "high";
+      ctx.drawImage(
+        document.getElementById("webcam"),
+        0,
+        0,
+        picture.width,
+        picture.height
+      );
     },
     stop() {
       if (this.camOn) {
-        if (document.getElementById('webcam') != null) {
-          const stream = document.getElementById('webcam').srcObject;
+        if (document.getElementById("webcam") != null) {
+          const stream = document.getElementById("webcam").srcObject;
           const tracks = stream.getTracks();
           tracks.forEach(function(track) {
             track.stop();
           });
 
-          document.getElementById('webcam').srcObject = null;
+          document.getElementById("webcam").srcObject = null;
         }
         this.camOn = false;
       }
@@ -456,7 +522,7 @@ export default {
           videoPlayer.play();
         });
       } else {
-        alert('cannot get Media');
+        alert("cannot get Media");
       }
     },
     stepEnd() {
@@ -465,31 +531,31 @@ export default {
     cameraOn() {
       this.loading();
       http
-        .get('/smile/cameraOn')
-        .then((res) => {
-          if (res.data[0] != 'cancel') {
+        .get("/smile/cameraOn")
+        .then(res => {
+          if (res.data[0] != "cancel") {
             this.captureFlag = true;
             this.autoCapFlag = true;
             this.autoCapture = res.data;
             scroll(0, 1700);
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
     cameraOff() {
       http
-        .get('/smile/cameraOff')
-        .then((res) => {
+        .get("/smile/cameraOff")
+        .then(res => {
           this.log = res.data;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
     getImg(img) {
-      return '../../../images/' + img;
+      return "../../../images/" + img;
     },
     makeUrl(url) {
       return 'https://www.youtube.com/embed/' + url;
@@ -506,31 +572,39 @@ export default {
       }, 300);
     },
     donationSelfie() {
-      if (this.selfieCapture == 'findFail') {
-        alert('사진 다시 찍어주세요');
+      if (this.selfieCapture == "findFail") {
+        alert("사진 다시 찍어주세요");
       } else {
         if (this.selfieCapture[2] < 30) {
-          alert('웃음 지수가 너무 낮습니다.');
+          alert("웃음 지수가 너무 낮습니다.");
         } else {
           http
-            .post('/smile/regist', {
-              user_id: this.uid,
-              donationid: this.donationid,
-              photo: this.selfieCapture[0],
-              smileper: this.selfieCapture[2],
-              comment: this.comment,
-              agreement: this.kingFlag ? 1 : 0,
+            .get("/smile/textCheck")
+            .then(res => {
+              console.log(res.data);
+              // http
+              //   .post("/smile/regist", {
+              //     user_id: this.uid,
+              //     donationid: this.donationid,
+              //     photo: this.selfieCapture[0],
+              //     smileper: this.selfieCapture[2],
+              //     comment: this.comment,
+              //     agreement: this.kingFlag ? 1 : 0
+              //   })
+              //   .then(res => {
+              //     this.stop();
+              //     this.log = res.data;
+              //     this.donationFlag = true;
+              //     let x = this;
+              //     setTimeout(function() {
+              //       x.$router.push("/donationlist");
+              //     }, 1500);
+              //   })
+              //   .catch(err => {
+              //     console.log(err);
+              //   });
             })
-            .then((res) => {
-              this.stop();
-              this.log = res.data;
-              this.donationFlag = true;
-              let x = this;
-              setTimeout(function() {
-                x.$router.push('/donationlist');
-              }, 1500);
-            })
-            .catch((err) => {
+            .catch(err => {
               console.log(err);
             });
         }
@@ -538,23 +612,23 @@ export default {
     },
     donationContents() {
       http
-        .post('/smile/regist', {
+        .post("/smile/regist", {
           user_id: this.uid,
           donationid: this.donationid,
           photo: this.autoCapture[0],
           smileper: this.autoCapture[1],
           comment: this.comment,
-          agreement: this.kingFlag ? 1 : 0,
+          agreement: this.kingFlag ? 1 : 0
         })
-        .then((res) => {
+        .then(res => {
           this.log = res.data;
           this.donationFlag = true;
           let x = this;
           setTimeout(function() {
-            x.$router.push('/donationlist');
+            x.$router.push("/donationlist");
           }, 1500);
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },

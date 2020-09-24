@@ -183,4 +183,53 @@ public class SmileController {
         }
         return name;
     }
+    
+    @GetMapping("/textCheck")
+    @ApiOperation(value = "응원메세지 감성분석")
+    public Object textCheck() throws SQLException, IOException {
+        try {
+            System.out.println("Text Check Python Call");
+            String[] command = new String[2];
+            command[0] = "python";
+            // 경로 확인
+            command[1] = "./backend/textCheck.py";
+            try {
+                execPython2(command);
+            } catch (Exception e) {
+                return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+            return new ResponseEntity<>(camList, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    public static void execPython2(String[] command) throws IOException, InterruptedException {
+        CommandLine commandLine = CommandLine.parse(command[0]);
+        for (int i = 1, n = command.length; i < n; i++) {
+            commandLine.addArgument(command[i]);
+        }
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PumpStreamHandler pumpStreamHandler = new PumpStreamHandler(outputStream);
+        DefaultExecutor executor = new DefaultExecutor();
+        executor.setStreamHandler(pumpStreamHandler);
+        int result = executor.execute(commandLine);
+        System.out.println("result: " + result);
+        
+        // String[] outputList = outputStream.toString().split("\n");
+        // int len = outputList.length;
+        // if(outputList[len - 1].length() < 6) {
+        //     String fileName = outputList[len - 2].trim();
+        //     String percent = outputList[len - 1].trim();
+        //     camList.clear();
+        //     camList.add(fileName);
+        //     camList.add(percent);
+        //     System.out.println(fileName);
+        //     System.out.println(percent);
+        // } else {
+        //     camList.add("cancel");
+        // }
+        System.out.println("output: " + outputStream.toString().split("\n")[0]);
+    }
 }
