@@ -49,9 +49,9 @@ public class SmileController {
             String[] command = new String[4];
             command[0] = "python";
             // 경로 확인
-            command[1] = System.getProperty("user.home") + "/s03p23b108/backend/cameraOn.py";
-            command[2] = System.getProperty("user.home") + "/s03p23b108/backend/files/haarcascade_frontalface_default.xml";
-            command[3] = System.getProperty("user.home") + "/s03p23b108/backend/files/emotion_model.hdf5";
+            command[1] = System.getProperty("user.dir") + "../backend/cameraOn.py";
+            command[2] = System.getProperty("user.dir") + "../backend/files/haarcascade_frontalface_default.xml";
+            command[3] = System.getProperty("user.dir") + "../backend/files/emotion_model.hdf5";
             try {
                 execPython(command);
             } catch (Exception e) {

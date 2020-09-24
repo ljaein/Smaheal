@@ -74,7 +74,7 @@ def main(argv):
                 filename = str(now) + ".png"
                 # cv2.imwrite("C:/image/" + filename, frame)
                 # 경로 확인
-                cv2.imwrite("./var/lib/jenkins/workspace/Gitlab/frontend/public/images/" + filename, frame)
+                # cv2.imwrite("./var/lib/jenkins/workspace/Gitlab/frontend/public/images/" + filename, frame)
                 print(filename)
                 print(round(emotion_probability * 100))
                 break
