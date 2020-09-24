@@ -192,8 +192,7 @@ public class SmileController {
             String[] command = new String[2];
             command[0] = "python";
             // 경로 확인
-            command[1] = "C:\\AI108\\s03p23b108\\backend\\textCheck.py";
-            
+            command[1] = "./backend/textCheck.py";
             try {
                 execPython2(command);
             } catch (Exception e) {

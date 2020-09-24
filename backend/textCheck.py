@@ -18,5 +18,5 @@ def sentiment_predict(loaded_model, new_sentence):
         print("{:.2f}% 확률로 부정 메세지입니다.".format((1 - score) * 100))
 
 if __name__ == "__main__":
-    loaded_model = load_model('./backend/files/sentiment_analysis_model.h5', compile=False)
+    loaded_model = load_model('./backend/files/sentiment_model.hdf5')
     sentiment_predict(loaded_model,'이 상품 진짜 좋아요... 저는 강추합니다. 대박')
