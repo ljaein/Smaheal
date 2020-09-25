@@ -105,10 +105,9 @@ public class SmileController {
             command[2] = tempFileName;
             try {
                 execPythonSmileCheck(command);
-                
                 return new ResponseEntity<>(selfList, HttpStatus.OK);
             } catch (Exception e) {
-                return "findFail";
+                return System.getProperty("user.dir");
             }
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
