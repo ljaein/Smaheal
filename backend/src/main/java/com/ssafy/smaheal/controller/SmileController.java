@@ -95,22 +95,18 @@ public class SmileController {
     @PostMapping("/smileCheck")
     @ApiOperation("스마일 체크")
     public Object smileCheck(@RequestBody String filename) throws SQLException, IOException {
+        String tempFileName = createFile(filename);
+        System.out.println("SmileCheck Python Call");
+        String[] command = new String[3];
+        command[0] = "python";
+        // 경로 확인
+        command[1] = "../imageCheck.py";
+        command[2] = tempFileName;
         try {
-            String tempFileName = createFile(filename);
-            System.out.println("SmileCheck Python Call");
-            String[] command = new String[3];
-            command[0] = "python";
-            // 경로 확인
-            command[1] = "../imageCheck.py";
-            command[2] = tempFileName;
-            try {
-                execPythonSmileCheck(command);
-                return new ResponseEntity<>(selfList, HttpStatus.OK);
-            } catch (Exception e) {
-                return selfList;
-            }
+            execPythonSmileCheck(command);
+            return new ResponseEntity<>("1", HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return selfList;
         }
     }
 
@@ -130,9 +126,9 @@ public class SmileController {
 
         String[] outputList = outputStream.toString().split("\n");
         int len = outputList.length;
-        String filename = outputList[len - 1].trim();;
-        String emotion = outputList[len - 2].trim();
-        String happyPer = outputList[len - 3].trim();
+        // String filename = outputList[len - 1].trim();;
+        // String emotion = outputList[len - 2].trim();
+        // String happyPer = outputList[len - 3].trim();
         selfList.clear();
         // selfList.add(filename);
         // selfList.add(emotion);
