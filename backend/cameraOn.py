@@ -8,14 +8,14 @@ from keras.models import load_model
 def main(argv):
     # Face detection XML load and trained model loading
     # 경로 확인
-    face_detection = cv2.CascadeClassifier('./files/haarcascade_frontalface_default.xml')
-    emotion_classifier = load_model('./files/emotion_model.hdf5', compile=False)
+    face_detection = cv2.CascadeClassifier('~/.files/haarcascade_frontalface_default.xml')
+    emotion_classifier = load_model('~/.files/emotion_model.hdf5', compile=False)
     # face_detection = cv2.CascadeClassifier(argv[1])
     # emotion_classifier = load_model(argv[2], compile=False)
     EMOTIONS = ["Angry" ,"Disgusting","Fearful", "Happy", "Sad", "Surpring", "Neutral"]
 
     # Video capture using webcam
-    camera = cv2.VideoCapture(0)
+    camera = cv2.VideoCapture(-1)
 
     while True:
         # Capture image from camera
