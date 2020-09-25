@@ -104,7 +104,7 @@ public class SmileController {
         command[2] = tempFileName;
         try {
             execPythonSmileCheck(command);
-            return new ResponseEntity<>("1", HttpStatus.OK);
+            return new ResponseEntity<>(selfList, HttpStatus.OK);
         } catch (Exception e) {
             return selfList;
         }
