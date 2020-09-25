@@ -101,7 +101,7 @@ public class SmileController {
             String[] command = new String[3];
             command[0] = "python";
             // 경로 확인
-            command[1] = "./../../../../../../../imageCheck.py";
+            command[1] = "./backend/imageCheck.py";
             command[2] = tempFileName;
             try {
                 execPythonSmileCheck(command);
@@ -173,7 +173,7 @@ public class SmileController {
         long time = System.currentTimeMillis();
         String name = Long.toString(time);
         // 경로 정해주기
-        File file = new File("./../../../../../../../../frontend/public/textFiles/" + name);
+        File file = new File("./frontend/public/textFiles/" + name);
         String str = filename;
 
         try {
