@@ -69,7 +69,7 @@ def main(argv):
     # cv2.imwrite("C:/image/" + filename, frame)
 
     # 경로 확인
-    cv2.imwrite("./frontend/public/images/" + filename, color)
+    cv2.imwrite("../frontend/public/images/" + filename, color)
     print(filename)
 
     # cv2.imshow('Sample', color)
