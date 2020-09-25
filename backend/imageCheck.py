@@ -7,6 +7,7 @@ import base64
 
 def main(argv):
     # 경로 정해주기
+    print(os.path.realpath(__file__))
     r = open('../frontend/public/textFiles/' + argv[1], mode='rt', encoding='utf-8')
     raw = ""
     for line in r:
