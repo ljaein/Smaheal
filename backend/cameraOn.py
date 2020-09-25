@@ -15,7 +15,7 @@ def main(argv):
     EMOTIONS = ["Angry" ,"Disgusting","Fearful", "Happy", "Sad", "Surpring", "Neutral"]
 
     # Video capture using webcam
-    camera = cv2.VideoCapture(-1)
+    camera = cv2.VideoCapture(0, cv2.CAP_V4L)
 
     while True:
         # Capture image from camera
