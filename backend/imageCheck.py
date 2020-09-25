@@ -1,28 +1,29 @@
 import cv2, os, sys
-import numpy as np
-import time
-from keras.preprocessing.image import img_to_array
-from keras.models import load_model
-import base64
+# import numpy as np
+# import time
+# from keras.preprocessing.image import img_to_array
+# from keras.models import load_model
+# import base64
 
 def main(argv):
+    print(sys.modules)
     # 경로 정해주기
-    print(os.path.realpath(__file__))
-    r = open('/var/lib/jenkins/workspace/maven-test/frontend/public/textFiles/' + '1601024102786', mode='rt', encoding='utf-8')
-    raw = ""
-    for line in r:
-        raw += line
-    r.close()
+    # print(os.path.realpath(__file__))
+    # r = open('/var/lib/jenkins/workspace/maven-test/frontend/public/textFiles/' + '1601024102786', mode='rt', encoding='utf-8')
+    # raw = ""
+    # for line in r:
+    #     raw += line
+    # r.close()
 
     # path = "C:/image/test.png"
 
     # color = cv2.imread(img, cv2.IMREAD_UNCHANGED)
 
-    path = raw[22:]
+    # path = raw[22:]
     
-    decoded_data = base64.b64decode(path)
-    np_data = np.fromstring(decoded_data,np.uint8)
-    color = cv2.imdecode(np_data,cv2.IMREAD_UNCHANGED)
+    # decoded_data = base64.b64decode(path)
+    # np_data = np.fromstring(decoded_data,np.uint8)
+    # color = cv2.imdecode(np_data,cv2.IMREAD_UNCHANGED)
 
     # 경로 확인
     # face_detection = cv2.CascadeClassifier('/var/lib/jenkins/workspace/maven-test/backend/files/haarcascade_frontalface_default.xml')
@@ -60,8 +61,8 @@ def main(argv):
     # print(str(format(round(preds[3] * 100),".0f")))
     # print(label)
 
-    now = int(round(time.time() * 1000))
-    filename = str(now) + '.png'
+    # now = int(round(time.time() * 1000))
+    # filename = str(now) + '.png'
 
     # if(label == "Happy"):
     #     cv2.imwrite("C:/image/" + filename, color)
@@ -70,8 +71,8 @@ def main(argv):
     # cv2.imwrite("C:/image/" + filename, frame)
 
     # 경로 확인
-    cv2.imwrite("/var/lib/jenkins/workspace/maven-test/frontend/public/images/" + filename, color)
-    print(filename)
+    # cv2.imwrite("/var/lib/jenkins/workspace/maven-test/frontend/public/images/" + filename, color)
+    # print(filename)
 
     # cv2.imshow('Sample', color)
 
