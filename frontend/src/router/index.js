@@ -20,7 +20,7 @@ import noticeSearch from "../views/notice/noticeSearch.vue"
 import noticeModify from "../views/notice/noticeModify.vue"
 import signUp from "@/components/account/SignUp.vue"
 import Voice from "../views/test/Voice.vue"
-import SlideImage from "../views/template/SlideImage.vue"
+import fallImage from "../views/template/fallImage.vue"
 
 Vue.use(VueRouter);
 
@@ -130,9 +130,9 @@ const routes = [{
         component: Voice,
     },
     {
-        path: "/slideimage",
-        name: "SlideImage",
-        component: SlideImage
+        path: "/fallImage",
+        name: "fallImage",
+        component: fallImage
     },
 ];
 
