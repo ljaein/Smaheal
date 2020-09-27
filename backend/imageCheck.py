@@ -6,10 +6,10 @@ from keras.models import load_model
 import base64
 
 def main(argv):
-    print(sys.modules)
+    # print(sys.modules)
     # 경로 정해주기
     print(os.path.realpath(__file__))
-    r = open('/var/lib/jenkins/workspace/maven-test/frontend/public/textFiles/' + '1600953567488', mode='rt', encoding='utf-8')
+    r = open('/var/lib/jenkins/workspace/maven-test/frontend/public/textFiles/' + argv[1], mode='rt', encoding='utf-8')
     raw = ""
     for line in r:
         raw += line
