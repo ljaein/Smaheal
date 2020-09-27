@@ -9,7 +9,7 @@ def main(argv):
     print(sys.modules)
     # 경로 정해주기
     print(os.path.realpath(__file__))
-    r = open('/var/lib/jenkins/workspace/maven-test/frontend/public/textFiles/' + '1601196219124', mode='rt', encoding='utf-8')
+    r = open('/var/lib/jenkins/workspace/maven-test/frontend/public/textFiles/' + '1600953567488', mode='rt', encoding='utf-8')
     raw = ""
     for line in r:
         raw += line
