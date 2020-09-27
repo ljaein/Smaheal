@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,7 +35,7 @@ import com.ssafy.smaheal.repository.SmileRepository;
 @RestController
 @RequestMapping("/api/smile")
 public class SmileController {
-    
+
     @Autowired
     private SmileRepository smileRepository;
     public static List camList = new LinkedList<>();
@@ -62,7 +63,7 @@ public class SmileController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     @PostMapping("/regist")
     @ApiOperation(value = "웃음 기부 등록")
     public Object registDonation(@RequestBody Smile request) throws SQLException, IOException {
@@ -80,7 +81,7 @@ public class SmileController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     @GetMapping("/cameraOff")
     @ApiOperation(value = "웹캠 off")
     public Object cameraOff() throws SQLException, IOException, ExecuteException {
@@ -91,7 +92,7 @@ public class SmileController {
         }
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
-    
+
     @PostMapping("/smileCheck")
     @ApiOperation("스마일 체크")
     public Object smileCheck(@RequestBody String filename) throws SQLException, IOException {
@@ -117,7 +118,7 @@ public class SmileController {
 
     public static void execPythonSmileCheck(String[] command) throws IOException, InterruptedException {
         CommandLine commandLine = CommandLine.parse(command[0]);
-        
+
         for (int i = 1, n = command.length; i < n; i++) {
             commandLine.addArgument(command[i]);
         }
@@ -152,10 +153,10 @@ public class SmileController {
         executor.setStreamHandler(pumpStreamHandler);
         int result = executor.execute(commandLine);
         System.out.println("result: " + result);
-        
+
         String[] outputList = outputStream.toString().split("\n");
         int len = outputList.length;
-        if(outputList[len - 1].length() < 6) {
+        if (outputList[len - 1].length() < 6) {
             String fileName = outputList[len - 2].trim();
             String percent = outputList[len - 1].trim();
             camList.clear();
@@ -185,31 +186,26 @@ public class SmileController {
         }
         return name;
     }
-    
-    @GetMapping("/textCheck")
+
+    @GetMapping("/textCheck/{text}")
     @ApiOperation(value = "응원메세지 감성분석")
-    public Object textCheck() throws SQLException, IOException {
+    public Object textCheck(@PathVariable String text) throws SQLException, IOException {
+        String text_res = "";
+        System.out.println("Text Check Python Call");
+        String[] command = new String[3];
+        command[0] = "python";
+        // 경로 확인
+        command[1] = "../textCheck.py";
+        command[2] = text;
         try {
-            System.out.println("Text Check Python Call");
-            String[] command = new String[3];
-            command[0] = "python";
-            // 경로 확인
-            command[1] = "backend/textCheck.py";
-            command[2] = "wow hey";
-            try {
-                execPython2(command);
-            } catch (Exception e) {
-                System.out.println("여기서 오류");
-                return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-            return new ResponseEntity<>(textList, HttpStatus.OK);
+            text_res = execPython2(command);
         } catch (Exception e) {
-            System.out.println("저기서 오류");
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        return new ResponseEntity<>(text_res, HttpStatus.OK);
     }
-    
-    public static void execPython2(String[] command) throws IOException, InterruptedException {
+
+    public static String execPython2(String[] command) throws IOException, InterruptedException {
         CommandLine commandLine = CommandLine.parse(command[0]);
         for (int i = 1, n = command.length; i < n; i++) {
             commandLine.addArgument(command[i]);
@@ -221,9 +217,6 @@ public class SmileController {
         int result = executor.execute(commandLine);
         System.out.println("result: " + result);
         String[] outputList = outputStream.toString().split("\n");
-        for(String s : outputList){
-            textList.add(s);
-            System.out.println(s);
-        }
+        return outputList[outputList.length - 1];
     }
 }
