@@ -106,7 +106,7 @@ public class SmileController {
             execPythonSmileCheck(command);
             return new ResponseEntity<>(selfList, HttpStatus.OK);
         } catch (Exception e) {
-            return selfList;
+            return "findFail";
         }
     }
 
@@ -126,16 +126,16 @@ public class SmileController {
 
         String[] outputList = outputStream.toString().split("\n");
         int len = outputList.length;
-        // String filename = outputList[len - 1].trim();;
-        // String emotion = outputList[len - 2].trim();
-        // String happyPer = outputList[len - 3].trim();
+        String filename = outputList[len - 1].trim();
+        String emotion = outputList[len - 2].trim();
+        String happyPer = outputList[len - 3].trim();
         selfList.clear();
-        // selfList.add(filename);
-        // selfList.add(emotion);
-        // selfList.add(happyPer);
-        for(int i = 0; i < len; i++) {
-            selfList.add(outputList[i]);
-        }
+        selfList.add(filename);
+        selfList.add(emotion);
+        selfList.add(happyPer);
+        // for(int i = 0; i < len; i++) {
+        //     selfList.add(outputList[i]);
+        // }
     }
 
     public static void execPython(String[] command) throws IOException, InterruptedException {
