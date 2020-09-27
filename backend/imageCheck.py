@@ -64,11 +64,11 @@ def main(argv):
     now = int(round(time.time() * 1000))
     filename = str(now) + '.png'
 
-    if(label == "Happy"):
-        cv2.imwrite("C:/image/" + filename, color)
-        print(filename)
-        print("true")
-    cv2.imwrite("C:/image/" + filename, frame)
+    # if(label == "Happy"):
+    #     cv2.imwrite("C:/image/" + filename, color)
+    #     print(filename)
+    #     print("true")
+    # cv2.imwrite("C:/image/" + filename, frame)
 
     # 경로 확인
     cv2.imwrite("/var/lib/jenkins/workspace/maven-test/frontend/public/images/" + filename, color)
