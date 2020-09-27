@@ -74,9 +74,9 @@ def main(argv):
     cv2.imwrite("/var/lib/jenkins/workspace/maven-test/frontend/public/images/" + filename, color)
     print(filename)
 
-    cv2.imshow('Sample', color)
+    # cv2.imshow('Sample', color)
 
-    cv2.waitKey(0)
+    # cv2.waitKey(0)
 
 if __name__ == "__main__":
     main(sys.argv)
