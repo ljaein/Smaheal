@@ -96,18 +96,23 @@ public class SmileController {
     @PostMapping("/smileCheck")
     @ApiOperation("스마일 체크")
     public Object smileCheck(@RequestBody String filename) throws SQLException, IOException {
-        String tempFileName = createFile(filename);
-        System.out.println("SmileCheck Python Call");
-        String[] command = new String[3];
-        command[0] = "python";
-        // 경로 확인
-        command[1] = "../imageCheck.py";
-        command[2] = tempFileName;
         try {
-            execPythonSmileCheck(command);
-            return new ResponseEntity<>(selfList, HttpStatus.OK);
+            String tempFileName = createFile(filename);
+            System.out.println("SmileCheck Python Call");
+            String[] command = new String[3];
+            command[0] = "python";
+            // 경로 확인
+            command[1] = "./backend/imageCheck.py";
+            command[2] = tempFileName;
+            try {
+                execPythonSmileCheck(command);
+                
+                return new ResponseEntity<>(selfList, HttpStatus.OK);
+            } catch (Exception e) {
+                return "findFail";
+            }
         } catch (Exception e) {
-            return "findFail";
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -127,16 +132,13 @@ public class SmileController {
 
         String[] outputList = outputStream.toString().split("\n");
         int len = outputList.length;
-        String filename = outputList[len - 1].trim();
+        String filename = outputList[len - 1].trim();;
         String emotion = outputList[len - 2].trim();
         String happyPer = outputList[len - 3].trim();
         selfList.clear();
         selfList.add(filename);
         selfList.add(emotion);
         selfList.add(happyPer);
-        // for(int i = 0; i < len; i++) {
-        // selfList.add(outputList[i]);
-        // }
     }
 
     public static void execPython(String[] command) throws IOException, InterruptedException {
@@ -172,7 +174,7 @@ public class SmileController {
         long time = System.currentTimeMillis();
         String name = Long.toString(time);
         // 경로 정해주기
-        File file = new File("../../frontend/public/textFiles/" + name);
+        File file = new File("./frontend/public/textFiles/" + name);
         String str = filename;
 
         try {
