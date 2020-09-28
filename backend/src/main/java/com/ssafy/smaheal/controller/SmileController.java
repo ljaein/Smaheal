@@ -144,7 +144,6 @@ public class SmileController {
         String[] outputList = outputStream.toString().split("\n");
         int len = outputList.length;
         String filename = outputList[len - 1].trim();
-        ;
         String emotion = outputList[len - 2].trim();
         String happyPer = outputList[len - 3].trim();
         selfList.clear();
