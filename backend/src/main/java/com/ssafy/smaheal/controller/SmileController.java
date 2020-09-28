@@ -215,6 +215,7 @@ public class SmileController {
         String hostname = InetAddress.getLocalHost().getHostName();
         if (hostname.substring(0, 7).equals("DESKTOP")) {// local
             command[1] = "./backend/textCheck.py";
+            System.out.println("in");
         } else {// aws
             command[1] = "../textCheck.py";
         }
