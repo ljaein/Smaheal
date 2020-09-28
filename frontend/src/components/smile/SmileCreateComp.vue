@@ -248,6 +248,7 @@
               </div>
             </v-tab-item>
             <v-tab-item v-if="selfFlag" id="tab-self">
+              <audio id="audio" src="../../../public/laugh/laugh.mp3" loop></audio>
               <div class="container" style="height:400px;text-align:center">
                 <video
                   src
@@ -598,7 +599,8 @@ export default {
         .get(`/crawling/getVideosByAge/1`)
         .then(res => {
           var jbRandom = Math.random();
-          this.videosForChild = res.data[Math.floor(jbRandom * res.data.length)];
+          this.videosForChild =
+            res.data[Math.floor(jbRandom * res.data.length)];
         })
         .catch(err => {
           console.log(err);
@@ -788,12 +790,16 @@ export default {
       this.endFlag = false;
     },
     selfieStart() {
+      let audio = document.getElementById("audio");
+      audio.play();
       this.init();
       this.camOn = true;
       this.startFlag = false;
       this.endFlag = true;
     },
     selfieStop() {
+      let audio = document.getElementById("audio");
+      audio.pause();
       this.stop();
       this.startFlag = true;
       this.endFlag = false;
@@ -802,6 +808,8 @@ export default {
       this.selfieCapture = [];
     },
     selfieCap() {
+      let audio = document.getElementById("audio");
+      audio.pause();
       this.capture();
       this.selfieCapture = [];
       this.checkFlag = true;
