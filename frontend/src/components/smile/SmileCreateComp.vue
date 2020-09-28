@@ -58,7 +58,6 @@
         </v-stepper>
       </v-col>
     </v-row>
-
     <!-- 캡쳐 종류 선택 -->
     <v-row style="height:700px;" class="d-flex justify-content-center pt-15">
       <v-col cols="10">
@@ -524,7 +523,7 @@ export default {
       autoCapture: [],
       selfieCapture: [],
       videos: [],
-      inputFile: []
+      inputFile: [],
     };
   },
   methods: {
@@ -667,8 +666,9 @@ export default {
             .get(`/smile/textCheck/${this.comment}`)
             .then(res => {
               alert(res.data);
-              var smilePer = res.data.split(".")[0];
-              if (Number(smilePer) >= 60) {
+              var word = res.data.split(" ");
+              var smilePer = word[0].split(".")[0];
+              if (word[2]=="긍정" && Number(smilePer) >= 60) {
                 //긍정 60프로 이상
                 http
                   .post("/smile/regist", {
