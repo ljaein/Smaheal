@@ -1,6 +1,5 @@
 <template>
   <div align="center">
-    <v-card width="400px">
       <v-container>
         <v-row>
           <v-col>
@@ -31,7 +30,6 @@
           </v-col>
         </v-row>
       </v-container>
-    </v-card>
   </div>
 </template>
 
