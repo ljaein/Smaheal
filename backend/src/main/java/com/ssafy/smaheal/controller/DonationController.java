@@ -90,13 +90,13 @@ public class DonationController {
         }
     }
 
-    @GetMapping("/getWaitList")
+    @GetMapping("/getWaitList/{page}")
     @ApiOperation(value = "기부 게시판 리스트(대기)")
-    public Object getWaitDonationList() throws SQLException, IOException {
+    public Object getWaitDonationList(@PathVariable int page) throws SQLException, IOException {
         try {
-            List<Donation> donationList = donationRepository.findByApprovalAndTempOrderByCreatedateDesc(0, 0);
-            if (donationList != null) {
-                return new ResponseEntity<>(donationList, HttpStatus.OK);
+            List<Donation> waitList = donationRepository.findByApprovalAndTempOrderByCreatedateDesc(0, 0, PageRequest.of(page,8));
+            if (waitList != null) {
+                return new ResponseEntity<>(waitList, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
             }
