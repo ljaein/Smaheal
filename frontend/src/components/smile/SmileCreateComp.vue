@@ -28,8 +28,14 @@
 
             <v-stepper-content step="2">
               <v-card class="mb-8" color="grey lighten-1" height="400px">
-                <p>사진과 동영상을 보고 웃음을 기부하는 방법은 웃으면 자동으로 캡쳐가 됩니다.</p>
-                <p>셀카모드는 얼굴을 보면서 직접 캡쳐하여 웃음을 인증 받은 후에 기부가 진행됩니다.</p>
+                <p>
+                  사진과 동영상을 보고 웃음을 기부하는 방법은 웃으면 자동으로
+                  캡쳐가 됩니다.
+                </p>
+                <p>
+                  셀카모드는 얼굴을 보면서 직접 캡쳐하여 웃음을 인증 받은 후에
+                  기부가 진행됩니다.
+                </p>
                 <p>카메라와 너무 멀리 떨어져 있으면 캡쳐가 안될 수 있어요.</p>
               </v-card>
               <v-btn color="primary" @click="e1 = 3">Continue</v-btn>
@@ -38,7 +44,10 @@
 
             <v-stepper-content step="3">
               <v-card class="mb-8" color="grey lighten-1" height="400px">
-                <p>웃음 기부 전에 웃음왕에 사진이 쓰일지에 대한 여부를 선택하고 기부를 하게 됩니다.</p>
+                <p>
+                  웃음 기부 전에 웃음왕에 사진이 쓰일지에 대한 여부를 선택하고
+                  기부를 하게 됩니다.
+                </p>
                 <p>어렵지 않죠?</p>
                 <p>그러면 웃음 기부를 시작해볼까요?</p>
               </v-card>
@@ -48,10 +57,6 @@
           </v-stepper-items>
         </v-stepper>
       </v-col>
-    </v-row>
-
-    <v-row style="height:300px">
-      <button @click="texttest">감성분석</button>
     </v-row>
 
     <!-- 캡쳐 종류 선택 -->
@@ -67,7 +72,11 @@
             icons-and-text
           >
             <v-tabs-slider></v-tabs-slider>
-            <v-tab class="tab-text" href="#tab-contents" @click="someContents()">
+            <v-tab
+              class="tab-text"
+              href="#tab-contents"
+              @click="someContents()"
+            >
               Contents
               <v-icon>mdi-animation</v-icon>
             </v-tab>
@@ -92,12 +101,18 @@
                   class="col-2"
                   style="top:170px;color:white;"
                   @click="(contentsFlag = true), cameraOn()"
-                >start</v-btn>
+                  >start</v-btn
+                >
               </div>
             </v-tab-item>
             <v-tab-item v-if="contentsFlag" id="tab-contents">
               <v-row align="center" class="container m-0">
-                <v-item-group v-model="window" class="shrink" mandatory tag="v-flex">
+                <v-item-group
+                  v-model="window"
+                  class="shrink"
+                  mandatory
+                  tag="v-flex"
+                >
                   <!-- 사진 -->
                   <v-item v-slot:default="{ active, toggle }" class="mb-5">
                     <div>
@@ -123,7 +138,10 @@
                     <v-window-item>
                       <v-card flat>
                         <v-card-text>
-                          <div class="container" style="height:400px;text-align:center">
+                          <div
+                            class="container"
+                            style="height:400px;text-align:center"
+                          >
                             <v-carousel style="height:100%;">
                               <v-carousel-item
                                 reverse-transition="fade-transition"
@@ -164,7 +182,10 @@
                     <v-window-item>
                       <v-card flat>
                         <v-card-text>
-                          <LazyYoutubeVideo :src="makeUrl(videos[1].videoId)" style="width:100%;height:100%;" />
+                          <LazyYoutubeVideo
+                            :src="makeUrl(videos[1].videoId)"
+                            style="width:100%;height:100%;"
+                          />
                         </v-card-text>
                       </v-card>
                     </v-window-item>
@@ -181,7 +202,8 @@
                   class="col-2"
                   style="top:170px;color:white;"
                   @click="selfieInit()"
-                >start</v-btn>
+                  >start</v-btn
+                >
               </div>
             </v-tab-item>
             <v-tab-item v-if="selfFlag" id="tab-self">
@@ -203,28 +225,32 @@
                   style="color:white;"
                   v-if="startFlag"
                   @click="selfieStart()"
-                >start</v-btn>
+                  >start</v-btn
+                >
                 <v-btn
                   color="#356859"
                   class="m-2 col-md-2 col-sm-4 col-10"
                   style="color:white;"
                   v-if="endFlag"
                   @click="selfieStop()"
-                >stop</v-btn>
+                  >stop</v-btn
+                >
                 <v-btn
                   color="#356859"
                   class="m-2 col-md-2 col-sm-4 col-10"
                   style="color:white;"
                   v-if="endFlag"
                   @click="selfieCap()"
-                >capture</v-btn>
+                  >capture</v-btn
+                >
                 <v-btn
                   color="#356859"
                   class="m-2 col-md-2 col-sm-4 col-10"
                   style="color:white;"
                   v-if="checkFlag"
                   @click="check()"
-                >check</v-btn>
+                  >check</v-btn
+                >
               </v-row>
 
               <div v-if="!startFlag">
@@ -236,7 +262,12 @@
                 <div v-if="selCapFlag">
                   <!-- 사진 사용 여부 -->
                   <v-row>
-                    <v-switch style="margin:0 auto" v-model="kingFlag" inset :label="`사진 허용 `"></v-switch>
+                    <v-switch
+                      style="margin:0 auto"
+                      v-model="kingFlag"
+                      inset
+                      :label="`사진 허용 `"
+                    ></v-switch>
                   </v-row>
                   <!-- 한줄 코멘트 -->
                   <v-row class="justify-content-center">
@@ -256,7 +287,8 @@
                       class="col-3"
                       color="#356859"
                       @click="donationSelfie"
-                    >기부하기</v-btn>
+                      >기부하기</v-btn
+                    >
                   </v-row>
                 </div>
               </div>
@@ -265,7 +297,13 @@
             <!-- 파일 업로드 -->
             <v-tab-item v-if="!fileFlag" id="tab-file">
               <div class="container" style="height:400px;text-align:center">
-                <v-btn color="#356859" class="col-2" style="top:170px;color:white;" @click="uploadInit()">start</v-btn>
+                <v-btn
+                  color="#356859"
+                  class="col-2"
+                  style="top:170px;color:white;"
+                  @click="uploadInit()"
+                  >start</v-btn
+                >
               </div>
             </v-tab-item>
             <v-tab-item v-if="fileFlag" id="tab-file">
@@ -276,10 +314,16 @@
               </div>
 
               <div v-if="inputFile != ''" style="margin:0 auto;">
-                <img :src="preImg(inputFile)" style="max-width:100%;width:400px;height:65%;" />
+                <img
+                  :src="preImg(inputFile)"
+                  style="max-width:100%;width:400px;height:65%;"
+                />
               </div>
 
-              <div class="col-lg-6 col-md-6 col-sm-8 col-10" style="margin:0 auto;">
+              <div
+                class="col-lg-6 col-md-6 col-sm-8 col-10"
+                style="margin:0 auto;"
+              >
                 파일 업로드
                 <v-file-input
                   ref="file"
@@ -298,17 +342,33 @@
               <div>
                 <!-- 사진 사용 여부 -->
                 <v-row>
-                  <v-switch style="margin:0 auto" v-model="kingFlag" inset :label="`사진 허용 `"></v-switch>
+                  <v-switch
+                    style="margin:0 auto"
+                    v-model="kingFlag"
+                    inset
+                    :label="`사진 허용 `"
+                  ></v-switch>
                 </v-row>
                 <!-- 한줄 코멘트 -->
                 <v-row class="justify-content-center">
                   <v-col cols="6">
-                    <v-text-field v-model="comment" :rules="commentRules" :counter="20" label="한 줄 메세지"></v-text-field>
+                    <v-text-field
+                      v-model="comment"
+                      :rules="commentRules"
+                      :counter="20"
+                      label="한 줄 메세지"
+                    ></v-text-field>
                   </v-col>
                 </v-row>
                 <!-- 기부하기 -->
                 <v-row>
-                  <v-btn style="margin:0 auto 50px auto;color:white;" class="col-3" color="#356859" @click="donationSelfie">기부하기</v-btn>
+                  <v-btn
+                    style="margin:0 auto 50px auto;color:white;"
+                    class="col-3"
+                    color="#356859"
+                    @click="donationSelfie"
+                    >기부하기</v-btn
+                  >
                 </v-row>
               </div>
             </v-tab-item>
@@ -329,25 +389,37 @@
           color="#356859"
           style="color:white;"
           @click="(contentsFlag = false), (autoCapFlag = false), stepEnd()"
-        >다시찍기</v-btn>
+          >다시찍기</v-btn
+        >
         <v-btn
           class="col-lg-2 col-md-2 col-sm-5 col-5 mx-10 my-5"
           color="#356859"
           style="color:white;"
           @click="selectFlag = true"
-        >사진확정</v-btn>
+          >사진확정</v-btn
+        >
       </v-row>
     </div>
 
     <div v-if="autoCapFlag">
       <!-- 사진 사용 여부 -->
       <v-row class="col-4 p-0 mt-5" style="margin:0 auto;">
-        <v-switch v-model="kingFlag" inset label="사진 허용" style="margin:0 auto;"></v-switch>
+        <v-switch
+          v-model="kingFlag"
+          inset
+          label="사진 허용"
+          style="margin:0 auto;"
+        ></v-switch>
       </v-row>
       <!-- 한줄 코멘트 -->
       <v-row class="justify-content-center">
         <v-col cols="6">
-          <v-text-field v-model="comment" :rules="commentRules" :counter="20" label="한 줄 메세지"></v-text-field>
+          <v-text-field
+            v-model="comment"
+            :rules="commentRules"
+            :counter="20"
+            label="한 줄 메세지"
+          ></v-text-field>
         </v-col>
       </v-row>
       <!-- 기부하기 -->
@@ -357,7 +429,8 @@
           color="#356859"
           @click="donationContents"
           style="margin:0 auto;color:white;"
-        >기부하기</v-btn>
+          >기부하기</v-btn
+        >
       </v-row>
     </div>
 
@@ -370,7 +443,8 @@
         :width="15"
         :value="value"
         color="white"
-      >{{ value }}</v-progress-circular>
+        >{{ value }}</v-progress-circular
+      >
     </v-overlay>
 
     <!-- 캡쳐 알림 -->
@@ -391,7 +465,13 @@
 
     <!-- 로딩 오버레이 -->
     <v-overlay :value="donationFlag">
-      <v-progress-circular :size="70" width="6" indeterminate color="amber" style="margin-left:50%"></v-progress-circular>
+      <v-progress-circular
+        :size="70"
+        width="6"
+        indeterminate
+        color="amber"
+        style="margin-left:50%"
+      ></v-progress-circular>
     </v-overlay>
   </div>
 </template>
@@ -440,11 +520,11 @@ export default {
       selectFlag: false,
       donationFlag: false,
       fileFlag: false,
-      commentRules: [(v) => v.length <= 20 || '20자 이내로 써주세요.'],
+      commentRules: [v => v.length <= 20 || "20자 이내로 써주세요."],
       autoCapture: [],
       selfieCapture: [],
       videos: [],
-      inputFile: [],
+      inputFile: []
     };
   },
   methods: {
@@ -516,10 +596,13 @@ export default {
       }
     },
     init() {
-      console.log(navigator)
-      if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
-        navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
-          const videoPlayer = document.getElementById('webcam');
+      console.log(navigator);
+      if (
+        "mediaDevices" in navigator &&
+        "getUserMedia" in navigator.mediaDevices
+      ) {
+        navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+          const videoPlayer = document.getElementById("webcam");
           videoPlayer.srcObject = stream;
           videoPlayer.play();
         });
@@ -560,7 +643,7 @@ export default {
       return "../../../images/" + img;
     },
     makeUrl(url) {
-      return 'https://www.youtube.com/embed/' + url;
+      return "https://www.youtube.com/embed/" + url;
     },
     loading() {
       this.overlay = true;
@@ -581,22 +664,36 @@ export default {
           alert("웃음 지수가 너무 낮습니다.");
         } else {
           http
-            .post("/smile/regist", {
-              user_id: this.uid,
-              donationid: this.donationid,
-              photo: this.selfieCapture[0],
-              smileper: this.selfieCapture[2],
-              comment: this.comment,
-              agreement: this.kingFlag ? 1 : 0
-            })
+            .get(`/smile/textCheck/${this.comment}`)
             .then(res => {
-              this.stop();
-              this.log = res.data;
-              this.donationFlag = true;
-              let x = this;
-              setTimeout(function() {
-                x.$router.push("/donationlist");
-              }, 1500);
+              alert(res.data);
+              var smilePer = res.data.split(".")[0];
+              if (Number(smilePer) >= 60) {
+                //긍정 60프로 이상
+                http
+                  .post("/smile/regist", {
+                    user_id: this.uid,
+                    donationid: this.donationid,
+                    photo: this.selfieCapture[0],
+                    smileper: this.selfieCapture[2],
+                    comment: this.comment,
+                    agreement: this.kingFlag ? 1 : 0
+                  })
+                  .then(res => {
+                    this.stop();
+                    this.log = res.data;
+                    this.donationFlag = true;
+                    let x = this;
+                    setTimeout(function() {
+                      x.$router.push("/donationlist");
+                    }, 1500);
+                  })
+                  .catch(err => {
+                    console.log(err);
+                  });
+              } else {
+                alert("응원의 메세지를 적어주세요.");
+              }
             })
             .catch(err => {
               console.log(err);
@@ -674,16 +771,6 @@ export default {
       this.selfieCapture = [];
       this.stop();
     },
-    texttest() {
-      http
-        .get("/smile/textCheck")
-        .then(res => {
-          console.log(res.data);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
     uploadInit() {
       this.selfFlag = false;
       this.contentsFlag = false;
@@ -694,20 +781,20 @@ export default {
       if (img != null) {
         return URL.createObjectURL(img);
       }
-    },
+    }
   },
   computed: {
-    ...mapGetters(['getUserID', 'getUserBirth']),
+    ...mapGetters(["getUserID", "getUserBirth"]),
     ...mapState({
-      userID: (state) => `${state.user.getUserID}`,
-      userBirth: (state) => `${state.user.getUserBirth}`,
-    }),
+      userID: state => `${state.user.getUserID}`,
+      userBirth: state => `${state.user.getUserBirth}`
+    })
   },
   watch: {
     inputFile: function() {
       console.log(this.inputFile);
-    },
-  },
+    }
+  }
 };
 </script>
 
