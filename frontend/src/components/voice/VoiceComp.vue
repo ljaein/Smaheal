@@ -1,6 +1,5 @@
 <template>
   <div align="center">
-    <v-card width="400px">
       <v-container>
         <v-row>
           <v-col>
@@ -20,7 +19,7 @@
             <br />
             <button @click="loadTransform(1)">메가폰</button>
             <br />
-            <button @click="loadTransform(2)">느린</button>
+            <button @click="loadTransform(2)">느리게</button>
             <br />
             <button @click="loadTransform(3)">로꾸꺼</button>
             <br />
@@ -31,7 +30,6 @@
           </v-col>
         </v-row>
       </v-container>
-    </v-card>
   </div>
 </template>
 

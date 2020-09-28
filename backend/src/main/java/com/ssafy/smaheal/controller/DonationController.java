@@ -240,5 +240,18 @@ public class DonationController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    @GetMapping("/searchList/{search}")
+    @ApiOperation(value = "기부 게시판 검색(승인)")
+    public Object searchList(@PathVariable String search) throws SQLException, IOException {
+        try {
+            List<Donation> categoryList = donationRepository.findByApprovalAndTempAndTitleContainingOrderByCreatedateDesc(1, 0, search);
+            
+            return new ResponseEntity<>(categoryList, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }

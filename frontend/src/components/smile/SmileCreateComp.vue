@@ -95,11 +95,18 @@
             <!-- 콘텐츠 -->
             <v-tab-item v-if="!contentsFlag" id="tab-contents">
               <div class="container" style="height:400px;text-align:center">
-                <v-btn
+                <!-- <v-btn
                   color="#356859"
                   class="col-2"
                   style="top:170px;color:white;"
                   @click="(contentsFlag = true), cameraOn()"
+                  >start</v-btn
+                > -->
+                <v-btn
+                  color="#356859"
+                  class="col-2"
+                  style="top:170px;color:white;"
+                  @click="contentsFlag = true"
                   >start</v-btn
                 >
               </div>
@@ -121,10 +128,26 @@
                     </div>
                   </v-item>
                   <!-- 영상 -->
-                  <v-item v-slot:default="{ active, toggle }">
+                  <v-item v-slot:default="{ active, toggle }" class="mb-5">
                     <div>
                       <v-btn :input-value="active" icon @click="toggle">
                         <v-icon>mdi-video</v-icon>
+                      </v-btn>
+                    </div>
+                  </v-item>
+                  <!-- 어린이 영상 -->
+                  <v-item v-slot:default="{ active, toggle }" class="mb-5">
+                    <div>
+                      <v-btn :input-value="active" icon @click="toggle">
+                        <v-icon>mdi-baby-carriage</v-icon>
+                      </v-btn>
+                    </div>
+                  </v-item>
+                  <!-- 음성 -->
+                  <v-item v-slot:default="{ active, toggle }" class="mb-5">
+                    <div>
+                      <v-btn :input-value="active" icon @click="toggle">
+                        <v-icon>mdi-microphone</v-icon>
                       </v-btn>
                     </div>
                   </v-item>
@@ -182,9 +205,28 @@
                       <v-card flat>
                         <v-card-text>
                           <LazyYoutubeVideo
-                            :src="makeUrl(videos[1].videoId)"
+                            :src="makeUrl(videos.videoId)"
                             style="width:100%;height:100%;"
                           />
+                        </v-card-text>
+                      </v-card>
+                    </v-window-item>
+                    <!-- 어린이 영상 -->
+                    <v-window-item>
+                      <v-card flat>
+                        <v-card-text>
+                          <LazyYoutubeVideo
+                            :src="makeUrl(videosForChild.videoId)"
+                            style="width:100%;height:100%;"
+                          />
+                        </v-card-text>
+                      </v-card>
+                    </v-window-item>
+                    <!-- 음성 -->
+                    <v-window-item>
+                      <v-card flat>
+                        <v-card-text>
+                          <VoiceComp />
                         </v-card-text>
                       </v-card>
                     </v-window-item>
@@ -206,6 +248,7 @@
               </div>
             </v-tab-item>
             <v-tab-item v-if="selfFlag" id="tab-self">
+              <audio id="audio" src="../../../public/laugh/laugh.mp3" loop></audio>
               <div class="container" style="height:400px;text-align:center">
                 <video
                   src
@@ -479,11 +522,13 @@
 import http from "@/util/http-common.js";
 import { mapGetters, mapState } from "vuex";
 import LazyYoutubeVideo from "vue-lazy-youtube-video";
+import VoiceComp from "@/components/voice/VoiceComp.vue";
 // npm install --save vue-lazy-youtube-video
 
 export default {
   components: {
-    LazyYoutubeVideo
+    LazyYoutubeVideo,
+    VoiceComp
   },
   created() {
     scroll(0, 0);
@@ -522,8 +567,9 @@ export default {
       commentRules: [v => v.length <= 20 || "20자 이내로 써주세요."],
       autoCapture: [],
       selfieCapture: [],
-      videos: [],
-      inputFile: [],
+      videos: {},
+      videosForChild: {},
+      inputFile: []
     };
   },
   methods: {
@@ -535,12 +581,26 @@ export default {
         this.uage = this.uage - (this.uage % 10);
       }
       this.getVideos();
+      this.getVideosForChild();
     },
     getVideos() {
       http
         .get(`/crawling/getVideosByAge/${this.uage}`)
         .then(res => {
-          this.videos = res.data;
+          var jbRandom = Math.random();
+          this.videos = res.data[Math.floor(jbRandom * res.data.length)];
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getVideosForChild() {
+      http
+        .get(`/crawling/getVideosByAge/1`)
+        .then(res => {
+          var jbRandom = Math.random();
+          this.videosForChild =
+            res.data[Math.floor(jbRandom * res.data.length)];
         })
         .catch(err => {
           console.log(err);
@@ -668,7 +728,7 @@ export default {
               alert(res.data);
               var word = res.data.split(" ");
               var smilePer = word[0].split(".")[0];
-              if (word[2]=="긍정" && Number(smilePer) >= 60) {
+              if (word[2] == "긍정" && Number(smilePer) >= 60) {
                 //긍정 60프로 이상
                 http
                   .post("/smile/regist", {
@@ -730,12 +790,16 @@ export default {
       this.endFlag = false;
     },
     selfieStart() {
+      let audio = document.getElementById("audio");
+      audio.play();
       this.init();
       this.camOn = true;
       this.startFlag = false;
       this.endFlag = true;
     },
     selfieStop() {
+      let audio = document.getElementById("audio");
+      audio.pause();
       this.stop();
       this.startFlag = true;
       this.endFlag = false;
@@ -744,6 +808,8 @@ export default {
       this.selfieCapture = [];
     },
     selfieCap() {
+      let audio = document.getElementById("audio");
+      audio.pause();
       this.capture();
       this.selfieCapture = [];
       this.checkFlag = true;

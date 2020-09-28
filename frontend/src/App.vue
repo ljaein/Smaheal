@@ -17,10 +17,6 @@
         <span class="mr-2">ai_video test</span>
       </v-btn> -->
 
-      <v-btn @click="goVoiceTest()" text>
-        <span class="mr-2 font-weight-bold">voice test</span>
-      </v-btn>
-
       <v-btn @click="goDonationList()" text>
         <span class="mr-2 font-weight-bold">기부 게시판</span>
       </v-btn>
@@ -128,9 +124,6 @@ export default {
     },
     goMyPage(){
       this.$router.push('/myPage').catch(() => {}); 
-    },
-    goVoiceTest(){
-      this.$router.push('/voice').catch(() => {}); 
     },
   },
   computed: {
