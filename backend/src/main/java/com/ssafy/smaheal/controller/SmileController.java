@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
@@ -50,7 +51,12 @@ public class SmileController {
             String[] command = new String[2];
             command[0] = "python";
             // 경로 확인
-            command[1] = "./backend/cameraOn.py";
+            String hostname = InetAddress.getLocalHost().getHostName();
+            if (hostname.substring(0, 7).equals("DESKTOP")) {// local
+                command[1] = "./backend/cameraOn.py";
+            } else {// aws
+                command[1] = "../cameraOn.py";
+            }
             // command[2] = "./backend/files/haarcascade_frontalface_default.xml";
             // command[3] = "./backend/files/emotion_model.hdf5";
             try {
@@ -102,11 +108,16 @@ public class SmileController {
             String[] command = new String[3];
             command[0] = "python";
             // 경로 확인
-            command[1] = "./backend/imageCheck.py";
+            String hostname = InetAddress.getLocalHost().getHostName();
+            if (hostname.substring(0, 7).equals("DESKTOP")) {// local
+                command[1] = "./backend/imageCheck.py";
+            } else {// aws
+                command[1] = "../imageCheck.py";
+            }
             command[2] = tempFileName;
             try {
                 execPythonSmileCheck(command);
-                
+
                 return new ResponseEntity<>(selfList, HttpStatus.OK);
             } catch (Exception e) {
                 return "findFail";
@@ -132,7 +143,8 @@ public class SmileController {
 
         String[] outputList = outputStream.toString().split("\n");
         int len = outputList.length;
-        String filename = outputList[len - 1].trim();;
+        String filename = outputList[len - 1].trim();
+        ;
         String emotion = outputList[len - 2].trim();
         String happyPer = outputList[len - 3].trim();
         selfList.clear();
@@ -174,10 +186,15 @@ public class SmileController {
         long time = System.currentTimeMillis();
         String name = Long.toString(time);
         // 경로 정해주기
-        File file = new File("./frontend/public/textFiles/" + name);
-        String str = filename;
-
         try {
+            File file = null;
+            String hostname = InetAddress.getLocalHost().getHostName();
+            if (hostname.substring(0, 7).equals("DESKTOP")) {// local
+                file = new File("./frontend/public/textFiles/" + name);
+            } else {// aws
+                file = new File("../../frontend/public/textFiles/" + name);
+            }
+            String str = filename;
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             writer.write(str);
             writer.close();
@@ -195,7 +212,12 @@ public class SmileController {
         String[] command = new String[3];
         command[0] = "python";
         // 경로 확인
-        command[1] = "../textCheck.py";
+        String hostname = InetAddress.getLocalHost().getHostName();
+        if (hostname.substring(0, 7).equals("DESKTOP")) {// local
+            command[1] = "./backend/textCheck.py";
+        } else {// aws
+            command[1] = "../textCheck.py";
+        }
         command[2] = text;
         try {
             text_res = execPython2(command);
