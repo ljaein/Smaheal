@@ -19,6 +19,8 @@ import imageTest from "../views/donation/imagetest.vue"
 import noticeSearch from "../views/notice/noticeSearch.vue"
 import noticeModify from "../views/notice/noticeModify.vue"
 import signUp from "@/components/account/SignUp.vue"
+import Voice from "../views/test/Voice.vue"
+import AdminPage from "../views/admin/AdminPage.vue"
 
 Vue.use(VueRouter);
 
@@ -121,6 +123,16 @@ const routes = [{
         path: "/signup",
         name: "signUp",
         component: signUp,
+    },
+    {
+        path: "/voice",
+        name: "Voice",
+        component: Voice,
+    },
+    {
+        path: "/adminPage",
+        name: "AdminPage",
+        component: AdminPage,
     },
 ];
 
