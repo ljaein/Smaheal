@@ -298,7 +298,7 @@
               <div v-if="!startFlag">
                 <div class="container" style="height:250px;text-align:center">
                   <canvas height="200%" width="200%"></canvas>
-                  <img id="myImage" />
+                  <!-- <img id="myImage" /> -->
                   <!-- {{ selfieCapture }} -->
                 </div>
                 <div v-if="selCapFlag">
@@ -348,71 +348,81 @@
                 >
               </div>
             </v-tab-item>
-            <v-tab-item v-if="fileFlag" id="tab-file">
-              <div class="container" style="height:250px;text-align:center">
-                <canvas height="200%" width="200%"></canvas>
-                <img id="myImage" />
-                <!-- {{ selfieCapture }} -->
-              </div>
-
-              <div v-if="inputFile != ''" style="margin:0 auto;">
-                <img
-                  :src="preImg(inputFile)"
-                  style="max-width:100%;width:400px;height:65%;"
-                />
-              </div>
-
-              <div
-                class="col-lg-6 col-md-6 col-sm-8 col-10"
-                style="margin:0 auto;"
-              >
-                파일 업로드
-                <v-file-input
-                  ref="file"
-                  accept="image/png, image/jpeg, image/bmp"
-                  v-model="inputFile"
-                  color="#356859"
-                  counter
-                  prepend-icon
-                  outlined
+            <canvas id="canvasImg" height="200%" width="200%" hidden></canvas>
+            <v-tab-item v-if="fileFlag" id="tab-file" style="margin:0 auto;text-align:center;">
+              <v-row>
+                <div
+                  class="col-lg-6 col-md-6 col-sm-8 col-10 pt-7"
+                  style="margin:0 auto;text-align:center;"
                 >
-                  <template v-slot:selection="{ text }">
-                    <v-chip color="#356859" dark label small>{{ text }}</v-chip>
-                  </template>
-                </v-file-input>
-              </div>
-              <div>
-                <!-- 사진 사용 여부 -->
-                <v-row>
-                  <v-switch
-                    style="margin:0 auto"
-                    v-model="kingFlag"
-                    inset
-                    :label="`사진 허용 `"
-                  ></v-switch>
-                </v-row>
-                <!-- 한줄 코멘트 -->
-                <v-row class="justify-content-center">
-                  <v-col cols="6">
-                    <v-text-field
-                      v-model="comment"
-                      :rules="commentRules"
-                      :counter="20"
-                      label="한 줄 메세지"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-                <!-- 기부하기 -->
-                <v-row>
-                  <v-btn
-                    style="margin:0 auto 50px auto;color:white;"
-                    class="col-3"
+                  파일 업로드
+                  <v-file-input
+                    ref="file"
+                    accept="image/png, image/jpeg, image/bmp"
+                    v-model="inputFile"
                     color="#356859"
-                    @click="donationSelfie"
-                    >기부하기</v-btn
+                    counter
+                    prepend-icon
+                    outlined
                   >
-                </v-row>
-              </div>
+                    <template v-slot:selection="{ text }">
+                      <v-chip color="#356859" dark label small>{{ text }}</v-chip>
+                    </template>
+                  </v-file-input>
+                </div>
+
+                <div v-if="inputFile != ''" style="margin:0 auto; margin-bottom:20px;">
+                  <img
+                    :src="preImg(inputFile)"
+                    style="max-width:80%;width:400px;height:100%;"
+                    id="uploadImg"
+                  />
+                </div>
+              </v-row>
+
+              <div>
+              <!-- 업로드 파일 체크 -->
+              <v-row class="justify-content-center mb-5">
+                <v-btn
+                  color="#356859"
+                  class="m-2 col-md-2 col-sm-4 col-10"
+                  style="color:white;"
+                  v-if="checkFlag"
+                  @click="checkUpload()"
+                  >check</v-btn
+                >
+              </v-row>
+              <!-- 사진 사용 여부 -->
+              <v-row>
+                <v-switch
+                  style="margin:0 auto"
+                  v-model="kingFlag"
+                  inset
+                  :label="`사진 허용 `"
+                ></v-switch>
+              </v-row>
+              <!-- 한줄 코멘트 -->
+              <v-row class="justify-content-center">
+                <v-col cols="6">
+                  <v-text-field
+                    v-model="comment"
+                    :rules="commentRules"
+                    :counter="20"
+                    label="한 줄 메세지"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+              <!-- 기부하기 -->
+              <v-row>
+                <v-btn
+                  style="margin:0 auto 50px auto;color:white;"
+                  class="col-3"
+                  color="#356859"
+                  @click="donationSelfie"
+                  >기부하기</v-btn
+                >
+              </v-row>
+            </div>
             </v-tab-item>
           </v-tabs-items>
         </v-card>
@@ -539,6 +549,7 @@ export default {
   },
   data() {
     return {
+      idname:'',
       donationid: 0,
       uid: "",
       uage: "",
@@ -569,7 +580,8 @@ export default {
       selfieCapture: [],
       videos: {},
       videosForChild: {},
-      inputFile: []
+      inputFile: [],
+      preUrl: '',
     };
   },
   methods: {
@@ -637,7 +649,7 @@ export default {
         0,
         0,
         picture.width,
-        picture.height
+        picture.height,
       );
     },
     stop() {
@@ -826,8 +838,10 @@ export default {
       this.overlay = false;
       this.fileFlag = false;
       this.selfieCapture = [];
+      this.inputFile = [];
       this.stop();
       this.cameraOff();
+      this.canvasClear();
     },
     someContents() {
       this.selfFlag = false;
@@ -835,19 +849,46 @@ export default {
       this.overlay = false;
       this.fileFlag = false;
       this.selfieCapture = [];
+      this.inputFile = [];
       this.stop();
+      this.canvasClear();
     },
     uploadInit() {
       this.selfFlag = false;
       this.contentsFlag = false;
       this.fileFlag = true;
+      this.selfieCapture = [];
       this.stop();
     },
     preImg(img) {
-      if (img != null) {
+      if (img != null && img != '') {
+        this.preUrl = URL.createObjectURL(img);
         return URL.createObjectURL(img);
       }
-    }
+    },
+    canvasClear() {
+      const picture = document.querySelector("canvas");
+      const ctx = picture.getContext("2d");
+      // 픽셀 정리
+      ctx.clearRect(0, 0, picture.width, picture.height);
+      // 컨텍스트 리셋
+      ctx.beginPath();
+    },
+    checkUpload() {
+      const picture = document.querySelector("canvas");
+      const ctx = picture.getContext("2d");
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
+      ctx.drawImage(
+        document.getElementById("uploadImg"),
+        0,
+        0,
+        picture.width,
+        picture.height
+      );
+      
+      this.check();
+    },
   },
   computed: {
     ...mapGetters(["getUserID", "getUserBirth"]),
@@ -858,7 +899,11 @@ export default {
   },
   watch: {
     inputFile: function() {
-      console.log(this.inputFile);
+      if(this.inputFile != '' && this.inputFile != null) {
+        this.checkFlag = true;
+      } else {
+        this.checkFlag = false;
+      }
     }
   }
 };
