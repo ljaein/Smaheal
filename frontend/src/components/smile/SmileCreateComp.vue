@@ -248,7 +248,7 @@
               </div>
             </v-tab-item>
             <v-tab-item v-if="selfFlag" id="tab-self">
-              <audio id="audio" src="../../../public/laugh/laugh.mp3"></audio>
+              <audio id="audio" src="../../../public/laugh/laugh.mp3" loop></audio>
               <div class="container" style="height:400px;text-align:center">
                 <video
                   src
@@ -798,6 +798,8 @@ export default {
       this.endFlag = true;
     },
     selfieStop() {
+      let audio = document.getElementById("audio");
+      audio.pause();
       this.stop();
       this.startFlag = true;
       this.endFlag = false;
@@ -806,6 +808,8 @@ export default {
       this.selfieCapture = [];
     },
     selfieCap() {
+      let audio = document.getElementById("audio");
+      audio.pause();
       this.capture();
       this.selfieCapture = [];
       this.checkFlag = true;
