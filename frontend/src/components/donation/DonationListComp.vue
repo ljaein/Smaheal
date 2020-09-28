@@ -4,41 +4,71 @@
     <v-card color="basil">
       <v-card-title class="text-center justify-center py-6">
         <v-col cols="12" class="d-flex justify-content-end">
-            <v-btn
-              cols="3"
-              @click="goCreate()"
-              class="mr-2"
-              style="background-color:#356859; color:white; font-weight:bold;"
-            >등록 요청</v-btn>
+          <v-btn
+            cols="3"
+            @click="goCreate()"
+            class="mr-2"
+            style="background-color:#356859; color:white; font-weight:bold;"
+            >등록 요청</v-btn
+          >
         </v-col>
-        <v-col cols="12" class="d-flex justify-content-center align-items-center p-0">
+        <v-col
+          cols="12"
+          class="d-flex justify-content-center align-items-center p-0"
+        >
           <v-col cols="6" class="pt-0">
             <v-text-field
+              v-model="searchTxt"
               flat
               hide-details
               label="Search"
               prepend-inner-icon="mdi-magnify"
               solo-inverted
+              clearable
             ></v-text-field>
           </v-col>
         </v-col>
         <!-- <h1 class="font-weight-bold display-3 basil--text">BASiL</h1> -->
       </v-card-title>
-      <v-tabs v-model="tab" background-color="transparent" color="basil" class="basil--text" grow>
+      <v-tabs
+        v-model="tab"
+        background-color="transparent"
+        color="basil"
+        class="basil--text"
+        grow
+      >
         <!-- <v-tabs-slider></v-tabs-slider> -->
-        <v-tab href="#tab-1" @click="infiniteId+=1" class="tab-text">all</v-tab>
-        <v-tab href="#tab-2" @click="infiniteId+=1" class="tab-text">아동/청소년</v-tab>
-        <v-tab href="#tab-3" @click="infiniteId+=1" class="tab-text">어르신</v-tab>
-        <v-tab href="#tab-4" @click="infiniteId+=1" class="tab-text">장애인</v-tab>
-        <v-tab href="#tab-5" @click="infiniteId+=1" class="tab-text">가족/여성</v-tab>
-        <v-tab href="#tab-6" @click="infiniteId+=1" class="tab-text">다문화</v-tab>
-        <v-tab href="#tab-7" @click="infiniteId+=1" class="tab-text">기타</v-tab>
+        <v-tab href="#tab-1" @click="infiniteId += 1" class="tab-text"
+          >all</v-tab
+        >
+        <v-tab href="#tab-2" @click="infiniteId += 1" class="tab-text"
+          >아동/청소년</v-tab
+        >
+        <v-tab href="#tab-3" @click="infiniteId += 1" class="tab-text"
+          >어르신</v-tab
+        >
+        <v-tab href="#tab-4" @click="infiniteId += 1" class="tab-text"
+          >장애인</v-tab
+        >
+        <v-tab href="#tab-5" @click="infiniteId += 1" class="tab-text"
+          >가족/여성</v-tab
+        >
+        <v-tab href="#tab-6" @click="infiniteId += 1" class="tab-text"
+          >다문화</v-tab
+        >
+        <v-tab href="#tab-7" @click="infiniteId += 1" class="tab-text"
+          >기타</v-tab
+        >
       </v-tabs>
     </v-card>
 
     <v-tabs-items v-model="tab">
       <v-tab-item class="row justify-content-left p-3" value="tab-1">
-        <div class="col-12 col-sm-6 col-md-3" v-for="(donation,index) in all" :key="index">
+        <div
+          class="col-12 col-sm-6 col-md-3"
+          v-for="(donation, index) in all"
+          :key="index"
+        >
           <v-card max-width="400" style="overflow:hidden;">
             <div style="height:200px;width:100%;">
               <img
@@ -50,28 +80,34 @@
             <v-card-title
               class="pb-0 mb-1 donation-title"
               @click="getDetail(donation.donationid)"
-            >{{donation.title}}</v-card-title>
+              >{{ donation.title }}</v-card-title
+            >
             <v-card-text class="text--primary">
-              <div class="mb-3">{{donation.receiver}}</div>
+              <div class="mb-3">{{ donation.receiver }}</div>
               <v-progress-linear
                 rounded
-                :value="toPercent(donation.nowcnt,donation.maxcnt)"
+                :value="toPercent(donation.nowcnt, donation.maxcnt)"
                 height="10"
                 color="yellow darken-2"
               ></v-progress-linear>
               <div class="d-flex justify-content-between mt-2">
-                <div
-                  class="d-flex"
-                  style="font-size:large; color:#F9A825"
-                >{{toPercent(donation.nowcnt,donation.maxcnt)}}%</div>
-                <div class="d-flex" style="font-size:large;">{{donation.nowcnt}}장</div>
+                <div class="d-flex" style="font-size:large; color:#F9A825">
+                  {{ toPercent(donation.nowcnt, donation.maxcnt) }}%
+                </div>
+                <div class="d-flex" style="font-size:large;">
+                  {{ donation.nowcnt }}장
+                </div>
               </div>
             </v-card-text>
           </v-card>
         </div>
       </v-tab-item>
       <v-tab-item class="row justify-content-left p-3" value="tab-2">
-        <div class="col-12 col-sm-6 col-md-3" v-for="(donation,index) in child" :key="index">
+        <div
+          class="col-12 col-sm-6 col-md-3"
+          v-for="(donation, index) in child"
+          :key="index"
+        >
           <v-card max-width="400" style="overflow:hidden;">
             <div style="height:200px;width:100%;">
               <img
@@ -83,28 +119,34 @@
             <v-card-title
               class="pb-0 mb-1 donation-title"
               @click="getDetail(donation.donationid)"
-            >{{donation.title}}</v-card-title>
+              >{{ donation.title }}</v-card-title
+            >
             <v-card-text class="text--primary">
-              <div class="mb-3">{{donation.receiver}}</div>
+              <div class="mb-3">{{ donation.receiver }}</div>
               <v-progress-linear
                 rounded
-                :value="toPercent(donation.nowcnt,donation.maxcnt)"
+                :value="toPercent(donation.nowcnt, donation.maxcnt)"
                 height="10"
                 color="yellow darken-2"
               ></v-progress-linear>
               <div class="d-flex justify-content-between mt-2">
-                <div
-                  class="d-flex"
-                  style="font-size:large; color:#F9A825"
-                >{{toPercent(donation.nowcnt,donation.maxcnt)}}%</div>
-                <div class="d-flex" style="font-size:large;">{{donation.nowcnt}}장</div>
+                <div class="d-flex" style="font-size:large; color:#F9A825">
+                  {{ toPercent(donation.nowcnt, donation.maxcnt) }}%
+                </div>
+                <div class="d-flex" style="font-size:large;">
+                  {{ donation.nowcnt }}장
+                </div>
               </div>
             </v-card-text>
           </v-card>
         </div>
       </v-tab-item>
       <v-tab-item class="row justify-content-left p-3" value="tab-3">
-        <div class="col-12 col-sm-6 col-md-3" v-for="(donation,index) in old" :key="index">
+        <div
+          class="col-12 col-sm-6 col-md-3"
+          v-for="(donation, index) in old"
+          :key="index"
+        >
           <v-card max-width="400" style="overflow:hidden;">
             <div style="height:200px;width:100%;">
               <img
@@ -116,28 +158,34 @@
             <v-card-title
               class="pb-0 mb-1 donation-title"
               @click="getDetail(donation.donationid)"
-            >{{donation.title}}</v-card-title>
+              >{{ donation.title }}</v-card-title
+            >
             <v-card-text class="text--primary">
-              <div class="mb-3">{{donation.receiver}}</div>
+              <div class="mb-3">{{ donation.receiver }}</div>
               <v-progress-linear
                 rounded
-                :value="toPercent(donation.nowcnt,donation.maxcnt)"
+                :value="toPercent(donation.nowcnt, donation.maxcnt)"
                 height="10"
                 color="yellow darken-2"
               ></v-progress-linear>
               <div class="d-flex justify-content-between mt-2">
-                <div
-                  class="d-flex"
-                  style="font-size:large; color:#F9A825"
-                >{{toPercent(donation.nowcnt,donation.maxcnt)}}%</div>
-                <div class="d-flex" style="font-size:large;">{{donation.nowcnt}}장</div>
+                <div class="d-flex" style="font-size:large; color:#F9A825">
+                  {{ toPercent(donation.nowcnt, donation.maxcnt) }}%
+                </div>
+                <div class="d-flex" style="font-size:large;">
+                  {{ donation.nowcnt }}장
+                </div>
               </div>
             </v-card-text>
           </v-card>
         </div>
       </v-tab-item>
       <v-tab-item class="row justify-content-left p-3" value="tab-4">
-        <div class="col-12 col-sm-6 col-md-3" v-for="(donation,index) in disabled" :key="index">
+        <div
+          class="col-12 col-sm-6 col-md-3"
+          v-for="(donation, index) in disabled"
+          :key="index"
+        >
           <v-card max-width="400" style="overflow:hidden;">
             <div style="height:200px;width:100%;">
               <img
@@ -149,28 +197,34 @@
             <v-card-title
               class="pb-0 mb-1 donation-title"
               @click="getDetail(donation.donationid)"
-            >{{donation.title}}</v-card-title>
+              >{{ donation.title }}</v-card-title
+            >
             <v-card-text class="text--primary">
-              <div class="mb-3">{{donation.receiver}}</div>
+              <div class="mb-3">{{ donation.receiver }}</div>
               <v-progress-linear
                 rounded
-                :value="toPercent(donation.nowcnt,donation.maxcnt)"
+                :value="toPercent(donation.nowcnt, donation.maxcnt)"
                 height="10"
                 color="yellow darken-2"
               ></v-progress-linear>
               <div class="d-flex justify-content-between mt-2">
-                <div
-                  class="d-flex"
-                  style="font-size:large; color:#F9A825"
-                >{{toPercent(donation.nowcnt,donation.maxcnt)}}%</div>
-                <div class="d-flex" style="font-size:large;">{{donation.nowcnt}}장</div>
+                <div class="d-flex" style="font-size:large; color:#F9A825">
+                  {{ toPercent(donation.nowcnt, donation.maxcnt) }}%
+                </div>
+                <div class="d-flex" style="font-size:large;">
+                  {{ donation.nowcnt }}장
+                </div>
               </div>
             </v-card-text>
           </v-card>
         </div>
       </v-tab-item>
       <v-tab-item class="row justify-content-left p-3" value="tab-5">
-        <div class="col-12 col-sm-6 col-md-3" v-for="(donation,index) in woman" :key="index">
+        <div
+          class="col-12 col-sm-6 col-md-3"
+          v-for="(donation, index) in woman"
+          :key="index"
+        >
           <v-card max-width="400" style="overflow:hidden;">
             <div style="height:200px;width:100%;">
               <img
@@ -182,28 +236,34 @@
             <v-card-title
               class="pb-0 mb-1 donation-title"
               @click="getDetail(donation.donationid)"
-            >{{donation.title}}</v-card-title>
+              >{{ donation.title }}</v-card-title
+            >
             <v-card-text class="text--primary">
-              <div class="mb-3">{{donation.receiver}}</div>
+              <div class="mb-3">{{ donation.receiver }}</div>
               <v-progress-linear
                 rounded
-                :value="toPercent(donation.nowcnt,donation.maxcnt)"
+                :value="toPercent(donation.nowcnt, donation.maxcnt)"
                 height="10"
                 color="yellow darken-2"
               ></v-progress-linear>
               <div class="d-flex justify-content-between mt-2">
-                <div
-                  class="d-flex"
-                  style="font-size:large; color:#F9A825"
-                >{{toPercent(donation.nowcnt,donation.maxcnt)}}%</div>
-                <div class="d-flex" style="font-size:large;">{{donation.nowcnt}}장</div>
+                <div class="d-flex" style="font-size:large; color:#F9A825">
+                  {{ toPercent(donation.nowcnt, donation.maxcnt) }}%
+                </div>
+                <div class="d-flex" style="font-size:large;">
+                  {{ donation.nowcnt }}장
+                </div>
               </div>
             </v-card-text>
           </v-card>
         </div>
       </v-tab-item>
       <v-tab-item class="row justify-content-left p-3" value="tab-6">
-        <div class="col-12 col-sm-6 col-md-3" v-for="(donation,index) in multi" :key="index">
+        <div
+          class="col-12 col-sm-6 col-md-3"
+          v-for="(donation, index) in multi"
+          :key="index"
+        >
           <v-card max-width="400" style="overflow:hidden;">
             <div style="height:200px;width:100%;">
               <img
@@ -215,28 +275,34 @@
             <v-card-title
               class="pb-0 mb-1 donation-title"
               @click="getDetail(donation.donationid)"
-            >{{donation.title}}</v-card-title>
+              >{{ donation.title }}</v-card-title
+            >
             <v-card-text class="text--primary">
-              <div class="mb-3">{{donation.receiver}}</div>
+              <div class="mb-3">{{ donation.receiver }}</div>
               <v-progress-linear
                 rounded
-                :value="toPercent(donation.nowcnt,donation.maxcnt)"
+                :value="toPercent(donation.nowcnt, donation.maxcnt)"
                 height="10"
                 color="yellow darken-2"
               ></v-progress-linear>
               <div class="d-flex justify-content-between mt-2">
-                <div
-                  class="d-flex"
-                  style="font-size:large; color:#F9A825"
-                >{{toPercent(donation.nowcnt,donation.maxcnt)}}%</div>
-                <div class="d-flex" style="font-size:large;">{{donation.nowcnt}}장</div>
+                <div class="d-flex" style="font-size:large; color:#F9A825">
+                  {{ toPercent(donation.nowcnt, donation.maxcnt) }}%
+                </div>
+                <div class="d-flex" style="font-size:large;">
+                  {{ donation.nowcnt }}장
+                </div>
               </div>
             </v-card-text>
           </v-card>
         </div>
       </v-tab-item>
       <v-tab-item class="row justify-content-left p-3" value="tab-7">
-        <div class="col-12 col-sm-6 col-md-3" v-for="(donation,index) in others" :key="index">
+        <div
+          class="col-12 col-sm-6 col-md-3"
+          v-for="(donation, index) in others"
+          :key="index"
+        >
           <v-card max-width="400" style="overflow:hidden;">
             <div style="height:200px;width:100%;">
               <img
@@ -248,21 +314,23 @@
             <v-card-title
               class="pb-0 mb-1 donation-title"
               @click="getDetail(donation.donationid)"
-            >{{donation.title}}</v-card-title>
+              >{{ donation.title }}</v-card-title
+            >
             <v-card-text class="text--primary">
-              <div class="mb-3">{{donation.receiver}}</div>
+              <div class="mb-3">{{ donation.receiver }}</div>
               <v-progress-linear
                 rounded
-                :value="toPercent(donation.nowcnt,donation.maxcnt)"
+                :value="toPercent(donation.nowcnt, donation.maxcnt)"
                 height="10"
                 color="yellow darken-2"
               ></v-progress-linear>
               <div class="d-flex justify-content-between mt-2">
-                <div
-                  class="d-flex"
-                  style="font-size:large; color:#F9A825"
-                >{{toPercent(donation.nowcnt,donation.maxcnt)}}%</div>
-                <div class="d-flex" style="font-size:large;">{{donation.nowcnt}}장</div>
+                <div class="d-flex" style="font-size:large; color:#F9A825">
+                  {{ toPercent(donation.nowcnt, donation.maxcnt) }}%
+                </div>
+                <div class="d-flex" style="font-size:large;">
+                  {{ donation.nowcnt }}장
+                </div>
               </div>
             </v-card-text>
           </v-card>
@@ -270,7 +338,12 @@
       </v-tab-item>
     </v-tabs-items>
     <!-- infinite loading -->
-    <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler" spinner="waveDots">
+    <infinite-loading
+      v-if="!isSearch"
+      :identifier="infiniteId"
+      @infinite="infiniteHandler"
+      spinner="waveDots"
+    >
       <div slot="no-results"></div>
     </infinite-loading>
   </v-container>
@@ -297,7 +370,10 @@ export default {
       disabled: [],
       woman: [],
       multi: [],
-      others: []
+      others: [],
+      searchTxt: "",
+      searchList: [],
+      isSearch: false
     };
   },
 
@@ -428,9 +504,27 @@ export default {
       this.$router.push({
         name: "DonationRequestCreate"
       });
-    }
+    },
   },
-  watch: {}
+  watch: {
+    searchTxt(req) {
+      if (req == "" || req == null) {
+        this.all = this.donationList[0];
+        this.isSearch = false;
+      } else {
+        http
+          .get(`/donation/searchList/${req}`)
+          .then(res => {
+            this.all = res.data;
+            this.isSearch = true;
+            this.tab = "#tab-1";
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
+    }
+  }
 };
 </script>
 <style scoped>
