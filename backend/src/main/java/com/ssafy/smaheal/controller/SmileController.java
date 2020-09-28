@@ -242,4 +242,15 @@ public class SmileController {
         String[] outputList = outputStream.toString().split("\n");
         return outputList[outputList.length - 1];
     }
+    
+    @GetMapping("/smileKing")
+    @ApiOperation(value = "웃음왕 Top3")
+    public Object getSmileKing() throws SQLException, IOException, ExecuteException {
+        try {
+            List<Smile> list = smileRepository.findTop3ByOrderBySmileperDesc();
+            return list;
+        } catch (Exception e) {
+        	return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
