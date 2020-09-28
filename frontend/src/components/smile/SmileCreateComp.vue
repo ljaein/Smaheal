@@ -128,6 +128,14 @@
                       </v-btn>
                     </div>
                   </v-item>
+                  <!-- 음성 -->
+                  <v-item v-slot:default="{ active, toggle }">
+                    <div>
+                      <v-btn :input-value="active" icon @click="toggle">
+                        <v-icon>mdi-audio</v-icon>
+                      </v-btn>
+                    </div>
+                  </v-item>
                 </v-item-group>
 
                 <!-- 컨텐츠 내용 -->
@@ -185,6 +193,14 @@
                             :src="makeUrl(videos[1].videoId)"
                             style="width:100%;height:100%;"
                           />
+                        </v-card-text>
+                      </v-card>
+                    </v-window-item>
+                    <!-- 음성 -->
+                    <v-window-item>
+                      <v-card flat>
+                        <v-card-text>
+                          <VoiceComp />
                         </v-card-text>
                       </v-card>
                     </v-window-item>
@@ -479,11 +495,13 @@
 import http from "@/util/http-common.js";
 import { mapGetters, mapState } from "vuex";
 import LazyYoutubeVideo from "vue-lazy-youtube-video";
+import VoiceComp from "@/components/voice/VoiceComp.vue";
 // npm install --save vue-lazy-youtube-video
 
 export default {
   components: {
-    LazyYoutubeVideo
+    LazyYoutubeVideo,
+    VoiceComp
   },
   created() {
     scroll(0, 0);
