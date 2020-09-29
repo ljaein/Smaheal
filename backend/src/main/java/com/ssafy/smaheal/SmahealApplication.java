@@ -56,7 +56,7 @@ public class SmahealApplication {
 			}
 		};
 
-		timer.scheduleAtFixedRate(tt, 0, 5 * 6000);
+		timer.scheduleAtFixedRate(tt, 0, 10 * 6000);
 	}
 
 }
