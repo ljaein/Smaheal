@@ -1,13 +1,6 @@
 <template>
   <v-app>
     <v-app-bar app color="white" height="100">
-      <!-- <v-avatar class="mr-3" color="grey lighten-5" size="70">
-        <v-img
-          contain
-          max-height="70%"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-        ></v-img>
-      </v-avatar> -->
 
       <v-btn @click="goHome()" class="headline" color="amber accent-4" text>SmaHeal</v-btn>
 
@@ -85,6 +78,7 @@
 import { mapGetters, mapState } from "vuex";
 import { AUTH_LOGOUT } from "./store/actions/auth";
 import { USER_UPDATE } from "@/store/actions/user";
+import http from "@/util/http-common.js";
 
 export default {
   name: "App",
