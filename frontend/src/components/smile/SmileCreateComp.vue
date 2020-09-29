@@ -932,7 +932,7 @@ export default {
         // faceapi.draw.drawFaceExpressions(canvas, resizedDetections);
         
         if (detections[0].expressions.happy * 100 > 99.89) {
-          this.autoCapture.per = Math.round(detections[0].expressions.happy * detections[0].detection.score * 99);
+          this.autoCapture.per = Math.round(detections[0].expressions.happy * detections[0].detection.score * 97);
           this.captureComplete();
           clearInterval();
           return;
