@@ -42,6 +42,7 @@ public class SmileController {
     public static List camList = new LinkedList<>();
     public static List selfList = new LinkedList<>();
     public static List textList = new LinkedList<>();
+    public static String autoFile;
 
     @GetMapping("/cameraOn")
     @ApiOperation(value = "웹캠 on")
@@ -73,6 +74,24 @@ public class SmileController {
     @PostMapping("/regist")
     @ApiOperation(value = "웃음 기부 등록")
     public Object registDonation(@RequestBody Smile request) throws SQLException, IOException {
+        try {
+            Smile smile = new Smile();
+            smile.setUser_id(request.getUser_id());
+            smile.setDonationid(request.getDonationid());
+            smile.setPhoto(request.getPhoto());
+            smile.setSmileper(request.getSmileper());
+            smile.setComment(request.getComment());
+            smile.setAgreement(request.getAgreement());
+            smileRepository.save(smile);
+            return new ResponseEntity<>(smile, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/autoRegist")
+    @ApiOperation(value = "웃음 기부 등록")
+    public Object autoRegistDonation(@RequestBody Smile request) throws SQLException, IOException {
         try {
             Smile smile = new Smile();
             smile.setUser_id(request.getUser_id());
@@ -125,6 +144,53 @@ public class SmileController {
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PostMapping("/autoCheck")
+    @ApiOperation("자동캡쳐 파일 체크")
+    public Object autoCheck(@RequestBody String filename) throws SQLException, IOException {
+        try {
+            String tempFileName = createFile(filename);
+            System.out.println("autoCheck Python Call");
+            String[] command = new String[3];
+            command[0] = "python";
+            // 경로 확인
+            String hostname = InetAddress.getLocalHost().getHostName();
+            if (hostname.substring(0, 7).equals("DESKTOP")) {// local
+                command[1] = "./backend/autoCheck.py";
+            } else {// aws
+                command[1] = "../autoCheck.py";
+            }
+            command[2] = tempFileName;
+            try {
+                execPythonAutoCheck(command);
+                return new ResponseEntity<>(autoFile, HttpStatus.OK);
+            } catch (Exception e) {
+                return "findFail";
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public static void execPythonAutoCheck(String[] command) throws IOException, InterruptedException {
+        CommandLine commandLine = CommandLine.parse(command[0]);
+
+        for (int i = 1, n = command.length; i < n; i++) {
+            commandLine.addArgument(command[i]);
+        }
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PumpStreamHandler pumpStreamHandler = new PumpStreamHandler(outputStream);
+        DefaultExecutor executor = new DefaultExecutor();
+        executor.setStreamHandler(pumpStreamHandler);
+        int result = executor.execute(commandLine);
+        System.out.println("result: " + result);
+        System.out.println("output: " + outputStream.toString());
+
+        String[] outputList = outputStream.toString().split("\n");
+        int len = outputList.length;
+        String filename = outputList[len - 1].trim();
+        autoFile = filename;
     }
 
     public static void execPythonSmileCheck(String[] command) throws IOException, InterruptedException {
