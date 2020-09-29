@@ -20,6 +20,7 @@ import noticeSearch from "../views/notice/noticeSearch.vue"
 import noticeModify from "../views/notice/noticeModify.vue"
 import signUp from "@/components/account/SignUp.vue"
 import AdminPage from "../views/admin/AdminPage.vue"
+import TestCount from "../views/smile/testCount.vue"
 
 Vue.use(VueRouter);
 
@@ -127,6 +128,11 @@ const routes = [{
         path: "/adminPage",
         name: "AdminPage",
         component: AdminPage,
+    },
+    {
+        path: "/testCount",
+        name: "TestCount",
+        component: TestCount,
     },
 ];
 

@@ -29,8 +29,12 @@
         <span class="mr-2 font-weight-bold">공지사항</span>
       </v-btn>
 
-      <v-btn v-if="getProfile" @click="goMyPage" text>
-        <span class="mr-2 font-weight-bold">MYPAGE</span>
+      <v-btn v-if="getProfile!='관리자'" @click="goMyPage" text>
+        <span class="mr-2 font-weight-bold">마이페이지</span>
+      </v-btn>
+
+      <v-btn v-if="getProfile=='관리자'" @click="goAdminPage" text>
+        <span class="mr-2 font-weight-bold">관리자페이지</span>
       </v-btn>
 
       <v-btn v-if="getProfile" @click="logout" text>
@@ -125,6 +129,9 @@ export default {
     goMyPage(){
       this.$router.push('/myPage').catch(() => {}); 
     },
+    goAdminPage(){
+      this.$router.push('/adminPage').catch(() => {}); 
+    },    
   },
   computed: {
     ...mapGetters([
@@ -153,6 +160,7 @@ export default {
         this.loginSuccess = true;
       }
     },
+
   }
 };
 </script>
