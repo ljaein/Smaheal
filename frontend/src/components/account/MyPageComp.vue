@@ -1,66 +1,190 @@
 <template>
-  <div class="container">
-    <h1 align="center" style="color:#356859;margin-top:50px;">MyPage</h1>
+  <v-container fluid class="col-md-11">
+    <p align="left" class="m-0">
+      <span style="color:#356859; font-size:2.5rem;">{{ getUserID }}</span
+      ><span style="font-size:1.5rem;"> 님의 마이페이지</span>
+    </p>
     <v-form>
-      <v-container fluid>
-        <v-row>
-          <v-col class="px-7 mt-14 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-            <v-row justify="space-around">
-              <v-text-field class="mb-12" v-model="getUserID" outlined color="#356859" label="아이디" readonly></v-text-field>
-            </v-row>
-            <v-row justify="space-around">
-              <v-text-field class="mb-12" v-model="name" outlined color="#356859" label="이름"></v-text-field>
-            </v-row>
-            <v-row justify="space-around">
-              <v-text-field v-model="nickName" outlined color="#356859" label="별명"></v-text-field>
-            </v-row>
-          </v-col>
-          <v-col class="px-7 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-            <v-row justify="space-around">
-              <v-col cols="12">
-                <p style="font-family: 'Sunflower'; font-weight: bold;">생일</p>
-                <v-date-picker v-model="birth" color="#356859" width="100%"></v-date-picker>
-              </v-col>
-            </v-row>
-          </v-col>
-        </v-row>
-        <v-row justify="space-around">
-          <v-col cols="12" md="3" align="center" class="d-flex justify-content-center">
-            <v-btn @click="modifyUser" color="#356859" class="mr-10" style="color:white;">수정</v-btn>
-            <v-btn @click="signOut" color="#356859" style="color:white;">탈퇴</v-btn>
-          </v-col>
-        </v-row>
+      <!-- 내 정보 -->
+      <v-row>
+        <v-col>
+          <v-row class="d-flex justify-content-between">
+            <v-text-field
+              class="mr-5"
+              v-model="name"
+              outlined
+              color="#356859"
+              label="이름"
+            ></v-text-field>
+            <v-text-field
+              class="mr-5"
+              v-model="nickName"
+              outlined
+              color="#356859"
+              label="닉네임"
+            ></v-text-field>
+            <v-text-field
+              v-model="birth"
+              outlined
+              color="#356859"
+              label="생일"
+            ></v-text-field>
+          </v-row>
+          <v-row> </v-row>
+        </v-col>
+      </v-row>
+      <!-- 글 정보 -->
+      <v-row>
+        <v-card>
+          
+          <v-tabs vertical>
+            <v-tab>
+              <v-icon left>
+                mdi-account
+              </v-icon>
+              Option 1
+            </v-tab>
+            <v-tab>
+              <v-icon left>
+                mdi-lock
+              </v-icon>
+              Option 2
+            </v-tab>
+            <v-tab>
+              <v-icon left>
+                mdi-access-point
+              </v-icon>
+              Option 3
+            </v-tab>
 
-        <!-- 유튜브 크롤링 임시 -->
-        <div v-if="uid == 'admin'" class="col-12 col-md-4 col-lg-4 col-sm-6" style="margin:100px auto 0 auto;text-align:center;border:1px solid black">
-          영상 크롤링
-          <v-text-field v-model="word" label="검색어" id="id"></v-text-field>
-          <v-select :items="items" label="연령대" dense outlined v-model="age"></v-select>
-          <v-btn color="#356859" style="color:white;" @click="crawling">크롤링</v-btn>
-        </div>
-      </v-container>
+            <v-tab-item>
+              <v-card flat>
+                <v-card-text>
+                  <p>
+                    Sed aliquam ultrices mauris. Donec posuere vulputate arcu.
+                    Morbi ac felis. Etiam feugiat lorem non metus. Sed a libero.
+                  </p>
+
+                  <p>
+                    Nam ipsum risus, rutrum vitae, vestibulum eu, molestie vel,
+                    lacus. Aenean tellus metus, bibendum sed, posuere ac, mattis
+                    non, nunc. Aliquam lobortis. Aliquam lobortis. Suspendisse
+                    non nisl sit amet velit hendrerit rutrum.
+                  </p>
+
+                  <p class="mb-0">
+                    Phasellus dolor. Fusce neque. Fusce fermentum odio nec arcu.
+                    Pellentesque libero tortor, tincidunt et, tincidunt eget,
+                    semper nec, quam. Phasellus blandit leo ut odio.
+                  </p>
+                </v-card-text>
+              </v-card>
+            </v-tab-item>
+            <v-tab-item>
+              <v-card flat>
+                <v-card-text>
+                  <p>
+                    Morbi nec metus. Suspendisse faucibus, nunc et pellentesque
+                    egestas, lacus ante convallis tellus, vitae iaculis lacus
+                    elit id tortor. Sed mollis, eros et ultrices tempus, mauris
+                    ipsum aliquam libero, non adipiscing dolor urna a orci.
+                    Curabitur ligula sapien, tincidunt non, euismod vitae,
+                    posuere imperdiet, leo. Nunc sed turpis.
+                  </p>
+
+                  <p>
+                    Suspendisse feugiat. Suspendisse faucibus, nunc et
+                    pellentesque egestas, lacus ante convallis tellus, vitae
+                    iaculis lacus elit id tortor. Proin viverra, ligula sit amet
+                    ultrices semper, ligula arcu tristique sapien, a accumsan
+                    nisi mauris ac eros. In hac habitasse platea dictumst. Fusce
+                    ac felis sit amet ligula pharetra condimentum.
+                  </p>
+
+                  <p>
+                    Sed consequat, leo eget bibendum sodales, augue velit cursus
+                    nunc, quis gravida magna mi a libero. Nam commodo suscipit
+                    quam. In consectetuer turpis ut velit. Sed cursus turpis
+                    vitae tortor. Aliquam eu nunc.
+                  </p>
+
+                  <p>
+                    Etiam ut purus mattis mauris sodales aliquam. Ut varius
+                    tincidunt libero. Aenean viverra rhoncus pede. Duis leo.
+                    Fusce fermentum odio nec arcu.
+                  </p>
+
+                  <p class="mb-0">
+                    Donec venenatis vulputate lorem. Aenean viverra rhoncus
+                    pede. In dui magna, posuere eget, vestibulum et, tempor
+                    auctor, justo. Fusce commodo aliquam arcu. Suspendisse enim
+                    turpis, dictum sed, iaculis a, condimentum nec, nisi.
+                  </p>
+                </v-card-text>
+              </v-card>
+            </v-tab-item>
+            <v-tab-item>
+              <v-card flat>
+                <v-card-text>
+                  <p>
+                    Fusce a quam. Phasellus nec sem in justo pellentesque
+                    facilisis. Nam eget dui. Proin viverra, ligula sit amet
+                    ultrices semper, ligula arcu tristique sapien, a accumsan
+                    nisi mauris ac eros. In dui magna, posuere eget, vestibulum
+                    et, tempor auctor, justo.
+                  </p>
+
+                  <p class="mb-0">
+                    Cras sagittis. Phasellus nec sem in justo pellentesque
+                    facilisis. Proin sapien ipsum, porta a, auctor quis, euismod
+                    ut, mi. Donec quam felis, ultricies nec, pellentesque eu,
+                    pretium quis, sem. Nam at tortor in tellus interdum
+                    sagittis.
+                  </p>
+                </v-card-text>
+              </v-card>
+            </v-tab-item>
+          </v-tabs>
+        </v-card>
+      </v-row>
+      <v-row justify="space-around">
+        <v-col
+          cols="12"
+          md="3"
+          align="center"
+          class="d-flex justify-content-center"
+        >
+          <v-btn
+            @click="modifyUser"
+            color="#356859"
+            class="mr-10"
+            style="color:white;"
+            >수정</v-btn
+          >
+          <v-btn @click="signOut" color="#356859" style="color:white;"
+            >탈퇴</v-btn
+          >
+        </v-col>
+      </v-row>
     </v-form>
-  </div>
+  </v-container>
 </template>
 
 <script>
-import http from '@/util/http-common';
-import { mapGetters, mapState } from 'vuex';
-import { AUTH_LOGOUT } from '@/store/actions/auth';
-import { USER_UPDATE } from '@/store/actions/user';
+import http from "@/util/http-common";
+import { mapGetters, mapState } from "vuex";
+import { AUTH_LOGOUT } from "@/store/actions/auth";
+import { USER_UPDATE } from "@/store/actions/user";
 
 export default {
-  name: 'MyPageComp',
+  name: "MyPageComp",
   data() {
     return {
-      word: '',
-      age: 0,
-      uid: '',
-      name: '',
-      log: '',
-      nickName: '',
-      items: [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-      birth: new Date().toISOString().substr(0, 10),
+      uid: "",
+      name: "",
+      log: "",
+      nickName: "",
+      birth: new Date().toISOString().substr(0, 10)
     };
   },
   created() {
@@ -73,22 +197,6 @@ export default {
     this.birth = this.getFormatDate(this.getUserBirth);
   },
   methods: {
-    crawling() {
-      if (this.age == 0 || this.word == '') {
-        alert('크롤링 정보를 입력하세요.');
-      } else {
-        http
-          .post(`/crawling/youtube?search=${this.word}&age=${this.age}`)
-          .then((res) => {
-            this.log = res.data;
-            this.word = '';
-            this.age = 0;
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
-    },
     getFormatDate(joinedAt) {
       return new Date(joinedAt).toISOString().substr(0, 10);
     },
@@ -96,12 +204,12 @@ export default {
       http
         .delete(`/user/delete/${this.getUserNum}`)
         .then(() => {
-          alert('탈퇴가 완료되었습니다.');
+          alert("탈퇴가 완료되었습니다.");
           this.logout();
         })
-        .catch((e) => {
+        .catch(e => {
           if (e.request.status === 404) {
-            alert('탈퇴 처리시 에러가 발생했습니다.');
+            alert("탈퇴 처리시 에러가 발생했습니다.");
             this.alert = true;
           } else {
             this.$router.push(`/apierror/${e.request.status}/`);
@@ -113,46 +221,54 @@ export default {
       this.$store.dispatch(AUTH_LOGOUT).then(() => {
         this.drawer = false;
       });
-      this.$router.push('/');
+      this.$router.push("/");
     },
     modifyUser() {
       http
         .put(`/user/${this.getUserNum}`, {
           name: this.name,
           nickName: this.nickName,
-          birth: this.birth,
+          birth: this.birth
         })
         .then(({ data }) => {
-          if (data === 'success') {
-            alert('수정이 완료되었습니다.');
-            this.$router.push('/');
+          if (data === "success") {
+            alert("수정이 완료되었습니다.");
+            this.$router.push("/");
             this.$router.go();
           } else {
-            alert('수정 처리시 문제가 발생했습니다.');
+            alert("수정 처리시 문제가 발생했습니다.");
           }
         })
-        .catch((e) => {
+        .catch(e => {
           if (e.request.status === 404) {
-            alert('수정 처리시 에러가 발생했습니다.');
+            alert("수정 처리시 에러가 발생했습니다.");
           } else {
-            this.$emit('closeLoginModal');
+            this.$emit("closeLoginModal");
             this.$router.push(`/apierror/${e.request.status}/`);
           }
           console.log(e.request.status);
         });
-    },
+    }
   },
   computed: {
-    ...mapGetters(['isAuthenticated', 'isProfileLoaded', 'getProfile', 'getRealName', 'getUserNum', 'getUserID', 'getUserBirth']),
+    ...mapGetters([
+      "isAuthenticated",
+      "isProfileLoaded",
+      "getProfile",
+      "getRealName",
+      "getUserNum",
+      "getUserID",
+      "getUserBirth"
+    ]),
     ...mapState({
-      authLoading: (state) => state.auth.status === 'loading',
-      uname: (state) => `${state.user.getProfile}`,
-      userNum: (state) => `${state.user.getUserNum}`,
-      userName: (state) => `${state.user.getRealName}`,
-      userID: (state) => `${state.user.getUserID}`,
-      userBirth: (state) => `${state.user.getUserBirth}`,
-    }),
-  },
+      authLoading: state => state.auth.status === "loading",
+      uname: state => `${state.user.getProfile}`,
+      userNum: state => `${state.user.getUserNum}`,
+      userName: state => `${state.user.getRealName}`,
+      userID: state => `${state.user.getUserID}`,
+      userBirth: state => `${state.user.getUserBirth}`
+    })
+  }
 };
 </script>
 

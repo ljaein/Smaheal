@@ -30,5 +30,5 @@ public class Smile {
     private String comment;
     private int agreement;
     @Column(insertable = false, updatable = false)
-    private LocalDateTime createdate;
+    private LocalDate createdate;
 }

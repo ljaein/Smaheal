@@ -6,9 +6,9 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn @click="goVoiceTest()" text>
-        <span class="mr-2 font-weight-bold">voice test</span>
-      </v-btn>
+      <!-- <v-btn @click="goDonationBoardDetail()" text>
+        <span class="mr-2">ai_video test</span>
+      </v-btn> -->
 
       <v-btn @click="goDonationList()" text>
         <span class="mr-2 font-weight-bold">기부 게시판</span>
@@ -22,8 +22,12 @@
         <span class="mr-2 font-weight-bold">공지사항</span>
       </v-btn>
 
-      <v-btn v-if="getProfile" @click="goMyPage" text>
-        <span class="mr-2 font-weight-bold">MYPAGE</span>
+      <v-btn v-if="getProfile!='관리자'" @click="goMyPage" text>
+        <span class="mr-2 font-weight-bold">마이페이지</span>
+      </v-btn>
+
+      <v-btn v-if="getProfile=='관리자'" @click="goAdminPage" text>
+        <span class="mr-2 font-weight-bold">관리자페이지</span>
       </v-btn>
 
       <v-btn v-if="getProfile" @click="logout" text>
@@ -119,9 +123,9 @@ export default {
     goMyPage(){
       this.$router.push('/myPage').catch(() => {}); 
     },
-    goVoiceTest(){
-      this.$router.push('/voice').catch(() => {}); 
-    },
+    goAdminPage(){
+      this.$router.push('/adminPage').catch(() => {}); 
+    },    
   },
   computed: {
     ...mapGetters([
@@ -150,7 +154,8 @@ export default {
         this.loginSuccess = true;
       }
     },
-  },
+
+  }
 };
 </script>
 <style>

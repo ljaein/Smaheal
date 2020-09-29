@@ -90,13 +90,13 @@ public class DonationController {
         }
     }
 
-    @GetMapping("/getWaitList")
+    @GetMapping("/getWaitList/{page}")
     @ApiOperation(value = "기부 게시판 리스트(대기)")
-    public Object getWaitDonationList() throws SQLException, IOException {
+    public Object getWaitDonationList(@PathVariable int page) throws SQLException, IOException {
         try {
-            List<Donation> donationList = donationRepository.findByApprovalAndTempOrderByCreatedateDesc(0, 0);
-            if (donationList != null) {
-                return new ResponseEntity<>(donationList, HttpStatus.OK);
+            List<Donation> waitList = donationRepository.findByApprovalAndTempOrderByCreatedateDesc(0, 0, PageRequest.of(page,8));
+            if (waitList != null) {
+                return new ResponseEntity<>(waitList, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
             }
@@ -241,22 +241,17 @@ public class DonationController {
         }
     }
     
-//    @GetMapping("/getEndList")
-//    @ApiOperation(value = "마감될 게시물 가져오기")
-//    public List<Donation> getEndList() {
-//    	List<Donation> list = donationRepository.findByApprovalAndTempOrderByCreatedateDesc(1, 0);
-//    	System.out.println(list.size());
-//    	return list;
-//    }
-//    
-//    @PutMapping("/setSerial/{donationid}")
-//    @ApiOperation(value = "일련번호 부여하기")
-//    public void setSerialNumber(@PathVariable(value = "donationid") Long donationid, @RequestBody Donation donation) {
-//    	
-//    	donation = donationRepository.findByDonationid(donationid);
-//    	donation.setTemplate("123");
-//    	
-//    	donationRepository.save(donation);    
-//    }
+    @GetMapping("/searchList/{search}")
+    @ApiOperation(value = "기부 게시판 검색(승인)")
+    public Object searchList(@PathVariable String search) throws SQLException, IOException {
+        try {
+            List<Donation> categoryList = donationRepository.findByApprovalAndTempAndTitleContainingOrderByCreatedateDesc(1, 0, search);
+            
+            return new ResponseEntity<>(categoryList, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }
