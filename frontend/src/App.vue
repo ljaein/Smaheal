@@ -78,7 +78,6 @@
 import { mapGetters, mapState } from "vuex";
 import { AUTH_LOGOUT } from "./store/actions/auth";
 import { USER_UPDATE } from "@/store/actions/user";
-import http from "@/util/http-common.js";
 
 export default {
   name: "App",
