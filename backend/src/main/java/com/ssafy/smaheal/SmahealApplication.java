@@ -38,7 +38,7 @@ public class SmahealApplication {
 				time = format.format(date.getTime());
 				String today = todayF.format(date.getTime());
 				
-				if (time.equals("15:10")) {
+				if (time.equals("16:28")) {
 					List<Donation> list = donationRepository.findByApprovalAndTempOrderByCreatedateDesc(1, 0);
 					System.out.println(list.size());
 //					for (Donation donation : list) {

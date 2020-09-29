@@ -1,21 +1,10 @@
 <template>
   <v-app>
     <v-app-bar app color="white" height="100">
-      <!-- <v-avatar class="mr-3" color="grey lighten-5" size="70">
-        <v-img
-          contain
-          max-height="70%"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-        ></v-img>
-      </v-avatar> -->
 
       <v-btn @click="goHome()" class="headline" color="amber accent-4" text>SmaHeal</v-btn>
 
       <v-spacer></v-spacer>
-
-      <!-- <v-btn @click="goDonationBoardDetail()" text>
-        <span class="mr-2">ai_video test</span>
-      </v-btn> -->
 
       <v-btn @click="goVoiceTest()" text>
         <span class="mr-2 font-weight-bold">voice test</span>
@@ -85,6 +74,7 @@
 import { mapGetters, mapState } from "vuex";
 import { AUTH_LOGOUT } from "./store/actions/auth";
 import { USER_UPDATE } from "@/store/actions/user";
+import http from "@/util/http-common.js";
 
 export default {
   name: "App",
@@ -160,7 +150,7 @@ export default {
         this.loginSuccess = true;
       }
     },
-  }
+  },
 };
 </script>
 <style>
