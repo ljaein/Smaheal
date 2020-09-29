@@ -240,5 +240,23 @@ public class DonationController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    @GetMapping("/getEndList")
+    @ApiOperation(value = "마감될 게시물 가져오기")
+    public List<Donation> getEndList() {
+    	List<Donation> list = donationRepository.findByApproval(1);
+    	
+    	return list;
+    }
+    
+    @PutMapping("/setSerial/{donationid}")
+    @ApiOperation(value = "일련번호 부여하기")
+    public void setSerialNumber(@PathVariable(value = "donationid") Long donationid, @RequestBody Donation donation) {
+    	
+    	donation = donationRepository.findByDonationid(donationid);
+    	donation.setTemplate("123");
+    	
+    	donationRepository.save(donation);    
+    }
 
 }
