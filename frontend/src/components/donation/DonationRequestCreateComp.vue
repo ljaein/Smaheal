@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="pt-5 px-0 col-md-10" style="background-color:#fffbe6;">
+  <v-container fluid class="pt-5 px-0">
     <v-row class="d-flex justify-content-center">
       <v-col cols="5" class="mr-2">
         <v-carousel style="width:30rem;height:23rem;">

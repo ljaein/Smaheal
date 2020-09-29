@@ -11,7 +11,7 @@
       >
         <!-- <v-tabs-slider></v-tabs-slider> -->
         <v-tab href="#tab-1" class="tab-text">대기 중인 기부요청</v-tab>
-        <v-tab href="#tab-2" class="tab-text">관리</v-tab>
+        <v-tab href="#tab-2" class="tab-text">영상 크롤링</v-tab>
       </v-tabs>
     </v-card>
 
@@ -48,6 +48,15 @@
           </v-card>
         </div>
       </v-tab-item>
+      <v-tab-item class="row justify-content-left p-3" value="tab-2">
+        <!-- 유튜브 크롤링 임시 -->
+        <div class="col-12 col-md-6 col-lg-6 col-sm-6 p-5" style="margin:100px auto 0 auto;text-align:center;border:2px solid lightgray; border-radius:8px;">
+          <p style="font-size:1.2rem;">YouTube에서 영상을 가져옵니다.</p>
+          <v-text-field v-model="word" label="검색어" id="id"></v-text-field>
+          <v-select :items="items" label="연령대" dense outlined v-model="age"></v-select>
+          <v-btn class="green-mbtn" @click="crawling">크롤링</v-btn>
+        </div>
+      </v-tab-item>
     </v-tabs-items>
     <WaitDetailComp :wait="this.goWaitDetail" :waitImages="this.goWaitImages" />
   </v-container>
@@ -67,7 +76,10 @@ export default {
       waitList: [],
       page: 0,
       goWaitDetail: [],
-      goWaitImages: []
+      goWaitImages: [],
+      word: '',
+      age: 0,
+      items: [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
     };
   },
   created() {
@@ -99,7 +111,23 @@ export default {
     getImg(img) {
       img = img.split("|")[0];
       return "../../../contents/" + img;
-    }
+    },
+    crawling() {
+      if (this.age == 0 || this.word == '') {
+        alert('크롤링 정보를 입력하세요.');
+      } else {
+        http
+          .post(`/crawling/youtube?search=${this.word}&age=${this.age}`)
+          .then((res) => {
+            this.log = res.data;
+            this.word = '';
+            this.age = 0;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    },
   }
 };
 </script>

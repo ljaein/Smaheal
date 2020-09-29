@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -249,6 +250,34 @@ public class SmileController {
         try {
             List<Smile> list = smileRepository.findTop3ByOrderBySmileperDesc();
             return list;
+        } catch (Exception e) {
+        	return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/getSmileCnt")
+    @ApiOperation(value = "누적,오늘 웃음사진 개수")
+    public Object getSmileCnt() throws SQLException, IOException, ExecuteException {
+        LocalDate currentDate = LocalDate.now();
+        List<Integer> result = new LinkedList<>();
+        try {
+            List<Smile> smileList = smileRepository.findAll();
+            List<Smile> todayList = smileRepository.findByCreatedate(currentDate);
+            result.add(smileList.size());
+            result.add(todayList.size());
+            return new ResponseEntity<>(result,HttpStatus.OK);
+        } catch (Exception e) {
+        	return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/getTodayCnt")
+    @ApiOperation(value = "오늘 웃음사진 개수")
+    public Object getTodayCnt() throws SQLException, IOException, ExecuteException {
+        LocalDate currentDate = LocalDate.now();
+        try {
+            List<Smile> todayList = smileRepository.findByCreatedate(currentDate);
+            return new ResponseEntity<>(todayList.size(),HttpStatus.OK);
         } catch (Exception e) {
         	return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
