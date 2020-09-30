@@ -16,7 +16,7 @@ public interface DonationRepository extends JpaRepository<Donation, Long> {
 
     List<Donation> findByApprovalAndTempOrderByCreatedateDesc(int approval, int temp, Pageable page);
 
-    List<Donation> findByTempOrderByCreatedateDesc(int temp);
+    List<Donation> findByTempAndWriterOrderByCreatedateDesc(int temp, String writer);
 
     List<Donation> findByCategoryAndApprovalAndTempOrderByCreatedateDesc(String category, int approval, int temp, Pageable page);
 

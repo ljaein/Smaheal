@@ -113,6 +113,7 @@ export default {
     },
     goHome() {
       this.$router.push('/').catch(() => {})
+      scroll(0,0)
     },
     goDonationList(){
       this.$router.push('/donationList')

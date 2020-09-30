@@ -36,50 +36,26 @@
       <!-- 글 정보 -->
       <v-row>
         <v-card>
-          
-          <v-tabs vertical>
-            <v-tab>
-              <v-icon left>
+          <v-tabs vertical icons-and-text centered>
+            <v-tab style="font-weight:bold; margin:0">
+              기부 현황
+              <v-icon>
                 mdi-account
               </v-icon>
-              Option 1
             </v-tab>
-            <v-tab>
-              <v-icon left>
+            <v-tab style="font-weight:bold;">
+              임시 저장
+              <v-icon>
                 mdi-lock
               </v-icon>
-              Option 2
             </v-tab>
-            <v-tab>
-              <v-icon left>
+            <v-tab style="font-weight:bold;">
+              내게 온 후기
+              <v-icon>
                 mdi-access-point
               </v-icon>
-              Option 3
             </v-tab>
 
-            <v-tab-item>
-              <v-card flat>
-                <v-card-text>
-                  <p>
-                    Sed aliquam ultrices mauris. Donec posuere vulputate arcu.
-                    Morbi ac felis. Etiam feugiat lorem non metus. Sed a libero.
-                  </p>
-
-                  <p>
-                    Nam ipsum risus, rutrum vitae, vestibulum eu, molestie vel,
-                    lacus. Aenean tellus metus, bibendum sed, posuere ac, mattis
-                    non, nunc. Aliquam lobortis. Aliquam lobortis. Suspendisse
-                    non nisl sit amet velit hendrerit rutrum.
-                  </p>
-
-                  <p class="mb-0">
-                    Phasellus dolor. Fusce neque. Fusce fermentum odio nec arcu.
-                    Pellentesque libero tortor, tincidunt et, tincidunt eget,
-                    semper nec, quam. Phasellus blandit leo ut odio.
-                  </p>
-                </v-card-text>
-              </v-card>
-            </v-tab-item>
             <v-tab-item>
               <v-card flat>
                 <v-card-text>
@@ -121,6 +97,11 @@
                     turpis, dictum sed, iaculis a, condimentum nec, nisi.
                   </p>
                 </v-card-text>
+              </v-card>
+            </v-tab-item>
+            <v-tab-item>
+              <v-card flat>
+              <TempComp />
               </v-card>
             </v-tab-item>
             <v-tab-item>
@@ -175,9 +156,13 @@ import http from "@/util/http-common";
 import { mapGetters, mapState } from "vuex";
 import { AUTH_LOGOUT } from "@/store/actions/auth";
 import { USER_UPDATE } from "@/store/actions/user";
+import TempComp from "@/components/account/TempComp.vue";
 
 export default {
   name: "MyPageComp",
+  components: {
+    TempComp
+  },
   data() {
     return {
       uid: "",
