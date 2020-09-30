@@ -119,18 +119,7 @@ export default {
   created() {
     this.nickname = this.getProfile;
     this.init();
-  },
-  methods: {
-    init() {
-      http
-        .get(`/smile/getMySmile/${this.getUserID}/${this.page - 1}`)
-        .then(res => {
-          this.smileList = res.data;
-        })
-        .catch(err => {
-          console.log(err);
-        });
-      http
+    http
         .get(`/smile/getMySmileCnt/${this.getUserID}`)
         .then(res => {
           if (res.data % 8 == 0) {
@@ -142,6 +131,18 @@ export default {
         .catch(err => {
           console.log(err);
         });
+  },
+  methods: {
+    init() {
+      http
+        .get(`/smile/getMySmile/${this.getUserID}/${this.page - 1}`)
+        .then(res => {
+          this.smileList = res.data;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      
     },
     getImg(img) {
       return "../../../images/" + img;
