@@ -41,9 +41,10 @@ public class SmahealApplication {
 
 				if (time.equals("00:00")) {
 					List<Donation> list = donationRepository.findByApprovalAndTempOrderByCreatedateDesc(1, 0);
-
+					
 					for (Donation donation : list) {
-						if (donation.getEdate().equals(today)) {
+						String eDate = donation.getEdate().toString();
+						if (eDate.equals(today)) {
 
 							donation.setApproval(2);
 							String uid = UUID.randomUUID().toString();
