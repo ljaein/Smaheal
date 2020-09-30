@@ -22,6 +22,8 @@ import signUp from "@/components/account/SignUp.vue"
 import fallImage from "../views/template/fallImage.vue"
 import AdminPage from "../views/admin/AdminPage.vue"
 import TestCount from "../views/smile/testCount.vue"
+import search from "../views/template/search.vue"
+import templateSearch from "../views/template/templateSearch.vue"
 
 Vue.use(VueRouter);
 
@@ -139,6 +141,16 @@ const routes = [{
         path: "/fallImage",
         name: "fallImage",
         component: fallImage
+    },
+    {
+        path: "/template",
+        name: "search",
+        component: search
+    },
+    {
+        path: "/template/search",
+        name: "templateSearch",
+        component: templateSearch
     },
 ];
 
