@@ -1,46 +1,111 @@
 <template>
-  <div>
-    <v-data-table
-      :headers="headers"
-      :items="desserts"
-      :page.sync="page"
-      :items-per-page="itemsPerPage"
-      hide-default-footer
-      class="elevation-1"
-      @page-count="pageCount = $event"
-    ></v-data-table>
-    <div class="text-center pt-2">
-      <v-pagination
-        v-model="page"
-        :length="pageCount"
-      ></v-pagination>
-      
-    </div>
+  <div class="p-3" align="center">
+    <table class="table" style="text-align:center; width:90%">
+      <thead>
+        <tr style="background-color:#fffbe6;">
+          <td>번호</td>
+          <td>제목</td>
+          <td>작성일시</td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(temp, index) in tempList" :key="index">
+          <td style="width:10%">{{ index + 1 }}</td>
+          <td style="width:50%; text-overflow:ellipsis; overflow: hidden; white-space: nowrap;">
+            <router-link
+              v-if="temp.donationid"
+              v-bind:to="{
+                name: 'TempDetailComp',
+                params: { ID: temp.donationid }
+              }"
+              class="btn--text"
+              style="color:black;"
+              >{{ temp.title }}</router-link
+            >
+          </td>
+          <td style="width:30%">{{ temp.createdate.split("T")[0] }}</td>
+          <td
+            style="width:10%; color:crimson; cursor:pointer;"
+            @click="deleteSet(temp.donationid)"
+          >
+            삭제
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <v-row justify="center">
+      <v-dialog v-model="dialog" persistent max-width="290">
+        <v-card>
+          <v-card-title>
+            글을 삭제하시겠습니까?
+          </v-card-title>
+          <v-card-text></v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn style="color:crimson" text @click="deleteTemp()">
+              삭제
+            </v-btn>
+            <v-btn text @click="dialog = false">
+              취소
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-row>
+    <!-- <div class="text-center pt-2">
+      <v-pagination v-model="page" :length="pageCount"></v-pagination>
+    </div> -->
   </div>
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        page: 1,
-        pageCount: 0,
-        itemsPerPage: 10,
-        headers: [
-          {
-            text: 'Dessert (100g serving)',
-            align: 'start',
-            sortable: false,
-            value: 'name',
-          },
-          { text: 'Calories', value: 'calories' },
-          { text: 'Fat (g)', value: 'fat' },
-          { text: 'Carbs (g)', value: 'carbs' },
-          { text: 'Protein (g)', value: 'protein' },
-          { text: 'Iron (%)', value: 'iron' },
-        ],
-        tempList: [],
-      }
+import http from "@/util/http-common.js";
+import { mapGetters, mapState } from "vuex";
+export default {
+  data() {
+    return {
+      tempList: [],
+      dialog: false,
+      deleteId: ""
+    };
+  },
+  created() {
+    this.init();
+  },
+  methods: {
+    init() {
+      http
+        .get(`/donation/getTempList/${this.getProfile}`)
+        .then(res => {
+          this.tempList = res.data;
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
+    deleteSet(id) {
+      this.deleteId = id;
+      this.dialog = true;
+    },
+    deleteTemp() {
+      this.dialog = false;
+      http
+        .delete(`/donation/delete/${this.deleteId}`)
+        .then(() => {
+          alert("삭제되었습니다.");
+          this.init();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  },
+  computed: {
+    ...mapGetters(["getProfile"]),
+    ...mapState({
+      uname: state => `${state.user.getProfile}`
+    })
   }
+};
 </script>
