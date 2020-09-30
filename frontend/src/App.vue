@@ -1,13 +1,6 @@
 <template>
   <v-app>
     <v-app-bar app color="white" height="100">
-      <!-- <v-avatar class="mr-3" color="grey lighten-5" size="70">
-        <v-img
-          contain
-          max-height="70%"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-        ></v-img>
-      </v-avatar> -->
 
       <v-btn @click="goHome()" class="headline" color="amber accent-4" text>SmaHeal</v-btn>
 
@@ -29,8 +22,12 @@
         <span class="mr-2 font-weight-bold">공지사항</span>
       </v-btn>
 
-      <v-btn v-if="getProfile" @click="goMyPage" text>
-        <span class="mr-2 font-weight-bold">MYPAGE</span>
+      <v-btn v-if="getProfile!='관리자'" @click="goMyPage" text>
+        <span class="mr-2 font-weight-bold">마이페이지</span>
+      </v-btn>
+
+      <v-btn v-if="getProfile=='관리자'" @click="goAdminPage" text>
+        <span class="mr-2 font-weight-bold">관리자페이지</span>
       </v-btn>
 
       <v-btn v-if="getProfile" @click="logout" text>
@@ -125,6 +122,9 @@ export default {
     goMyPage(){
       this.$router.push('/myPage').catch(() => {}); 
     },
+    goAdminPage(){
+      this.$router.push('/adminPage').catch(() => {}); 
+    },    
   },
   computed: {
     ...mapGetters([
@@ -153,6 +153,7 @@ export default {
         this.loginSuccess = true;
       }
     },
+
   }
 };
 </script>

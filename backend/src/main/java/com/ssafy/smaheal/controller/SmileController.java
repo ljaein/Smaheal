@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -38,11 +39,13 @@ import com.ssafy.smaheal.repository.SmileRepository;
 @RequestMapping("/api/smile")
 public class SmileController {
 
-	@Autowired
-	private SmileRepository smileRepository;
-	public static List camList = new LinkedList<>();
-	public static List selfList = new LinkedList<>();
-	public static List textList = new LinkedList<>();
+
+    @Autowired
+    private SmileRepository smileRepository;
+    public static List camList = new LinkedList<>();
+    public static List selfList = new LinkedList<>();
+    public static List textList = new LinkedList<>();
+    public static String autoFile;
 
 	@GetMapping("/cameraOn")
 	@ApiOperation(value = "웹캠 on")
@@ -89,16 +92,34 @@ public class SmileController {
 		}
 	}
 
-	@GetMapping("/cameraOff")
-	@ApiOperation(value = "웹캠 off")
-	public Object cameraOff() throws SQLException, IOException, ExecuteException {
-		try {
-			Runtime.getRuntime().exec("taskkill /F /IM Python.exe");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return new ResponseEntity<>(null, HttpStatus.OK);
-	}
+    @PostMapping("/autoRegist")
+    @ApiOperation(value = "웃음 기부 등록")
+    public Object autoRegistDonation(@RequestBody Smile request) throws SQLException, IOException {
+        try {
+            Smile smile = new Smile();
+            smile.setUser_id(request.getUser_id());
+            smile.setDonationid(request.getDonationid());
+            smile.setPhoto(request.getPhoto());
+            smile.setSmileper(request.getSmileper());
+            smile.setComment(request.getComment());
+            smile.setAgreement(request.getAgreement());
+            smileRepository.save(smile);
+            return new ResponseEntity<>(smile, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/cameraOff")
+    @ApiOperation(value = "웹캠 off")
+    public Object cameraOff() throws SQLException, IOException, ExecuteException {
+        try {
+            Runtime.getRuntime().exec("taskkill /F /IM Python.exe");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
 
 	@PostMapping("/smileCheck")
 	@ApiOperation("스마일 체크")
@@ -128,9 +149,55 @@ public class SmileController {
 		}
 	}
 
-	public static void execPythonSmileCheck(String[] command) throws IOException, InterruptedException {
-		CommandLine commandLine = CommandLine.parse(command[0]);
+    @PostMapping("/autoCheck")
+    @ApiOperation("자동캡쳐 파일 체크")
+    public Object autoCheck(@RequestBody String filename) throws SQLException, IOException {
+        try {
+            String tempFileName = createFile(filename);
+            System.out.println("autoCheck Python Call");
+            String[] command = new String[3];
+            command[0] = "python";
+            // 경로 확인
+            String hostname = InetAddress.getLocalHost().getHostName();
+            if (hostname.substring(0, 7).equals("DESKTOP")) {// local
+                command[1] = "./backend/autoCheck.py";
+            } else {// aws
+                command[1] = "../autoCheck.py";
+            }
+            command[2] = tempFileName;
+            try {
+                execPythonAutoCheck(command);
+                return new ResponseEntity<>(autoFile, HttpStatus.OK);
+            } catch (Exception e) {
+                return "findFail";
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
+    public static void execPythonAutoCheck(String[] command) throws IOException, InterruptedException {
+        CommandLine commandLine = CommandLine.parse(command[0]);
+
+        for (int i = 1, n = command.length; i < n; i++) {
+            commandLine.addArgument(command[i]);
+        }
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PumpStreamHandler pumpStreamHandler = new PumpStreamHandler(outputStream);
+        DefaultExecutor executor = new DefaultExecutor();
+        executor.setStreamHandler(pumpStreamHandler);
+        int result = executor.execute(commandLine);
+        System.out.println("result: " + result);
+        System.out.println("output: " + outputStream.toString());
+
+        String[] outputList = outputStream.toString().split("\n");
+        int len = outputList.length;
+        String filename = outputList[len - 1].trim();
+        autoFile = filename;
+    }
+
+    public static void execPythonSmileCheck(String[] command) throws IOException, InterruptedException {
+        CommandLine commandLine = CommandLine.parse(command[0]);
 		for (int i = 1, n = command.length; i < n; i++) {
 			commandLine.addArgument(command[i]);
 		}
@@ -142,17 +209,16 @@ public class SmileController {
 		System.out.println("result: " + result);
 		System.out.println("output: " + outputStream.toString());
 
-		String[] outputList = outputStream.toString().split("\n");
-		int len = outputList.length;
-		String filename = outputList[len - 1].trim();
-		;
-		String emotion = outputList[len - 2].trim();
-		String happyPer = outputList[len - 3].trim();
-		selfList.clear();
-		selfList.add(filename);
-		selfList.add(emotion);
-		selfList.add(happyPer);
-	}
+        String[] outputList = outputStream.toString().split("\n");
+        int len = outputList.length;
+        String filename = outputList[len - 1].trim();
+        String emotion = outputList[len - 2].trim();
+        String happyPer = outputList[len - 3].trim();
+        selfList.clear();
+        selfList.add(filename);
+        selfList.add(emotion);
+        selfList.add(happyPer);
+    }
 
 	public static void execPython(String[] command) throws IOException, InterruptedException {
 		CommandLine commandLine = CommandLine.parse(command[0]);
@@ -229,21 +295,6 @@ public class SmileController {
 		return new ResponseEntity<>(text_res, HttpStatus.OK);
 	}
 
-	public static String execPython2(String[] command) throws IOException, InterruptedException {
-		CommandLine commandLine = CommandLine.parse(command[0]);
-		for (int i = 1, n = command.length; i < n; i++) {
-			commandLine.addArgument(command[i]);
-		}
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		PumpStreamHandler pumpStreamHandler = new PumpStreamHandler(outputStream);
-		DefaultExecutor executor = new DefaultExecutor();
-		executor.setStreamHandler(pumpStreamHandler);
-		int result = executor.execute(commandLine);
-		System.out.println("result: " + result);
-		String[] outputList = outputStream.toString().split("\n");
-		return outputList[outputList.length - 1];
-	}
-
 	@GetMapping("/smileKing")
 	@ApiOperation(value = "웃음왕 Top3")
 	public Object getSmileKing() throws SQLException, IOException, ExecuteException {
@@ -275,4 +326,47 @@ public class SmileController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+    public static String execPython2(String[] command) throws IOException, InterruptedException {
+        CommandLine commandLine = CommandLine.parse(command[0]);
+        for (int i = 1, n = command.length; i < n; i++) {
+            commandLine.addArgument(command[i]);
+        }
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PumpStreamHandler pumpStreamHandler = new PumpStreamHandler(outputStream);
+        DefaultExecutor executor = new DefaultExecutor();
+        executor.setStreamHandler(pumpStreamHandler);
+        int result = executor.execute(commandLine);
+        System.out.println("result: " + result);
+        String[] outputList = outputStream.toString().split("\n");
+        return outputList[outputList.length - 1];
+    }
+
+    @GetMapping("/getSmileCnt")
+    @ApiOperation(value = "누적,오늘 웃음사진 개수")
+    public Object getSmileCnt() throws SQLException, IOException, ExecuteException {
+        LocalDate currentDate = LocalDate.now();
+        List<Integer> result = new LinkedList<>();
+        try {
+            List<Smile> smileList = smileRepository.findAll();
+            List<Smile> todayList = smileRepository.findByCreatedate(currentDate);
+            result.add(smileList.size());
+            result.add(todayList.size());
+            return new ResponseEntity<>(result,HttpStatus.OK);
+        } catch (Exception e) {
+        	return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/getTodayCnt")
+    @ApiOperation(value = "오늘 웃음사진 개수")
+    public Object getTodayCnt() throws SQLException, IOException, ExecuteException {
+        LocalDate currentDate = LocalDate.now();
+        try {
+            List<Smile> todayList = smileRepository.findByCreatedate(currentDate);
+            return new ResponseEntity<>(todayList.size(),HttpStatus.OK);
+        } catch (Exception e) {
+        	return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

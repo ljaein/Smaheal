@@ -90,6 +90,68 @@
         <div class="py-12"></div>
       </section>
 
+
+      <!-- 기부수 -->
+      <section id="stats">
+        <v-parallax
+          :height="$vuetify.breakpoint.smAndDown ? 700 : 500"
+          :src="require(`@/assets/main-happy.jpg`)"
+        >
+          <v-container fill-height>
+            <v-row cols="12" class="d-flex justify-content-center">
+              <v-row cols="6" class="d-flex justify-content-center">
+                <div
+                  class="text-center my-auto mr-10"
+                  style="font-size:5em;line-height:1.3em;"
+                >
+                  TODAY's <br />웃음기부
+                </div>
+                <div class="iCountUp my-auto">
+                  <ICountUp
+                    :endVal="endVal"
+                    :options="options"
+                    @ready="onReady2"
+                  />
+                </div>
+              </v-row>
+              <v-row cols="6" class="d-flex justify-content-center">
+                <div
+                  class="text-center my-auto mr-10"
+                  style="font-size:5em; line-height:1.3em;"
+                >
+                  TOTAL's <br />웃음기부
+                </div>
+                <div class="iCountUp my-auto">
+                  <ICountUp
+                    :endVal="endVal"
+                    :options="options"
+                    @ready="onReady"
+                  />
+                </div>
+              </v-row>
+              <!-- <v-col
+                v-for="[value, title] of stats"
+                :key="title"
+                cols="12"
+                md="3"
+              >
+                <div class="text-center">
+                  <div
+                    class="display-3 font-weight-black mb-4"
+                    v-text="value"
+                  ></div>
+
+                  <div
+                    class="title font-weight-regular text-uppercase"
+                    v-text="title"
+                  ></div>
+                </div>
+              </v-col> -->
+            </v-row>
+          </v-container>
+        </v-parallax>
+      </section>
+
       <section id="features" class="grey lighten-3">
         <div class="py-12"></div>
 
@@ -135,36 +197,6 @@
       <section id="smileKing">
         <div class="py-12"></div>
         <SmileKingComp />
-      </section>
-
-      <section id="stats">
-        <v-parallax
-          :height="$vuetify.breakpoint.smAndDown ? 700 : 500"
-          :src="require(`@/assets/main-happy.jpg`)"
-        >
-          <v-container fill-height>
-            <v-row class="mx-auto">
-              <v-col
-                v-for="[value, title] of stats"
-                :key="title"
-                cols="12"
-                md="3"
-              >
-                <div class="text-center">
-                  <div
-                    class="display-3 font-weight-black mb-4"
-                    v-text="value"
-                  ></div>
-
-                  <div
-                    class="title font-weight-regular text-uppercase"
-                    v-text="title"
-                  ></div>
-                </div>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-parallax>
       </section>
 
       <section id="blog">
@@ -216,68 +248,6 @@
 
       <v-sheet id="contact" color="#333333" dark tag="section" tile>
         <div class="py-12"></div>
-
-        <!-- <v-container>
-          <h2 class="display-2 font-weight-bold mb-3 text-uppercase text-center">Contact Me</h2>
-
-          <v-responsive
-            class="mx-auto mb-12"
-            width="56"
-          >
-            <v-divider class="mb-1"></v-divider>
-
-            <v-divider></v-divider>
-          </v-responsive>
-
-          <v-theme-provider light>
-            <v-row>
-              <v-col cols="12">
-                <v-text-field
-                  flat
-                  label="Name*"
-                  solo
-                ></v-text-field>
-              </v-col>
-
-              <v-col cols="12">
-                <v-text-field
-                  flat
-                  label="Email*"
-                  solo
-                ></v-text-field>
-              </v-col>
-
-              <v-col cols="12">
-                <v-text-field
-                  flat
-                  label="Subject*"
-                  solo
-                ></v-text-field>
-              </v-col>
-
-              <v-col cols="12">
-                <v-textarea
-                  flat
-                  label="Message*"
-                  solo
-                ></v-textarea>
-              </v-col>
-
-              <v-col
-                class="mx-auto"
-                cols="auto"
-              >
-                <v-btn
-                  color="accent"
-                  x-large
-                >
-                  Submit
-                </v-btn>
-              </v-col>
-            </v-row>
-          </v-theme-provider>
-        </v-container> -->
-
         <div class="py-12"></div>
       </v-sheet>
     </v-main>
@@ -291,13 +261,14 @@
     </v-footer>
   </v-container>
 </template>
-
 <script>
+import http from "@/util/http-common.js";
+import ICountUp from "vue-countup-v2";
 import SmileKingComp from "@/components/smile/SmileKingComp.vue";
-
 export default {
   name: "HelloWorld",
-  components:{
+  components: {
+    ICountUp,
     SmileKingComp
   },
   data: () => ({
@@ -344,13 +315,53 @@ export default {
           "웃음 기부를 신청한 당신은 템플릿이 적용된 기부를 받을 수 있습니다. SMAHEAL에서는 웃음 기부를 모아서 다양한 템플릿을 적용해 단체 혹은 개인에게 전달해드립니다. 지금 당장 신청해보세요 !"
       }
     ],
-    stats: [
-      ["24k", "Github Stars"],
-      ["330+", "Releases"],
-      ["1m", "Downloads/mo"],
-      ["5m", "Total Downloads"]
-    ],
+    options: {
+      useEasing: true,
+      useGrouping: true,
+      separator: ",",
+      decimal: ".",
+      prefix: "",
+      suffix: ""
+    },
+    endVal:0,
+    todayCnt: 0,
+    totalCnt: 0,
+    inst1:'',
+    inst2:''
   }),
-  
+  created() {
+    http
+      .get("/smile/getSmileCnt/")
+      .then(res => {
+        this.totalCnt = Number(res.data[0]);
+        this.todayCnt = Number(res.data[1]);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    window.addEventListener("scroll", () => {
+      var cur = document.documentElement.scrollTop;
+      if(cur >= 1000){
+        this.inst1.update(this.totalCnt);
+        this.inst2.update(this.todayCnt);
+      }
+      // console.log(document.documentElement.scrollTop);
+    });
+  },
+  methods: {
+    onReady: function(instance) {
+      this.inst1 = instance;
+    },
+    onReady2: function(instance) {
+      this.inst2 = instance;
+    }
+  }
 };
 </script>
+<style scoped>
+.iCountUp {
+  font-size: 12em;
+  margin: 0;
+  color: white;
+}
+</style>

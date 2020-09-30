@@ -1,5 +1,6 @@
 package com.ssafy.smaheal.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,4 +11,6 @@ import com.ssafy.smaheal.model.Smile;
 @Repository
 public interface SmileRepository extends JpaRepository<Smile, Long> {
     List<Smile> findByOrderBySmileperDesc();
+    List<Smile> findTop3ByOrderBySmileperDesc();
+    List<Smile> findByCreatedate(LocalDate createdate);
 }

@@ -59,7 +59,7 @@
       </v-col>
     </v-row>
     <!-- 캡쳐 종류 선택 -->
-    <v-row style="height:700px;" class="d-flex justify-content-center pt-15">
+    <v-row style="height:700px;margin-top:300px;" class="d-flex justify-content-center pt-15">
       <v-col cols="10">
         <v-card>
           <v-tabs
@@ -95,22 +95,19 @@
             <!-- 콘텐츠 -->
             <v-tab-item v-if="!contentsFlag" id="tab-contents">
               <div class="container" style="height:400px;text-align:center">
-                <!-- <v-btn
-                  color="#356859"
-                  class="col-2"
-                  style="top:170px;color:white;"
-                  @click="(contentsFlag = true), cameraOn()"
-                  >start</v-btn
-                > -->
                 <v-btn
                   color="#356859"
                   class="col-2"
                   style="top:170px;color:white;"
-                  @click="contentsFlag = true"
+                  @click="(contentsFlag = true), loading(), startVideo()"
                   >start</v-btn
                 >
               </div>
             </v-tab-item>
+            
+            <!-- 자동캡쳐 비디오 부분 -->
+            <video id="videoTag" hidden width="720" height="560" muted @playing="addEventListener()"></video>
+
             <v-tab-item v-if="contentsFlag" id="tab-contents">
               <v-row align="center" class="container m-0">
                 <v-item-group
@@ -298,7 +295,7 @@
               <div v-if="!startFlag">
                 <div class="container" style="height:250px;text-align:center">
                   <canvas height="200%" width="200%"></canvas>
-                  <img id="myImage" />
+                  <!-- <img id="myImage" /> -->
                   <!-- {{ selfieCapture }} -->
                 </div>
                 <div v-if="selCapFlag">
@@ -322,7 +319,7 @@
                       ></v-text-field>
                     </v-col>
                   </v-row>
-                  <!-- 기부하기 -->
+                  <!-- 셀카 기부하기 -->
                   <v-row>
                     <v-btn
                       style="margin:0 auto 50px auto;color:white;"
@@ -348,80 +345,95 @@
                 >
               </div>
             </v-tab-item>
-            <v-tab-item v-if="fileFlag" id="tab-file">
-              <div class="container" style="height:250px;text-align:center">
-                <canvas height="200%" width="200%"></canvas>
-                <img id="myImage" />
-                <!-- {{ selfieCapture }} -->
-              </div>
-
-              <div v-if="inputFile != ''" style="margin:0 auto;">
-                <img
-                  :src="preImg(inputFile)"
-                  style="max-width:100%;width:400px;height:65%;"
-                />
-              </div>
-
-              <div
-                class="col-lg-6 col-md-6 col-sm-8 col-10"
-                style="margin:0 auto;"
-              >
-                파일 업로드
-                <v-file-input
-                  ref="file"
-                  accept="image/png, image/jpeg, image/bmp"
-                  v-model="inputFile"
-                  color="#356859"
-                  counter
-                  prepend-icon
-                  outlined
+            <canvas id="canvasImg" height="200%" width="200%" hidden></canvas>
+            <v-tab-item v-if="fileFlag" id="tab-file" style="margin:0 auto;text-align:center;">
+              <v-row>
+                <div
+                  class="col-lg-6 col-md-6 col-sm-8 col-10 pt-7"
+                  style="margin:0 auto;text-align:center;"
                 >
-                  <template v-slot:selection="{ text }">
-                    <v-chip color="#356859" dark label small>{{ text }}</v-chip>
-                  </template>
-                </v-file-input>
-              </div>
-              <div>
-                <!-- 사진 사용 여부 -->
-                <v-row>
-                  <v-switch
-                    style="margin:0 auto"
-                    v-model="kingFlag"
-                    inset
-                    :label="`사진 허용 `"
-                  ></v-switch>
-                </v-row>
-                <!-- 한줄 코멘트 -->
-                <v-row class="justify-content-center">
-                  <v-col cols="6">
-                    <v-text-field
-                      v-model="comment"
-                      :rules="commentRules"
-                      :counter="20"
-                      label="한 줄 메세지"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-                <!-- 기부하기 -->
-                <v-row>
-                  <v-btn
-                    style="margin:0 auto 50px auto;color:white;"
-                    class="col-3"
+                  파일 업로드
+                  <v-file-input
+                    ref="file"
+                    accept="image/png, image/jpeg, image/bmp"
+                    v-model="inputFile"
                     color="#356859"
-                    @click="donationSelfie"
-                    >기부하기</v-btn
+                    counter
+                    prepend-icon
+                    outlined
                   >
-                </v-row>
-              </div>
+                    <template v-slot:selection="{ text }">
+                      <v-chip color="#356859" dark label small>{{ text }}</v-chip>
+                    </template>
+                  </v-file-input>
+                </div>
+
+                <div v-if="inputFile != ''" style="margin:0 auto; margin-bottom:20px;">
+                  <img
+                    :src="preImg(inputFile)"
+                    style="max-width:80%;width:400px;height:100%;"
+                    id="uploadImg"
+                  />
+                </div>
+              </v-row>
+
+              <div>
+              <!-- 업로드 파일 체크 -->
+              <v-row class="justify-content-center mb-5">
+                <v-btn
+                  color="#356859"
+                  class="m-2 col-md-2 col-sm-4 col-10"
+                  style="color:white;"
+                  v-if="checkFlag"
+                  @click="checkUpload()"
+                  >check</v-btn
+                >
+              </v-row>
+              <!-- 사진 사용 여부 -->
+              <v-row>
+                <v-switch
+                  style="margin:0 auto"
+                  v-model="kingFlag"
+                  inset
+                  :label="`사진 허용 `"
+                ></v-switch>
+              </v-row>
+              <!-- 한줄 코멘트 -->
+              <v-row class="justify-content-center">
+                <v-col cols="6">
+                  <v-text-field
+                    v-model="comment"
+                    :rules="commentRules"
+                    :counter="20"
+                    label="한 줄 메세지"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+              <!-- 업로드 기부하기 -->
+              <v-row>
+                <v-btn
+                  style="margin:0 auto 50px auto;color:white;"
+                  class="col-3"
+                  color="#356859"
+                  @click="donationSelfie"
+                  >기부하기</v-btn
+                >
+              </v-row>
+            </div>
             </v-tab-item>
           </v-tabs-items>
         </v-card>
       </v-col>
     </v-row>
-    <div v-if="autoCapFlag">
+
+    <div class="d-flex justify-content-center" style="margin:150px 0 20px 0;">
+      <canvas v-if="contentsFlag" id="autoCanvas" height="200%" width="200%"></canvas>
+    </div>
+
+    <div v-if="contentsFlag">
       <v-row>
         <v-card style="margin:0 auto;">
-          <img :src="getImg(autoCapture[0])" alt="캡쳐된 이미지" />
+          <!-- <img :src="getImg(autoCapture[0])" alt="캡쳐된 이미지" /> -->
           <!-- <v-img src="../../../public/images/1600678282188.png" alt="autoCapture"></v-img> -->
         </v-card>
       </v-row>
@@ -430,7 +442,7 @@
           class="col-lg-2 col-md-2 col-sm-5 col-5 mx-10 my-5"
           color="#356859"
           style="color:white;"
-          @click="(contentsFlag = false), (autoCapFlag = false), stepEnd()"
+          @click="(contentsFlag = false), stepEnd()"
           >다시찍기</v-btn
         >
         <v-btn
@@ -443,7 +455,7 @@
       </v-row>
     </div>
 
-    <div v-if="autoCapFlag">
+    <div v-if="contentsFlag">
       <!-- 사진 사용 여부 -->
       <v-row class="col-4 p-0 mt-5" style="margin:0 auto;">
         <v-switch
@@ -464,7 +476,7 @@
           ></v-text-field>
         </v-col>
       </v-row>
-      <!-- 기부하기 -->
+      <!-- 컨텐츠 기부하기 -->
       <v-row class="col-4 mb-10" style="margin:0 auto;">
         <v-btn
           v-if="selectFlag"
@@ -524,21 +536,32 @@ import { mapGetters, mapState } from "vuex";
 import LazyYoutubeVideo from "vue-lazy-youtube-video";
 import VoiceComp from "@/components/voice/VoiceComp.vue";
 // npm install --save vue-lazy-youtube-video
+import * as faceapi from 'face-api.js';
+// npm install --save face-api.js
 
 export default {
   components: {
     LazyYoutubeVideo,
     VoiceComp
   },
+  mounted() {
+    this.videoTag = document.getElementById('videoTag')
+    Promise.all([
+      faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
+      faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
+      faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
+      faceapi.nets.faceExpressionNet.loadFromUri('/models'),
+    ]);
+  },
   created() {
     scroll(0, 0);
-    this.cameraOff();
     this.donationid = this.$route.params.ID;
     this.uid = this.getUserID;
     this.getAge();
   },
   data() {
     return {
+      idname:'',
       donationid: 0,
       uid: "",
       uage: "",
@@ -565,11 +588,16 @@ export default {
       donationFlag: false,
       fileFlag: false,
       commentRules: [v => v.length <= 20 || "20자 이내로 써주세요."],
-      autoCapture: [],
+      autoCapture: {
+        url:'',
+        per:''
+      },
       selfieCapture: [],
       videos: {},
       videosForChild: {},
-      inputFile: []
+      inputFile: [],
+      preUrl: '',
+      videoTag: [],
     };
   },
   methods: {
@@ -607,7 +635,7 @@ export default {
         });
     },
     playing() {
-      console.log("we are watching!!!");
+      // console.log("we are watching!!!");
     },
     check() {
       var myImage = document.querySelector("canvas").toDataURL();
@@ -637,7 +665,7 @@ export default {
         0,
         0,
         picture.width,
-        picture.height
+        picture.height,
       );
     },
     stop() {
@@ -655,7 +683,6 @@ export default {
       }
     },
     init() {
-      console.log(navigator);
       if (
         "mediaDevices" in navigator &&
         "getUserMedia" in navigator.mediaDevices
@@ -672,32 +699,6 @@ export default {
     stepEnd() {
       scroll(0, 920);
     },
-    cameraOn() {
-      this.loading();
-      http
-        .get("/smile/cameraOn")
-        .then(res => {
-          if (res.data[0] != "cancel") {
-            this.captureFlag = true;
-            this.autoCapFlag = true;
-            this.autoCapture = res.data;
-            scroll(0, 1700);
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
-    cameraOff() {
-      http
-        .get("/smile/cameraOff")
-        .then(res => {
-          this.log = res.data;
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
     getImg(img) {
       return "../../../images/" + img;
     },
@@ -713,7 +714,7 @@ export default {
           return;
         }
         this.value += 10;
-      }, 300);
+      }, 200);
     },
     donationSelfie() {
       if (this.selfieCapture == "findFail") {
@@ -761,27 +762,55 @@ export default {
         }
       }
     },
-    donationContents() {
-      http
-        .post("/smile/regist", {
-          user_id: this.uid,
-          donationid: this.donationid,
-          photo: this.autoCapture[0],
-          smileper: this.autoCapture[1],
-          comment: this.comment,
-          agreement: this.kingFlag ? 1 : 0
-        })
+    doDonation() {
+      if(this.comment != '') {
+        http
+        .get(`/smile/textCheck/${this.comment}`)
         .then(res => {
-          this.log = res.data;
-          this.donationFlag = true;
-          let x = this;
-          setTimeout(function() {
-            x.$router.push("/donationlist");
-          }, 1500);
+          alert(res.data);
+          var word = res.data.split(" ");
+          var smilePer = word[0].split(".")[0];
+          if (word[2] == "긍정" && Number(smilePer) >= 60) {
+            //긍정 60프로 이상
+            http
+            .post("/smile/autoRegist", {
+              user_id: this.uid,
+              donationid: this.donationid,
+              photo: this.autoCapture.url,
+              smileper: this.autoCapture.per,
+              comment: this.comment,
+              agreement: this.kingFlag ? 1 : 0
+            })
+            .then(res => {
+              this.log = res.data;
+              this.donationFlag = true;
+              let x = this;
+              setTimeout(function() {
+                x.$router.push("/donationlist");
+              }, 1500);
+            })
+            .catch(err => {
+              console.log(err);
+            });
+          }
         })
         .catch(err => {
           console.log(err);
-        });
+        })} else {
+          alert("응원의 메세지를 적어주세요.");
+        }
+    },
+    donationContents() {
+      var myImage = document.querySelector("#autoCanvas").toDataURL();
+      http
+        .post(`/smile/autoCheck`, myImage)
+        .then(res => {
+          this.autoCapture.url = res.data;
+          this.doDonation();
+        })
+        .catch(err => {
+          console.log(err);
+      });
     },
     selfieInit() {
       this.selfFlag = true;
@@ -826,8 +855,10 @@ export default {
       this.overlay = false;
       this.fileFlag = false;
       this.selfieCapture = [];
+      this.inputFile = [];
       this.stop();
-      this.cameraOff();
+      this.canvasClear();
+      this.camOff();
     },
     someContents() {
       this.selfFlag = false;
@@ -835,19 +866,105 @@ export default {
       this.overlay = false;
       this.fileFlag = false;
       this.selfieCapture = [];
+      this.inputFile = [];
       this.stop();
+      this.canvasClear();
     },
     uploadInit() {
       this.selfFlag = false;
       this.contentsFlag = false;
       this.fileFlag = true;
+      this.selfieCapture = [];
       this.stop();
     },
     preImg(img) {
-      if (img != null) {
+      if (img != null && img != '') {
+        this.preUrl = URL.createObjectURL(img);
         return URL.createObjectURL(img);
       }
-    }
+    },
+    canvasClear() {
+      const picture = document.querySelector("canvas");
+      const ctx = picture.getContext("2d");
+      // 픽셀 정리
+      ctx.clearRect(0, 0, picture.width, picture.height);
+      // 컨텍스트 리셋
+      ctx.beginPath();
+    },
+    checkUpload() {
+      const picture = document.querySelector("canvas");
+      const ctx = picture.getContext("2d");
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
+      ctx.drawImage(
+        document.getElementById("uploadImg"),
+        0,
+        0,
+        picture.width,
+        picture.height
+      );
+      
+      this.check();
+    },
+    startVideo() {
+      navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
+        const videoPlayer = document.getElementById('videoTag');
+        videoPlayer.srcObject = stream;
+        videoPlayer.play();
+      });
+    },
+    addEventListener() {
+      const canvas = faceapi.createCanvasFromMedia(this.videoTag);
+      // document.body.append(canvas);
+      const displaySize = { width: this.videoTag.width, height: this.videoTag.height };
+      faceapi.matchDimensions(canvas, displaySize);
+      setInterval(async () => {
+        const detections = await faceapi
+          .detectAllFaces(this.videoTag, new faceapi.TinyFaceDetectorOptions())
+          .withFaceLandmarks()
+          .withFaceExpressions();
+
+        // // detections
+        // const resizedDetections = faceapi.resizeResults(detections, displaySize);
+        // canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+        // faceapi.draw.drawDetections(canvas, resizedDetections);
+        // faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
+        // faceapi.draw.drawFaceExpressions(canvas, resizedDetections);
+        
+        if (detections[0].expressions.happy * 100 > 99.89) {
+          this.autoCapture.per = Math.round(detections[0].expressions.happy * detections[0].detection.score * 97);
+          this.captureComplete();
+          clearInterval();
+          return;
+        }
+      }, 300);
+    },
+    captureComplete() {
+      const picture = document.querySelector("#autoCanvas");
+      const ctx = picture.getContext("2d");
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
+      ctx.drawImage(
+        document.getElementById("videoTag"),
+        0,
+        0,
+        picture.width,
+        picture.height,
+      );
+      this.captureFlag = true;
+      this.autoCapFlag = true;
+      this.camOff();
+      scroll(0, 1900);
+    },
+    camOff() {
+      if(this.videoTag.srcObject != null && this.videoTag.srcObject != '') {
+        const tracks = this.videoTag.srcObject.getTracks();
+          tracks.forEach(function(track) {
+            track.stop();
+        });
+        this.videoTag.srcObject = null;
+      }
+    },
   },
   computed: {
     ...mapGetters(["getUserID", "getUserBirth"]),
@@ -858,7 +975,11 @@ export default {
   },
   watch: {
     inputFile: function() {
-      console.log(this.inputFile);
+      if(this.inputFile != '' && this.inputFile != null) {
+        this.checkFlag = true;
+      } else {
+        this.checkFlag = false;
+      }
     }
   }
 };
