@@ -57,6 +57,12 @@
                 mdi-bullhorn-outline
               </v-icon>
             </v-tab>
+            <v-tab style="font-weight:bold;">
+              기부요청 현황
+              <v-icon>
+                mdi-bullhorn-outline
+              </v-icon>
+            </v-tab>
 
             <v-tab-item>
               <MySmileComp />
@@ -84,6 +90,9 @@
                   </p>
                 </v-card-text>
               </v-card>
+            </v-tab-item>
+            <v-tab-item>
+              <MyDonationComp />
             </v-tab-item>
           </v-tabs>
         </v-card>
@@ -118,12 +127,14 @@ import { AUTH_LOGOUT } from "@/store/actions/auth";
 import { USER_UPDATE } from "@/store/actions/user";
 import TempComp from "@/components/account/TempComp.vue";
 import MySmileComp from "@/components/account/MySmileComp.vue";
-
+import MyDonationComp from "@/views/account/DonationList.vue";
+// import MyDonationComp from "@/components/account/DonationListComp.vue";
 export default {
   name: "MyPageComp",
   components: {
     TempComp,
-    MySmileComp
+    MySmileComp,
+    MyDonationComp
   },
   data() {
     return {
