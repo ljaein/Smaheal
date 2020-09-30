@@ -11,8 +11,10 @@
       </thead>
       <tbody>
         <tr v-for="(temp, index) in tempList" :key="index">
-          <td style="width:10%">{{ index + 1 }}</td>
-          <td style="width:50%; text-overflow:ellipsis; overflow: hidden; white-space: nowrap;">
+          <td style="width:10%">{{ (page-1)*10+index + 1 }}</td>
+          <td
+            style="width:50%; text-overflow:ellipsis; overflow: hidden; white-space: nowrap;"
+          >
             <router-link
               v-if="temp.donationid"
               v-bind:to="{
@@ -34,6 +36,15 @@
         </tr>
       </tbody>
     </table>
+    <div class="text-center m-3">
+      <v-pagination
+        v-model="page"
+        :length="length"
+        color="#356859"
+        prev-icon="mdi-menu-left"
+        next-icon="mdi-menu-right"
+      ></v-pagination>
+    </div>
     <v-row justify="center">
       <v-dialog v-model="dialog" persistent max-width="290">
         <v-card>
@@ -67,16 +78,30 @@ export default {
     return {
       tempList: [],
       dialog: false,
-      deleteId: ""
+      deleteId: "",
+      page: 1,
+      length: 0
     };
   },
   created() {
     this.init();
+    http
+        .get(`/donation/getTempCnt/${this.getProfile}`)
+        .then(res => {
+          if (res.data % 10 == 0) {
+            this.length = Math.floor(res.data / 10);
+          } else {
+            this.length = Math.floor(res.data / 10) + 1;
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
   },
   methods: {
     init() {
       http
-        .get(`/donation/getTempList/${this.getProfile}`)
+        .get(`/donation/getTempList/${this.getProfile}/${this.page - 1}`)
         .then(res => {
           this.tempList = res.data;
         })
@@ -106,6 +131,11 @@ export default {
     ...mapState({
       uname: state => `${state.user.getProfile}`
     })
+  },
+  watch:{
+    page(){
+      this.init();
+    }
   }
 };
 </script>
