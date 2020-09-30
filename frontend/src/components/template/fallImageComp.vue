@@ -75,7 +75,7 @@
 
 <script>
 export default {
-    name: "SlideImageComp",
+    name: "fallImageComp",
     data: function() {
         return {
           show: false,

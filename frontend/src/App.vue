@@ -71,6 +71,28 @@
         <v-btn color="white" text v-bind="attrs" @click="logoutSuccess = false">Close</v-btn>
       </template>
     </v-snackbar>
+
+    <v-tooltip top>
+      <template v-slot:activator="{ on, attrs }">
+        <v-fab-transition>
+          <v-btn
+            fab
+            large
+            bottom
+            dark
+            right
+            class="v-btn--example orange"
+            fixed
+            v-on="on"
+            v-bind="attrs"
+            @click="goSearchTemplate()"
+          >
+            <v-icon>mdi-table-search</v-icon>
+          </v-btn>
+        </v-fab-transition>
+      </template>
+      <span>기부 사진 템플릿 찾기</span>
+    </v-tooltip>
   </v-app>
 </template>
 
@@ -78,6 +100,7 @@
 import { mapGetters, mapState } from "vuex";
 import { AUTH_LOGOUT } from "./store/actions/auth";
 import { USER_UPDATE } from "@/store/actions/user";
+
 
 export default {
   name: "App",
@@ -125,6 +148,9 @@ export default {
     goAdminPage(){
       this.$router.push('/adminPage').catch(() => {}); 
     },    
+    goSearchTemplate() {
+      this.$router.push('/template').catch(() => {});
+    }
   },
   computed: {
     ...mapGetters([
