@@ -257,5 +257,17 @@ public class DonationController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    @GetMapping("/mypage/getList/{writer}/{page}")
+    @ApiOperation(value = "마이페이지에서 기부요청 목록")
+    public Object mypageGetList(@PathVariable(value = "writer") String writer, @PathVariable(value = "page") int page) {
+    	try {
+    		List<Donation> list = donationRepository.findByWriterAndTempOrderByCreatedateDesc(writer, 0);
+    		
+    		return new ResponseEntity<>(list, HttpStatus.OK);
+    	} catch (Exception e) {
+    		return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    	}
+    }
 
 }
