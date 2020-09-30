@@ -10,6 +10,7 @@ import com.ssafy.smaheal.model.Smile;
 
 @Repository
 public interface SmileRepository extends JpaRepository<Smile, Long> {
+    List<Smile> findByOrderBySmileperDesc();
     List<Smile> findTop3ByOrderBySmileperDesc();
     List<Smile> findByCreatedate(LocalDate createdate);
 }

@@ -90,6 +90,7 @@
         <div class="py-12"></div>
       </section>
 
+
       <!-- 기부수 -->
       <section id="stats">
         <v-parallax
@@ -193,6 +194,11 @@
         <div class="py-12"></div>
       </section>
 
+      <section id="smileKing">
+        <div class="py-12"></div>
+        <SmileKingComp />
+      </section>
+
       <section id="blog">
         <div class="py-12"></div>
 
@@ -258,10 +264,12 @@
 <script>
 import http from "@/util/http-common.js";
 import ICountUp from "vue-countup-v2";
+import SmileKingComp from "@/components/smile/SmileKingComp.vue";
 export default {
   name: "HelloWorld",
   components: {
-    ICountUp
+    ICountUp,
+    SmileKingComp
   },
   data: () => ({
     articles: [
