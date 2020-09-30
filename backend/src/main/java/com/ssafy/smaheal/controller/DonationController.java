@@ -110,11 +110,7 @@ public class DonationController {
     public Object getTempDonationList(@PathVariable String writer) throws SQLException, IOException {
         try {
             List<Donation> tempDonationList = donationRepository.findByTempAndWriterOrderByCreatedateDesc(1,writer);
-            List<Object> result = new LinkedList<>();
             if (tempDonationList != null) {
-                for(Donation temp : tempDonationList){
-                    //모델 만들어서 넣기
-                }
                 return new ResponseEntity<>(tempDonationList, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);

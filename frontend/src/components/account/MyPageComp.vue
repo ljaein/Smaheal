@@ -10,20 +10,21 @@
         <v-col>
           <v-row class="d-flex justify-content-between">
             <v-text-field
-              class="mr-5"
+              class="mx-3"
               v-model="name"
               outlined
               color="#356859"
               label="이름"
             ></v-text-field>
             <v-text-field
-              class="mr-5"
+              class="mx-3"
               v-model="nickName"
               outlined
               color="#356859"
               label="닉네임"
             ></v-text-field>
             <v-text-field
+            class="mx-3"
               v-model="birth"
               outlined
               color="#356859"
@@ -35,74 +36,33 @@
       </v-row>
       <!-- 글 정보 -->
       <v-row>
-        <v-card>
-          <v-tabs vertical icons-and-text centered>
+        <v-card style="width:100%">
+          <v-tabs vertical icons-and-text centered color="basil"
+        class="basil--text">
             <v-tab style="font-weight:bold; margin:0">
-              기부 현황
+              내 웃음기부
               <v-icon>
-                mdi-account
+                mdi-emoticon-excited-outline
               </v-icon>
             </v-tab>
             <v-tab style="font-weight:bold;">
               임시 저장
               <v-icon>
-                mdi-lock
+                mdi-content-save-edit
               </v-icon>
             </v-tab>
             <v-tab style="font-weight:bold;">
               내게 온 후기
               <v-icon>
-                mdi-access-point
+                mdi-bullhorn-outline
               </v-icon>
             </v-tab>
 
             <v-tab-item>
-              <v-card flat>
-                <v-card-text>
-                  <p>
-                    Morbi nec metus. Suspendisse faucibus, nunc et pellentesque
-                    egestas, lacus ante convallis tellus, vitae iaculis lacus
-                    elit id tortor. Sed mollis, eros et ultrices tempus, mauris
-                    ipsum aliquam libero, non adipiscing dolor urna a orci.
-                    Curabitur ligula sapien, tincidunt non, euismod vitae,
-                    posuere imperdiet, leo. Nunc sed turpis.
-                  </p>
-
-                  <p>
-                    Suspendisse feugiat. Suspendisse faucibus, nunc et
-                    pellentesque egestas, lacus ante convallis tellus, vitae
-                    iaculis lacus elit id tortor. Proin viverra, ligula sit amet
-                    ultrices semper, ligula arcu tristique sapien, a accumsan
-                    nisi mauris ac eros. In hac habitasse platea dictumst. Fusce
-                    ac felis sit amet ligula pharetra condimentum.
-                  </p>
-
-                  <p>
-                    Sed consequat, leo eget bibendum sodales, augue velit cursus
-                    nunc, quis gravida magna mi a libero. Nam commodo suscipit
-                    quam. In consectetuer turpis ut velit. Sed cursus turpis
-                    vitae tortor. Aliquam eu nunc.
-                  </p>
-
-                  <p>
-                    Etiam ut purus mattis mauris sodales aliquam. Ut varius
-                    tincidunt libero. Aenean viverra rhoncus pede. Duis leo.
-                    Fusce fermentum odio nec arcu.
-                  </p>
-
-                  <p class="mb-0">
-                    Donec venenatis vulputate lorem. Aenean viverra rhoncus
-                    pede. In dui magna, posuere eget, vestibulum et, tempor
-                    auctor, justo. Fusce commodo aliquam arcu. Suspendisse enim
-                    turpis, dictum sed, iaculis a, condimentum nec, nisi.
-                  </p>
-                </v-card-text>
-              </v-card>
+              <MySmileComp />
             </v-tab-item>
             <v-tab-item>
-              <v-card flat>
               <TempComp />
-              </v-card>
             </v-tab-item>
             <v-tab-item>
               <v-card flat>
@@ -157,11 +117,13 @@ import { mapGetters, mapState } from "vuex";
 import { AUTH_LOGOUT } from "@/store/actions/auth";
 import { USER_UPDATE } from "@/store/actions/user";
 import TempComp from "@/components/account/TempComp.vue";
+import MySmileComp from "@/components/account/MySmileComp.vue";
 
 export default {
   name: "MyPageComp",
   components: {
-    TempComp
+    TempComp,
+    MySmileComp
   },
   data() {
     return {
@@ -257,4 +219,11 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.basil {
+  background-color: #fffbe6 !important;
+}
+.basil--text {
+  color: #356859 !important;
+}
+</style>
