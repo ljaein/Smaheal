@@ -14,14 +14,14 @@
         </v-sheet>
         <v-col class="pr-10 pl-10">
           <v-form ref="form">
-          <v-text-field v-model="userId" hide-details color="#356859"
-          required clearable placeholder="아이디를 입력하세요."/>
+          <v-text-field class="mb-1" v-model="userId" hide-details  outlined
+          required placeholder="아이디를 입력하세요." @keypress.enter="loginRequest"/>
+          
+          <v-text-field v-model="password" type="password" hide-details outlined
+          placeholder="비밀번호를 입력하세요." required
+          class="mb-7" @keypress.enter="loginRequest"/>
 
-          <v-text-field v-model="password" type="password" hide-details
-          placeholder="비밀번호를 입력하세요." color="#356859" required
-          class="mb-7" clearable/>
-
-          <v-btn class="pa-5" width="100%" outlined color="#356859" @click="loginRequest">로그인</v-btn>
+          <v-btn class="pa-5 green-mbtn" width="100%" @click="loginRequest">로그인</v-btn>
         </v-form>
         <!-- <v-divider></v-divider>
         <v-btn class="pa-5" width="100%" outlined color="#356859">카카오로 로그인</v-btn> -->

@@ -105,12 +105,16 @@ public class DonationController {
         }
     }
 
-    @GetMapping("/getTempList")
+    @GetMapping("/getTempList/{writer}")
     @ApiOperation(value = "기부 게시판 임시저장 리스트")
-    public Object getTempDonationList() throws SQLException, IOException {
+    public Object getTempDonationList(@PathVariable String writer) throws SQLException, IOException {
         try {
-            List<Donation> tempDonationList = donationRepository.findByTempOrderByCreatedateDesc(1);
+            List<Donation> tempDonationList = donationRepository.findByTempAndWriterOrderByCreatedateDesc(1,writer);
+            List<Object> result = new LinkedList<>();
             if (tempDonationList != null) {
+                for(Donation temp : tempDonationList){
+                    //모델 만들어서 넣기
+                }
                 return new ResponseEntity<>(tempDonationList, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
