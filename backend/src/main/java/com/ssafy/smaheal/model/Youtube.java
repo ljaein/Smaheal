@@ -20,4 +20,5 @@ public class Youtube {
     private String videoId;
     private String thumbnail;
     private int ages;
+    private String title;
 }

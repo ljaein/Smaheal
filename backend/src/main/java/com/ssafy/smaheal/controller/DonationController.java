@@ -255,6 +255,17 @@ public class DonationController {
         }
     }
     
+    @GetMapping("/getWaitListCnt")
+    @ApiOperation("대기 목록 카운트")
+    public Object getWaitListCnt() throws SQLException, IOException {
+        try {
+            int count = donationRepository.findByApprovalAndTempOrderByCreatedateDesc(0, 0).size();
+            return new ResponseEntity<>(count, HttpStatus.OK);
+        } catch (Exception e) {
+    		return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    	}
+    }
+    
     @GetMapping("/mypage/getList/{writer}/{page}")
     @ApiOperation(value = "마이페이지에서 기부요청 목록")
     public Object mypageGetList(@PathVariable(value = "writer") String writer, @PathVariable(value = "page") int page) {
