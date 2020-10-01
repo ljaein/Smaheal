@@ -2,9 +2,9 @@
   <div align="center">
       <v-container>
         <v-row>
-          <v-col>
-            <audio id="audio"></audio>
-            <audio id="convert" controls></audio>
+          <v-col class="d-flex justify-content-center">
+            <audio class="col-xl-6 col-lg-6 col-md-8 col-12" id="audio"></audio>
+            <audio class="col-xl-6 col-lg-6 col-md-8 col-12" id="convert" controls></audio>
           </v-col>
         </v-row>
         <v-row>
@@ -15,17 +15,12 @@
         </v-row>
         <v-row v-if="bufferIs">
           <v-col>
-            <button @click="loadTransform(0)">비브라토</button>
-            <br />
-            <button @click="loadTransform(1)">메가폰</button>
-            <br />
-            <button @click="loadTransform(2)">느리게</button>
-            <br />
-            <button @click="loadTransform(3)">로꾸꺼</button>
-            <br />
-            <button @click="loadTransform(4)">외계생명체</button>
-            <br />
-            <button @click="loadTransform(5)">autowah</button>
+            <button class="col-xl-4 col-lg-4 col-md-4 col-6" @click="loadTransform(0)">비브라토</button>
+            <button class="col-xl-4 col-lg-4 col-md-4 col-6" @click="loadTransform(1)">메가폰</button>
+            <button class="col-xl-4 col-lg-4 col-md-4 col-6" @click="loadTransform(2)">느리게</button>
+            <button class="col-xl-4 col-lg-4 col-md-4 col-6" @click="loadTransform(3)">로꾸꺼</button>
+            <button class="col-xl-4 col-lg-4 col-md-4 col-6" @click="loadTransform(4)">외계생명체</button>
+            <button class="col-xl-4 col-lg-4 col-md-4 col-6" @click="loadTransform(5)">autowah</button>
             <br />
           </v-col>
         </v-row>
