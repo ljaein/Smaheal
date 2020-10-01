@@ -24,7 +24,8 @@ public interface DonationRepository extends JpaRepository<Donation, Long> {
     
     Donation findByTemplate(String template);
     
-    List<Donation> findByWriterAndTempOrderByCreatedateDesc(String writer, int temp);
+    List<Donation> findByWriterAndTempOrderByCreatedateDesc(String writer, int temp, Pageable page);
+    List<Donation> findByWriterAndTemp(String writer, int temp);
     List<Donation> findByTempAndWriter(int temp, String writer);
 
 }
