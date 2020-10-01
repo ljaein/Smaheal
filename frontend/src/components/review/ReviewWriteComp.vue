@@ -89,7 +89,8 @@ export default {
           title: this.title,
           content: this.content,
           nickName: this.getProfile,
-          img: data
+          img: data,
+          donationid: this.$route.params.donationid
         })
         .then(({ data }) => {
           console.log(data);
@@ -135,7 +136,8 @@ export default {
           img: this.img,
           likeCnt: this.item.likeCnt,
           visit: this.item.visit,
-          createdAt: this.item.createdAt
+          createdAt: this.item.createdAt,
+          donationid: this.item.donationid
         })
         .then(({ data }) => {
           if (data == "success") {
