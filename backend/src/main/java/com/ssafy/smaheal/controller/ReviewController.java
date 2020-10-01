@@ -130,7 +130,25 @@ public class ReviewController {
 			}
 			List<Long> donationIds = new LinkedList<>(set);
 			List<Review> reviews = reviewRepository.findByDonationid(donationIds);
-			return new ResponseEntity<>(reviews, HttpStatus.OK);
+			List<Object> result = new LinkedList<>();
+			List<Review> temp = new LinkedList<>();
+			for (int i = 0; i < reviews.size(); i++) {
+				if (i == 0) {
+					temp = new LinkedList<>();
+					temp.add(reviews.get(i));
+				} else {
+					if (i % 4 == 0) {
+						result.add(temp);
+						temp = new LinkedList<>();
+						temp.add(reviews.get(i));
+					} else {
+						temp.add(reviews.get(i));
+					}
+				}
+			}
+			if (temp.size() != 0)
+				result.add(temp);
+			return new ResponseEntity<>(result, HttpStatus.OK);
 
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
