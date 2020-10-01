@@ -1,12 +1,70 @@
 <template>
-  <div>
-    <div
+  <div class="my-3">
+    <v-carousel hide-delimiters light style="box-shadow: 0px 0px; height:400px;" class=" py-5">
+      <v-carousel-item  class="my-auto" v-for="(reviews, index) in reviewList" :key="index">
+        <v-layout row class="px-2">
+          <v-flex
+            class="col-12 col-sm-6 col-md-3"
+            v-for="(review, index2) in reviews"
+            :key="index2"
+          >
+            <v-card
+              class="rounded-lg"
+              max-width="400px"
+              style="overflow:hidden;"
+            >
+              <div style="height:200px;width:100%;overflow:hidden;">
+                <img
+                  class="review-img"
+                  :src="`${publicPath}reviewImage/${review.img}`"
+                />
+              </div>
+              <v-card-text style="font-weight:bold;" class="py-1">
+                <div style="font-size:1.1rem;">{{ review.nickName }}</div>
+                <div class="d-flex justify-content-between mt-1">
+                  <div style="font-size:1rem;" class="d-flex">
+                    <div class="detail-title">
+                      <v-icon class="mr-1" style="font-size:1.2rem;"
+                        >mdi-thumb-up</v-icon
+                      >{{ review.likeCnt }}
+                    </div>
+                    <div class="ml-4 detail-title">
+                      <v-icon class="mr-1" style="font-size:1.2rem;"
+                        >mdi-eye</v-icon
+                      >{{ review.visit }}
+                    </div>
+                  </div>
+                  <div align="right">{{ review.createdAt.split("T")[0] }}</div>
+                </div>
+              </v-card-text>
+              <v-divider class="mx-2 my-0"></v-divider>
+              <v-card-text class="pt-1 pb-2" align="center">
+                <p
+                  class="mb-1"
+                  style="font-size:1rem; font-weight:bold; text-overflow:ellipsis; overflow: hidden; white-space: nowrap;"
+                >
+                  {{ review.title }}
+                </p>
+                <v-btn
+                  small
+                  class="green-mbtn m-1"
+                  @click="goDetail(review.num)"
+                  >리뷰보기</v-btn
+                >
+              </v-card-text>
+            </v-card>
+          </v-flex>
+        </v-layout>
+      </v-carousel-item>
+    </v-carousel>
+
+    <!-- <div
       class="col-12 col-sm-6 col-md-3"
       v-for="(review, index) in reviewList"
       :key="index"
     >
-      <v-card max-width="400px" style="overflow:hidden;">
-        <div style="height:200px;width:100%;">
+      <v-card class="rounded-lg" max-width="400px" style="overflow:hidden;">
+        <div style="height:200px;width:100%;overflow:hidden;">
           <img
             class="review-img"
             :src="`${publicPath}reviewImage/${review.img}`"
@@ -32,10 +90,10 @@
         <v-divider class="mx-2 my-0"></v-divider>
         <v-card-text class="pt-1 pb-2" align="center">
           <p class="mb-1" style="font-size:1rem; font-weight:bold; text-overflow:ellipsis; overflow: hidden; white-space: nowrap;">{{ review.title }}</p>
-          <v-btn small class="green-mbtn" @click="goDetail(review.num)">리뷰보기</v-btn>
+          <v-btn small class="green-mbtn m-1" @click="goDetail(review.num)">리뷰보기</v-btn>
         </v-card-text>
       </v-card>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -59,13 +117,14 @@ export default {
         .get(`/review/getReviewToMe/${this.getUserID}`)
         .then(res => {
           this.reviewList = res.data;
+          console.log(this.reviewList);
         })
         .catch(err => {
           console.log(err);
         });
     },
-    goDetail(num){
-        this.$router.push(`/reviewDetail/${num}`);
+    goDetail(num) {
+      this.$router.push(`/reviewDetail/${num}`);
     }
   },
   computed: {

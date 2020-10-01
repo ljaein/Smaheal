@@ -1,72 +1,117 @@
 <template>
   <v-container fluid class="col-md-11">
-    <p align="left" class="m-0">
-      <span style="color:#356859; font-size:2.5rem;">{{ getUserID }}</span
-      ><span style="font-size:1.5rem;"> 님의 마이페이지</span>
-    </p>
     <v-form>
       <!-- 내 정보 -->
-      <v-row>
-        <v-col>
-          <v-row class="d-flex justify-content-between">
+      <v-row
+        class="mb-5 mt-3 d-flex justify-content-center"
+        style="border:1px solid lightgray; height:10rem;"
+      >
+        <v-col cols="4" align="left" class="m-0 my-auto pl-5">
+          <span style="color:#356859; font-size:2rem;">{{ getUserID }}</span
+          ><span style="font-size:1.5rem;"> 님의 회원등급은</span><br />
+          <span
+            style="font-size:1.5rem; vertical-align:middle; display:inline-flex;"
+            ><v-icon style="color:#ffd700">mdi-crown-outline</v-icon>{{ grade
+            }}<v-icon style="color:#ffd700" class="mr-2"
+              >mdi-crown-outline</v-icon
+            >입니다.</span
+          >
+        </v-col>
+        <v-col
+          cols="2"
+          class="my-auto"
+          align="center"
+          style="border-right:1px solid lightgray;"
+        >
+          <v-icon class="mb-2" style="font-size:3rem;"
+            >mdi-account-circle-outline</v-icon
+          ><br />
+          <span style="font-size:1rem;">이름</span><br />
+          <span style="font-size:1.5rem;">{{ name }}</span>
+        </v-col>
+        <v-col
+          cols="2"
+          class="my-auto"
+          align="center"
+          style="border-right:1px solid lightgray;"
+        >
+          <v-icon class="mb-2" style="font-size:3rem;"
+            >mdi-card-account-details-outline</v-icon
+          ><br />
+          <span style="font-size:1rem;">닉네임</span><br />
+          <span style="font-size:1.5rem;">{{ nickName }}</span>
+        </v-col>
+        <v-col
+          cols="2"
+          class="my-auto"
+          align="center"
+          style="border-right:1px solid lightgray;"
+        >
+          <v-icon class="mb-2" style="font-size:3rem;">mdi-cake-variant</v-icon
+          ><br />
+          <span style="font-size:1rem;">생일</span><br />
+          <span style="font-size:1.5rem;">{{ birth }}</span>
+        </v-col>
+        <v-col cols="2" class="my-auto" align="center">
+          <v-icon class="mb-2" style="font-size:3rem;"
+            >mdi-hand-heart-outline</v-icon
+          ><br />
+          <span style="font-size:1rem;">기부횟수</span><br />
+          <span style="font-size:1.5rem;">총 {{ smileCnt }}회</span>
+        </v-col>
+        <!-- 이름
             <v-text-field
               class="mx-3"
               v-model="name"
               outlined
-              color="#356859"
-              label="이름"
+              style="outline:none;"
             ></v-text-field>
+            닉네임
             <v-text-field
               class="mx-3"
               v-model="nickName"
               outlined
-              color="#356859"
-              label="닉네임"
             ></v-text-field>
+            생일
             <v-text-field
               class="mx-3"
               v-model="birth"
               outlined
-              color="#356859"
-              label="생일"
             ></v-text-field>
-          </v-row>
-          <v-row> </v-row>
-        </v-col>
+            기부 횟수 -->
       </v-row>
-      <!-- 글 정보 -->
       <v-row>
         <v-card style="width:100%">
           <v-tabs
-            vertical
             icons-and-text
             centered
             color="basil"
             class="basil--text"
+            grow
           >
             <v-tab style="font-weight:bold; margin:0">
               내 웃음기부
-              <v-icon>
+              <!-- <v-icon>
                 mdi-emoticon-excited-outline
-              </v-icon>
+              </v-icon> -->
             </v-tab>
             <v-tab style="font-weight:bold;">
               임시 저장
-              <v-icon>
+              <!-- <v-icon>
                 mdi-content-save-edit
-              </v-icon>
+              </v-icon> -->
             </v-tab>
             <v-tab style="font-weight:bold;">
               내게 온 후기
-              <v-icon>
+              <!-- <v-icon>
                 mdi-bullhorn-outline
-              </v-icon>
+              </v-icon> -->
             </v-tab>
             <v-tab style="font-weight:bold;">
               기부요청 현황
-              <v-icon>
+              <!-- <v-icon>
                 mdi-image
-              </v-icon>
+              </v-icon> -->
             </v-tab>
 
             <v-tab-item>
@@ -85,21 +130,20 @@
         </v-card>
       </v-row>
       <v-row justify="space-around">
-        <v-col
-          cols="12"
-          md="3"
-          align="center"
-          class="d-flex justify-content-center"
-        >
-          <v-btn
+        <v-col align="right" class="d-flex justify-content-end">
+          <!-- <v-btn
             @click="modifyUser"
             color="#356859"
             class="mr-10"
             style="color:white;"
             >수정</v-btn
-          >
-          <v-btn @click="signOut" color="#356859" style="color:white;"
-            >탈퇴</v-btn
+          > -->
+          <v-btn
+            outlined
+            class="mr-3"
+            @click="signOut"
+            style="border-radius:20px; border:1.8px solid lightgray; font-weight:bold;"
+            >탈퇴하기</v-btn
           >
         </v-col>
       </v-row>
@@ -130,12 +174,33 @@ export default {
       name: "",
       log: "",
       nickName: "",
-      birth: new Date().toISOString().substr(0, 10)
+      birth: new Date().toISOString().substr(0, 10),
+      smileCnt: 0,
+      grade: ""
     };
   },
   created() {
     this.uid = this.getUserID;
     this.$store.dispatch(USER_UPDATE, this.getUserID).then(() => {});
+    http
+      .get(`/smile/getMySmileCnt/${this.getUserID}`)
+      .then(res => {
+        this.smileCnt = res.data;
+        if (this.smileCnt >= 20) {
+          this.grade = "포복절도";
+        } else if (this.smileCnt >= 15) {
+          this.grade = "박장대소";
+        } else if (this.smileCnt >= 10) {
+          this.grade = "함박웃음";
+        } else if (this.smileCnt >= 5) {
+          this.grade = "미소";
+        } else {
+          this.grade = "일반";
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   },
   mounted() {
     this.name = this.getRealName;
@@ -224,5 +289,11 @@ export default {
 }
 .basil--text {
   color: #356859 !important;
+}
+.user-info {
+  font-size: 1.5rem;
+  border: 3px solid #356859;
+  width: 20%;
+  height: 8rem;
 }
 </style>
