@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -105,11 +106,11 @@ public class DonationController {
         }
     }
 
-    @GetMapping("/getTempList")
+    @GetMapping("/getTempList/{writer}/{page}")
     @ApiOperation(value = "기부 게시판 임시저장 리스트")
-    public Object getTempDonationList() throws SQLException, IOException {
+    public Object getTempDonationList(@PathVariable String writer, @PathVariable int page) throws SQLException, IOException {
         try {
-            List<Donation> tempDonationList = donationRepository.findByTempOrderByCreatedateDesc(1);
+            List<Donation> tempDonationList = donationRepository.findByTempAndWriterOrderByCreatedateDesc(1,writer,PageRequest.of(page, 10));
             if (tempDonationList != null) {
                 return new ResponseEntity<>(tempDonationList, HttpStatus.OK);
             } else {
@@ -260,6 +261,33 @@ public class DonationController {
         try {
             int count = donationRepository.findByApprovalAndTempOrderByCreatedateDesc(0, 0).size();
             return new ResponseEntity<>(count, HttpStatus.OK);
+        } catch (Exception e) {
+    		return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    	}
+    }
+    
+    @GetMapping("/mypage/getList/{writer}/{page}")
+    @ApiOperation(value = "마이페이지에서 기부요청 목록")
+    public Object mypageGetList(@PathVariable(value = "writer") String writer, @PathVariable(value = "page") int page) {
+    	try {
+    		List<Donation> list = donationRepository.findByWriterAndTempOrderByCreatedateDesc(writer, 0);
+    		
+    		return new ResponseEntity<>(list, HttpStatus.OK);
+    	} catch (Exception e) {
+    		return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    	}
+    }
+
+    @GetMapping("/getTempCnt/{writer}")
+    @ApiOperation(value = "기부 게시판 임시저장 개수")
+    public Object getTempCnt(@PathVariable String writer) throws SQLException, IOException {
+        try {
+            List<Donation> tempDonationList = donationRepository.findByTempAndWriter(1,writer);
+            if (tempDonationList != null) {
+                return new ResponseEntity<>(tempDonationList.size(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            }
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

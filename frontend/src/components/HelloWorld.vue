@@ -193,6 +193,11 @@
         <div class="py-12"></div>
       </section>
 
+      <section id="smileKing">
+        <div class="py-12"></div>
+        <SmileKingComp />
+      </section>
+
       <section id="blog">
         <div class="py-12"></div>
 
@@ -258,10 +263,12 @@
 <script>
 import http from "@/util/http-common.js";
 import ICountUp from "vue-countup-v2";
+import SmileKingComp from "@/components/smile/SmileKingComp.vue";
 export default {
   name: "HelloWorld",
   components: {
-    ICountUp
+    ICountUp,
+    SmileKingComp
   },
   data: () => ({
     articles: [
@@ -315,11 +322,11 @@ export default {
       prefix: "",
       suffix: ""
     },
-    endVal:0,
+    endVal: 0,
     todayCnt: 0,
     totalCnt: 0,
-    inst1:'',
-    inst2:''
+    inst1: "",
+    inst2: ""
   }),
   created() {
     http
@@ -333,9 +340,9 @@ export default {
       });
     window.addEventListener("scroll", () => {
       var cur = document.documentElement.scrollTop;
-      if(cur >= 1000){
-        this.inst1.update(this.totalCnt);
-        this.inst2.update(this.todayCnt);
+      if (cur >= 1000) {
+        if (this.inst1 != "") this.inst1.update(this.totalCnt);
+        if (this.inst2 != "") this.inst2.update(this.todayCnt);
       }
       // console.log(document.documentElement.scrollTop);
     });

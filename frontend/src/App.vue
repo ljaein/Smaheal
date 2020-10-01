@@ -1,13 +1,6 @@
 <template>
   <v-app>
     <v-app-bar app color="white" height="100">
-      <!-- <v-avatar class="mr-3" color="grey lighten-5" size="70">
-        <v-img
-          contain
-          max-height="70%"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-        ></v-img>
-      </v-avatar> -->
 
       <v-btn @click="goHome()" class="headline" color="amber accent-4" text>SmaHeal</v-btn>
 
@@ -78,6 +71,28 @@
         <v-btn color="white" text v-bind="attrs" @click="logoutSuccess = false">Close</v-btn>
       </template>
     </v-snackbar>
+
+    <v-tooltip top>
+      <template v-slot:activator="{ on, attrs }">
+        <v-fab-transition>
+          <v-btn
+            fab
+            large
+            bottom
+            dark
+            right
+            class="v-btn--example orange"
+            fixed
+            v-on="on"
+            v-bind="attrs"
+            @click="goSearchTemplate()"
+          >
+            <v-icon>mdi-table-search</v-icon>
+          </v-btn>
+        </v-fab-transition>
+      </template>
+      <span>기부 사진 템플릿 찾기</span>
+    </v-tooltip>
   </v-app>
 </template>
 
@@ -85,6 +100,7 @@
 import { mapGetters, mapState } from "vuex";
 import { AUTH_LOGOUT } from "./store/actions/auth";
 import { USER_UPDATE } from "@/store/actions/user";
+
 
 export default {
   name: "App",
@@ -113,6 +129,7 @@ export default {
     },
     goHome() {
       this.$router.push('/').catch(() => {})
+      scroll(0,0)
     },
     goDonationList(){
       this.$router.push('/donationList')
@@ -132,6 +149,9 @@ export default {
     goAdminPage(){
       this.$router.push('/adminPage').catch(() => {}); 
     },    
+    goSearchTemplate() {
+      this.$router.push('/template').catch(() => {});
+    }
   },
   computed: {
     ...mapGetters([
