@@ -1,9 +1,11 @@
 package com.ssafy.smaheal.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -62,19 +64,22 @@ public class CrawlingController {
         JsonParser parser = new JsonParser();
         JsonObject jsonObj = (JsonObject)parser.parse(result);
         JsonArray itemArray = (JsonArray) jsonObj.get("items");
-
+        
         for (JsonElement e : itemArray) {
             // "https://www.youtube.com/embed/"
             String vid = e.getAsJsonObject().get("id").getAsJsonObject().get("videoId").getAsString();
-            String thumbnail = e.getAsJsonObject().get("snippet").getAsJsonObject().get("thumbnails").getAsJsonObject().get("default").getAsJsonObject().get("url").getAsString();
-            System.out.println(vid);
-            System.out.println(thumbnail);
+            String thumbnail = e.getAsJsonObject().get("snippet").getAsJsonObject().get("thumbnails").getAsJsonObject().get("high").getAsJsonObject().get("url").getAsString();
+            String title = e.getAsJsonObject().get("snippet").getAsJsonObject().get("title").getAsString();
+            // System.out.println(title);
+            // System.out.println(vid);
+            // System.out.println(thumbnail);
 
             if(youtubeRepository.findByVideoIdAndAges(vid, age) == null) {
                 Youtube youtube = new Youtube();
                 youtube.setVideoId(vid);
                 youtube.setThumbnail(thumbnail);
                 youtube.setAges(age);
+                youtube.setTitle(title);
                 youtubeRepository.save(youtube);
             }
         }
@@ -100,4 +105,60 @@ public class CrawlingController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    @GetMapping("/getVideosP/{page}")
+    @ApiOperation("동영상 리스트 가져오기 페이징")
+    public Object getVideosPage(@PathVariable int page) throws SQLException, IOException {
+        try {
+            System.out.println(youtubeRepository.findAll(PageRequest.of(page, 8)));
+            return new ResponseEntity<>(youtubeRepository.findAll(PageRequest.of(page, 8)), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/getVideosByAgeP/{ages}/{page}")
+    @ApiOperation("연령별 동영상 리스트 가져오기 페이징")
+    public Object getVideosPage(@PathVariable int ages, @PathVariable int page) throws SQLException, IOException {
+        try {
+            List<Youtube> list = youtubeRepository.findByAges(ages, PageRequest.of(page, 8));
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @DeleteMapping("/deleteVideo/{youtubeid}")
+    @ApiOperation("비디오 삭제")
+    public Object deleteVideo(@PathVariable Long youtubeid) throws SQLException, IOException {
+        try {
+            youtubeRepository.deleteById(youtubeid);
+            return new ResponseEntity<>("delete" + youtubeid, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/getVideoCnt")
+    @ApiOperation("동영상 개수")
+    public Object getVideoCnt() throws SQLException, IOException {
+        try {
+            int cnt = youtubeRepository.findAll().size();
+            return new ResponseEntity<>(cnt, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/getVideoByAgeCnt/{age}")
+    @ApiOperation("연령별 동영상 개수")
+    public Object getVideoByAgeCnt(@PathVariable int age) throws SQLException, IOException {
+        try {
+            int cnt = youtubeRepository.findByAges(age).size();
+            return new ResponseEntity<>(cnt, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
 }
