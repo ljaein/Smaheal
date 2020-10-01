@@ -27,7 +27,7 @@
         </v-card>
         <v-row>
           <v-col class="text-right">
-            <v-btn color="#356859" dark>
+            <v-btn color="#356859" dark @click="goWriteReview">
               후기 남기기
             </v-btn>
           </v-col>
@@ -52,11 +52,13 @@ export default {
           items: [],
           imgsrc: "fall-background.jpg",
           num: 0,
+          donationid: "",
         }
     },
     methods: {
       fetchData: function() {
         this.items = this.propsItem;
+        this.donationid = this.items[0].donationid;
       },
       random: function() {
         this.num = Math.floor(Math.random() * 4);
@@ -68,6 +70,9 @@ export default {
         } else if (this.num == 2) {
           this.imgsrc = "seascape-background.jpg"
         }
+      },
+      goWriteReview(){
+        this.$router.push(`/reviewWrite/${this.donationid}`);
       },
     },
     created() {

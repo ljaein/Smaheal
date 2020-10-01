@@ -79,7 +79,7 @@ const routes = [{
         component: ReviewList
     },
     {
-        path: "/reviewWrite",
+        path: "/reviewWrite/:donationid",
         name: "ReviewWrite",
         component: ReviewWrite
     },
