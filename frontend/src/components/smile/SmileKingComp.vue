@@ -4,7 +4,7 @@
     <v-container>
       <v-row justify="center">
         <v-col cols="12" md="4">
-          <v-img width="150px" :src="`${publicPath}images/no${1}.png`"></v-img>
+          <v-img width="150px" :src="`${publicPath}images/no1.png`"></v-img>
           <v-avatar size="300">
             <v-img :src="`${publicPath}images/${smileKing[0].photo}`"></v-img>
           </v-avatar>
@@ -45,7 +45,20 @@ export default {
   data() {
     return {
       publicPath: process.env.BASE_URL,
-      smileKing: []
+      smileKing: [
+        {
+          user_id:"",
+          photo:""
+        },
+        {
+          user_id:"",
+          photo:""
+        },
+        {
+          user_id:"",
+          photo:""
+        },
+      ]
     };
   },
   created() {
