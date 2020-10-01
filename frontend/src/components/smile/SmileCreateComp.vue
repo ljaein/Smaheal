@@ -9,50 +9,169 @@
             <v-divider></v-divider>
             <v-stepper-step :complete="e1 > 2" step="2">step 2</v-stepper-step>
             <v-divider></v-divider>
-            <v-stepper-step step="3">step 3</v-stepper-step>
+            <v-stepper-step :complete="e1 > 3" step="3">step 3</v-stepper-step>
+            <v-divider></v-divider>
+            <v-stepper-step :complete="e1 > 4" step="4">step 4</v-stepper-step>
+            <v-divider></v-divider>
+            <v-stepper-step :complete="e1 > 5" step="5">step 5</v-stepper-step>
+            <v-divider></v-divider>
+            <v-stepper-step step="6">step 6</v-stepper-step>
           </v-stepper-header>
 
           <v-stepper-items>
             <v-stepper-content step="1">
-              <v-card class="mb-8" color="grey lighten-1" height="400px">
-                <p>먼저 스마힐 사용법에 대해 알아볼까요?</p>
-                <p>웃음을 기부하는 방법은 크게 3가지가 있어요.</p>
-                <ol>
-                  <li>재밌는 사진을 보면서 웃는다.</li>
-                  <li>재밌는 동영상을 보면서 웃는다.</li>
-                  <li>셀카모드로 직접 웃는 사진을 캡쳐한다.</li>
-                </ol>
+              <v-card class="mb-8" height="400px" style="overflow-x:hidden">
+                <v-row>
+                  <v-col class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-12">
+                    <img src="../../../public/images/step1.gif" height="100%" width="100%" max-height="80%">
+                  </v-col>
+                  <v-col class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 p-3" style="letter-spacing:1px;word-spacing:3px;line-height:250%;">
+                    <h3 style="font-weight:bold;margin-bottom:30px;"><v-icon large color="#356859">mdi-account-question-outline</v-icon> 스마힐 사용법에 대해 알아볼까요?</h3>
+                    <h4 style="font-weight:bold;margin-bottom:30px;">웃음을 기부하는 방법은 크게 3가지가 있어요.</h4>
+                    <ol style="font-size:1.1rem;">
+                      <li>재밌는 컨텐츠들을 보면서 웃는다.</li>
+                      <li>셀카모드로 직접 웃는 사진을 캡쳐한다.</li>
+                      <li>웃는 사진을 업로드하여 기부한다.</li>
+                      <li>원하는대로 Start~!!</li>
+                    </ol>
+                  </v-col>
+                </v-row>
               </v-card>
               <v-btn color="primary" @click="e1 = 2">Continue</v-btn>
             </v-stepper-content>
 
             <v-stepper-content step="2">
-              <v-card class="mb-8" color="grey lighten-1" height="400px">
-                <p>
-                  사진과 동영상을 보고 웃음을 기부하는 방법은 웃으면 자동으로
-                  캡쳐가 됩니다.
-                </p>
-                <p>
-                  셀카모드는 얼굴을 보면서 직접 캡쳐하여 웃음을 인증 받은 후에
-                  기부가 진행됩니다.
-                </p>
-                <p>카메라와 너무 멀리 떨어져 있으면 캡쳐가 안될 수 있어요.</p>
+              <v-card class="mb-8" height="400px" style="overflow-x:hidden">
+                <v-row>
+                  <v-col class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-12">
+                    <img src="../../../public/images/step2.gif" height="100%" width="100%" max-height="80%">
+                  </v-col>
+                  <v-col class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 p-3" style="letter-spacing:1px;word-spacing:3px;line-height:220%;">
+                    <h3 style="font-weight:bold;margin-bottom:30px;"><v-icon large color="#356859" class="mr-3">mdi-gamepad-variant-outline</v-icon>다양한 컨텐츠</h3>
+                    <h4 style="font-weight:bold;margin-bottom:30px;">웃음을 주는 컨텐츠는 4가지가 있어요.</h4>
+                    <ol style="font-size:1.1rem;">
+                      <li>재밌는 사진</li>
+                      <li>연령에 맞게 랜덤으로 나오는 동영상</li>
+                      <li>부모의 도움이 필요한 아이들을 위한 영상 컨텐츠</li>
+                      <li>목소리 변조기능
+                        <ul>
+                          <li>"녹음 시작"을 눌러서 목소리 녹음</li>
+                          <li>"중지"하여 녹음 종료</li>
+                          <li>다양하게 변조된 목소리를 들어보세요</li>
+                        </ul>
+                      </li>
+                    </ol>
+                  </v-col>
+                </v-row>
               </v-card>
               <v-btn color="primary" @click="e1 = 3">Continue</v-btn>
               <v-btn text @click="e1 = 1">Back</v-btn>
             </v-stepper-content>
 
             <v-stepper-content step="3">
-              <v-card class="mb-8" color="grey lighten-1" height="400px">
-                <p>
-                  웃음 기부 전에 웃음왕에 사진이 쓰일지에 대한 여부를 선택하고
-                  기부를 하게 됩니다.
-                </p>
-                <p>어렵지 않죠?</p>
-                <p>그러면 웃음 기부를 시작해볼까요?</p>
+              <v-card class="mb-8" height="400px" style="overflow-x:hidden">
+                <v-row>
+                  <v-col class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-12">
+                    <img src="../../../public/images/step3.gif" height="100%" width="100%" max-height="80%">
+                  </v-col>
+                  <v-col class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 p-3" style="letter-spacing:1px;word-spacing:3px;line-height:250%;">
+                    <h3 style="font-weight:bold;margin-bottom:30px;"><v-icon large color="#356859" class="mr-3">mdi-camera-wireless-outline</v-icon>자동캡쳐</h3>
+                    <h4 style="font-weight:bold;margin-bottom:30px;">컨텐츠 모드는 웃으면 자동캡쳐가 됩니다.</h4>
+                    <ol style="font-size:1.1rem;">
+                      <li>캡쳐된 사진이 보여요.</li>
+                      <li>다시 찍거나 사진을 확정해주세요.</li>
+                      <li>웃음왕에 사용해도 될지 여부를 체크해주세요.</li>
+                      <li>한 줄의 희망메세지를 작성합니다.
+                        <ul>
+                          <li>비속어를 사용하면 기부가 제한됩니다.</li>
+                        </ul>
+                      </li>
+                      <li>다 작성했으면 기부를 할 수 있어요.</li>
+                    </ol>
+                  </v-col>
+                </v-row>
+              </v-card>
+              <v-btn color="primary" @click="e1 = 4">Continue</v-btn>
+              <v-btn text @click="e1 = 1">Back</v-btn>
+            </v-stepper-content>
+
+            <v-stepper-content step="4">
+              <v-card class="mb-8" height="400px" style="overflow-x:hidden">
+                <v-row>
+                  <v-col class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-12">
+                    <img src="../../../public/images/step4.gif" height="100%" width="100%" max-height="80%">
+                  </v-col>
+                  <v-col class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 p-3" style="letter-spacing:1px;word-spacing:3px;line-height:220%;">
+                    <h3 style="font-weight:bold;margin-bottom:30px;"><v-icon large color="#356859" class="mr-3">mdi-webcam</v-icon>셀카모드</h3>
+                    <h4 style="font-weight:bold;margin-bottom:30px;">셀카 모드를 알아볼게요.</h4>
+                    <ol style="font-size:1.1rem;">
+                      <li>"START"를 눌러 웹캠을 시작합니다.</li>
+                      <li>"CAPTURE"를 눌러 사진을 캡쳐합니다.</li>
+                      <li>"STOP"을 눌러 정지시킬 수 있어요.</li>
+                      <li>"CHECK"를 눌러 사진을 인식시켜 주세요.</li>
+                      <li>완료되면 다음은 컨텐츠 모드와 동일해요.
+                        <ul>
+                          <li>비속어를 사용하면 기부가 제한됩니다.</li>
+                          <li>웃음지수가 낮으면 기부가 제한됩니다.</li>
+                        </ul>
+                      </li>
+                    </ol>
+                  </v-col>
+                </v-row>
+              </v-card>
+              <v-btn color="primary" @click="e1 = 5">Continue</v-btn>
+              <v-btn text @click="e1 = 3">Back</v-btn>
+            </v-stepper-content>
+
+            <v-stepper-content step="5">
+              <v-card class="mb-8" height="400px" style="overflow-x:hidden">
+                <v-row>
+                  <v-col class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-12">
+                    <img src="../../../public/images/step5.gif" height="100%" width="100%" max-height="80%">
+                  </v-col>
+                  <v-col class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 p-3" style="letter-spacing:1px;word-spacing:3px;line-height:220%;">
+                    <h3 style="font-weight:bold;margin-bottom:30px;"><v-icon large color="#356859" class="mr-3">mdi-cloud-upload-outline</v-icon>파일업로드 모드</h3>
+                    <h4 style="font-weight:bold;margin-bottom:30px;">파일업로드 모드를 알아볼게요.</h4>
+                    <ol style="font-size:1.1rem;">
+                      <li>업로드 칸을 클릭하여 파일을 업로드합니다.</li>
+                      <li>"CHECK"를 눌러 사진을 인식시켜주세요.</li>
+                      <li>완료되면 다음은 셀카 모드와 동일해요.
+                        <ul>
+                          <li>비속어를 사용하면 기부가 제한됩니다.</li>
+                          <li>웃음지수가 낮으면 기부가 제한됩니다.</li>
+                        </ul>
+                      </li>
+                    </ol>
+                  </v-col>
+                </v-row>
+              </v-card>
+              <v-btn color="primary" @click="e1 = 6">Continue</v-btn>
+              <v-btn text @click="e1 = 4">Back</v-btn>
+            </v-stepper-content>
+
+            <v-stepper-content step="6">
+              <v-card class="mb-8" height="400px" style="overflow-x:hidden">
+                <v-row>
+                  <v-col class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-12">
+                    <img src="../../../public/images/step6.gif" height="100%" width="100%" max-height="80%">
+                  </v-col>
+                  <v-col class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 p-3" style="letter-spacing:1px;word-spacing:3px;line-height:220%;">
+                    <h3 style="font-weight:bold;margin-bottom:30px;"><v-icon large color="#356859" class="mr-3">mdi-close-circle-outline</v-icon>주의사항</h3>
+                    <h4 style="font-weight:bold;margin-bottom:30px;">주의사항을 지켜주세요.</h4>
+                    <ol style="font-size:1.1rem;">
+                      <li>마스크를 착용하면 인식을 못해요.</li>
+                      <li>얼굴의 일부가 가려지면 인식을 못해요.</li>
+                      <li>카메라와 적당한 거리를 유지해주세요.
+                        <ul>
+                          <li>화면 중앙에 얼굴을 위치시켜주세요.</li>
+                        </ul>
+                      </li>
+                    </ol>
+                  </v-col>
+                </v-row>
               </v-card>
               <v-btn color="primary" @click="stepEnd">Complete</v-btn>
-              <v-btn text @click="e1 = 2">Back</v-btn>
+              <v-btn text @click="e1 = 5">Back</v-btn>
             </v-stepper-content>
           </v-stepper-items>
         </v-stepper>
@@ -74,18 +193,18 @@
             <v-tab
               class="tab-text"
               href="#tab-contents"
-              @click="someContents()"
+              @click="someContents(), stopVideo()"
             >
               Contents
               <v-icon>mdi-animation</v-icon>
             </v-tab>
 
-            <v-tab class="tab-text" href="#tab-self" @click="selfieContents()">
+            <v-tab class="tab-text" href="#tab-self" @click="selfieContents(), stopVideo()">
               Selfie
               <v-icon>mdi-account-box</v-icon>
             </v-tab>
 
-            <v-tab class="tab-text" href="#tab-file" @click="selfieContents()">
+            <v-tab class="tab-text" href="#tab-file" @click="selfieContents(), stopVideo()">
               Upload
               <v-icon>mdi-file-upload</v-icon>
             </v-tab>
@@ -367,7 +486,7 @@
                     </template>
                   </v-file-input>
                 </div>
-
+                <div class="col-12"></div>
                 <div v-if="inputFile != ''" style="margin:0 auto; margin-bottom:20px;">
                   <img
                     :src="preImg(inputFile)"
@@ -377,7 +496,6 @@
                 </div>
               </v-row>
 
-              <div>
               <!-- 업로드 파일 체크 -->
               <v-row class="justify-content-center mb-5">
                 <v-btn
@@ -389,37 +507,38 @@
                   >check</v-btn
                 >
               </v-row>
-              <!-- 사진 사용 여부 -->
-              <v-row>
-                <v-switch
-                  style="margin:0 auto"
-                  v-model="kingFlag"
-                  inset
-                  :label="`사진 허용 `"
-                ></v-switch>
-              </v-row>
-              <!-- 한줄 코멘트 -->
-              <v-row class="justify-content-center">
-                <v-col cols="6">
-                  <v-text-field
-                    v-model="comment"
-                    :rules="commentRules"
-                    :counter="20"
-                    label="한 줄 메세지"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <!-- 업로드 기부하기 -->
-              <v-row>
-                <v-btn
-                  style="margin:0 auto 50px auto;color:white;"
-                  class="col-3"
-                  color="#356859"
-                  @click="donationSelfie"
-                  >기부하기</v-btn
-                >
-              </v-row>
-            </div>
+              <div v-if="upFlag">
+                <!-- 사진 사용 여부 -->
+                <v-row>
+                  <v-switch
+                    style="margin:0 auto"
+                    v-model="kingFlag"
+                    inset
+                    :label="`사진 허용 `"
+                  ></v-switch>
+                </v-row>
+                <!-- 한줄 코멘트 -->
+                <v-row class="justify-content-center">
+                  <v-col cols="6">
+                    <v-text-field
+                      v-model="comment"
+                      :rules="commentRules"
+                      :counter="20"
+                      label="한 줄 메세지"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+                <!-- 업로드 기부하기 -->
+                <v-row>
+                  <v-btn
+                    style="margin:0 auto 50px auto;color:white;"
+                    class="col-3"
+                    color="#356859"
+                    @click="donationSelfie"
+                    >기부하기</v-btn
+                  >
+                </v-row>
+              </div>
             </v-tab-item>
           </v-tabs-items>
         </v-card>
@@ -430,7 +549,7 @@
       <canvas v-if="contentsFlag" id="autoCanvas" height="200%" width="200%"></canvas>
     </div>
 
-    <div v-if="contentsFlag">
+    <div v-if="autoFlag">
       <v-row>
         <v-card style="margin:0 auto;">
           <!-- <img :src="getImg(autoCapture[0])" alt="캡쳐된 이미지" /> -->
@@ -442,7 +561,7 @@
           class="col-lg-2 col-md-2 col-sm-5 col-5 mx-10 my-5"
           color="#356859"
           style="color:white;"
-          @click="(contentsFlag = false), stepEnd()"
+          @click="(contentsFlag = false), (autoFlag = false), stepEnd()"
           >다시찍기</v-btn
         >
         <v-btn
@@ -455,7 +574,7 @@
       </v-row>
     </div>
 
-    <div v-if="contentsFlag">
+    <div v-if="autoFlag">
       <!-- 사진 사용 여부 -->
       <v-row class="col-4 p-0 mt-5" style="margin:0 auto;">
         <v-switch
@@ -551,7 +670,7 @@ export default {
       faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
       faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
       faceapi.nets.faceExpressionNet.loadFromUri('/models'),
-    ]);
+    ])
   },
   created() {
     scroll(0, 0);
@@ -598,6 +717,8 @@ export default {
       inputFile: [],
       preUrl: '',
       videoTag: [],
+      upFlag: false,
+      autoFlag: false,
     };
   },
   methods: {
@@ -648,6 +769,7 @@ export default {
             alert("얼굴 인식 못함");
           } else {
             this.selCapFlag = true;
+            this.upFlag = true;
             alert("얼굴 인식 성공");
           }
         })
@@ -859,6 +981,8 @@ export default {
       this.stop();
       this.canvasClear();
       this.camOff();
+      this.upFlag = false;
+      this.autoFlag = false;
     },
     someContents() {
       this.selfFlag = false;
@@ -869,6 +993,7 @@ export default {
       this.inputFile = [];
       this.stop();
       this.canvasClear();
+      this.upFlag = false;
     },
     uploadInit() {
       this.selfFlag = false;
@@ -876,6 +1001,7 @@ export default {
       this.fileFlag = true;
       this.selfieCapture = [];
       this.stop();
+      this.autoFlag = false;
     },
     preImg(img) {
       if (img != null && img != '') {
@@ -934,6 +1060,7 @@ export default {
         if (detections[0].expressions.happy * 100 > 99.89) {
           this.autoCapture.per = Math.round(detections[0].expressions.happy * detections[0].detection.score * 97);
           this.captureComplete();
+          this.autoFlag = true;
           clearInterval();
           return;
         }
@@ -965,6 +1092,11 @@ export default {
         this.videoTag.srcObject = null;
       }
     },
+    stopVideo() {
+      if(document.querySelector("iframe") != '' && document.querySelector("iframe") != null) {
+        document.querySelectorAll("iframe").src = '';
+      }
+    },
   },
   computed: {
     ...mapGetters(["getUserID", "getUserBirth"]),
@@ -980,7 +1112,7 @@ export default {
       } else {
         this.checkFlag = false;
       }
-    }
+    },
   }
 };
 </script>
