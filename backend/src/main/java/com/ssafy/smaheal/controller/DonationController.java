@@ -110,7 +110,7 @@ public class DonationController {
     @ApiOperation(value = "기부 게시판 임시저장 리스트")
     public Object getTempDonationList(@PathVariable String writer, @PathVariable int page) throws SQLException, IOException {
         try {
-            List<Donation> tempDonationList = donationRepository.findByTempAndWriterOrderByCreatedateDesc(1,writer,PageRequest.of(page, 10));
+            List<Donation> tempDonationList = donationRepository.findByTempAndWriterOrderByCreatedateDesc(1,writer,PageRequest.of(page, 8));
             if (tempDonationList != null) {
                 return new ResponseEntity<>(tempDonationList, HttpStatus.OK);
             } else {
@@ -255,24 +255,23 @@ public class DonationController {
         }
     }
     
-    @GetMapping("/getWaitListCnt")
-    @ApiOperation("대기 목록 카운트")
-    public Object getWaitListCnt() throws SQLException, IOException {
-        try {
-            int count = donationRepository.findByApprovalAndTempOrderByCreatedateDesc(0, 0).size();
-            return new ResponseEntity<>(count, HttpStatus.OK);
-        } catch (Exception e) {
-    		return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-    	}
-    }
-    
     @GetMapping("/mypage/getList/{writer}/{page}")
     @ApiOperation(value = "마이페이지에서 기부요청 목록")
     public Object mypageGetList(@PathVariable(value = "writer") String writer, @PathVariable(value = "page") int page) {
     	try {
-    		List<Donation> list = donationRepository.findByWriterAndTempOrderByCreatedateDesc(writer, 0);
-    		
+    		List<Donation> list = donationRepository.findByWriterAndTempOrderByCreatedateDesc(writer, 0,PageRequest.of(page,8));
     		return new ResponseEntity<>(list, HttpStatus.OK);
+    	} catch (Exception e) {
+    		return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    	}
+    }
+
+    @GetMapping("/mypage/getListCnt/{writer}")
+    @ApiOperation(value = "마이페이지에서 기부요청 목록")
+    public Object mypageGetListCnt(@PathVariable(value = "writer") String writer) {
+    	try {
+    		List<Donation> list = donationRepository.findByWriterAndTemp(writer, 0);
+    		return new ResponseEntity<>(list.size(), HttpStatus.OK);
     	} catch (Exception e) {
     		return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     	}
@@ -291,6 +290,17 @@ public class DonationController {
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/getWaitListCnt")
+    @ApiOperation("대기 목록 카운트")
+    public Object getWaitListCnt() throws SQLException, IOException {
+        try {
+            int count = donationRepository.findByApprovalAndTempOrderByCreatedateDesc(0, 0).size();
+            return new ResponseEntity<>(count, HttpStatus.OK);
+        } catch (Exception e) {
+    		return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    	}
     }
 
 }

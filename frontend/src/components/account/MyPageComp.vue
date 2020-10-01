@@ -24,7 +24,7 @@
               label="닉네임"
             ></v-text-field>
             <v-text-field
-            class="mx-3"
+              class="mx-3"
               v-model="birth"
               outlined
               color="#356859"
@@ -37,8 +37,13 @@
       <!-- 글 정보 -->
       <v-row>
         <v-card style="width:100%">
-          <v-tabs vertical icons-and-text centered color="basil"
-        class="basil--text">
+          <v-tabs
+            vertical
+            icons-and-text
+            centered
+            color="basil"
+            class="basil--text"
+          >
             <v-tab style="font-weight:bold; margin:0">
               내 웃음기부
               <v-icon>
@@ -60,7 +65,7 @@
             <v-tab style="font-weight:bold;">
               기부요청 현황
               <v-icon>
-                mdi-bullhorn-outline
+                mdi-image
               </v-icon>
             </v-tab>
 
@@ -71,25 +76,7 @@
               <TempComp />
             </v-tab-item>
             <v-tab-item>
-              <v-card flat>
-                <v-card-text>
-                  <p>
-                    Fusce a quam. Phasellus nec sem in justo pellentesque
-                    facilisis. Nam eget dui. Proin viverra, ligula sit amet
-                    ultrices semper, ligula arcu tristique sapien, a accumsan
-                    nisi mauris ac eros. In dui magna, posuere eget, vestibulum
-                    et, tempor auctor, justo.
-                  </p>
-
-                  <p class="mb-0">
-                    Cras sagittis. Phasellus nec sem in justo pellentesque
-                    facilisis. Proin sapien ipsum, porta a, auctor quis, euismod
-                    ut, mi. Donec quam felis, ultricies nec, pellentesque eu,
-                    pretium quis, sem. Nam at tortor in tellus interdum
-                    sagittis.
-                  </p>
-                </v-card-text>
-              </v-card>
+              <ReviewToMeComp />
             </v-tab-item>
             <v-tab-item>
               <MyDonationComp />
@@ -128,13 +115,14 @@ import { USER_UPDATE } from "@/store/actions/user";
 import TempComp from "@/components/account/TempComp.vue";
 import MySmileComp from "@/components/account/MySmileComp.vue";
 import MyDonationComp from "@/views/account/DonationList.vue";
-// import MyDonationComp from "@/components/account/DonationListComp.vue";
+import ReviewToMeComp from "@/components/account/ReviewToMeComp.vue";
 export default {
   name: "MyPageComp",
   components: {
     TempComp,
     MySmileComp,
-    MyDonationComp
+    MyDonationComp,
+    ReviewToMeComp
   },
   data() {
     return {

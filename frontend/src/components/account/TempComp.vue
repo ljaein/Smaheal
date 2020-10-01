@@ -1,6 +1,6 @@
 <template>
   <div class="p-3" align="center">
-    <table class="table" style="text-align:center; width:90%">
+    <v-simple-table style="text-align:center; width:90%">
       <thead>
         <tr style="background-color:#fffbe6;">
           <td>번호</td>
@@ -11,7 +11,7 @@
       </thead>
       <tbody>
         <tr v-for="(temp, index) in tempList" :key="index">
-          <td style="width:10%">{{ (page-1)*10+index + 1 }}</td>
+          <td style="width:10%">{{ (page-1)*8+index + 1 }}</td>
           <td
             style="width:50%; text-overflow:ellipsis; overflow: hidden; white-space: nowrap;"
           >
@@ -35,7 +35,7 @@
           </td>
         </tr>
       </tbody>
-    </table>
+    </v-simple-table>
     <div class="text-center m-3">
       <v-pagination
         v-model="page"
@@ -88,10 +88,10 @@ export default {
     http
         .get(`/donation/getTempCnt/${this.getProfile}`)
         .then(res => {
-          if (res.data % 10 == 0) {
-            this.length = Math.floor(res.data / 10);
+          if (res.data % 8 == 0) {
+            this.length = Math.floor(res.data / 8);
           } else {
-            this.length = Math.floor(res.data / 10) + 1;
+            this.length = Math.floor(res.data / 8) + 1;
           }
         })
         .catch(err => {
