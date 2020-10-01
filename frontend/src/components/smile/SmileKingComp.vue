@@ -9,7 +9,7 @@
             <v-img :src="`${publicPath}images/${smileKing[0].photo}`"></v-img>
           </v-avatar>
           <v-col>
-            {{ smileKing[0].user_id }}
+            {{ smileKing[0].userId }}
           </v-col>
         </v-col>
       </v-row>
@@ -20,7 +20,7 @@
             <v-img :src="`${publicPath}images/${smileKing[1].photo}`"></v-img>
           </v-avatar>
           <v-col>
-            {{ smileKing[1].user_id }}
+            {{ smileKing[1].userId }}
           </v-col>
         </v-col>
         <v-col cols="12" md="4">
@@ -29,7 +29,7 @@
             <v-img :src="`${publicPath}images/${smileKing[2].photo}`"></v-img>
           </v-avatar>
           <v-col>
-            {{ smileKing[2].user_id }}
+            {{ smileKing[2].userId }}
           </v-col>
         </v-col>
       </v-row>
