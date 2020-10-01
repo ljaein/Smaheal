@@ -8,7 +8,7 @@
           * 넓이가 1300px 이상인 화면에서 보는 것을 추천드립니다.
         </h5>
         <v-card width="900" height="400"
-          class="mx-auto" :img="require(`@/assets/template/fall-background.jpg`)"
+          class="mx-auto" :img="require(`@/assets/template/${imgsrc}`)"
           dark
           elevation="8"
           >
@@ -18,69 +18,61 @@
             next-icon="mdi-code-greater-than"
             :show-arrows="true"
           >
-            <v-slide-item
-              v-for="n in 15"
-              :key="n"
-            >
-              <v-card
-                class="ma-4"
-                width="300"
-                light
-              >
-                <v-fab-transition>
-                  <v-btn
-                  color="white"
-                  fab
-                  small
-                  absolute
-                  top
-                  left
-                  icon
-                  >
-                    <v-icon>mdi-emoticon-excited</v-icon>
-                  </v-btn>
-                </v-fab-transition>
-                <v-img
-                  class="white--text align-end"
-                  height="250px"
-                  src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-                >
-                </v-img>
-                <v-card-title>별명이 들어갈 자리
-                  <v-spacer></v-spacer>
-                  <v-card-actions>
-                  <v-btn
-                    icon
-                    @click="show = !show"
-                  >
-                    <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-                  </v-btn>
-                </v-card-actions>
-
-                <v-expand-transition>
-                  <div v-show="show">
-                    <v-card-text>
-                      I'm a thing. But, like most politicians, 
-                    </v-card-text>
-                  </div>
-                </v-expand-transition>
-                </v-card-title>
-              </v-card>
-            </v-slide-item>
+            <slideComp
+            v-for="(item, index) in items"
+            :key="index"
+            :propsitem="item"
+            />
           </v-slide-group>
         </v-card>
+        <v-row>
+          <v-col class="text-right">
+            <v-btn color="#356859" dark>
+              후기 남기기
+            </v-btn>
+          </v-col>
+        </v-row>
       </v-sheet>
     </div>
 </template>
 
 <script>
+import slideComp from "@/components/template/slideComp.vue";
+
 export default {
     name: "fallImageComp",
+    components: {
+      slideComp,
+    },
+    props: {
+      propsItem: {type: Array}
+    },
     data: function() {
         return {
-          show: false,
-          showArrows: true,
+          items: [],
+          imgsrc: "fall-background.jpg",
+          num: 0,
         }
-    }
+    },
+    methods: {
+      fetchData: function() {
+        this.items = this.propsItem;
+      },
+      random: function() {
+        this.num = Math.floor(Math.random() * 4);
+
+        if (this.num == 0) {
+          this.imgsrc = "flower-background.jpg"
+        } else if (this.num == 1) {
+          this.imgsrc = "night-background.jpg"
+        } else if (this.num == 2) {
+          this.imgsrc = "seascape-background.jpg"
+        }
+      },
+    },
+    created() {
+      this.fetchData();
+      this.random();
+    },
 }
 </script>
