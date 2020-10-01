@@ -1,9 +1,12 @@
 package com.ssafy.smaheal.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +24,12 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import io.swagger.annotations.ApiOperation;
+
 import com.ssafy.smaheal.exception.ResourceNotFoundException;
 import com.ssafy.smaheal.model.Review;
 import com.ssafy.smaheal.model.Smile;
+import com.ssafy.smaheal.repository.DonationRepository;
 import com.ssafy.smaheal.repository.ReviewRepository;
 import com.ssafy.smaheal.repository.SmileRepository;
 
@@ -150,6 +156,72 @@ public class ReviewController {
 				result.add(temp);
 			return new ResponseEntity<>(result, HttpStatus.OK);
 
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@GetMapping("/visitPlus/{num}")
+	@ApiOperation("방문수 증가")
+	public Object visitPlus(@PathVariable Long num) throws SQLException, IOException {
+		try {
+			Review review = findReviewByNum(num);
+			review.setVisit(review.getVisit() + 1);
+			reviewRepository.save(review);
+			
+			return new ResponseEntity<>(num + "visit+", HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@Autowired
+	DonationRepository donationRepo;
+
+	@GetMapping("/categoryCnt")
+	@ApiOperation("카테고리별 개수")
+	public Object categoryCnt() throws SQLException, IOException {
+		try {
+			int[] cnts = new int[6];
+			List<Review> review = new LinkedList<>();
+			review = reviewRepository.findAll();
+			for (Review r : review) {
+				String cat = donationRepo.findByDonationid(r.getDonationid()).getCategory();
+				if(cat.equals("아동,청소년")) {
+					cnts[0]++;
+				} else if(cat.equals("어르신")) {
+					cnts[1]++;
+				} else if(cat.equals("장애인")) {
+					cnts[2]++;
+				} else if(cat.equals("가족,여성")) {
+					cnts[3]++;
+				} else if(cat.equals("다문화")) {
+					cnts[4]++;
+				} else if(cat.equals("기타")) {
+					cnts[5]++;
+				}
+			}
+			return new ResponseEntity<>(cnts, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("/categoryList/{category}")
+	@ApiOperation("카테고리별 리스트")
+	public Object categoryList(@PathVariable String category) throws SQLException, IOException {
+		System.out.println(category);
+		try {
+			List<Review> list = new LinkedList<>();
+			List<Review> review = new LinkedList<>();
+			review = reviewRepository.findAll();
+			for (Review r : review) {
+				String cat = donationRepo.findByDonationid(r.getDonationid()).getCategory();
+				if(cat.equals(category)) {
+					list.add(r);
+				}
+			}
+			return new ResponseEntity<>(list, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
