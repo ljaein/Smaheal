@@ -8,7 +8,7 @@
           * 넓이가 1300px 이상인 화면에서 보는 것을 추천드립니다.
         </h5>
         <v-card width="900" height="400"
-          class="mx-auto" :img="require(`@/assets/template/fall-background.jpg`)"
+          class="mx-auto" :img="require(`@/assets/template/${imgsrc}`)"
           dark
           elevation="8"
           >
@@ -50,16 +50,29 @@ export default {
     data: function() {
         return {
           items: [],
+          imgsrc: "fall-background.jpg",
+          num: 0,
         }
     },
     methods: {
       fetchData: function() {
         this.items = this.propsItem;
-        console.log(this.items.length);
-      }
+      },
+      random: function() {
+        this.num = Math.floor(Math.random() * 4);
+
+        if (this.num == 0) {
+          this.imgsrc = "flower-background.jpg"
+        } else if (this.num == 1) {
+          this.imgsrc = "night-background.jpg"
+        } else if (this.num == 2) {
+          this.imgsrc = "seascape-background.jpg"
+        }
+      },
     },
     created() {
-      this.fetchData()
+      this.fetchData();
+      this.random();
     },
 }
 </script>
