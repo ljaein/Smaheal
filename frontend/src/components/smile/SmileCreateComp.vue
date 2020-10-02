@@ -406,12 +406,13 @@
                   class="m-2 col-md-2 col-sm-4 col-10"
                   style="color:white;"
                   v-if="checkFlag"
-                  @click="check()"
+                  @click="check(), sloading = true"
                   >check</v-btn
                 >
               </v-row>
 
               <div v-if="!startFlag">
+                <v-progress-linear color="deep-purple" :active="sloading" :indeterminate="sloading" rounded height="3"></v-progress-linear>
                 <div class="container" style="height:250px;text-align:center">
                   <canvas height="200%" width="200%"></canvas>
                   <!-- <img id="myImage" /> -->
@@ -451,7 +452,6 @@
                 </div>
               </div>
             </v-tab-item>
-
             <!-- 파일 업로드 -->
             <v-tab-item v-if="!fileFlag" id="tab-file">
               <div class="container" style="height:400px;text-align:center">
@@ -485,6 +485,7 @@
                       <v-chip color="#356859" dark label small>{{ text }}</v-chip>
                     </template>
                   </v-file-input>
+                  <v-progress-linear color="deep-purple" :active="uloading" :indeterminate="uloading" rounded height="6"></v-progress-linear>
                 </div>
                 <div class="col-12"></div>
                 <div v-if="inputFile != ''" style="margin:0 auto; margin-bottom:20px;">
@@ -503,7 +504,7 @@
                   class="m-2 col-md-2 col-sm-4 col-10"
                   style="color:white;"
                   v-if="checkFlag"
-                  @click="checkUpload()"
+                  @click="checkUpload(), uloading = true"
                   >check</v-btn
                 >
               </v-row>
@@ -621,7 +622,7 @@
     </v-overlay>
 
     <!-- 캡쳐 알림 -->
-    <v-snackbar v-model="captureFlag" top right :timeout="3000" color="error">
+    <v-snackbar v-model="captureFlag" top right :timeout="3000" color="#356859">
       캡쳐되었습니다.
       <template v-slot:action="{ attrs }">
         <v-btn text v-bind="attrs" @click="captureFlag = false">Close</v-btn>
@@ -629,7 +630,7 @@
     </v-snackbar>
 
     <!-- 기부 알림 -->
-    <v-snackbar v-model="donationFlag" top right :timeout="3000" color="error">
+    <v-snackbar v-model="donationFlag" top right :timeout="3000" color="#356859">
       기부되었습니다.
       <template v-slot:action="{ attrs }">
         <v-btn text v-bind="attrs" @click="donationFlag = false">Close</v-btn>
@@ -646,6 +647,15 @@
         style="margin-left:50%"
       ></v-progress-circular>
     </v-overlay>
+    
+    <!-- alert -->
+    <v-snackbar v-model="noFace" top right color="error" :timeout="2000"><p class="snackText">얼굴을 인식하지 못했습니다.</p></v-snackbar>
+    <v-snackbar v-model="yesFace" top right color="success" :timeout="2000"><p class="snackText">얼굴 인식을 성공했습니다.</p></v-snackbar>
+    <v-snackbar v-model="noDev" top right color="error" :timeout="2000"><p class="snackText">카메라를 찾을 수 없습니다.</p></v-snackbar>
+    <v-snackbar v-model="reTry" top right color="error" :timeout="2000"><p class="snackText">사진을 다시 찍어주세요.</p></v-snackbar>
+    <v-snackbar v-model="rowPer" top right color="error" :timeout="2000"><p class="snackText">웃음 지수가 너무 낮습니다.</p></v-snackbar>
+    <v-snackbar v-model="noMsg" top right color="error" :timeout="2000"><p class="snackText">응원 메세지를 적어주세요.</p></v-snackbar>
+    <v-snackbar v-model="ckMsg" top right color="#356859" :timeout="2000"><p class="snackText">{{tempMsg}}</p></v-snackbar>
   </div>
 </template>
 
@@ -719,6 +729,17 @@ export default {
       videoTag: [],
       upFlag: false,
       autoFlag: false,
+      snackbar: true,
+      noFace: false,
+      yesFace: false,
+      noDev: false,
+      reTry: false,
+      rowPer: false,
+      noMsg: false,
+      ckMsg: false,
+      tempMsg: '',
+      uloading: false,
+      sloading: false,
     };
   },
   methods: {
@@ -766,11 +787,15 @@ export default {
         .then(res => {
           this.selfieCapture = res.data;
           if (this.selfieCapture == "findFail") {
-            alert("얼굴 인식 못함");
+            this.noFace = true;
+            this.uloading = false;
+            this.sloading = false;
           } else {
             this.selCapFlag = true;
             this.upFlag = true;
-            alert("얼굴 인식 성공");
+            this.yesFace = true;
+            this.uloading = false;
+            this.sloading = false;
           }
         })
         .catch(err => {
@@ -815,7 +840,7 @@ export default {
           videoPlayer.play();
         });
       } else {
-        alert("cannot get Media");
+        this.noDev = true;
       }
     },
     stepEnd() {
@@ -840,15 +865,16 @@ export default {
     },
     donationSelfie() {
       if (this.selfieCapture == "findFail") {
-        alert("사진 다시 찍어주세요");
+        this.reTry = true;
       } else {
         if (this.selfieCapture[2] < 30) {
-          alert("웃음 지수가 너무 낮습니다.");
+          this.rowPer = true;
         } else {
           http
             .get(`/smile/textCheck/${this.comment}`)
             .then(res => {
-              alert(res.data);
+              this.tempMsg = res.data;
+              this.ckMsg = true;
               var word = res.data.split(" ");
               var smilePer = word[0].split(".")[0];
               if (word[2] == "긍정" && Number(smilePer) >= 60) {
@@ -875,7 +901,7 @@ export default {
                     console.log(err);
                   });
               } else {
-                alert("응원의 메세지를 적어주세요.");
+                this.noMsg = true;
               }
             })
             .catch(err => {
@@ -889,7 +915,8 @@ export default {
         http
         .get(`/smile/textCheck/${this.comment}`)
         .then(res => {
-          alert(res.data);
+          this.tempMsg = res.data;
+          this.ckMsg = true;
           var word = res.data.split(" ");
           var smilePer = word[0].split(".")[0];
           if (word[2] == "긍정" && Number(smilePer) >= 60) {
@@ -919,7 +946,7 @@ export default {
         .catch(err => {
           console.log(err);
         })} else {
-          alert("응원의 메세지를 적어주세요.");
+          this.noMsg = true;
         }
     },
     donationContents() {
@@ -1140,5 +1167,12 @@ export default {
 .tab-text {
   font-weight: bold;
   text-decoration: none;
+}
+.snackText {
+  margin-bottom:0;
+  font-weight:bold;
+  font-size:1rem;
+  word-spacing:2px;
+  letter-spacing:2px;
 }
 </style>
