@@ -303,4 +303,15 @@ public class DonationController {
     	}
     }
 
+    @GetMapping("/getTempDetail/{donationid}")
+    @ApiOperation("임시저장 디테일")
+    public Object getTempDetail(@PathVariable Long donationid) throws SQLException, IOException {
+        try {
+            Donation temp = donationRepository.findByDonationid(donationid);
+            return new ResponseEntity<>(temp, HttpStatus.OK);
+        } catch (Exception e) {
+    		return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    	}
+    }
+
 }
