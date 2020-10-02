@@ -534,10 +534,7 @@ export default {
       };
       var map = new kakao.maps.Map(container, options); //마커추가하려면 객체를 아래와 같이 하나 만든다.
       var geocoder = new kakao.maps.services.Geocoder();
-
-      // 주소로 좌표를 검색합니다
       geocoder.addressSearch(loc, function(result, status) {
-        // 정상적으로 검색이 완료됐으면
         if (status === kakao.maps.services.Status.OK) {
           var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
           var marker = new kakao.maps.Marker({
@@ -552,7 +549,7 @@ export default {
       const script = document.createElement("script");
       script.onload = () => kakao.maps.load(this.initMap);
       script.src =
-        "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=a0064e7e9af3feb23b87a09d13dbc1b1&libraries=services";
+        "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=a0064e7e9af3feb23b87a09d13dbc1b1&libraries=services";
       document.head.appendChild(script);
     }
   },
