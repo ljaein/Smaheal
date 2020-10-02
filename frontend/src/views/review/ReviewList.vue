@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container fluid class="mt-5">
+    <v-container fluid class="mt-0">
       <v-card class="topbar">
         <v-toolbar color="#fffbe6" flat>
           <v-toolbar-title class="pl-5 tab-text basil--text">후기 게시판</v-toolbar-title>
@@ -21,7 +21,7 @@
       </v-card>
 
       <!-- 아동,청소년 -->
-      <v-sheet class="col-12 mb-15" elevation="8" style="height:340px;">
+      <v-sheet class="col-12 mb-15 sheet" elevation="8">
         <v-slide-group v-model="model" center-active show-arrows>
           <v-slide-item v-for="(item, index) in child" :key="index">
             <v-card class="ma-4 " height="280" width="200">
@@ -40,7 +40,7 @@
         </v-slide-group>
       </v-sheet>
       <!-- 어르신 -->
-      <v-sheet class="col-12 mb-15" elevation="8" style="height:340px;">
+      <v-sheet class="col-12 mb-15 sheet" elevation="8">
         <v-slide-group v-model="model" center-active show-arrows>
           <v-slide-item v-for="(item, index) in senior" :key="index">
             <v-card class="ma-4 " height="280" width="200">
@@ -59,7 +59,7 @@
         </v-slide-group>
       </v-sheet>
       <!-- 장애인 -->
-      <v-sheet class="col-12 mb-15" elevation="8" style="height:340px;">
+      <v-sheet class="col-12 mb-15 sheet" elevation="8">
         <v-slide-group v-model="model" center-active show-arrows>
           <v-slide-item v-for="(item, index) in disabled" :key="index">
             <v-card class="ma-4 " height="280" width="200">
@@ -78,7 +78,7 @@
         </v-slide-group>
       </v-sheet>
       <!-- 가족,여성 -->
-      <v-sheet class="col-12 mb-15" elevation="8" style="height:340px;">
+      <v-sheet class="col-12 mb-15 sheet" elevation="8" >
         <v-slide-group v-model="model" center-active show-arrows>
           <v-slide-item v-for="(item, index) in family" :key="index">
             <v-card class="ma-4 " height="280" width="200">
@@ -97,7 +97,7 @@
         </v-slide-group>
       </v-sheet>
       <!-- 다문화 -->
-      <v-sheet class="col-12 mb-15" elevation="8" style="height:340px;">
+      <v-sheet class="col-12 mb-15 sheet" elevation="8">
         <v-slide-group v-model="model" center-active show-arrows>
           <v-slide-item v-for="(item, index) in cultural" :key="index">
             <v-card class="ma-4 " height="280" width="200">
@@ -116,7 +116,7 @@
         </v-slide-group>
       </v-sheet>
       <!-- 기타 -->
-      <v-sheet class="col-12 mb-15" elevation="8" style="height:340px;">
+      <v-sheet class="col-12 mb-15 sheet" elevation="8">
         <v-slide-group v-model="model" center-active show-arrows>
           <v-slide-item v-for="(item, index) in etc" :key="index">
             <v-card class="ma-4 " height="280" width="200">
@@ -371,5 +371,8 @@ export default {
 }
 .tab-text {
   font-weight: bold;
+}
+.sheet {
+  height:340px;
 }
 </style>

@@ -4,7 +4,7 @@
       <div class="container mx-auto col-xl-7 col-lg-8 col-md-10 col-sm-11 col-12 d-flex justift-content-center">
         <v-card class="mt-12 mb-3 col-xl-7 col-lg-8 col-md-10 col-sm-11 col-12">
           <!-- 이미지 -->
-          <v-img :src="`${publicPath}reviewImage/${item.img}`" width="100%"></v-img>
+          <v-img :src="`${publicPath}reviewImage/${item.img}`" width="100%" max-width="100%"></v-img>
           <!-- 제목 -->
           <v-card-title style="font-weight:bold" class="mt-2">{{ item.title }}</v-card-title>
           <!-- 내용 -->
@@ -52,6 +52,7 @@
           </v-card>
         </v-dialog>
       </div>
+      <v-snackbar v-model="delFlag" top right color="error" :timeout="2000"><p class="snackText2">삭제되었습니다.</p></v-snackbar>
     </div>
   </div>
 </template>
@@ -71,6 +72,7 @@ export default {
       del: false,
       likeFlag: false,
       log: '',
+      delFlag: false,
     };
   },
   created() {
@@ -99,8 +101,12 @@ export default {
         .delete(`/review/delete/${this.$route.params.num}`)
         .then(({ data }) => {
           if (data == 'success') {
-            alert('성공적으로 삭제되었습니다.');
-            this.$router.push(`/reviewList`);
+            this.delFlag = true;
+            setTimeout(() => {
+              this.$router.push("/reviewList").catch(err => {
+                console.log(err);
+              });
+            }, 1500);
           }
         })
         .catch((err) => {
@@ -111,7 +117,7 @@ export default {
       this.$router.push(`/reviewModify/${this.$route.params.num}`);
     },
     goBack() {
-      window.history.back();
+      this.$router.push(`/reviewList`);
     },
     getLike() {
       http.get(`/like/getLike/${this.getProfile}/${this.item.num}`).then((res) => {
@@ -173,4 +179,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.snackText2 {
+  margin-bottom:0;
+  font-weight:bold;
+  font-size:1rem;
+  word-spacing:2px;
+  letter-spacing:2px;
+}
+</style>
