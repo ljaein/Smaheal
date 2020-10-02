@@ -92,7 +92,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app color="white" height="100" class="d-none d-md-block">
+    <v-app-bar app color="white" height="90" class="d-none d-md-block">
       <v-btn @click="goHome()" class="headline" color="amber accent-4" text
         >SmaHeal</v-btn
       >

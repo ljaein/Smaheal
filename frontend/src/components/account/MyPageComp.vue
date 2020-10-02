@@ -59,26 +59,6 @@
           <span style="font-size:1rem;">기부횟수</span><br />
           <span style="font-size:1.5rem;">총 {{ smileCnt }}회</span>
         </v-col>
-        <!-- 이름
-            <v-text-field
-              class="mx-3"
-              v-model="name"
-              outlined
-              style="outline:none;"
-            ></v-text-field>
-            닉네임
-            <v-text-field
-              class="mx-3"
-              v-model="nickName"
-              outlined
-            ></v-text-field>
-            생일
-            <v-text-field
-              class="mx-3"
-              v-model="birth"
-              outlined
-            ></v-text-field>
-            기부 횟수 -->
       </v-row>
       <v-row>
         <v-card style="width:100%">
@@ -141,13 +121,32 @@
           <v-btn
             outlined
             class="mr-3"
-            @click="signOut"
-            style="border-radius:20px; border:1.8px solid lightgray; font-weight:bold;"
+            @click="dialog = true"
+            style="border-radius:20px; border:1.8px solid crimson; font-weight:bold;"
             >탈퇴하기</v-btn
           >
         </v-col>
       </v-row>
     </v-form>
+    <v-row justify="center">
+      <v-dialog v-model="dialog" persistent max-width="290">
+        <v-card>
+          <v-card-title>
+            정말 탈퇴하시겠습니까?
+          </v-card-title>
+          <v-card-text></v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn style="color:crimson; font-weight:bold;" text @click="signOut()">
+              탈퇴
+            </v-btn>
+            <v-btn style="font-weight:bold;" text @click="dialog = false">
+              취소
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-row>
   </v-container>
 </template>
 
@@ -176,7 +175,8 @@ export default {
       nickName: "",
       birth: new Date().toISOString().substr(0, 10),
       smileCnt: 0,
-      grade: ""
+      grade: "",
+      dialog:false
     };
   },
   created() {
@@ -212,6 +212,7 @@ export default {
       return new Date(joinedAt).toISOString().substr(0, 10);
     },
     signOut() {
+      this.dialog=true;
       http
         .delete(`/user/delete/${this.getUserNum}`)
         .then(() => {
