@@ -1,39 +1,76 @@
 <template>
   <div>
-    <ReviewDetailComp
-      :num="item.num"
-      :nickName="item.nickName"
-      :title="item.title"
-      :content="item.content"
-      :img="item.img"
-      :likeCnt="item.likeCnt"
-      :visit="item.visit"
-      :createdAt="item.createdAt"
-    />
-    <div style="width:100%; text-align:center;">
-      <v-btn v-if="isWriter" @click="moveModify" outlined>수정</v-btn>
-      <v-btn v-if="isWriter" @click="deleteReview" outlined>삭제</v-btn>
-      <v-btn @click="goBack" outlined>뒤로가기</v-btn>
+    <div class="container d-flex justify-content-center col-12">
+      <div class="container mx-auto col-xl-7 col-lg-8 col-md-10 col-sm-11 col-12 d-flex justift-content-center">
+        <v-card class="mt-12 mb-3 col-xl-7 col-lg-8 col-md-10 col-sm-11 col-12">
+          <!-- 이미지 -->
+          <v-img :src="`${publicPath}reviewImage/${item.img}`" width="100%"></v-img>
+          <!-- 제목 -->
+          <v-card-title style="font-weight:bold" class="mt-2">{{ item.title }}</v-card-title>
+          <!-- 내용 -->
+          <v-card-text>
+            <v-row class="px-3">
+              <div style="width:100%; text-align:right;">
+                <h4 style="display:inline-block;cursor:pointer;font-weight:bold;">by {{ item.nickName }}</h4>
+                <p class="text-right" style="color:gray;font-weight:bold;">{{ item.visit }} views · {{ getFormatDate(item.createdAt) }}</p>
+              </div>
+            </v-row>
+            <!-- 좋아요 -->
+            <div v-if="!likeFlag" class="mb-4 subtitle-1">
+              <v-btn icon @click="upLike()"><v-icon>mdi-hand-heart-outline</v-icon></v-btn>
+              {{ item.likeCnt }}
+            </div>
+            <div v-if="likeFlag" class="mb-4 subtitle-1">
+              <v-btn icon @click="downLike()"><v-icon>mdi-hand-heart</v-icon></v-btn>
+              {{ item.likeCnt }}
+            </div>
+            <div style="font-size:1rem;font-weight:bold;letter-spacing:1px;word-spacing:2px;line-height:200%;">{{ item.content }}</div>
+          </v-card-text>
+          <!-- 버튼 -->
+          <v-divider class="mx-4 mb-2"></v-divider>
+          <div style="width:100%; text-align:center;">
+            <v-btn class="mx-5" v-if="isWriter" @click="moveModify" icon fab large color="basil">
+              <v-icon>mdi-pencil</v-icon>
+            </v-btn>
+            <v-btn class="mx-5" v-if="isWriter" @click="del = true" icon fab large color="basil">
+              <v-icon>mdi-delete</v-icon>
+            </v-btn>
+            <v-btn class="mx-5" @click="goBack" icon fab large color="basil">
+              <v-icon>mdi-undo</v-icon>
+            </v-btn>
+          </div>
+        </v-card>
+
+        <v-dialog dark v-model="del" max-width="400">
+          <v-card>
+            <v-card-title class="headline">정말 삭제하시겠습니까?</v-card-title>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn text @click="(del = false), deleteReview()">확인</v-btn>
+              <v-btn text @click="del = false">취소</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </div>
     </div>
-    
-    <br>
   </div>
 </template>
 
 <script>
-import http from "@/util/http-common.js";
-import ReviewDetailComp from "@/components/review/ReviewDetailComp.vue";
-import { mapGetters } from "vuex";
+import http from '@/util/http-common.js';
+import { mapGetters } from 'vuex';
+import moment from 'moment';
 
 export default {
-  name: "ReviewDetail",
-  components: {
-    ReviewDetailComp
-  },
+  name: 'ReviewDetail',
   data() {
     return {
       item: {},
-      isWriter: false
+      isWriter: false,
+      publicPath: process.env.BASE_URL,
+      del: false,
+      likeFlag: false,
+      log: '',
     };
   },
   created() {
@@ -43,42 +80,30 @@ export default {
         this.item = data;
         if (this.getProfile == this.item.nickName) {
           this.isWriter = true;
-        } else {
-          this.item.visit += 1;
-          http
-            .put(`/review/update/${this.$route.params.num}`, {
-              num: this.item.num,
-              title: this.item.title,
-              content: this.item.content,
-              nickName: this.item.nickName,
-              img: this.item.img,
-              likeCnt: this.item.likeCnt,
-              visit: this.item.visit,
-              createdAt: this.item.createdAt
-            })
-            .catch(err => {
-              console.log(err);
-            });
         }
+        this.getLike();
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   },
   computed: {
-    ...mapGetters(["getProfile"])
+    ...mapGetters(['getProfile']),
   },
   methods: {
+    getFormatDate(regtime) {
+      return moment(new Date(regtime)).format('YYYY년 MM월 DD일');
+    },
     deleteReview() {
       http
         .delete(`/review/delete/${this.$route.params.num}`)
         .then(({ data }) => {
-          if (data == "success") {
-            alert("성공적으로 삭제되었습니다.");
+          if (data == 'success') {
+            alert('성공적으로 삭제되었습니다.');
             this.$router.push(`/reviewList`);
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     },
@@ -86,11 +111,66 @@ export default {
       this.$router.push(`/reviewModify/${this.$route.params.num}`);
     },
     goBack() {
-      this.$router.push(`/reviewList`);
-    }
-  }
+      window.history.back();
+    },
+    getLike() {
+      http.get(`/like/getLike/${this.getProfile}/${this.item.num}`).then((res) => {
+        // console.log(res.data);
+        if (res.data != null && res.data != '') {
+          this.likeFlag = true;
+        } else {
+          this.likeFlag = false;
+        }
+      });
+    },
+    downLike() {
+      http
+        .delete(`/like/deleteLike/${this.getProfile}/${this.item.num}`)
+        .then((res) => {
+          this.log = res.data;
+          this.likeFlag = false;
+          this.item.likeCnt -= 1;
+          this.likeUpdate();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    upLike() {
+      http
+        .post(`/like/pushLike/`, {
+          nickname: this.getProfile,
+          num: this.item.num,
+        })
+        .then((res) => {
+          this.log = res.data;
+          this.likeFlag = true;
+          this.item.likeCnt += 1;
+          this.likeUpdate();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    likeUpdate() {
+      http
+        .put(`/review/update/${this.$route.params.num}`, {
+          num: this.item.num,
+          title: this.item.title,
+          content: this.item.content,
+          nickName: this.item.nickName,
+          img: this.item.img,
+          likeCnt: this.item.likeCnt,
+          visit: this.item.visit,
+          createdAt: this.item.createdAt,
+          donationid: this.item.donationid,
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
 };
 </script>
 
-<style>
-</style>
+<style></style>

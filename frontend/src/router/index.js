@@ -25,6 +25,7 @@ import TestCount from "../views/smile/testCount.vue"
 import search from "../views/template/search.vue"
 import templateSearch from "../views/template/templateSearch.vue"
 import Award from "../views/smile/Award.vue"
+import TempDetailComp from "../components/account/TempDetailComp.vue"
 
 Vue.use(VueRouter);
 
@@ -157,6 +158,11 @@ const routes = [{
         path: "/award",
         name: "Award",
         component: Award
+    },
+    {
+        path: "/tempDetailComp/:ID",
+        name: "TempDetailComp",
+        component: TempDetailComp
     },
 ];
 

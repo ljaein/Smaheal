@@ -1,8 +1,5 @@
 package com.ssafy.smaheal.model;
 
-import java.time.LocalDate;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,13 +13,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Cheerup {
+public class Reviewlike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cheerupid;
-    private Long donationid;
-    private String msg;
-    private String userId;
-    @Column(insertable = false, updatable = false)
-    private LocalDate createdate;
+    private Long likeid;
+    private Long num;
+    private String nickname;
 }

@@ -24,7 +24,7 @@
                 :src="require(`../../../public/images/${item.photo}`)"
             >
             </v-img>
-            <v-card-title>{{item.user_id}}
+            <v-card-title>{{item.userId}}
                 <v-spacer></v-spacer>
                 <v-card-actions>
                 <v-btn
