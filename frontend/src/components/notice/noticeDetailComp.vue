@@ -1,49 +1,49 @@
 <template>
-  <v-container class="pa-0">
-    <v-sheet class="pa-6 mt-4" color="#fffbe6">
+  <v-container class="col-md-11 m-3" style="border:1px solid lightgray; border-radius:5px;">
+    <!-- <v-sheet class="pa-6 mt-4" color="#fffbe6">
       <v-icon class="mr-2" color="#356859">mdi-clipboard-alert-outline</v-icon>
       공지사항
-    </v-sheet>
-    <v-sheet color="#fffbe6" class="pa-5 mb-5">
-      <div class="headline pa-4 text-center">
+    </v-sheet> -->
+    <v-sheet class="pa-5 mb-5">
+      <div class="pa-4 text-center" style="font-size:1.5rem;">
         {{this.item.title}}
       </div>
-      <div class="text-right pb-5">
+      <div class="text-right pb-5" style="font-size:1rem;">
         {{getFormatDate(this.item.createdAt)}}
       </div>
       <v-divider></v-divider>
       <v-textarea readonly auto-grow solo
-      flat background-color="#fffbe6"
+      flat
       class="pa-3"
       :value="this.item.content">
       </v-textarea>
     </v-sheet>
     <v-row>
       <v-col>
-        <v-btn class="mr-5" @click="goWrite()" color="#356859" dark v-if="getUserID == 'admin'">
-          수정
+        <v-btn class="mr-3 ml-5" color="blue darken-4" @click="goWrite()" v-if="getUserID == 'admin'" style="color:white;font-weight:bold">
+          <span style="display:inline-flex; vertical-align:middle;" ><v-icon style="font-size:1rem;">mdi-wrench</v-icon>수정</span>
         </v-btn>
-        <v-btn class="mr-5" @click="deleteNotice()" color="#356859" dark v-if="getUserID == 'admin'">
-          삭제
+        <v-btn @click="deleteNotice()" color="red darken-4" v-if="getUserID == 'admin'" style="color:white;font-weight:bold">
+          <span style="display:inline-flex; vertical-align:middle;" ><v-icon style="font-size:1rem;">mdi-trash-can</v-icon>삭제</span>
         </v-btn>
       </v-col>
       <v-col class="text-right">
-        <v-btn @click="goBack()" color="#356859" dark>
-            목록으로 가기
+        <v-btn @click="goBack()" class="green-mbtn mr-2" dark>
+            목록으로
         </v-btn>
       </v-col>
     </v-row>
 
-    <v-dialog dark v-model="del" max-width="400">
+    <v-dialog v-model="del" max-width="400">
       <v-card>
-        <v-card-title class="headline">정말 삭제하시겠습니까?</v-card-title>
+        <v-card-title style="font-size:1.5rem;">정말 삭제하시겠습니까?</v-card-title>
 
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn text @click="cancelDel()">취소</v-btn>
+          <v-btn text @click="cancelDel()" style="font-weight:bold;">취소</v-btn>
 
-          <v-btn text @click="noticeDelHandler()">확인</v-btn>
+          <v-btn text @click="noticeDelHandler()" style="font-weight:bold;color:crimson">삭제</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

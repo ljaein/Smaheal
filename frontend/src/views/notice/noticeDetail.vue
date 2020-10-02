@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="d-flex justify-content-center">
     <noticeDetailComp
     :propItem="item"
     v-if="item.length !== 0"
