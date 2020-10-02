@@ -1,20 +1,21 @@
 <template>
-  <v-container class="pa-0">
-    <v-sheet class="pa-6 mt-4" color="#fffbe6">
-      <v-icon class="mr-2" color="#356859">mdi-clipboard-edit-outline</v-icon>
+  <v-container class="col-md-11">
+    <v-sheet class="pa-6 mt-4">
+      <v-icon class="mr-1" color="black">mdi-clipboard-edit-outline</v-icon>
       공지사항 수정페이지
     </v-sheet>
-    <v-sheet color="#fffbe6" class="pa-5 mb-5">
+    <!-- prepend-icon="mdi-lightbulb-on" -->
+    <v-sheet class="pa-5">
         <v-text-field
+        outlined
         placeholder="제목을 입력하세요."
         color="#356859"
         v-model="title"
         ref="title"
-        class="headline"
-        prepend-icon="mdi-lightbulb-on"
-        clearable
         :counter="20"
         :rules="titleRules"
+        class="mb-3"
+        style="font-size:1.5rem"
         />
         <v-textarea
         placeholder="공지사항 내용을 입력하세요."
@@ -22,38 +23,32 @@
         v-model="content"
         ref="content"
         outlined
-        clearable
         height="300"
         :counter="1000"
         :rules="contentRules"
         />
     </v-sheet>
     <v-row>
-        <v-col>
-            <v-btn @click="noticeTempRegist()" color="#356859" dark>
-                임시저장
-            </v-btn>
-        </v-col>
-        <v-col class="text-right">
-            <v-btn class="mr-5" @click="goBack()" color="#356859" dark>
+        <v-col class="text-right m-3">
+            <v-btn class="mr-5" @click="goBack()" color="red darken-4" dark style="font-weight:bold;">
                 취소
             </v-btn>
-            <v-btn @click="noticeModify()" color="#356859" dark>
+            <v-btn @click="noticeModify()" color="blue darken-4" dark style="font-weight:bold;">
                 수정
             </v-btn>
         </v-col>
     </v-row>
 
-    <v-dialog dark v-model="regist" max-width="400">
+    <v-dialog v-model="regist" max-width="400">
       <v-card>
-        <v-card-title class="headline">공지사항을 수정하겠습니까?</v-card-title>
+        <v-card-title style="font-size:1.5rem;">공지사항을 수정하겠습니까?</v-card-title>
 
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn text @click="cancelRegist()">취소</v-btn>
+          <v-btn text @click="cancelRegist()" style="font-weight:bold;">취소</v-btn>
 
-          <v-btn text @click="noticeModifyHandler()">확인</v-btn>
+          <v-btn text @click="noticeModifyHandler()" style="font-weight:bold;color:#000080">수정</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -115,9 +110,6 @@ export default {
               this.alert = true;
               console.log(e)
           })
-      },
-      noticeTempRegist: function() {
-
       },
       goBack: function() {
           this.$router.push('/notice').catch(() => {})
