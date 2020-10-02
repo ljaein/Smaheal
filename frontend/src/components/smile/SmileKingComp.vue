@@ -47,17 +47,17 @@ export default {
       publicPath: process.env.BASE_URL,
       smileKing: [
         {
-          user_id:"",
-          photo:""
+          userId: "",
+          photo: ""
         },
         {
-          user_id:"",
-          photo:""
+          userId: "",
+          photo: ""
         },
         {
-          user_id:"",
-          photo:""
-        },
+          userId: "",
+          photo: ""
+        }
       ]
     };
   },
