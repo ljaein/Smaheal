@@ -5,20 +5,21 @@
         <v-toolbar color="#fffbe6" flat>
           <v-toolbar-title class="pl-5 tab-text basil--text">후기 게시판</v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-btn v-if="getProfile" class="green-mbtn" @click="goReviewWrite" outlined>후기 등록</v-btn>
+          <v-btn v-if="getProfile" class="green-mbtn" @click="goList()" outlined>{{ tabTitle }}</v-btn>
 
           <template v-slot:extension>
             <v-tabs center-active color="basil" class="basil--text" grow>
-              <v-tab class="tab-text" @click="goTab(1)">아동/청소년</v-tab>
-              <v-tab class="tab-text" @click="goTab(2)">어르신</v-tab>
-              <v-tab class="tab-text" @click="goTab(3)">장애인</v-tab>
-              <v-tab class="tab-text" @click="goTab(4)">가족/여성</v-tab>
-              <v-tab class="tab-text" @click="goTab(5)">다문화</v-tab>
-              <v-tab class="tab-text" @click="goTab(6)">기타</v-tab>
+              <v-tab id="tab1" class="tab-text" @click="goTab(1)">아동/청소년</v-tab>
+              <v-tab id="tab2" class="tab-text" @click="goTab(2)">어르신</v-tab>
+              <v-tab id="tab3" class="tab-text" @click="goTab(3)">장애인</v-tab>
+              <v-tab id="tab4" class="tab-text" @click="goTab(4)">가족/여성</v-tab>
+              <v-tab id="tab5" class="tab-text" @click="goTab(5)">다문화</v-tab>
+              <v-tab id="tab6" class="tab-text" @click="goTab(6)">기타</v-tab>
             </v-tabs>
           </template>
         </v-toolbar>
       </v-card>
+
       <!-- 아동,청소년 -->
       <v-sheet class="col-12 mb-15" elevation="8" style="height:340px;">
         <v-slide-group v-model="model" center-active show-arrows>
@@ -156,6 +157,8 @@ export default {
       family: [],
       cultural: [],
       etc: [],
+      toTop: 0,
+      tabTitle: '아동/청소년',
     };
   },
   components: {
@@ -168,13 +171,14 @@ export default {
     this.getFamily();
     this.getCultural();
     this.getEtc();
+    window.addEventListener('scroll', this.handleScroll);
   },
   computed: {
     ...mapGetters(['getProfile']),
   },
   methods: {
-    goReviewWrite() {
-      this.$router.push(`/reviewWrite`);
+    goList() {
+      this.$router.push(`/donationList`);
     },
     getChild() {
       http
@@ -251,6 +255,97 @@ export default {
         scroll(0, 2030);
       }
     },
+    handleScroll() {
+      this.toTop = document.documentElement.scrollTop;
+      if (this.toTop >= 400 && this.toTop < 800) {
+        this.tabTitle = '어르신';
+        document.getElementById('tab1').setAttribute('aria-selected', false);
+        document.getElementById('tab1').classList.remove('v-tab--active');
+        document.getElementById('tab2').setAttribute('aria-selected', true);
+        document.getElementById('tab2').classList.add('v-tab--active');
+        document.getElementById('tab3').setAttribute('aria-selected', false);
+        document.getElementById('tab3').classList.remove('v-tab--active');
+        document.getElementById('tab4').setAttribute('aria-selected', false);
+        document.getElementById('tab4').classList.remove('v-tab--active');
+        document.getElementById('tab5').setAttribute('aria-selected', false);
+        document.getElementById('tab5').classList.remove('v-tab--active');
+        document.getElementById('tab6').setAttribute('aria-selected', false);
+        document.getElementById('tab6').classList.remove('v-tab--active');
+      } else if (this.toTop >= 800 && this.toTop < 1200) {
+        this.tabTitle = '장애인';
+        document.getElementById('tab1').setAttribute('aria-selected', false);
+        document.getElementById('tab1').classList.remove('v-tab--active');
+        document.getElementById('tab2').setAttribute('aria-selected', false);
+        document.getElementById('tab2').classList.remove('v-tab--active');
+        document.getElementById('tab3').setAttribute('aria-selected', true);
+        document.getElementById('tab3').classList.add('v-tab--active');
+        document.getElementById('tab4').setAttribute('aria-selected', false);
+        document.getElementById('tab4').classList.remove('v-tab--active');
+        document.getElementById('tab5').setAttribute('aria-selected', false);
+        document.getElementById('tab5').classList.remove('v-tab--active');
+        document.getElementById('tab6').setAttribute('aria-selected', false);
+        document.getElementById('tab6').classList.remove('v-tab--active');
+      } else if (this.toTop >= 1200 && this.toTop < 1600) {
+        this.tabTitle = '가족/여성';
+        document.getElementById('tab1').setAttribute('aria-selected', false);
+        document.getElementById('tab1').classList.remove('v-tab--active');
+        document.getElementById('tab2').setAttribute('aria-selected', false);
+        document.getElementById('tab2').classList.remove('v-tab--active');
+        document.getElementById('tab3').setAttribute('aria-selected', false);
+        document.getElementById('tab3').classList.remove('v-tab--active');
+        document.getElementById('tab4').setAttribute('aria-selected', true);
+        document.getElementById('tab4').classList.add('v-tab--active');
+        document.getElementById('tab5').setAttribute('aria-selected', false);
+        document.getElementById('tab5').classList.remove('v-tab--active');
+        document.getElementById('tab6').setAttribute('aria-selected', false);
+        document.getElementById('tab6').classList.remove('v-tab--active');
+      } else if (this.toTop >= 1600 && this.toTop < 2000) {
+        this.tabTitle = '다문화';
+        document.getElementById('tab1').setAttribute('aria-selected', false);
+        document.getElementById('tab1').classList.remove('v-tab--active');
+        document.getElementById('tab2').setAttribute('aria-selected', false);
+        document.getElementById('tab2').classList.remove('v-tab--active');
+        document.getElementById('tab3').setAttribute('aria-selected', false);
+        document.getElementById('tab3').classList.remove('v-tab--active');
+        document.getElementById('tab4').setAttribute('aria-selected', false);
+        document.getElementById('tab4').classList.remove('v-tab--active');
+        document.getElementById('tab5').setAttribute('aria-selected', true);
+        document.getElementById('tab5').classList.add('v-tab--active');
+        document.getElementById('tab6').setAttribute('aria-selected', false);
+        document.getElementById('tab6').classList.remove('v-tab--active');
+      } else if (this.toTop >= 2000) {
+        this.tabTitle = '기타';
+        document.getElementById('tab1').setAttribute('aria-selected', false);
+        document.getElementById('tab1').classList.remove('v-tab--active');
+        document.getElementById('tab2').setAttribute('aria-selected', false);
+        document.getElementById('tab2').classList.remove('v-tab--active');
+        document.getElementById('tab3').setAttribute('aria-selected', false);
+        document.getElementById('tab3').classList.remove('v-tab--active');
+        document.getElementById('tab4').setAttribute('aria-selected', false);
+        document.getElementById('tab4').classList.remove('v-tab--active');
+        document.getElementById('tab5').setAttribute('aria-selected', false);
+        document.getElementById('tab5').classList.remove('v-tab--active');
+        document.getElementById('tab6').setAttribute('aria-selected', true);
+        document.getElementById('tab6').classList.add('v-tab--active');
+      } else {
+        this.tabTitle = '아동/청소년';
+        document.getElementById('tab1').setAttribute('aria-selected', true);
+        document.getElementById('tab1').classList.add('v-tab--active');
+        document.getElementById('tab2').setAttribute('aria-selected', false);
+        document.getElementById('tab2').classList.remove('v-tab--active');
+        document.getElementById('tab3').setAttribute('aria-selected', false);
+        document.getElementById('tab3').classList.remove('v-tab--active');
+        document.getElementById('tab4').setAttribute('aria-selected', false);
+        document.getElementById('tab4').classList.remove('v-tab--active');
+        document.getElementById('tab5').setAttribute('aria-selected', false);
+        document.getElementById('tab5').classList.remove('v-tab--active');
+        document.getElementById('tab6').setAttribute('aria-selected', false);
+        document.getElementById('tab6').classList.remove('v-tab--active');
+      }
+    },
+  },
+  beforeDestroy: function() {
+    window.removeEventListener('scroll', this.handleScroll);
   },
   watch: {
     page(page) {
