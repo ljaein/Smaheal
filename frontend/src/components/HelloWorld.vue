@@ -244,20 +244,7 @@
 
         <div class="py-12"></div>
       </section>
-
-      <v-sheet id="contact" color="#333333" dark tag="section" tile>
-        <div class="py-12"></div>
-        <div class="py-12"></div>
-      </v-sheet>
     </v-main>
-
-    <v-footer class="justify-center" color="#292929" height="100">
-      <div
-        class="title font-weight-light grey--text text--lighten-1 text-center"
-      >
-        &copy; {{ new Date().getFullYear() }} — SmaHeal — Made with 💜 by 미찾사
-      </div>
-    </v-footer>
   </v-container>
 </template>
 <script>

@@ -1,8 +1,101 @@
 <template>
   <v-app>
-    <v-app-bar app color="white" height="100">
+    <v-app-bar app class="d-block d-md-none"
+      ><v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-btn @click="goHome()" class="headline" color="amber accent-4" text align-center
+        >SmaHeal</v-btn
+      >
+    </v-app-bar>
+    
+    <v-navigation-drawer v-model="drawer" absolute temporary>
+      <div v-if="getProfile" class="text-center">
+        <v-btn block dark depressed color="amber" @click="logout">
+          LOGOUT
+        </v-btn>
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title class="title">
+              {{ getUserID }} 님
+            </v-list-item-title>
+            <v-list-item-subtitle>
+              환영합니다!
+            </v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </div>
+      <div v-else class="text-center">
+        <v-btn block dark depressed color="amber" @click="goLogin">
+          LOGIN
+        </v-btn>
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title class="title">
+              로그인을 해주세요
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </div>
+      <v-list nav dense rounded>
+        <v-list-item-group
+          v-model="group"
+          active-class="amber--text text--accent-4"
+        >
+          <v-list-item @click="goHome()">
+            <v-list-item-icon>
+              <v-icon>mdi-home</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>메인 화면</v-list-item-title>
+          </v-list-item>
 
-      <v-btn @click="goHome()" class="headline" color="amber accent-4" text>SmaHeal</v-btn>
+          <v-list-item @click="goDonationList()">
+            <v-list-item-icon>
+              <v-icon>mdi-clipboard-text</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>기부 게시판</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item @click="goReviewList()">
+            <v-list-item-icon>
+              <v-icon>mdi-message-draw</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>후기 게시판</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item @click="goNotice()">
+            <v-list-item-icon>
+              <v-icon>mdi-clipboard-alert</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>공지사항</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item v-if="getProfile != '관리자'" @click="goMyPage">
+            <v-list-item-icon>
+              <v-icon>mdi-clipboard-account</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>마이페이지</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item v-if="getProfile == '관리자'" @click="goAdminPage">
+            <v-list-item-icon>
+              <v-icon>mdi-clipboard-account</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>마이페이지</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item v-if="isSmileKing" @click="goAward()">
+            <v-list-item-icon>
+              <v-icon>mdi-seal</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>상장 보기</v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-app-bar app color="white" height="100" class="d-none d-md-block">
+      <v-btn @click="goHome()" class="headline" color="amber accent-4" text
+        >SmaHeal</v-btn
+      >
 
       <v-spacer></v-spacer>
 
@@ -26,11 +119,11 @@
         <span class="mr-2 font-weight-bold">공지사항</span>
       </v-btn>
 
-      <v-btn v-if="getProfile!='관리자'" @click="goMyPage" text>
+      <v-btn v-if="getProfile != '관리자'" @click="goMyPage" text>
         <span class="mr-2 font-weight-bold">마이페이지</span>
       </v-btn>
 
-      <v-btn v-if="getProfile=='관리자'" @click="goAdminPage" text>
+      <v-btn v-if="getProfile == '관리자'" @click="goAdminPage" text>
         <span class="mr-2 font-weight-bold">관리자페이지</span>
       </v-btn>
 
@@ -58,7 +151,9 @@
       <v-icon color="white" class="mr-1">mdi-emoticon-excited-outline</v-icon>
       {{ getProfile + "님 반갑습니다." }}
       <template v-slot:action="{ attrs }">
-        <v-btn color="white" text v-bind="attrs" @click="loginSuccess = false">Close</v-btn>
+        <v-btn color="white" text v-bind="attrs" @click="loginSuccess = false"
+          >Close</v-btn
+        >
       </template>
     </v-snackbar>
 
@@ -70,9 +165,12 @@
       v-model="logoutSuccess"
       timeout="3000"
     >
-      <v-icon color="white" class="mr-1">mdi-check-bold</v-icon>정상적으로 로그아웃 되었습니다.
+      <v-icon color="white" class="mr-1">mdi-check-bold</v-icon>정상적으로
+      로그아웃 되었습니다.
       <template v-slot:action="{ attrs }">
-        <v-btn color="white" text v-bind="attrs" @click="logoutSuccess = false">Close</v-btn>
+        <v-btn color="white" text v-bind="attrs" @click="logoutSuccess = false"
+          >Close</v-btn
+        >
       </template>
     </v-snackbar>
 
@@ -97,6 +195,13 @@
       </template>
       <span>기부 사진 템플릿 찾기</span>
     </v-tooltip>
+    <v-footer class="justify-center" color="#292929" height="100">
+      <div
+        class="title font-weight-light grey--text text--lighten-1 text-center"
+      >
+        &copy; {{ new Date().getFullYear() }} — SmaHeal — Made with 💜 by 미찾사
+      </div>
+    </v-footer>
   </v-app>
 </template>
 
@@ -108,17 +213,17 @@ import http from "@/util/http-common.js";
 
 export default {
   name: "App",
-  components: {
-    
-  },
-  data(){
-    return{
+  components: {},
+  data() {
+    return {
       logoutSuccess: false,
       loginSuccess: false,
       isSmileKing: false,
-    }
+      drawer: false,
+      group: null
+    };
   },
-  created(){
+  created() {
     this.$store.dispatch(USER_UPDATE, this.getUserID).then(() => {});
     http
       .get(`/smile/smileKing`)
@@ -140,17 +245,17 @@ export default {
       this.$router.push("/donationDetail").catch(() => {});
     },
     goLogin() {
-      this.$router.push('/login').catch(() => {}); 
+      this.$router.push("/login").catch(() => {});
     },
     goNotice() {
-      this.$router.push('/notice').catch(() => {})
+      this.$router.push("/notice").catch(() => {});
     },
     goHome() {
-      this.$router.push('/').catch(() => {})
-      scroll(0,0)
+      this.$router.push("/").catch(() => {});
+      scroll(0, 0);
     },
-    goDonationList(){
-      this.$router.push('/donationList')
+    goDonationList() {
+      this.$router.push("/donationList").catch(() => {});
     },
     logout: function() {
       this.$store.dispatch(AUTH_LOGOUT).then(() => {
@@ -159,19 +264,19 @@ export default {
       this.$router.push("/").catch(() => {});
     },
     goReviewList() {
-      this.$router.push('/reviewList').catch(() => {}); 
+      this.$router.push("/reviewList").catch(() => {});
     },
-    goMyPage(){
-      this.$router.push('/myPage').catch(() => {}); 
+    goMyPage() {
+      this.$router.push("/myPage").catch(() => {});
     },
-    goAdminPage(){
-      this.$router.push('/adminPage').catch(() => {}); 
-    },    
+    goAdminPage() {
+      this.$router.push("/adminPage").catch(() => {});
+    },
     goSearchTemplate() {
-      this.$router.push('/template').catch(() => {});
+      this.$router.push("/template").catch(() => {});
     },
     goAward() {
-      this.$router.push('/award').catch(() => {});
+      this.$router.push("/award").catch(() => {});
     }
   },
   computed: {
@@ -182,7 +287,7 @@ export default {
       "getRealName",
       "getUserNum",
       "getUserID",
-      "getUserBirth",
+      "getUserBirth"
     ]),
     ...mapState({
       authLoading: state => state.auth.status === "loading",
@@ -190,8 +295,8 @@ export default {
       userNum: state => `${state.user.getUserNum}`,
       userName: state => `${state.user.getRealName}`,
       userID: state => `${state.user.getUserID}`,
-      userBirth: state => `${state.user.getUserBirth}`,
-    }),
+      userBirth: state => `${state.user.getUserBirth}`
+    })
   },
   watch: {
     getProfile: function() {
@@ -201,16 +306,18 @@ export default {
         this.loginSuccess = true;
       }
     },
-
+    group() {
+      this.drawer = false;
+    }
   }
 };
 </script>
 <style>
-#app{
-  font-family: 'Nanum Gothic', sans-serif;
-  font-weight:bold;
+#app {
+  font-family: "Nanum Gothic", sans-serif;
+  font-weight: bold;
 }
-html{
+html {
   scroll-behavior: smooth;
 }
 </style>
