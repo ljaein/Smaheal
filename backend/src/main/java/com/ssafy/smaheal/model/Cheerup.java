@@ -1,5 +1,8 @@
 package com.ssafy.smaheal.model;
 
+import java.time.LocalDate;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,4 +23,6 @@ public class Cheerup {
     private Long donationid;
     private String msg;
     private String userId;
+    @Column(insertable = false, updatable = false)
+    private LocalDate createdate;
 }
