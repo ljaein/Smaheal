@@ -3,9 +3,9 @@
     <!-- 카테고리 -->
     <v-row justify="center">
       <v-col cols="12" class="pb-0">
-        <v-chip color="#356859" text-color="white"><v-icon left>
-        mdi-label
-      </v-icon>{{ donation.category }}</v-chip>
+        <v-chip color="#356859" text-color="white"
+          ><v-icon left> mdi-label </v-icon>{{ donation.category }}</v-chip
+        >
       </v-col>
     </v-row>
     <!-- 제목 -->
@@ -67,24 +67,34 @@
       <v-col cols="8">
         <body data-spy="scroll" data-target=".navbar" data-offset="50">
           <div class="section1 container-fluid">
-            <h3 style="font-family: 'Nanum Gothic';font-weight:bold;" class="mb-5">
+            <h3
+              style="font-family: 'Nanum Gothic';font-weight:bold;"
+              class="mb-5"
+            >
               상세내용
             </h3>
-            {{ donation.content }}
+            <span style="font-size:1rem;font-weight:bold;font-family: 'Nanum Gothic';">{{ donation.content }}</span>
           </div>
           <v-divider></v-divider>
           <div id="section2" class="container-fluid">
-            <h3 style="font-family: 'Nanum Gothic';font-weight:bold;" class="mb-5">
+            <h3
+              style="font-family: 'Nanum Gothic';font-weight:bold;"
+              class="mb-5"
+            >
               주소
             </h3>
-            {{ donation.address }}
+            <div id="map" style="max-width: 100%; height:350px; z-index:0" class="mb-2"></div>
+            <span style="font-size:1rem;font-weight:bold;font-family: 'Nanum Gothic';">{{ donation.address }}</span>
           </div>
           <v-divider></v-divider>
           <div id="section3" class="container-fluid">
-            <h3 style="font-family: 'Nanum Gothic';font-weight:bold;" class="mb-5">
+            <h3
+              style="font-family: 'Nanum Gothic';font-weight:bold;"
+              class="mb-5"
+            >
               응원메세지
             </h3>
-            
+
             <v-list-item v-for="(msg, i) in msgs" :key="i" class="px-0">
               <v-list-item-content class="pb-0">
                 <v-row
@@ -342,6 +352,7 @@
   </v-container>
 </template>
 
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a0064e7e9af3feb23b87a09d13dbc1b1&libraries=services"></script>
 <script>
 import http from "@/util/http-common.js";
 import { mapGetters, mapState } from "vuex";
@@ -368,7 +379,7 @@ export default {
       modifyFlag: false,
       tempMsg: [],
       temp: "",
-      msgFlag: false
+      msgFlag: false,
     };
   },
 
@@ -390,6 +401,8 @@ export default {
             .substring(0, this.donation.img.length - 1)
             .split("|");
           this.calDay();
+          this.addScript();
+          this.initMap()
         })
         .catch(err => {
           console.log(err);
@@ -506,12 +519,48 @@ export default {
     getImg(img) {
       return "../../../contents/" + img;
     },
-    makedate(date) {
-      var arr = date.split("-");
-      return arr[0] + "년 " + arr[1] + "월 " + arr[2] + "일";
+    makedate(ndate) {
+      if (ndate != null) {
+        var arr = ndate.split("-");
+        return arr[0] + "년 " + arr[1] + "월 " + arr[2] + "일";
+      }
+    },
+    initMap() {
+      var loc = this.donation.address;
+      var container = document.getElementById("map");
+      var options = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667),
+        level: 3
+      };
+      var map = new kakao.maps.Map(container, options); //마커추가하려면 객체를 아래와 같이 하나 만든다.
+      var geocoder = new kakao.maps.services.Geocoder();
+
+      // 주소로 좌표를 검색합니다
+      geocoder.addressSearch(loc, function(result, status) {
+        // 정상적으로 검색이 완료됐으면
+        if (status === kakao.maps.services.Status.OK) {
+          var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+          var marker = new kakao.maps.Marker({
+            map: map,
+            position: coords
+          });
+          map.setCenter(coords);
+        }
+      });
+    },
+    addScript() {
+      const script = document.createElement("script");
+      script.onload = () => kakao.maps.load(this.initMap);
+      script.src =
+        "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=a0064e7e9af3feb23b87a09d13dbc1b1&libraries=services";
+      document.head.appendChild(script);
     }
   },
   watch: {},
+  // mounted() {
+  //   window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
+  // },
+
   computed: {
     ...mapGetters(["getUserID"]),
     ...mapState({
