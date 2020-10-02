@@ -10,6 +10,10 @@
         <span class="mr-2">ai_video test</span>
       </v-btn> -->
 
+      <v-btn v-if="isSmileKing" @click="goAward()" text>
+        <span class="mr-2 font-weight-bold">상장 보기</span>
+      </v-btn>
+
       <v-btn @click="goDonationList()" text>
         <span class="mr-2 font-weight-bold">기부 게시판</span>
       </v-btn>
@@ -100,7 +104,7 @@
 import { mapGetters, mapState } from "vuex";
 import { AUTH_LOGOUT } from "./store/actions/auth";
 import { USER_UPDATE } from "@/store/actions/user";
-
+import http from "@/util/http-common.js";
 
 export default {
   name: "App",
@@ -111,10 +115,24 @@ export default {
     return{
       logoutSuccess: false,
       loginSuccess: false,
+      isSmileKing: false,
     }
   },
   created(){
     this.$store.dispatch(USER_UPDATE, this.getUserID).then(() => {});
+    http
+      .get(`/smile/smileKing`)
+      .then(res => {
+        const smileKing = res.data;
+        for (const smile of smileKing) {
+          if (smile.userId == this.getUserID) {
+            this.isSmileKing = true;
+          }
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   },
   methods: {
     goDonationBoardDetail: function() {
@@ -138,7 +156,7 @@ export default {
       this.$store.dispatch(AUTH_LOGOUT).then(() => {
         this.drawer = false;
       });
-      this.$router.push("/");
+      this.$router.push("/").catch(() => {});
     },
     goReviewList() {
       this.$router.push('/reviewList').catch(() => {}); 
@@ -151,6 +169,9 @@ export default {
     },    
     goSearchTemplate() {
       this.$router.push('/template').catch(() => {});
+    },
+    goAward() {
+      this.$router.push('/award').catch(() => {});
     }
   },
   computed: {

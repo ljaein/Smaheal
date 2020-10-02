@@ -24,6 +24,7 @@ import AdminPage from "../views/admin/AdminPage.vue"
 import TestCount from "../views/smile/testCount.vue"
 import search from "../views/template/search.vue"
 import templateSearch from "../views/template/templateSearch.vue"
+import Award from "../views/smile/Award.vue"
 
 Vue.use(VueRouter);
 
@@ -151,6 +152,11 @@ const routes = [{
         path: "/template/search",
         name: "templateSearch",
         component: templateSearch
+    },
+    {
+        path: "/award",
+        name: "Award",
+        component: Award
     },
 ];
 
