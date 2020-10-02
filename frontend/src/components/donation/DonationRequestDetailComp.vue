@@ -73,7 +73,10 @@
             >
               상세내용
             </h3>
-            <span style="font-size:1rem;font-weight:bold;font-family: 'Nanum Gothic';">{{ donation.content }}</span>
+            <span
+              style="font-size:1rem;font-weight:bold;font-family: 'Nanum Gothic';"
+              >{{ donation.content }}</span
+            >
           </div>
           <v-divider></v-divider>
           <div id="section2" class="container-fluid">
@@ -83,20 +86,27 @@
             >
               주소
             </h3>
-            <div id="map" style="max-width: 100%; height:350px; z-index:0" class="mb-2"></div>
-            <span style="font-size:1rem;font-weight:bold;font-family: 'Nanum Gothic';">{{ donation.address }}</span>
+            <div
+              id="map"
+              style="max-width: 100%; height:350px; z-index:0"
+              class="mb-2"
+            ></div>
+            <span
+              style="font-size:1rem;font-weight:bold;font-family: 'Nanum Gothic';"
+              >{{ donation.address }}</span
+            >
           </div>
           <v-divider></v-divider>
           <div id="section3" class="container-fluid">
             <h3
-              style="font-family: 'Nanum Gothic';font-weight:bold;"
+              style="font-family:'Nanum Gothic';font-weight:bold;"
               class="mb-5"
             >
               응원메세지
             </h3>
 
-            <v-list-item v-for="(msg, i) in msgs" :key="i" class="px-0">
-              <v-list-item-content class="pb-0">
+            <v-list-item v-for="(msg, i) in msgs" :key="i">
+              <v-list-item-content class="pb-0" style="display:block">
                 <v-row
                   class="d-flex justify-content-between"
                   style="font-size:1rem;"
@@ -183,7 +193,8 @@
                 <v-card-text style="font-weight:bold;">
                   <v-text-field
                     v-model="tempMsg.msg"
-                    :counter="50"
+                    counter
+                    maxlength="50"
                   ></v-text-field>
                 </v-card-text>
                 <v-card-actions>
@@ -208,12 +219,14 @@
             <!-- 메세지 입력 -->
             <v-row class="d-flex align-items-center my-auto p-3 ">
               <v-text-field
-                :counter="50"
+                counter
+                maxlength="50"
                 prepend-icon="mdi-comment"
                 name="cheerup"
                 placeholder="응원의 메세지를 입력하세요"
                 v-model="cheerup"
                 color="lightgray"
+                style="font-family: 'Nanum Gothic';"
               ></v-text-field>
               <div>
                 <v-btn
@@ -379,7 +392,7 @@ export default {
       modifyFlag: false,
       tempMsg: [],
       temp: "",
-      msgFlag: false,
+      msgFlag: false
     };
   },
 
@@ -402,7 +415,7 @@ export default {
             .split("|");
           this.calDay();
           this.addScript();
-          this.initMap()
+          this.initMap();
         })
         .catch(err => {
           console.log(err);
