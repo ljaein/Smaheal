@@ -86,7 +86,7 @@ public class SmileController {
 			
 			Smile smile = new Smile();
 			smile.setUserId(request.getUserId());
-			smile.setDonationid(did);
+			smile.setDonationid(didd);
 			smile.setPhoto(request.getPhoto());
 			smile.setSmileper(request.getSmileper());
 			smile.setComment(request.getComment());
