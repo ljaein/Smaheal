@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex justify-content-center">
     <v-container fluid class="mt-0 col-md-11">
-      <v-card class="topbar">
+      <v-card class="topbar d-none d-md-block">
         <v-toolbar color="#fffbe6" flat>
           <v-toolbar-title class="pl-5 tab-text basil--text">후기 게시판</v-toolbar-title>
           <v-spacer></v-spacer>

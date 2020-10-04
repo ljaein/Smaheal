@@ -7,7 +7,7 @@
       >
     </v-app-bar>
     
-    <v-navigation-drawer v-model="drawer" absolute temporary>
+    <v-navigation-drawer v-model="drawer" relative temporary app fixed style="overflow: auto;">
       <div v-if="getProfile" class="text-center">
         <v-btn block dark depressed color="amber" @click="logout">
           LOGOUT
