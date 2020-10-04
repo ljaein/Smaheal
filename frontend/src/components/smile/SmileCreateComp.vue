@@ -881,7 +881,7 @@ export default {
                 //긍정 60프로 이상
                 http
                   .post("/smile/regist", {
-                    user_id: this.uid,
+                    userId: this.uid,
                     donationid: this.donationid,
                     photo: this.selfieCapture[0],
                     smileper: this.selfieCapture[2],
@@ -923,7 +923,7 @@ export default {
             //긍정 60프로 이상
             http
             .post("/smile/autoRegist", {
-              user_id: this.uid,
+              userId: this.uid,
               donationid: this.donationid,
               photo: this.autoCapture.url,
               smileper: this.autoCapture.per,

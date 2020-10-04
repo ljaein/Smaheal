@@ -1,7 +1,69 @@
 <template>
   <v-container fluid class="col-md-11">
     <v-form>
+      <div class="d-block d-md-none">
+        <v-row class="mb-5 mt-3 d-flex justify-content-center"
+        style="border:1px solid lightgray; ">
+        <v-col align="center" class="m-0 my-auto pl-5">
+          <span style="color:#356859; font-size:2rem;">{{ getUserID }}</span
+          ><span style="font-size:1.5rem;"> 님의 회원등급은</span><br />
+          <span
+            style="font-size:1.5rem; vertical-align:middle; display:inline-flex;"
+            ><v-icon style="color:#ffd700">mdi-crown-outline</v-icon>{{ grade
+            }}<v-icon style="color:#ffd700" class="mr-2"
+              >mdi-crown-outline</v-icon
+            >입니다.</span
+          >
+        </v-col>
+        </v-row>
+        <v-row class="mb-5 mt-3 d-flex justify-content-center"
+        style="border:1px solid lightgray; ">
+          <v-col
+            cols="3"
+            class="my-auto"
+            align="center"
+            style="border-right:1px solid lightgray;"
+          >
+            <v-icon class="mb-2" style="font-size:3rem;"
+              >mdi-account-circle-outline</v-icon
+            ><br />
+            <span style="font-size:1rem;">이름</span><br />
+            <span style="font-size:1.5rem;">{{ name }}</span>
+          </v-col>
+          <v-col
+          cols="3"
+          class="my-auto"
+          align="center"
+          style="border-right:1px solid lightgray;"
+        >
+          <v-icon class="mb-2" style="font-size:3rem;"
+            >mdi-card-account-details-outline</v-icon
+          ><br />
+          <span style="font-size:1rem;">닉네임</span><br />
+          <span style="font-size:1.5rem;">{{ nickName }}</span>
+        </v-col>
+        <v-col
+          cols="3"
+          class="my-auto"
+          align="center"
+          style="border-right:1px solid lightgray;"
+        >
+          <v-icon class="mb-2" style="font-size:3rem;">mdi-cake-variant</v-icon
+          ><br />
+          <span style="font-size:1rem;">생일</span><br />
+          <span style="font-size:1.5rem;">{{ mobileBirth }}</span>
+        </v-col>
+        <v-col cols="3" class="my-auto" align="center">
+          <v-icon class="mb-2" style="font-size:3rem;"
+            >mdi-hand-heart-outline</v-icon
+          ><br />
+          <span style="font-size:1rem;">기부횟수</span><br />
+          <span style="font-size:1.5rem;">총 {{ smileCnt }}회</span>
+        </v-col>
+        </v-row>
+      </div>
       <!-- 내 정보 -->
+      <div class="d-none d-md-block">
       <v-row
         class="mb-5 mt-3 d-flex justify-content-center"
         style="border:1px solid lightgray; height:10rem;"
@@ -60,6 +122,7 @@
           <span style="font-size:1.5rem;">총 {{ smileCnt }}회</span>
         </v-col>
       </v-row>
+      </div>
       <v-row>
         <v-card style="width:100%">
           <v-tabs
@@ -93,6 +156,12 @@
                 mdi-image
               </v-icon> -->
             </v-tab>
+            <v-tab style="font-weight:bold;" v-if="isSmileKing">
+              <v-badge color="red" icon="mdi-medal" content="new">
+                웃음왕 선정
+              </v-badge>
+              
+            </v-tab>
 
             <v-tab-item>
               <MySmileComp />
@@ -105,6 +174,9 @@
             </v-tab-item>
             <v-tab-item>
               <MyDonationComp />
+            </v-tab-item>
+            <v-tab-item v-if="isSmileKing">
+              <AwardComp />
             </v-tab-item>
           </v-tabs>
         </v-card>
@@ -137,7 +209,11 @@
           <v-card-text></v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn style="color:crimson; font-weight:bold;" text @click="signOut()">
+            <v-btn
+              style="color:crimson; font-weight:bold;"
+              text
+              @click="signOut()"
+            >
               탈퇴
             </v-btn>
             <v-btn style="font-weight:bold;" text @click="dialog = false">
@@ -159,13 +235,16 @@ import TempComp from "@/components/account/TempComp.vue";
 import MySmileComp from "@/components/account/MySmileComp.vue";
 import MyDonationComp from "@/views/account/DonationList.vue";
 import ReviewToMeComp from "@/components/account/ReviewToMeComp.vue";
+import AwardComp from "@/components/smile/AwardComp.vue";
+
 export default {
   name: "MyPageComp",
   components: {
     TempComp,
     MySmileComp,
     MyDonationComp,
-    ReviewToMeComp
+    ReviewToMeComp,
+    AwardComp
   },
   data() {
     return {
@@ -176,7 +255,9 @@ export default {
       birth: new Date().toISOString().substr(0, 10),
       smileCnt: 0,
       grade: "",
-      dialog:false
+      dialog: false,
+      isSmileKing: false,
+      mobileBirth: new Date().toISOString().substr(5, 5),
     };
   },
   created() {
@@ -201,18 +282,35 @@ export default {
       .catch(err => {
         console.log(err);
       });
+    http
+      .get(`/smile/smileKing`)
+      .then(res => {
+        const smileKing = res.data;
+        for (const smile of smileKing) {
+          if (smile.userId == this.getUserID) {
+            this.isSmileKing = true;
+          }
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   },
   mounted() {
     this.name = this.getRealName;
     this.nickName = this.getProfile;
     this.birth = this.getFormatDate(this.getUserBirth);
+    this.mobileBirth = this.getFormatDateMD(this.getUserBirth);
   },
   methods: {
+    getFormatDateMD(regtime) {
+      return new Date(regtime).toISOString().substr(5, 5);
+    },
     getFormatDate(joinedAt) {
       return new Date(joinedAt).toISOString().substr(0, 10);
     },
     signOut() {
-      this.dialog=true;
+      this.dialog = true;
       http
         .delete(`/user/delete/${this.getUserNum}`)
         .then(() => {

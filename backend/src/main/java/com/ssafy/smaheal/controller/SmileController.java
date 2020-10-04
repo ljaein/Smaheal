@@ -45,6 +45,7 @@ public class SmileController {
 
 	@Autowired
 	private SmileRepository smileRepository;
+	@Autowired
 	private DonationRepository donationRepository;
 	public static List camList = new LinkedList<>();
 	public static List selfList = new LinkedList<>();
@@ -91,6 +92,13 @@ public class SmileController {
 			smile.setAgreement(request.getAgreement());
 			smile.setTitle(donationRepository.findByDonationid(request.getDonationid()).getTitle());
 			smileRepository.save(smile);
+
+			Donation donation = new Donation();
+			donation = donationRepository.findByDonationid(request.getDonationid());
+			int nowCnt = donation.getNowcnt();
+			donation.setNowcnt(nowCnt + 1);
+			donationRepository.save(donation);
+			
 			return new ResponseEntity<>(smile, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -112,8 +120,8 @@ public class SmileController {
 			smileRepository.save(smile);
 
 			Donation donation = new Donation();
-			int nowCnt = donation.getNowcnt();
 			donation = donationRepository.findByDonationid(request.getDonationid());
+			int nowCnt = donation.getNowcnt();
 			donation.setNowcnt(nowCnt + 1);
 			donationRepository.save(donation);
 
