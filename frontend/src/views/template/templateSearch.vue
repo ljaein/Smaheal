@@ -1,5 +1,5 @@
 <template>
-    <v-container v-if="this.totalCnt != 0">
+    <v-container v-if="this.totalCnt != 0" class="mt-5">
       <v-row>
           <v-col>
               총 {{this.totalCnt}}개의 사진에 대한 결과입니다.
