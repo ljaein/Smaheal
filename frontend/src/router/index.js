@@ -26,6 +26,7 @@ import search from "../views/template/search.vue"
 import templateSearch from "../views/template/templateSearch.vue"
 import Award from "../views/smile/Award.vue"
 import TempDetailComp from "../components/account/TempDetailComp.vue"
+import ebookComp from "../components/template/ebookComp.vue"
 
 Vue.use(VueRouter);
 
@@ -163,6 +164,11 @@ const routes = [{
         path: "/tempDetailComp/:ID",
         name: "TempDetailComp",
         component: TempDetailComp
+    },
+    {
+        path: "/ebook",
+        name: "ebookComp",
+        component: ebookComp
     },
 ];
 
