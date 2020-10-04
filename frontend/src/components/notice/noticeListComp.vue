@@ -108,7 +108,7 @@ export default {
   watch: {
     currentPage: function(currentPage) {
       this.previousPage = currentPage - 1;
-      this.limit = this.previousPage * 6;
+      this.limit = this.previousPage * 10;
 
       http
         .get(`/notice/findAll/${this.limit}`)
@@ -122,10 +122,10 @@ export default {
   },
   created() {
     http.get("/notice/getCount").then(({ data }) => {
-      if (data % 6 == 0) {
-        this.totalPage = Math.floor(data / 6);
+      if (data % 10 == 0) {
+        this.totalPage = Math.floor(data / 10);
       } else {
-        this.totalPage = Math.floor(data / 6) + 1;
+        this.totalPage = Math.floor(data / 10) + 1;
       }
     });
   },
