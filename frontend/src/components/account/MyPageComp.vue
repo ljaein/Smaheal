@@ -256,7 +256,7 @@ export default {
       smileCnt: 0,
       grade: "",
       dialog: false,
-      isSmileKing: false
+      isSmileKing: false,
       mobileBirth: new Date().toISOString().substr(5, 5),
     };
   },
