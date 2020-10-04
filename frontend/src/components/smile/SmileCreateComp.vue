@@ -886,6 +886,7 @@ export default {
                     photo: this.selfieCapture[0],
                     smileper: this.selfieCapture[2],
                     comment: this.comment,
+                    title: '',
                     agreement: this.kingFlag ? 1 : 0
                   })
                   .then(res => {
@@ -928,6 +929,7 @@ export default {
               photo: this.autoCapture.url,
               smileper: this.autoCapture.per,
               comment: this.comment,
+              title: '',
               agreement: this.kingFlag ? 1 : 0
             })
             .then(res => {
