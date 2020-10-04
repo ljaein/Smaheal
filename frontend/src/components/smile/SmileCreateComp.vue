@@ -927,7 +927,6 @@ export default {
               donationid: this.donationid,
               photo: this.autoCapture.url,
               smileper: this.autoCapture.per,
-              title: '',
               comment: this.comment,
               agreement: this.kingFlag ? 1 : 0
             })
