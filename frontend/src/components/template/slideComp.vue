@@ -21,7 +21,7 @@
             <v-img
                 class="white--text align-end"
                 height="250px"
-                :src="require(`../../../public/images/${item.photo}`)"
+                :src="`/var/lib/jenkins/workspace/maven-test/frontend/public/images/${item.photo}`"
             >
             </v-img>
             <v-card-title>{{item.userId}}
