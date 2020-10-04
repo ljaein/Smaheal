@@ -90,17 +90,17 @@
         <div class="py-12"></div>
       </section> -->
 
-      <section id="features" class="grey lighten-3">
+      <section id="features" style="background-color:#fffbe6;">
         <div class="py-12"></div>
 
         <v-container class="text-center">
-          <h2 class="display-2 font-weight-bold mb-3">SMAHEAL FEATURES</h2>
+          <!-- <h2 class="display-2 font-weight-bold mb-3">SMAHEAL FEATURES</h2>
 
           <v-responsive class="mx-auto mb-12" width="56">
             <v-divider class="mb-1"></v-divider>
 
             <v-divider></v-divider>
-          </v-responsive>
+          </v-responsive> -->
 
           <v-row>
             <v-col
@@ -109,10 +109,10 @@
               cols="12"
               md="4"
             >
-              <v-card class="py-12 px-4" color="grey lighten-5" flat>
+              <v-card class="py-12 px-4 rounded-lg" flat style="background-color:#fffbe6; border:3px solid #356859">
                 <v-theme-provider dark>
                   <div>
-                    <v-avatar color="amber accent-4" size="88">
+                    <v-avatar color="#356859" size="88">
                       <v-icon large v-text="icon"></v-icon>
                     </v-avatar>
                   </div>
@@ -123,7 +123,7 @@
                   v-text="title"
                 ></v-card-title>
 
-                <v-card-text class="subtitle-1" v-text="text"> </v-card-text>
+                <v-card-text class="font-weight-black" style="font-size:1rem; line-height:2rem; word-spacing:2px; " v-text="text"> </v-card-text>
               </v-card>
             </v-col>
           </v-row>
@@ -193,9 +193,10 @@
         </v-parallax>
       </section>
 
-      <section id="smileKing">
-        <div class="py-12"></div>
+      <section id="smileKing" style="background-color:#fffbe6;">
+        <div class="py-5"></div>
         <SmileKingComp />
+        <div class="py-5"></div>
       </section>
 
       <!-- <section id="blog">
@@ -350,4 +351,5 @@ export default {
   margin: 0;
   color: white;
 }
+
 </style>

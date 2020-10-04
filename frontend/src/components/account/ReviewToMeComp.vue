@@ -24,14 +24,14 @@
                 <div class="d-flex justify-content-between mt-1">
                   <div style="font-size:1rem;" class="d-flex">
                     <div class="detail-title">
-                      <v-icon class="mr-1" style="font-size:1.2rem;"
+                      <v-icon class="mr-1" style="font-size:1.2rem;color:#f25278"
                         >mdi-thumb-up</v-icon
-                      >{{ review.likeCnt }}
+                      ><span style="color:#f25278;">{{ review.likeCnt }}</span>
                     </div>
                     <div class="ml-4 detail-title">
-                      <v-icon class="mr-1" style="font-size:1.2rem;"
+                      <v-icon class="mr-1" style="font-size:1.2rem;color:#151757"
                         >mdi-eye</v-icon
-                      >{{ review.visit }}
+                      ><span style="color:#151757;">{{ review.visit }}</span>
                     </div>
                   </div>
                   <div align="right">{{ review.createdAt.split("T")[0] }}</div>

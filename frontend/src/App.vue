@@ -82,12 +82,12 @@
             <v-list-item-title>마이페이지</v-list-item-title>
           </v-list-item>
 
-          <v-list-item v-if="isSmileKing" @click="goAward()">
+          <!-- <v-list-item v-if="isSmileKing" @click="goAward()">
             <v-list-item-icon>
               <v-icon>mdi-seal</v-icon>
             </v-list-item-icon>
             <v-list-item-title>상장 보기</v-list-item-title>
-          </v-list-item>
+          </v-list-item> -->
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
@@ -103,9 +103,9 @@
         <span class="mr-2">ai_video test</span>
       </v-btn> -->
 
-      <v-btn v-if="isSmileKing" @click="goAward()" text>
+      <!-- <v-btn v-if="isSmileKing" @click="goAward()" text>
         <span class="mr-2 font-weight-bold">상장 보기</span>
-      </v-btn>
+      </v-btn> -->
 
       <v-btn @click="goDonationList()" text>
         <span class="mr-2 font-weight-bold">기부 게시판</span>
