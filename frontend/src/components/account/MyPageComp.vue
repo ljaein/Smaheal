@@ -156,6 +156,12 @@
                 mdi-image
               </v-icon> -->
             </v-tab>
+            <v-tab style="font-weight:bold;" v-if="isSmileKing">
+              <v-badge color="red" icon="mdi-medal" content="new">
+                웃음왕 선정
+              </v-badge>
+              
+            </v-tab>
 
             <v-tab-item>
               <MySmileComp />
@@ -168,6 +174,9 @@
             </v-tab-item>
             <v-tab-item>
               <MyDonationComp />
+            </v-tab-item>
+            <v-tab-item v-if="isSmileKing">
+              <AwardComp />
             </v-tab-item>
           </v-tabs>
         </v-card>
@@ -200,7 +209,11 @@
           <v-card-text></v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn style="color:crimson; font-weight:bold;" text @click="signOut()">
+            <v-btn
+              style="color:crimson; font-weight:bold;"
+              text
+              @click="signOut()"
+            >
               탈퇴
             </v-btn>
             <v-btn style="font-weight:bold;" text @click="dialog = false">
@@ -222,6 +235,7 @@ import TempComp from "@/components/account/TempComp.vue";
 import MySmileComp from "@/components/account/MySmileComp.vue";
 import MyDonationComp from "@/views/account/DonationList.vue";
 import ReviewToMeComp from "@/components/account/ReviewToMeComp.vue";
+import AwardComp from "@/components/smile/AwardComp.vue";
 
 export default {
   name: "MyPageComp",
@@ -229,7 +243,8 @@ export default {
     TempComp,
     MySmileComp,
     MyDonationComp,
-    ReviewToMeComp
+    ReviewToMeComp,
+    AwardComp
   },
   data() {
     return {
@@ -240,7 +255,8 @@ export default {
       birth: new Date().toISOString().substr(0, 10),
       smileCnt: 0,
       grade: "",
-      dialog:false,
+      dialog: false,
+      isSmileKing: false
       mobileBirth: new Date().toISOString().substr(5, 5),
     };
   },
@@ -266,6 +282,19 @@ export default {
       .catch(err => {
         console.log(err);
       });
+    http
+      .get(`/smile/smileKing`)
+      .then(res => {
+        const smileKing = res.data;
+        for (const smile of smileKing) {
+          if (smile.userId == this.getUserID) {
+            this.isSmileKing = true;
+          }
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   },
   mounted() {
     this.name = this.getRealName;
@@ -281,7 +310,7 @@ export default {
       return new Date(joinedAt).toISOString().substr(0, 10);
     },
     signOut() {
-      this.dialog=true;
+      this.dialog = true;
       http
         .delete(`/user/delete/${this.getUserNum}`)
         .then(() => {
