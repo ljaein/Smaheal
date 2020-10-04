@@ -89,7 +89,7 @@ public class SmileController {
 			smile.setSmileper(request.getSmileper());
 			smile.setComment(request.getComment());
 			smile.setAgreement(request.getAgreement());
-			smile.setTitle(donationRepository.findByDonationid(request.getDonationid()).getTitle());
+			// smile.setTitle(donationRepository.findByDonationid(request.getDonationid()).getTitle());
 			smileRepository.save(smile);
 			return new ResponseEntity<>(smile, HttpStatus.OK);
 		} catch (Exception e) {
