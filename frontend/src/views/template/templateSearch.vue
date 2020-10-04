@@ -1,15 +1,10 @@
 <template>
-    <v-container>
+    <v-container v-if="this.totalCnt != 0" class="mt-5">
       <v-row>
           <v-col>
-              총 {{this.totalCnt}}개의 사진에 대한 템플릿입니다.
+              총 {{this.totalCnt}}개의 사진에 대한 결과입니다.
           </v-col>
       </v-row>
-      <!-- <v-row v-for="(item, index) in items" :key="index">
-          <v-col>
-            <v-img :src="require(`../../../public/images/${item.photo}`)"/>
-          </v-col>
-      </v-row> -->
       <v-row>
           <v-col>
             <fallImageComp
@@ -18,6 +13,14 @@
             />
           </v-col>
       </v-row>
+    </v-container>
+    <v-container v-else style="text-align: center;">
+        <v-row>
+            <v-col class="h1 font-weight-bold"> (*ㅠㅅㅠ*) </v-col>
+        </v-row>
+        <v-row>
+            <v-col>기부된 사진이 없습니다.</v-col>
+        </v-row>
     </v-container>
 </template>
 

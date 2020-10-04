@@ -1,10 +1,10 @@
 <template>
     <div>
       <v-sheet
-        class="mx-auto mt-5"
+        class="mx-auto"
         max-width="800"
       >
-        <h5>
+        <!-- <h5>
           * 넓이가 1300px 이상인 화면에서 보는 것을 추천드립니다.
         </h5>
         <v-card width="900" height="400"
@@ -24,7 +24,14 @@
             :propsitem="item"
             />
           </v-slide-group>
-        </v-card>
+        </v-card> -->
+        <v-timeline align-top
+        :dense="$vuetify.breakpoint.smAndDown"
+        >
+          <ebookComp
+          :propsitem="items"
+          />
+        </v-timeline>
         <v-row>
           <v-col class="text-right">
             <v-btn color="#356859" dark @click="goWriteReview">
@@ -37,12 +44,14 @@
 </template>
 
 <script>
-import slideComp from "@/components/template/slideComp.vue";
+// import slideComp from "@/components/template/slideComp.vue";
+import ebookComp from "@/components/template/ebookComp.vue";
 
 export default {
     name: "fallImageComp",
     components: {
-      slideComp,
+      // slideComp,
+      ebookComp,
     },
     props: {
       propsItem: {type: Array}
