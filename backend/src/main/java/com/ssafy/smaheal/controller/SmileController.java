@@ -82,20 +82,14 @@ public class SmileController {
 	@ApiOperation(value = "웃음 기부 등록")
 	public Object registDonation(@RequestBody Smile request) throws SQLException, IOException {
 		try {
-			Long didd = request.getDonationid();
-			
 			Smile smile = new Smile();
 			smile.setUserId(request.getUserId());
-			smile.setDonationid(didd);
+			smile.setDonationid(request.getDonationid());
 			smile.setPhoto(request.getPhoto());
 			smile.setSmileper(request.getSmileper());
 			smile.setComment(request.getComment());
 			smile.setAgreement(request.getAgreement());
-			// smile.setTitle(donationRepository.findByDonationid(did).getTitle());
-			Donation don = new Donation();
-			don = donationRepository.findByDonationid(didd);
-			String dtitle = don.getTitle();
-			smile.setTitle(dtitle);
+			smile.setTitle(donationRepository.findByDonationid(request.getDonationid().longValue()).getTitle());
 			smileRepository.save(smile);
 
 			// Donation donation = new Donation();
