@@ -91,6 +91,13 @@ public class SmileController {
 			smile.setAgreement(request.getAgreement());
 			smile.setTitle(donationRepository.findByDonationid(request.getDonationid()).getTitle());
 			smileRepository.save(smile);
+
+			Donation donation = new Donation();
+			int nowCnt = donation.getNowcnt();
+			donation = donationRepository.findByDonationid(request.getDonationid());
+			donation.setNowcnt(nowCnt + 1);
+			donationRepository.save(donation);
+			
 			return new ResponseEntity<>(smile, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
