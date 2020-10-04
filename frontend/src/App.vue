@@ -7,7 +7,7 @@
       >
     </v-app-bar>
     
-    <v-navigation-drawer v-model="drawer" absolute temporary>
+    <v-navigation-drawer v-model="drawer" relative temporary app fixed style="overflow: auto;">
       <div v-if="getProfile" class="text-center">
         <v-btn block dark depressed color="amber" @click="logout">
           LOGOUT
@@ -195,7 +195,7 @@
       </template>
       <span>기부 사진 템플릿 찾기</span>
     </v-tooltip>
-    <v-footer class="justify-center" color="#292929" height="100">
+    <v-footer class="justify-center" style="margin-top:150px;" color="#292929" height="100">
       <div
         class="title font-weight-light grey--text text--lighten-1 text-center"
       >

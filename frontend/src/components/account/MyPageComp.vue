@@ -1,7 +1,69 @@
 <template>
   <v-container fluid class="col-md-11">
     <v-form>
+      <div class="d-block d-md-none">
+        <v-row class="mb-5 mt-3 d-flex justify-content-center"
+        style="border:1px solid lightgray; ">
+        <v-col align="center" class="m-0 my-auto pl-5">
+          <span style="color:#356859; font-size:2rem;">{{ getUserID }}</span
+          ><span style="font-size:1.5rem;"> 님의 회원등급은</span><br />
+          <span
+            style="font-size:1.5rem; vertical-align:middle; display:inline-flex;"
+            ><v-icon style="color:#ffd700">mdi-crown-outline</v-icon>{{ grade
+            }}<v-icon style="color:#ffd700" class="mr-2"
+              >mdi-crown-outline</v-icon
+            >입니다.</span
+          >
+        </v-col>
+        </v-row>
+        <v-row class="mb-5 mt-3 d-flex justify-content-center"
+        style="border:1px solid lightgray; ">
+          <v-col
+            cols="3"
+            class="my-auto"
+            align="center"
+            style="border-right:1px solid lightgray;"
+          >
+            <v-icon class="mb-2" style="font-size:3rem;"
+              >mdi-account-circle-outline</v-icon
+            ><br />
+            <span style="font-size:1rem;">이름</span><br />
+            <span style="font-size:1.5rem;">{{ name }}</span>
+          </v-col>
+          <v-col
+          cols="3"
+          class="my-auto"
+          align="center"
+          style="border-right:1px solid lightgray;"
+        >
+          <v-icon class="mb-2" style="font-size:3rem;"
+            >mdi-card-account-details-outline</v-icon
+          ><br />
+          <span style="font-size:1rem;">닉네임</span><br />
+          <span style="font-size:1.5rem;">{{ nickName }}</span>
+        </v-col>
+        <v-col
+          cols="3"
+          class="my-auto"
+          align="center"
+          style="border-right:1px solid lightgray;"
+        >
+          <v-icon class="mb-2" style="font-size:3rem;">mdi-cake-variant</v-icon
+          ><br />
+          <span style="font-size:1rem;">생일</span><br />
+          <span style="font-size:1.5rem;">{{ mobileBirth }}</span>
+        </v-col>
+        <v-col cols="3" class="my-auto" align="center">
+          <v-icon class="mb-2" style="font-size:3rem;"
+            >mdi-hand-heart-outline</v-icon
+          ><br />
+          <span style="font-size:1rem;">기부횟수</span><br />
+          <span style="font-size:1.5rem;">총 {{ smileCnt }}회</span>
+        </v-col>
+        </v-row>
+      </div>
       <!-- 내 정보 -->
+      <div class="d-none d-md-block">
       <v-row
         class="mb-5 mt-3 d-flex justify-content-center"
         style="border:1px solid lightgray; height:10rem;"
@@ -60,6 +122,7 @@
           <span style="font-size:1.5rem;">총 {{ smileCnt }}회</span>
         </v-col>
       </v-row>
+      </div>
       <v-row>
         <v-card style="width:100%">
           <v-tabs
@@ -173,6 +236,7 @@ import MySmileComp from "@/components/account/MySmileComp.vue";
 import MyDonationComp from "@/views/account/DonationList.vue";
 import ReviewToMeComp from "@/components/account/ReviewToMeComp.vue";
 import AwardComp from "@/components/smile/AwardComp.vue";
+
 export default {
   name: "MyPageComp",
   components: {
@@ -193,6 +257,7 @@ export default {
       grade: "",
       dialog: false,
       isSmileKing: false
+      mobileBirth: new Date().toISOString().substr(5, 5),
     };
   },
   created() {
@@ -235,8 +300,12 @@ export default {
     this.name = this.getRealName;
     this.nickName = this.getProfile;
     this.birth = this.getFormatDate(this.getUserBirth);
+    this.mobileBirth = this.getFormatDateMD(this.getUserBirth);
   },
   methods: {
+    getFormatDateMD(regtime) {
+      return new Date(regtime).toISOString().substr(5, 5);
+    },
     getFormatDate(joinedAt) {
       return new Date(joinedAt).toISOString().substr(0, 10);
     },
