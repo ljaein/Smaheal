@@ -69,7 +69,7 @@
                     웃음지수
                   </v-col>
                   <v-col cols="4">
-                    {{smileKing[0].smileper}}%
+                    {{smileKing[1].smileper}}%
                   </v-col>
                   </v-row>
                   <v-row class="d-flex justify-content-center">
@@ -106,7 +106,7 @@
                     웃음지수
                   </v-col>
                   <v-col cols="4">
-                    {{smileKing[0].smileper}}%
+                    {{smileKing[2].smileper}}%
                   </v-col>
                   </v-row>
                   <v-row class="d-flex justify-content-center">
