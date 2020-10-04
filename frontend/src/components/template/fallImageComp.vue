@@ -1,7 +1,7 @@
 <template>
     <div>
       <v-sheet
-        class="mx-auto mt-5"
+        class="mx-auto"
         max-width="800"
       >
         <h5>
