@@ -92,9 +92,8 @@ public class SmileController {
 			smile.setTitle(donationRepository.findByDonationid(request.getDonationid()).getTitle());
 			smileRepository.save(smile);
 
-			Donation donation = new Donation();
-			int nowCnt = donation.getNowcnt();
 			donation = donationRepository.findByDonationid(request.getDonationid());
+			int nowCnt = donation.getNowcnt();
 			donation.setNowcnt(nowCnt + 1);
 			donationRepository.save(donation);
 			
@@ -118,9 +117,8 @@ public class SmileController {
 			smile.setTitle(donationRepository.findByDonationid(request.getDonationid()).getTitle());
 			smileRepository.save(smile);
 
-			Donation donation = new Donation();
-			int nowCnt = donation.getNowcnt();
 			donation = donationRepository.findByDonationid(request.getDonationid());
+			int nowCnt = donation.getNowcnt();
 			donation.setNowcnt(nowCnt + 1);
 			donationRepository.save(donation);
 
