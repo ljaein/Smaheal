@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 import com.ssafy.smaheal.exception.ResourceNotFoundException;
 import com.ssafy.smaheal.help.UserIdentityAvailability;
 import com.ssafy.smaheal.help.UserProfile;
@@ -88,6 +91,24 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
       } catch (Exception e) {
         return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+      }
+    }
+    
+    @GetMapping("checkId/{id}")
+    public Object checkId(@PathVariable String id) throws SQLException, IOException {
+      try {
+        return new ResponseEntity<>(userRepository.findByUserId(id), HttpStatus.OK);
+      } catch (Exception e) {
+        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+    }
+
+    @GetMapping("checkNick/{nickName}")
+    public Object checkNick(@PathVariable String nickName) throws SQLException, IOException {
+      try {
+        return new ResponseEntity<>(userRepository.findByNickName(nickName), HttpStatus.OK);
+      } catch (Exception e) {
+        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
       }
     }
 }
