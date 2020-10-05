@@ -12,16 +12,20 @@
           <v-spacer />
         </v-col>
         <v-col class="mr-2">
-          <v-form action="/notice/search">
-            <v-text-field
-            hide-details
-              placeholder="제목으로 검색됩니다.. 검색어를 입력하세요."
-              outlined
-              color="#356859"
-              clearable
-              name="title"
-              prepend-inner-icon="mdi-text-search"
-            />
+          <v-form action="/notice/search" @submit="checkForm">
+            <v-row class="mr-1">
+              <v-text-field
+              hide-details
+                placeholder="제목으로 검색됩니다.. 검색어를 입력하세요."
+                outlined
+                color="#356859"
+                clearable
+                v-model="title"
+                ref="search"
+                name="title"
+                prepend-inner-icon="mdi-text-search"
+              />
+            </v-row>
           </v-form>
         </v-col>
       </v-row>
@@ -91,7 +95,8 @@ export default {
       currentPage: 1,
       totalPage: this.propCount,
       visibleCnt: 5,
-      limit: 0
+      limit: 0,
+      title: "",
     };
   },
   methods: {
@@ -103,6 +108,12 @@ export default {
     },
     getFormatDate: function(regtime) {
       return moment(new Date(regtime)).format("YYYY년 MM월 DD일");
+    },
+    checkForm: function(e) {
+      if (this.title !== "") {
+        return true;
+      }
+      e.preventDefault();
     }
   },
   watch: {
