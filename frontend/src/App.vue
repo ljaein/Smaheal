@@ -79,7 +79,7 @@
             <v-list-item-icon>
               <v-icon>mdi-clipboard-account</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>마이페이지</v-list-item-title>
+            <v-list-item-title>관리자페이지</v-list-item-title>
           </v-list-item>
 
           <!-- <v-list-item v-if="isSmileKing" @click="goAward()">
