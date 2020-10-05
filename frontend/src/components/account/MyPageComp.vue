@@ -223,6 +223,11 @@
         </v-card>
       </v-dialog>
     </v-row>
+    <v-snackbar v-model="outFlag" top right flat color="error" :timeout="2000">
+      <p style="margin-bottom:0;font-weight:bold;font-size:1rem;word-spacing:2px;letter-spacing:2px;">
+        탈퇴되었습니다.
+      </p>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -258,6 +263,7 @@ export default {
       dialog: false,
       isSmileKing: false,
       mobileBirth: new Date().toISOString().substr(5, 5),
+      outFlag: false,
     };
   },
   created() {
@@ -314,8 +320,10 @@ export default {
       http
         .delete(`/user/delete/${this.getUserNum}`)
         .then(() => {
-          alert("탈퇴가 완료되었습니다.");
-          this.logout();
+          this.outFlag = true;
+          setTimeout(() => {
+            this.logout();
+          }, 1500);
         })
         .catch(e => {
           if (e.request.status === 404) {

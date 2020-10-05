@@ -444,7 +444,7 @@ export default {
       evt.preventDefault();
       const href = evt.target.getAttribute("href");
       var location = document.querySelector(href).offsetTop;
-      window.scrollTo({ top: location + 790, behavior: "smooth" });
+      window.scrollTo({ top: location + 300, behavior: "smooth" });
     },
     msgSubmit() {
       if (this.uid != "") {
