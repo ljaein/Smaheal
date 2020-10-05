@@ -68,7 +68,7 @@
             <v-list-item-title>공지사항</v-list-item-title>
           </v-list-item>
 
-          <v-list-item v-if="getProfile != '관리자'" @click="goMyPage">
+          <v-list-item v-if="getProfile != '관리자' && getProfile" @click="goMyPage">
             <v-list-item-icon>
               <v-icon>mdi-clipboard-account</v-icon>
             </v-list-item-icon>
@@ -119,7 +119,7 @@
         <span class="mr-2 font-weight-bold">공지사항</span>
       </v-btn>
 
-      <v-btn v-if="getProfile != '관리자'" @click="goMyPage" text>
+      <v-btn v-if="getProfile != '관리자' && getProfile" @click="goMyPage" text>
         <span class="mr-2 font-weight-bold">마이페이지</span>
       </v-btn>
 
@@ -195,11 +195,17 @@
       </template>
       <span>기부 사진 템플릿 찾기</span>
     </v-tooltip>
-    <v-footer class="justify-center" style="margin-top:150px;" color="#292929" height="100">
+    <v-footer class="justify-center" style="margin-top:350px;" color="#292929">
       <div
         class="title font-weight-light grey--text text--lighten-1 text-center"
       >
-        &copy; {{ new Date().getFullYear() }} — SmaHeal — Made with 💜 by 미찾사
+        <div class="py-5"></div>
+        &copy; {{ new Date().getFullYear() }} — SMAHEAL — Made with 💜 by 미찾사<br />
+        SMAHEAL 대전광역시 유성구 동서대로 98-39<br />
+        대표 이재인 | 사업자가짜번호 111-222-33333<br />
+        GitLab <a href="https://lab.ssafy.com/s03-ai-sub3/s03p23b108">https://lab.ssafy.com/s03-ai-sub3/s03p23b108</a><br />
+        제휴문의 ssafy@ssafy.com | 고객문의 ssafy@ssafy.com / 1111-2222 (09:00~18:00)
+        <div class="py-5"></div>
       </div>
     </v-footer>
   </v-app>

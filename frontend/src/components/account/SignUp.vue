@@ -144,6 +144,12 @@
     <v-snackbar v-model="signOk" top right flat color="#356859" :timeout="2000">
       <p class="snackText">가입이 완료되었습니다.</p>
     </v-snackbar>
+    <v-snackbar v-model="pwdLength" top right flat color="error" :timeout="2000">
+      <p class="snackText">비밀번호는 숫자와 영문자 조합으로 8~20자리를 사용해야 합니다.</p>
+    </v-snackbar>
+    <v-snackbar v-model="pwdEngNum" top right flat color="error" :timeout="2000">
+      <p class="snackText">비밀번호는 숫자와 영문자를 혼용하여야 합니다.</p>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -180,18 +186,26 @@ export default {
       idCk: false,
       nicCk: false,
       signOk: false,
+      pwdLength: false,
+      pwdEngNum: false
     };
   },
   methods: {
     validate() {
       this.$refs.form.validate();
       if (this.password1 == this.password2) {
+        var chk_num = this.password1.search(/[0-9]/g);
+        var chk_eng = this.password1.search(/[a-z]/ig);
         if(this.idCk == false && this.nicCk == true) {
           this.noidOk = true;
         } else if (this.nicCk == false && this.idCk == true) {
           this.nonickOk = true;
         } else if(this.nicCk == false && this.idCk == false) {
           this.noOk = true;
+        } else if(!/^[a-zA-Z0-9]{8,20}$/.test(this.password1)) { 
+          this.pwdLength = true;
+        } else if(chk_num < 0 || chk_eng < 0) {
+          this.pwdEngNum = true;
         } else {
           this.signUpRequest();
         }
