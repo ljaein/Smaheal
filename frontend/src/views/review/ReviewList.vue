@@ -5,7 +5,7 @@
         <v-toolbar color="#fffbe6" flat>
           <v-toolbar-title class="pl-5 tab-text basil--text">후기 게시판</v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-btn v-if="getProfile" class="green-mbtn" @click="goList()" outlined>{{ tabTitle }}</v-btn>
+          <v-btn v-if="getProfile" class="green-mbtn" outlined>{{ tabTitle }}</v-btn>
 
           <template v-slot:extension>
             <v-tabs center-active color="basil" class="basil--text" grow>
@@ -177,9 +177,6 @@ export default {
     ...mapGetters(['getProfile']),
   },
   methods: {
-    goList() {
-      this.$router.push(`/donationList`);
-    },
     getChild() {
       http
         .get('/review/categoryList/아동,청소년')
