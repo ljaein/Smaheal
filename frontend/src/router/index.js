@@ -27,7 +27,6 @@ import templateSearch from "../views/template/templateSearch.vue"
 import Award from "../views/smile/Award.vue"
 import TempDetailComp from "../components/account/TempDetailComp.vue"
 import ebookComp from "../components/template/ebookComp.vue"
-import FlipBook from "../views/test/FlipBook.vue"
 
 Vue.use(VueRouter);
 
@@ -170,11 +169,6 @@ const routes = [{
         path: "/ebook",
         name: "ebookComp",
         component: ebookComp
-    },
-    {
-        path: "/flipBook",
-        name: "FlipBook",
-        component: FlipBook
     },
 ];
 
