@@ -16,7 +16,7 @@ def main(argv):
     # mecab = Mecab('./backend/files/mecab-ko-dic')
     # X_train = open('./backend/files/save_xtrain.txt', 'r',encoding='UTF-8').readlines()
     X_train = np.array([[num[1:-1] for num in item[1:-2].split(', ')] for item in X_train])
-    tokenizer = Tokenizer(21787, oov_token = 'OOV') 
+    tokenizer = Tokenizer(25078, oov_token = 'OOV') 
     tokenizer.fit_on_texts(X_train)
     new_sentence = mecab.morphs(argv[1]) # 토큰화
     new_sentence = [word for word in new_sentence if not word in stopwords] # 불용어 제거
