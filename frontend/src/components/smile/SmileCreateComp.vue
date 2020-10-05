@@ -608,7 +608,7 @@
       </v-row>
     </div>
 
-    <div style="200px;"></div>
+    <div style="height:200px;"></div>
 
     <!-- 로딩 오버레이 -->
     <v-overlay :value="overlay">
