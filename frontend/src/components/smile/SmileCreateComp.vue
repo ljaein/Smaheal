@@ -608,8 +608,6 @@
       </v-row>
     </div>
 
-    <div v-if="!autoFlag" style="height:400px;"></div>
-
     <!-- 로딩 오버레이 -->
     <v-overlay :value="overlay">
       <v-progress-circular
