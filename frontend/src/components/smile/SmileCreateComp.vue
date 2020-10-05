@@ -608,7 +608,7 @@
       </v-row>
     </div>
 
-    <div style="height:200px;"></div>
+    <div v-if="!autoFlag" style="height:400px;"></div>
 
     <!-- 로딩 오버레이 -->
     <v-overlay :value="overlay">
