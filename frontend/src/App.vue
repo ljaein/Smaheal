@@ -195,7 +195,7 @@
       </template>
       <span>기부 사진 템플릿 찾기</span>
     </v-tooltip>
-    <v-footer class="justify-center" style="margin-top:150px;" color="#292929">
+    <v-footer class="justify-center" style="margin-top:350px;" color="#292929">
       <div
         class="title font-weight-light grey--text text--lighten-1 text-center"
       >
