@@ -117,7 +117,6 @@ export default {
         .get(`/review/getReviewToMe/${this.getUserID}`)
         .then(res => {
           this.reviewList = res.data;
-          console.log(this.reviewList);
         })
         .catch(err => {
           console.log(err);
