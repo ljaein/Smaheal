@@ -870,43 +870,45 @@ export default {
         if (this.selfieCapture[2] < 30) {
           this.rowPer = true;
         } else {
-          http
-            .get(`/smile/textCheck/${this.comment}`)
-            .then(res => {
-              this.tempMsg = res.data;
-              this.ckMsg = true;
-              var word = res.data.split(" ");
-              var smilePer = word[0].split(".")[0];
-              if (word[2] == "긍정" && Number(smilePer) >= 60) {
-                //긍정 60프로 이상
-                http
-                  .post("/smile/regist", {
-                    userId: this.uid,
-                    donationid: this.donationid,
-                    photo: this.selfieCapture[0],
-                    smileper: this.selfieCapture[2],
-                    comment: this.comment,
-                    agreement: this.kingFlag ? 1 : 0
-                  })
-                  .then(res => {
-                    this.stop();
-                    this.log = res.data;
-                    this.donationFlag = true;
-                    let x = this;
-                    setTimeout(function() {
-                      x.$router.push("/donationlist");
-                    }, 1500);
-                  })
-                  .catch(err => {
-                    console.log(err);
-                  });
-              } else {
-                this.noMsg = true;
-              }
-            })
-            .catch(err => {
-              console.log(err);
-            });
+          if(this.comment != null || this.comment == '') {
+            this.noMsg = true;
+          } else {
+            http
+              .get(`/smile/textCheck/${this.comment}`)
+              .then(res => {
+                this.tempMsg = res.data;
+                this.ckMsg = true;
+                var word = res.data.split(" ");
+                var smilePer = word[0].split(".")[0];
+                if (word[2] == "긍정" && Number(smilePer) >= 60) {
+                  //긍정 60프로 이상
+                  http
+                    .post("/smile/regist", {
+                      userId: this.uid,
+                      donationid: this.donationid,
+                      photo: this.selfieCapture[0],
+                      smileper: this.selfieCapture[2],
+                      comment: this.comment,
+                      agreement: this.kingFlag ? 1 : 0
+                    })
+                    .then(res => {
+                      this.stop();
+                      this.log = res.data;
+                      this.donationFlag = true;
+                      let x = this;
+                      setTimeout(function() {
+                        x.$router.push("/donationlist");
+                      }, 1500);
+                    })
+                    .catch(err => {
+                      console.log(err);
+                    });
+                }
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          }
         }
       }
     },
