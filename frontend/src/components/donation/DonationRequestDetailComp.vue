@@ -73,10 +73,12 @@
             >
               상세내용
             </h3>
-            <span
-              style="font-size:1rem;font-weight:bold;font-family: 'Nanum Gothic';"
-              >{{ donation.content }}</span
-            >
+            <v-textarea readonly auto-grow solo
+            flat
+            class="pa-3"
+            :value="donation.content"
+            style="font-size:1rem;font-weight:bold;font-family: 'Nanum Gothic';">
+            </v-textarea>
           </div>
           <v-divider></v-divider>
           <div id="section2" class="container-fluid">
@@ -240,7 +242,11 @@
             </v-row>
           </div>
         </body>
+        <v-btn class="mx-5" @click="goBack" icon fab large color="basil">
+              <v-icon>mdi-undo</v-icon>
+            </v-btn>
       </v-col>
+      
       <!-- 플로팅 메뉴 -->
       <v-col cols="4">
         <v-card
@@ -564,7 +570,10 @@ export default {
       script.src =
         "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=a0064e7e9af3feb23b87a09d13dbc1b1&libraries=services";
       document.head.appendChild(script);
-    }
+    },
+    goBack() {
+      window.history.back()
+    },
   },
   watch: {},
   // mounted() {
