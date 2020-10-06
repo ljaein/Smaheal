@@ -1,6 +1,6 @@
 <template>
   <div class="p-3" align="center">
-    <v-simple-table style="text-align:center; width:90%">
+    <v-simple-table style="text-align:center; width:90%" v-if="items.length != 0">
       <thead>
         <tr style="background-color:#fffbe6;">
           <td>No</td>
@@ -26,7 +26,7 @@
         </tr>
       </tbody>
     </v-simple-table>
-    <div class="text-center m-3">
+    <div class="text-center m-3" v-if="items.length != 0">
       <v-pagination
         v-model="page"
         :length="length"
@@ -34,6 +34,30 @@
         prev-icon="mdi-menu-left"
         next-icon="mdi-menu-right"
       ></v-pagination>
+    </div>
+    <div v-else>
+      <v-row class="text-center ma-5">
+        <v-col class="text-h2 font-weight-bold">
+          💬 Not Yet..
+        </v-col>
+      </v-row>
+      <v-row class="text-center">
+        <v-col class="text-subtitle-1 black--text">
+          기부를 요청한 게시물이 없습니다.
+        </v-col>
+      </v-row>
+      <v-row class="text-center">
+        <v-col class="text-subtitle-1 black--text">
+          웃음이 필요하다면 기부요청을 해보세요! 기부된 사진들을 일련번호 조회를 통해 받아보실 수 있습니다 :)
+        </v-col>
+      </v-row>
+      <v-row class="text-center">
+        <v-col>
+          <v-btn outlined color="#356859" class="font-weight-bold" @click="goDonationList()">
+            기부 요청하러 가기
+          </v-btn>
+        </v-col>
+      </v-row>
     </div>
     <v-row justify="center">
       <v-dialog v-model="dialog" persistent max-width="400">
@@ -106,7 +130,10 @@ export default {
     setDonation(donation) {
       this.dialog = true;
       this.detailItem = donation;
-    }
+    },
+    goDonationList: function() {
+      this.$router.push('/donationList');
+    },
   },
   watch:{
     page(){

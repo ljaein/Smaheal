@@ -28,7 +28,31 @@
         </v-card>
       </v-hover>
     </div>
-    <div class="text-center m-3">
+    <div v-if="this.smileList.length == 0">
+      <v-row class="text-center ma-5">
+        <v-col class="text-h2 font-weight-bold">
+          💬 Not Yet..
+        </v-col>
+      </v-row>
+      <v-row class="text-center">
+        <v-col class="text-subtitle-1 black--text">
+          아직 웃음기부를 하지 않으셨습니다.
+        </v-col>
+      </v-row>
+      <v-row class="text-center">
+        <v-col class="text-subtitle-1 black--text">
+          서로가 행복해질 수 있도록 웃음을 기부해보세요 :)
+        </v-col>
+      </v-row>
+      <v-row class="text-center">
+        <v-col>
+          <v-btn outlined color="#356859" class="font-weight-bold" @click="goDonationList()">
+            웃음 기부하러 가기
+          </v-btn>
+        </v-col>
+      </v-row>
+    </div>
+    <div class="text-center m-3" v-else>
       <v-pagination
         v-model="page"
         :length="length"
@@ -150,7 +174,10 @@ export default {
     goDetail(smile) {
       this.detailSmile = smile;
     },
-    goPage() {}
+    goPage() {},
+    goDonationList: function() {
+      this.$router.push('/donationList');
+    },
   },
   computed: {
     ...mapGetters(["getUserID", "getProfile"]),
