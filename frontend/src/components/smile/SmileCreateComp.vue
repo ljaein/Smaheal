@@ -546,13 +546,13 @@
       </v-col>
     </v-row>
 
-    <div class="d-flex justify-content-center" style="margin:150px 0 20px 0;">
+    <div class="d-flex justify-content-center" style="">
       <canvas v-if="contentsFlag" id="autoCanvas" height="200%" width="200%"></canvas>
     </div>
 
     <div v-if="autoFlag">
       <v-row>
-        <v-card style="margin:0 auto;">
+        <v-card style="">
           <!-- <img :src="getImg(autoCapture[0])" alt="캡쳐된 이미지" /> -->
           <!-- <v-img src="../../../public/images/1600678282188.png" alt="autoCapture"></v-img> -->
         </v-card>
@@ -577,12 +577,12 @@
 
     <div v-if="autoFlag">
       <!-- 사진 사용 여부 -->
-      <v-row class="col-4 p-0 mt-5" style="margin:0 auto;">
+      <v-row class="justify-content-center" style="">
         <v-switch
           v-model="kingFlag"
           inset
           label="사진 허용"
-          style="margin:0 auto;"
+          style=""
         ></v-switch>
       </v-row>
       <!-- 한줄 코멘트 -->
@@ -597,12 +597,12 @@
         </v-col>
       </v-row>
       <!-- 컨텐츠 기부하기 -->
-      <v-row class="col-4 mb-10" style="margin:0 auto;">
+      <v-row class="col-4 mb-10" style="">
         <v-btn
           v-if="selectFlag"
           color="#356859"
           @click="donationContents"
-          style="margin:0 auto;color:white;"
+          style="color:white;"
           >기부하기</v-btn
         >
       </v-row>
