@@ -1,5 +1,5 @@
 <template>
-  <div v-if="this.totalCnt != 0" class="mt-5 container">
+  <div v-if="this.totalCnt != 0" class="" style="margin:0 0 !important;">
     <v-row>
       <v-col> 총 {{ this.totalCnt }}개의 사진에 대한 결과입니다. </v-col>
     </v-row>
@@ -7,7 +7,7 @@
       <!-- <v-col>
         <fallImageComp :propsItem="items" v-if="items.length !== 0" />
       </v-col> -->
-      <v-col class="container justify-content-center col-xl-12 col-lg-12 col-md-12 col-sm-12">
+      <v-col class=" justify-content-center col-12">
         <FlipBookComp :propsItem="items" v-if="items.length !== 0" />
       </v-col>
     </v-row>
