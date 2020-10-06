@@ -24,7 +24,14 @@
               <v-btn icon @click="downLike()"><v-icon>mdi-hand-heart</v-icon></v-btn>
               {{ item.likeCnt }}
             </div>
-            <div style="font-size:1rem;font-weight:bold;letter-spacing:1px;word-spacing:2px;line-height:200%;">{{ item.content }}</div>
+            <v-textarea readonly auto-grow solo
+            flat
+            class="pa-3"
+            :value="item.content"
+            style="font-size:1rem;font-weight:bold;letter-spacing:1px;word-spacing:2px;line-height:200%;"
+            >
+            </v-textarea>
+            <!-- <div style="font-size:1rem;font-weight:bold;letter-spacing:1px;word-spacing:2px;line-height:200%;">{{ item.content }}</div> -->
           </v-card-text>
           <!-- 버튼 -->
           <v-divider class="mx-4 mb-2"></v-divider>
