@@ -1,9 +1,5 @@
 <template>
   <v-container class="col-md-11 m-3" style="border:1px solid lightgray; border-radius:5px;">
-    <!-- <v-sheet class="pa-6 mt-4" color="#fffbe6">
-      <v-icon class="mr-2" color="#356859">mdi-clipboard-alert-outline</v-icon>
-      공지사항
-    </v-sheet> -->
     <v-sheet class="pa-5 mb-5">
       <div class="pa-4 text-center" style="font-size:1.5rem;">
         {{this.item.title}}
@@ -67,8 +63,8 @@ export default {
    };
   },
   methods: {
-    goBack: function() {
-      this.$router.push('/notice').catch(() => {})
+    goBack() {
+      window.history.back()
     },
     getFormatDate: function(regtime) {
       return moment(new Date(regtime)).format("YYYY년 MM월 DD일");
