@@ -149,6 +149,7 @@
                 </template>
                 <v-date-picker
                   v-model="DonationCreate.edate"
+                  :allowed-dates="allowedDates"
                   @input="menu2 = false"
                 ></v-date-picker>
               </v-menu>
@@ -409,6 +410,11 @@ export default {
             console.log(err);
           });
       }
+    },
+    allowedDates (val) {
+      var date = new Date();
+      date.setDate(date.getDate() -1);
+      return new Date(val) >= date;
     }
   },
   watch: {},
