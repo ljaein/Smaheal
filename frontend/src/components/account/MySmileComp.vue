@@ -7,7 +7,6 @@
     >
       <v-hover v-slot:default="{ hover }">
         <v-card :elevation="hover ? 12 : 2" :class="{ 'on-hover': hover }">
-          {{smile.photo}}
           <v-img :src="getImg(smile.photo)" height="200px" class="my-auto">
             <div style="height:70%"></div>
             <v-card-title class="title white--text" style="height:30%">
