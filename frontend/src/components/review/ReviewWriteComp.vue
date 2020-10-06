@@ -42,23 +42,23 @@
       </v-card>
     </div>
     <!-- 수정확인 -->
-    <v-dialog dark v-model="modi" max-width="400">
+    <v-dialog v-model="modi" max-width="400">
       <v-card>
         <v-card-title class="headline">수정하시겠습니까?</v-card-title>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn text @click="(modi = false), updateReview()">확인</v-btn>
+          <v-btn text @click="(modi = false), updateReview()" color="#DC143C">확인</v-btn>
           <v-btn text @click="modi = false">취소</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
     <!-- 등록 확인 -->
-    <v-dialog dark v-model="writ" max-width="400">
+    <v-dialog v-model="writ" max-width="400">
       <v-card>
         <v-card-title class="headline">후기를 등록하시겠습니까?</v-card-title>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn text @click="(writ = false), writeReview()">확인</v-btn>
+          <v-btn text @click="(writ = false), writeReview()" color="#DC143C">확인</v-btn>
           <v-btn text @click="writ = false">취소</v-btn>
         </v-card-actions>
       </v-card>

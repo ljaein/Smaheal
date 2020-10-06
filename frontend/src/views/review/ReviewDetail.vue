@@ -41,12 +41,12 @@
           </div>
         </v-card>
 
-        <v-dialog dark v-model="del" max-width="400">
+        <v-dialog v-model="del" max-width="400">
           <v-card>
             <v-card-title class="headline">정말 삭제하시겠습니까?</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn text @click="(del = false), deleteReview()">확인</v-btn>
+              <v-btn text @click="(del = false), deleteReview()" color="#DC143C">확인</v-btn>
               <v-btn text @click="del = false">취소</v-btn>
             </v-card-actions>
           </v-card>
@@ -190,5 +190,6 @@ export default {
   font-size:1rem;
   word-spacing:2px;
   letter-spacing:2px;
+  color: #dc143c;
 }
 </style>
