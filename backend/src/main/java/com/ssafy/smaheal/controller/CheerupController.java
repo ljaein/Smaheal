@@ -3,11 +3,15 @@ package com.ssafy.smaheal.controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 
+import com.ssafy.smaheal.exception.ResourceNotFoundException;
 import com.ssafy.smaheal.model.Cheerup;
+import com.ssafy.smaheal.model.MemberUser;
 import com.ssafy.smaheal.repository.CheerupRepository;
+import com.ssafy.smaheal.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,12 +34,24 @@ import io.swagger.annotations.ApiOperation;
 public class CheerupController {
     @Autowired
     private CheerupRepository cheerupRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/getList/{donationid}")
     @ApiOperation(value = "기부요청 디테일 응원메세지 리스트")
     public Object getCheerUp(@PathVariable Long donationid) throws SQLException, IOException {
         try {
             List<Cheerup> cheerupList = cheerupRepository.findByDonationid(donationid);
+            
+            // userid를 닉네임으로 바꿔서 받기 위함
+            for (Cheerup cheerup : cheerupList) {
+				String userId = cheerup.getUserId();
+				MemberUser user = userRepository.findByUserId(userId)
+		                .orElseThrow(() -> new ResourceNotFoundException("User", "UserId", userId));
+				String nickName = user.getNickName();
+				cheerup.setUserId(nickName);
+			}
+            
             if(cheerupList != null) {
                 return new ResponseEntity<>(cheerupList, HttpStatus.OK);
             } else {
