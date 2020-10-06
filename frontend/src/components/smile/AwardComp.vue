@@ -70,7 +70,7 @@
           </div>
           <div class="modal-body">
             <v-card width="800px">
-              <v-img width="100%" :src="`${publicPath}images/award.jpg`"
+              <v-img width="100%" :src="getImg()"
                 ><v-container
                   style="width: 100%; height: 100%; top:10%; font-size: 2em; font-family: 궁서; font-weight: bold; position: absolute;"
                 >
@@ -199,7 +199,10 @@ export default {
           }, 1000);
 
       }
-    }
+    },
+    getImg() {
+      return "../../../images/award.jpg"
+    },
   }
 };
 </script>
