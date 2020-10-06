@@ -390,7 +390,7 @@
                   class="m-2 col-md-2 col-sm-4 col-10"
                   style="color:white;"
                   v-if="endFlag"
-                  @click="selfieStop()"
+                  @click="selfieStop(), this.mloading = false"
                   >stop</v-btn
                 >
                 <v-btn
@@ -916,6 +916,8 @@ export default {
                       this.mloading = false;
                       console.log(err);
                     });
+                } else {
+                  this.mloading = false;
                 }
               })
               .catch(err => {
@@ -959,6 +961,8 @@ export default {
               this.mloading = false;
               console.log(err);
             });
+          } else {
+            this.mloading = false;
           }
         })
         .catch(err => {
