@@ -9,6 +9,7 @@
             @click="goCreate()"
             class="mr-2"
             style="background-color:#356859; color:white; font-weight:bold;"
+            v-if="isAuthenticated"
             >등록 요청</v-btn
           >
         </v-col>
@@ -352,6 +353,8 @@
 <script>
 import http from "@/util/http-common.js";
 import InfiniteLoading from "vue-infinite-loading";
+import { mapGetters, mapState } from "vuex";
+
 export default {
   name: "DonationListComp",
   components: {
@@ -524,6 +527,14 @@ export default {
           });
       }
     }
+  },
+  computed: {
+    ...mapGetters([
+      "isAuthenticated",
+      "isProfileLoaded",]),
+    ...mapState({
+      authLoading: state => state.auth.status === "loading",
+    })
   }
 };
 </script>
