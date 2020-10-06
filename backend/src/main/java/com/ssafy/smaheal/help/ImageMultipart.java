@@ -40,7 +40,7 @@ public class ImageMultipart {
         if (hostname.substring(0, 7).equals("DESKTOP")) {// local
             file = new File("C:\\AI108\\s03p23b108\\frontend\\public\\contents\\" + fileName);
         } else {// aws
-            file = new File("/var/lib/jenkins/workspace/maven-test/frontend/public/contents/" + fileName);
+            file = new File("/var/lib/jenkins/workspace/Gitlab/frontend/public/contents/" + fileName);
         }
         if (!file.getParentFile().exists())
             file.getParentFile().mkdirs();
