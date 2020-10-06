@@ -1,5 +1,5 @@
 <template>
-  <div class="container" style="height:1920px;">
+  <div class="container" style="height:2300px;">
     <!-- stepper -->
     <v-row>
       <v-col cols="12">
@@ -52,7 +52,7 @@
                     <ol style="font-size:1.1rem;">
                       <li>재밌는 사진</li>
                       <li>연령에 맞게 랜덤으로 나오는 동영상</li>
-                      <li>부모의 도움이 필요한 아이들을 위한 영상 컨텐츠</li>
+                      <li>아이들을 위한 영상 컨텐츠</li>
                       <li>목소리 변조기능
                         <ul>
                           <li>"녹음 시작"을 눌러서 목소리 녹음</li>
@@ -431,6 +431,8 @@
                   <!-- 한줄 코멘트 -->
                   <v-row class="justify-content-center">
                     <v-col cols="6">
+                      <p v-if="mloading">메세지 분석중...</p>
+                      <v-progress-linear color="deep-purple" :active="mloading" :indeterminate="mloading" rounded height="6"></v-progress-linear>
                       <v-text-field
                         v-model="comment"
                         :rules="commentRules"
@@ -521,6 +523,8 @@
                 <!-- 한줄 코멘트 -->
                 <v-row class="justify-content-center">
                   <v-col cols="6">
+                    <p v-if="mloading">메세지 분석중...</p>
+                    <v-progress-linear color="deep-purple" :active="mloading" :indeterminate="mloading" rounded height="6"></v-progress-linear>
                     <v-text-field
                       v-model="comment"
                       :rules="commentRules"
@@ -588,6 +592,8 @@
       <!-- 한줄 코멘트 -->
       <v-row class="justify-content-center">
         <v-col cols="6">
+          <p v-if="mloading">메세지 분석중...</p>
+          <v-progress-linear color="deep-purple" :active="mloading" :indeterminate="mloading" rounded height="6"></v-progress-linear>
           <v-text-field
             v-model="comment"
             :rules="commentRules"
@@ -607,7 +613,6 @@
         >
       </v-row>
     </div>
-
     <!-- 로딩 오버레이 -->
     <v-overlay :value="overlay">
       <v-progress-circular
@@ -619,6 +624,7 @@
         color="white"
         >{{ value }}</v-progress-circular
       >
+      <p class="mt-5">카메라 인식중...</p>
     </v-overlay>
 
     <!-- 캡쳐 알림 -->
@@ -740,6 +746,7 @@ export default {
       tempMsg: '',
       uloading: false,
       sloading: false,
+      mloading: false,
     };
   },
   methods: {
@@ -866,13 +873,17 @@ export default {
     donationSelfie() {
       if (this.selfieCapture == "findFail") {
         this.reTry = true;
+        this.mloading = false;
       } else {
         if (this.selfieCapture[2] < 30) {
           this.rowPer = true;
+          this.mloading = false;
         } else {
           if(this.comment == '') {
             this.noMsg = true;
+            this.mloading = false;
           } else {
+            this.mloading = true;
             http
               .get(`/smile/textCheck/${this.comment}`)
               .then(res => {
@@ -896,11 +907,13 @@ export default {
                       this.log = res.data;
                       this.donationFlag = true;
                       let x = this;
+                      this.mloading = false;
                       setTimeout(function() {
                         x.$router.push("/donationlist");
                       }, 1500);
                     })
                     .catch(err => {
+                      this.mloading = false;
                       console.log(err);
                     });
                 }
@@ -913,6 +926,7 @@ export default {
       }
     },
     doDonation() {
+      this.mloading = true;
       if(this.comment != '') {
         http
         .get(`/smile/textCheck/${this.comment}`)
@@ -936,11 +950,13 @@ export default {
               this.log = res.data;
               this.donationFlag = true;
               let x = this;
+              this.mloading = false;
               setTimeout(function() {
                 x.$router.push("/donationlist");
               }, 1500);
             })
             .catch(err => {
+              this.mloading = false;
               console.log(err);
             });
           }
@@ -1012,6 +1028,10 @@ export default {
       this.camOff();
       this.upFlag = false;
       this.autoFlag = false;
+      this.uloading = false;
+      this.sloading = false;
+      this.mloading = false;
+      this.comment = '';
     },
     someContents() {
       this.selfFlag = false;
@@ -1023,6 +1043,10 @@ export default {
       this.stop();
       this.canvasClear();
       this.upFlag = false;
+      this.uloading = false;
+      this.sloading = false;
+      this.mloading = false;
+      this.comment = '';
     },
     uploadInit() {
       this.selfFlag = false;
@@ -1031,6 +1055,10 @@ export default {
       this.selfieCapture = [];
       this.stop();
       this.autoFlag = false;
+      this.uloading = false;
+      this.sloading = false;
+      this.mloading = false;
+      this.comment = '';
     },
     preImg(img) {
       if (img != null && img != '') {
