@@ -1,5 +1,5 @@
 <template>
-  <div class="container" style="height:2300px;">
+  <div class="container col-11" style="height:2300px;">
     <!-- stepper -->
     <v-row>
       <v-col cols="12">
@@ -615,16 +615,18 @@
     </div>
     <!-- 로딩 오버레이 -->
     <v-overlay :value="overlay">
-      <v-progress-circular
-        v-if="(value > 0) & (value < 100)"
-        :rotate="-90"
-        :size="100"
-        :width="15"
-        :value="value"
-        color="white"
-        >{{ value }}</v-progress-circular
-      >
-      <p class="mt-5">카메라 인식중...</p>
+      <div class="container" style="margin:0 auto;text-align:center;position:relative;top:50%;">
+        <v-progress-circular
+          v-if="(value > 0) & (value < 100)"
+          :rotate="-90"
+          :size="100"
+          :width="15"
+          :value="value"
+          color="white"
+          >{{ value }}</v-progress-circular
+        >
+        <p class="mt-5">카메라 인식중...</p>
+      </div>
     </v-overlay>
 
     <!-- 캡쳐 알림 -->
