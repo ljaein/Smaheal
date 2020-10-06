@@ -870,7 +870,7 @@ export default {
         if (this.selfieCapture[2] < 30) {
           this.rowPer = true;
         } else {
-          if(this.comment != null || this.comment == '') {
+          if(this.comment == '') {
             this.noMsg = true;
           } else {
             http
