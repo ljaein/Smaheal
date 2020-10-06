@@ -131,14 +131,13 @@ export default {
     accept() {
       http
         .put('/donation/approve/' + this.wait.donationid)
-        .then((res) => {
+        .then(() => {
           this.acceptFlag = true;
           setTimeout(() => {
             this.$router.go().catch((err) => {
               console.log(err);
             });
           }, 1000);
-          console.log(res);
         })
         .catch((err) => {
           console.log(err);
@@ -147,8 +146,7 @@ export default {
     reject() {
       http
         .delete('/donation/delete/' + this.wait.donationid)
-        .then((res) => {
-          console.log(res);
+        .then(() => {
           this.rejectFlag = true;
           setTimeout(() => {
             this.$router.go().catch((err) => {
