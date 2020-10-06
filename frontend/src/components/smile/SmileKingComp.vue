@@ -18,7 +18,7 @@
         <v-col cols="12" md="4" class="p-0 pt-4">
           <v-avatar size="300">
             <v-hover v-slot:default="{ hover }">
-              <v-img :src="`${publicPath}images/${smileKing[0].photo}`">
+              <v-img :src="getImg(smileKing[0].photo)">
                 <v-expand-transition>
                   <div
                     v-if="hover"
@@ -48,7 +48,7 @@
           </v-avatar>
           <!-- <v-divider class="m-0 mt-4"></v-divider> -->
           <v-col class="d-flex justify-content-center">
-            <img :src="`${publicPath}images/no1.png`" style="width:80px;" />
+            <img :src="getImg1()" style="width:80px;" />
             <span style="font-size:3rem;">{{ smileKing[0].userId }}</span>
           </v-col>
         </v-col>
@@ -57,7 +57,7 @@
         <v-col cols="12" md="4" class="p-0 pt-4" style="border-left:none;">
           <v-avatar size="300">
             <v-hover v-slot:default="{ hover }">
-            <v-img :src="`${publicPath}images/${smileKing[1].photo}`">
+            <v-img :src="getImg(smileKing[1].photo)">
             <v-expand-transition>
                   <div
                     v-if="hover"
@@ -87,14 +87,14 @@
           </v-avatar>
           <!-- <v-divider class="m-0 mt-4"></v-divider> -->
           <v-col class="d-flex justify-content-center">
-            <img width="80px" :src="`${publicPath}images/no2.png`" />
+            <img width="80px" :src="getImg2()" />
             <span style="font-size:3rem;">{{ smileKing[1].userId }}</span>
           </v-col>
         </v-col>
         <v-col cols="12" md="4" class="p-0 pt-4 " style="border-left:none;">
           <v-avatar size="300">
             <v-hover v-slot:default="{ hover }">
-            <v-img :src="`${publicPath}images/${smileKing[2].photo}`">
+            <v-img :src="getImg(smileKing[2].photo)">
             <v-expand-transition>
                   <div
                     v-if="hover"
@@ -124,7 +124,7 @@
           </v-avatar>
           <!-- <v-divider class="m-0 mt-4"></v-divider> -->
           <v-col class="d-flex justify-content-center">
-            <img width="80px" :src="`${publicPath}images/no3.png`" />
+            <img width="80px" :src="getImg3()" />
             <span style="font-size:3rem;">{{ smileKing[2].userId }}</span>
           </v-col>
         </v-col>
@@ -166,7 +166,7 @@ export default {
       .then(res => {
         this.smileKing = res.data;
         this.cntSmile();
-        
+        console.log(this.smileKing)
       })
       .catch(err => {
         console.log(err);
@@ -199,7 +199,19 @@ export default {
         console.log(err);
       });
       
-    }
+    },
+    getImg(img) {
+      return "../../../images/" + img;
+    },
+    getImg1() {
+      return "../../../images/no1.png";
+    },
+    getImg2() {
+      return "../../../images/no2.png";
+    },
+    getImg3() {
+      return "../../../images/no3.png";
+    },
   }
 };
 </script>
