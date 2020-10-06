@@ -5,16 +5,21 @@ from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from keras.models import load_model
 import numpy as np
+import socket
 
 
 def main(argv):
     stopwords = ['도', '는', '다', '의', '가', '이', '은', '한', '에', '하', '고', '을', '를', '인', '듯', '과', '와', '네', '들', '듯', '지', '임', '게']
-    loaded_model = load_model('/var/lib/jenkins/workspace/maven-test/backend/files/sentiment_model.hdf5',compile=False)
-    mecab = Mecab('/var/lib/jenkins/workspace/maven-test/backend/files/mecab-ko-dic')
-    X_train = open('/var/lib/jenkins/workspace/maven-test/backend/files/save_xtrain.txt', 'r',encoding='UTF-8').readlines()
-    # loaded_model = load_model('./backend/files/sentiment_model.hdf5',compile=False)
-    # mecab = Mecab('./backend/files/mecab-ko-dic')
-    # X_train = open('./backend/files/save_xtrain.txt', 'r',encoding='UTF-8').readlines()
+
+    if(socket.gethostname()[:7] == "DESKTOP"):
+        loaded_model = load_model('./backend/files/sentiment_model.hdf5',compile=False)
+        mecab = Mecab('./backend/files/mecab-ko-dic')
+        X_train = open('./backend/files/save_xtrain.txt', 'r',encoding='UTF-8').readlines()
+    else:
+        loaded_model = load_model('/var/lib/jenkins/workspace/maven-test/backend/files/sentiment_model.hdf5',compile=False)
+        mecab = Mecab('/var/lib/jenkins/workspace/maven-test/backend/files/mecab-ko-dic')
+        X_train = open('/var/lib/jenkins/workspace/maven-test/backend/files/save_xtrain.txt', 'r',encoding='UTF-8').readlines()
+        
     X_train = np.array([[num[1:-1] for num in item[1:-2].split(', ')] for item in X_train])
     tokenizer = Tokenizer(25078, oov_token = 'OOV') 
     tokenizer.fit_on_texts(X_train)

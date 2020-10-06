@@ -2,11 +2,15 @@ import cv2, os, sys
 import numpy as np
 import time
 import base64
+import socket
 
 def main(argv):
     # 경로 정해주기
-    # r = open('./frontend/public/textFiles/' + argv[1], mode='rt', encoding='utf-8')
-    r = open('/var/lib/jenkins/workspace/maven-test/frontend/public/textFiles/' + argv[1], mode='rt', encoding='utf-8')
+    if(socket.gethostname()[:7] == "DESKTOP"):   
+        r = open('./frontend/public/textFiles/' + argv[1], mode='rt', encoding='utf-8')
+    else:
+        r = open('/var/lib/jenkins/workspace/maven-test/frontend/public/textFiles/' + argv[1], mode='rt', encoding='utf-8')
+
     raw = ""
     for line in r:
         raw += line
@@ -22,8 +26,11 @@ def main(argv):
     filename = str(now) + '.png'
 
     # 경로 확인
-    # cv2.imwrite("./frontend/public/images/" + filename, color)
-    cv2.imwrite("/var/lib/jenkins/workspace/maven-test/frontend/public/images/" + filename, color)
+    if(socket.gethostname()[:7] == "DESKTOP"):
+        cv2.imwrite("./frontend/public/images/" + filename, color)
+    else:
+        cv2.imwrite("/var/lib/jenkins/workspace/maven-test/frontend/public/images/" + filename, color)
+    
     print(filename)
 
 if __name__ == "__main__":
