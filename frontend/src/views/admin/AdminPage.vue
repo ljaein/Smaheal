@@ -10,7 +10,7 @@
     </v-card>
 
     <v-tabs-items v-model="tab">
-      <v-tab-item class="justify-content-left p-3" value="tab-1">
+      <v-tab-item class="justify-content-left p-3" value="tab-1" v-if="waitList.length != 0">
         <v-row>
           <div class="col-12 col-sm-6 col-md-3" v-for="(donation, index) in waitList" :key="index">
             <v-card max-width="400" style="overflow:hidden;">
@@ -32,6 +32,13 @@
         <!-- 페이지네이션 -->
         <v-row class="justify-content-center mt-8">
           <v-pagination v-model="page" :length="length" :page="page" :total-visible="totalVisible"></v-pagination>
+        </v-row>
+      </v-tab-item>
+      <v-tab-item value="tab-1" else>
+        <v-row class="text-center">
+          <v-col class="h1 pt-10">
+            💬 대기중인 기부요청이 없습니다.
+          </v-col>
         </v-row>
       </v-tab-item>
       <v-tab-item class="row justify-content-center p-3" value="tab-2">
@@ -70,8 +77,8 @@
                     <v-overlay v-if="hover" absolute color="black" class="d-flex justify-content-between" style="padding: 20px;">
                       <p style="color:white;font-size:1rem;">{{ video.title }}</p>
                       <div class="d-flex justify-content-center">
-                        <v-btn class="mr-5" @click="(tempVid = video.videoId), (view = true)">보기</v-btn>
-                        <v-btn @click="(tempId = video.youtubeid), (del = true)">삭제</v-btn>
+                        <v-btn class="mr-5 font-weight-bold" @click="(tempVid = video.videoId), (view = true)" color="#356859" dark>보기</v-btn>
+                        <v-btn @click="(tempId = video.youtubeid), (del = true)" outlined style="border:1.8px solid crimson; font-weight:bold;">삭제</v-btn>
                       </div>
                     </v-overlay>
                   </v-fade-transition>
@@ -83,7 +90,7 @@
         <div class="col-12"></div>
         <!-- 페이지네이션 -->
         <v-row class="justify-content-center mt-8">
-          <v-pagination v-model="vpage" :length="vlength" :page="vpage" :total-visible="totalVisible"></v-pagination>
+          <v-pagination color="#356859" v-model="vpage" :length="vlength" :page="vpage" :total-visible="totalVisible"></v-pagination>
         </v-row>
         <!-- 비디오 보기 -->
         <v-dialog dark v-model="view" max-width="800">
