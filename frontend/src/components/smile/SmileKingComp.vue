@@ -166,7 +166,6 @@ export default {
       .then(res => {
         this.smileKing = res.data;
         this.cntSmile();
-        console.log(this.smileKing)
       })
       .catch(err => {
         console.log(err);
