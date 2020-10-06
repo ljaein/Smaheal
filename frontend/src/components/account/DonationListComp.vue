@@ -7,21 +7,28 @@
           <td>제목</td>
           <td>작성 날짜</td>
           <td>일련번호</td>
+          <td>승인여부</td>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(item, index) in items" :key="index">
           <td style="width:10%">{{ (page-1)*8+index + 1 }}</td>
           <td
-            style="width:50%; text-overflow:ellipsis; overflow: hidden; white-space: nowrap;"
+            style="width:40%; text-overflow:ellipsis; overflow: hidden; white-space: nowrap;"
           >
             {{ item.title }}
           </td>
-          <td style="width:30%">{{ getFormatDate(item.createdate) }}</td>
-          <td style="width:10%;">
+          <td style="width:20%">{{ getFormatDate(item.createdate) }}</td>
+          <td style="width:20%;">
             <v-btn small class="green-mbtn" @click="setDonation(item)"
               >조회</v-btn
             >
+          </td>
+          <td style="width:30%;" v-if="item.approval == 1 || item.approval == 2" class="green--text">
+            승인
+          </td>
+          <td style="width:30%;" v-else class="red--text">
+            대기
           </td>
         </tr>
       </tbody>
