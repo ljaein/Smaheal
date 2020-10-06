@@ -16,7 +16,7 @@
               <div style="height:200px;width:100%;overflow:hidden;">
                 <img
                   class="review-img"
-                  :src="`${publicPath}reviewImage/${review.img}`"
+                  :src="getImg(review.img)"
                 />
               </div>
               <v-card-text style="font-weight:bold;" class="py-1">
@@ -124,7 +124,10 @@ export default {
     },
     goDetail(num) {
       this.$router.push(`/reviewDetail/${num}`);
-    }
+    },
+    getImg(img) {
+      return "../../../reviewImage/" + img;
+    },
   },
   computed: {
     ...mapGetters(["getProfile", "getUserID"]),
