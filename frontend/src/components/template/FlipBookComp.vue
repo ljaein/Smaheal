@@ -45,7 +45,6 @@ export default {
   height:600px;
 } */
 .flipbook {
-  position: relative;
   width: 100vw;
   height: 100vh;
   left:0px;
