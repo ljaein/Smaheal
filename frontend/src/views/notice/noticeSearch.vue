@@ -1,22 +1,27 @@
 <template>
-  <div>
+  <div class="d-flex justify-content-center">
     <noticeSearchComp
     :propItems="items"
     :propCount="totalCnt"
     :propKeyword="keyword"
     v-if="items.length !== 0 && totalCnt !== 0"
     />
+    <searchErrorComp
+    :propKeyword="keyword"
+    v-else/>
   </div>
 </template>
 
 <script>
 import noticeSearchComp from "@/components/notice/noticeSearchComp.vue";
+import searchErrorComp from "@/components/notice/searchErrorComp.vue";
 import http from "@/util/http-common.js";
 
 export default {
   name: "noticeSearch",
   components: {
-    noticeSearchComp
+    noticeSearchComp,
+    searchErrorComp
   },
   data: function() {
     return {
