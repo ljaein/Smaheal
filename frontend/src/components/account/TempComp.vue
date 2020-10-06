@@ -1,6 +1,6 @@
 <template>
   <div class="p-3" align="center">
-    <v-simple-table style="text-align:center; width:90%">
+    <v-simple-table style="text-align:center; width:90%" v-if="tempList.length != 0">
       <thead>
         <tr style="background-color:#fffbe6;">
           <td>번호</td>
@@ -36,7 +36,7 @@
         </tr>
       </tbody>
     </v-simple-table>
-    <div class="text-center m-3">
+    <div class="text-center m-3" v-if="tempList.length != 0">
       <v-pagination
         v-model="page"
         :length="length"
@@ -44,6 +44,18 @@
         prev-icon="mdi-menu-left"
         next-icon="mdi-menu-right"
       ></v-pagination>
+    </div>
+    <div v-else>
+      <v-row class="text-center ma-5">
+        <v-col class="text-h2 font-weight-bold">
+          💬 No data
+        </v-col>
+      </v-row>
+      <v-row class="text-center">
+        <v-col class="text-subtitle-1 black--text">
+          임시저장된 글이 없습니다.
+        </v-col>
+      </v-row>
     </div>
     <v-row justify="center">
       <v-dialog v-model="dialog" persistent max-width="290">

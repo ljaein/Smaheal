@@ -1,6 +1,6 @@
 <template>
   <div class="my-3">
-    <v-carousel hide-delimiters light style="box-shadow: 0px 0px; height:400px;" class=" py-5">
+    <v-carousel v-if="reviewList.length != 0" hide-delimiters light style="box-shadow: 0px 0px; height:400px;" class=" py-5">
       <v-carousel-item  class="my-auto" v-for="(reviews, index) in reviewList" :key="index">
         <v-layout row class="px-2">
           <v-flex
@@ -57,6 +57,30 @@
         </v-layout>
       </v-carousel-item>
     </v-carousel>
+    <div v-else>
+      <v-row class="text-center ma-5">
+        <v-col class="text-h2 font-weight-bold">
+          💬 Not Yet..
+        </v-col>
+      </v-row>
+      <v-row class="text-center">
+        <v-col class="text-subtitle-1 black--text">
+          아직 {{getProfile}} 님에게 온 후기가 없습니다. 다른 사람들의 후기를 둘러 보세요!
+        </v-col>
+      </v-row>
+      <v-row class="text-center">
+        <v-col class="text-subtitle-1 black--text">
+          만약 웃음을 기부하셨다면 조금만 기다려주세요! 곧 마음이 따뜻한 후기가 올라올 것입니다 :)
+        </v-col>
+      </v-row>
+      <v-row class="text-center">
+        <v-col>
+          <v-btn outlined color="#356859" class="font-weight-bold" @click="goReviewList()">
+            후기 보러 가기
+          </v-btn>
+        </v-col>
+      </v-row>
+    </div>
 
     <!-- <div
       class="col-12 col-sm-6 col-md-3"
@@ -127,6 +151,9 @@ export default {
     },
     getImg(img) {
       return "../../../reviewImage/" + img;
+    },
+    goReviewList: function() {
+      this.$router.push('/reviewList');
     },
   },
   computed: {
