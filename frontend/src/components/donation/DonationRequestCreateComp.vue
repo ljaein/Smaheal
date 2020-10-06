@@ -7,7 +7,7 @@
       color="#356859"
       class="mr-3"
     >
-      요청이 완료되었습니다.
+      요청이 완료되었습니다. 승인을 기다려주세요.
       <template v-slot:action="{ attrs }">
         <v-btn text v-bind="attrs" @click="rqFlag = false">Close</v-btn>
       </template>
@@ -78,7 +78,7 @@
             counter
             multiple
             prepend-icon
-            :rules="[value => value.length || '이미지를 선택하세요']"
+            :rules="[v => !!v || '이미지를 선택하세요']"
             outlined
             placeholder="Click!"
           >
@@ -374,7 +374,6 @@ export default {
                           console.log(err);
                         });
                       }, 1500);
-                      console.log(res.data);
                     })
                     .catch(err => {
                       console.log(err);
@@ -404,7 +403,6 @@ export default {
                 console.log(err);
               });
             }, 1500);
-            console.log(res.data);
           })
           .catch(err => {
             console.log(err);
