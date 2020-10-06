@@ -187,6 +187,9 @@ public class DonationController {
     @PutMapping("/update")
     @ApiOperation(value = "기부 게시물 수정")
     public Object updateDonation(@RequestBody Donation request) throws SQLException, IOException {
+        System.out.println("@");
+        System.out.println(request);
+        System.out.println("@");
         try {
             Donation donation = donationRepository.findByDonationid(request.getDonationid());
             if (donation != null) {
@@ -198,6 +201,10 @@ public class DonationController {
                 donation.setMaxcnt(request.getMaxcnt());
                 donation.setReceiver(request.getReceiver());
                 donation.setAddress(request.getAddress());
+                donation.setContent(request.getContent());
+                donation.setImg(request.getImg());
+                donation.setApproval(0); // 아직 승인되지 않은 게시물
+                donation.setTemp(1); // 임시저장인 게시물
                 donationRepository.save(donation);
                 return new ResponseEntity<>(donation, HttpStatus.OK);
             } else {

@@ -84,7 +84,7 @@
               counter
               multiple
               prepend-icon
-              :rules="[value => value.length || '이미지를 선택하세요']"
+              :rules="[value => !!value.length > 0 || '이미지를 선택하세요']"
               outlined
               placeholder="Click!"
             >
@@ -400,11 +400,11 @@ export default {
       } else {
         this.DonationCreate.address = this.addr + this.addrDetail;
         http
-          .post("/donation/registTemp", this.DonationCreate)
+          .put("/donation/update", this.DonationCreate)
           .then(res => {
             this.tempFlag = true;
             setTimeout(() => {
-              this.$router.push("/donationList").catch(err => {
+              this.$router.push("/myPage").catch(err => {
                 console.log(err);
               });
             }, 1500);
