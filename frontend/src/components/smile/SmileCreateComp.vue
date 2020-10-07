@@ -5,17 +5,17 @@
       <v-col cols="12">
         <v-stepper v-model="e1">
           <v-stepper-header>
-            <v-stepper-step :complete="e1 > 1" step="1">step 1</v-stepper-step>
+            <v-stepper-step :complete="e1 > 1" step="1" color="#356859">step 1</v-stepper-step>
             <v-divider></v-divider>
-            <v-stepper-step :complete="e1 > 2" step="2">step 2</v-stepper-step>
+            <v-stepper-step :complete="e1 > 2" step="2" color="#356859">step 2</v-stepper-step>
             <v-divider></v-divider>
-            <v-stepper-step :complete="e1 > 3" step="3">step 3</v-stepper-step>
+            <v-stepper-step :complete="e1 > 3" step="3" color="#356859">step 3</v-stepper-step>
             <v-divider></v-divider>
-            <v-stepper-step :complete="e1 > 4" step="4">step 4</v-stepper-step>
+            <v-stepper-step :complete="e1 > 4" step="4" color="#356859">step 4</v-stepper-step>
             <v-divider></v-divider>
-            <v-stepper-step :complete="e1 > 5" step="5">step 5</v-stepper-step>
+            <v-stepper-step :complete="e1 > 5" step="5" color="#356859">step 5</v-stepper-step>
             <v-divider></v-divider>
-            <v-stepper-step step="6">step 6</v-stepper-step>
+            <v-stepper-step step="6" color="#356859">step 6</v-stepper-step>
           </v-stepper-header>
 
           <v-stepper-items>
@@ -37,7 +37,7 @@
                   </v-col>
                 </v-row>
               </v-card>
-              <v-btn color="primary" @click="e1 = 2">Continue</v-btn>
+              <v-btn color="#356859" dark @click="e1 = 2">Continue</v-btn>
             </v-stepper-content>
 
             <v-stepper-content step="2">
@@ -64,8 +64,8 @@
                   </v-col>
                 </v-row>
               </v-card>
-              <v-btn color="primary" @click="e1 = 3">Continue</v-btn>
-              <v-btn text @click="e1 = 1">Back</v-btn>
+              <v-btn color="#356859" dark @click="e1 = 3">Continue</v-btn>
+              <v-btn color="#356859" dark class="font-weight-bold" text @click="e1 = 1">Back</v-btn>
             </v-stepper-content>
 
             <v-stepper-content step="3">
@@ -91,8 +91,8 @@
                   </v-col>
                 </v-row>
               </v-card>
-              <v-btn color="primary" @click="e1 = 4">Continue</v-btn>
-              <v-btn text @click="e1 = 1">Back</v-btn>
+              <v-btn color="#356859" dark @click="e1 = 4">Continue</v-btn>
+              <v-btn color="#356859" dark class="font-weight-bold" text @click="e1 = 1">Back</v-btn>
             </v-stepper-content>
 
             <v-stepper-content step="4">
@@ -122,8 +122,8 @@
                   </v-col>
                 </v-row>
               </v-card>
-              <v-btn color="primary" @click="e1 = 5">Continue</v-btn>
-              <v-btn text @click="e1 = 3">Back</v-btn>
+              <v-btn color="#356859" dark @click="e1 = 5">Continue</v-btn>
+              <v-btn color="#356859" dark class="font-weight-bold" text @click="e1 = 3">Back</v-btn>
             </v-stepper-content>
 
             <v-stepper-content step="5">
@@ -148,8 +148,8 @@
                   </v-col>
                 </v-row>
               </v-card>
-              <v-btn color="primary" @click="e1 = 6">Continue</v-btn>
-              <v-btn text @click="e1 = 4">Back</v-btn>
+              <v-btn color="#356859" dark @click="e1 = 6">Continue</v-btn>
+              <v-btn color="#356859" class="font-weight-bold" dark text @click="e1 = 4">Back</v-btn>
             </v-stepper-content>
 
             <v-stepper-content step="6">
@@ -173,8 +173,8 @@
                   </v-col>
                 </v-row>
               </v-card>
-              <v-btn color="primary" @click="stepEnd">Complete</v-btn>
-              <v-btn text @click="e1 = 5">Back</v-btn>
+              <v-btn color="#356859" dark @click="stepEnd">Complete</v-btn>
+              <v-btn color="#356859" dark class="font-weight-bold" text @click="e1 = 5">Back</v-btn>
             </v-stepper-content>
           </v-stepper-items>
         </v-stepper>
@@ -618,6 +618,15 @@
           style="color:white;"
           >기부하기</v-btn
         >
+      </v-row>
+    </div>
+    <div>
+      <v-row class="text-right">
+        <v-col>
+          <v-btn class="mx-10" @click="goBack" icon fab large color="basil">
+            <v-icon>mdi-undo</v-icon><span style="font-weight:bold;">뒤로</span>
+          </v-btn>
+        </v-col>
       </v-row>
     </div>
     <!-- 로딩 오버레이 -->
@@ -1199,6 +1208,9 @@ export default {
     },
     sameNum(n) {
       return this.lotto.find((e) => (e === n));
+    },
+    goBack() {
+      window.history.back();
     },
   },
   computed: {
