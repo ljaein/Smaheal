@@ -30,11 +30,46 @@
     <!-- 내용 -->
     <v-row class="d-flex justify-content-center m-0">
       <v-tabs
-        class="col-md-12 col-sm-12 basil--text px-0"
+        class="col-md-12 col-sm-12 basil--text px-0 d-block d-md-none"
         centered
         grow
         color="basil"
-        style="position:sticky;top:100px;z-index:5;"
+        style="position:sticky;top:43px;z-index:3;"
+      >
+        <v-tab>
+          <a
+            class="nav-link"
+            href=".section1"
+            @click="scrollSpy"
+            style="color:black;font-weight:bold;"
+            >상세내용</a
+          >
+        </v-tab>
+        <v-tab>
+          <a
+            class="nav-link"
+            href="#section2"
+            @click="scrollSpy"
+            style="color:black;font-weight:bold;"
+            >주소 & 지도</a
+          >
+        </v-tab>
+        <v-tab>
+          <a
+            class="nav-link"
+            href="#section3"
+            @click="scrollSpy"
+            style="color:black;font-weight:bold;"
+            >응원메세지</a
+          >
+        </v-tab>
+      </v-tabs>
+      <v-tabs
+        class="col-md-12 col-sm-12 basil--text px-0 d-none d-md-block"
+        centered
+        grow
+        color="basil"
+        style="position:sticky;top:79px;z-index:3;"
       >
         <v-tab>
           <a
@@ -249,7 +284,7 @@
           height="auto"
           outlined
           elevation="2"
-          style="position:sticky;top:200px;z-index:5;background-color:#fffbe6; border:1px solid #fffbe6 "
+          style="position:sticky;top:200px;z-index:2;background-color:#fffbe6; border:1px solid #fffbe6 "
         >
           <v-list-item three-line>
             <v-list-item-content>
