@@ -126,7 +126,7 @@ public class ReviewController {
 			if (hostname.substring(0, 7).equals("DESKTOP")) {// local
 				dest = new File(baseDir + newName);
 	        } else {// aws
-	        	dest = new File("/var/lib/jenkins/workspace/maven-test/frontend/public/reviewImage/" + newName);
+	        	dest = new File("/var/lib/jenkins/workspace/Gitlab/frontend/public/reviewImage/" + newName);
 	        }
 		}
 
