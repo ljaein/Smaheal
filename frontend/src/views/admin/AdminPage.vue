@@ -43,10 +43,10 @@
         </v-row>
         <!-- 페이지네이션 -->
         <v-row class="justify-content-center mt-8">
-          <v-pagination v-model="page" :length="length" :page="page" :total-visible="totalVisible"></v-pagination>
+          <v-pagination color="#356859" v-model="page" :length="length" :page="page" :total-visible="totalVisible"></v-pagination>
         </v-row>
       </v-tab-item>
-      <v-tab-item value="tab-1" else>
+      <v-tab-item value="tab-1" v-if="waitList.length == 0">
         <v-row class="text-center" style="min-height:500px;">
           <v-col class=" pt-10" style="font-size:2rem;">
             💬 대기중인 기부요청이 없습니다.
