@@ -60,6 +60,8 @@
           아이디와 비밀번호를 확인해주세요.
         </p></v-snackbar
       >
+      <div style="height:230px" class="d-block d-md-none" >
+      </div>
     </v-container>
   </div>
 </template>
