@@ -514,7 +514,7 @@ export default {
             .post("/cheerup/writeMsg", {
               donationid: this.donationid,
               msg: this.cheerup,
-              userId: this.uid
+              userId: this.getUserID
             })
             .then(res => {
               this.log = res;
