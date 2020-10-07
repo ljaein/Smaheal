@@ -1,12 +1,24 @@
 <template>
+<div class="col-md-12 p-0">
+    <div class="n_header_img d-flex justify-content-center">
+      <div
+        style="color:white; position:absolute; top:200px; font-size:3rem;"
+      >
+        공지사항
+     </div>
+    </div>
+    <div
+      class="d-flex justify-content-center"
+      style="background-color:rgb(188,150,39)"
+    >
   <v-container class="col-md-11">
     <v-card color="#fffbe6">
-      <v-row style="color:#356859;font-size:1.3rem;" class="p-4">
+      <!-- <v-row style="color:#356859;font-size:1.3rem;" class="p-4">
         
         <span class="pl-5" style="display:inline-flex;vertical-align:middle"><v-icon class="mr-1" color="#356859"
           >mdi-clipboard-alert-outline</v-icon
         >공지사항</span>
-      </v-row>
+      </v-row> -->
       <v-row>
         <v-col>
           <v-spacer />
@@ -30,11 +42,13 @@
         </v-col>
       </v-row>
     </v-card>
-    <v-row class="text-center ma-2">
-      <v-col>
+    <v-card>
+    <v-row class="text-center" style="height:200px;">
+      <v-col style="font-size:1rem;" class="mt-8">
         검색어 "{{this.keyword}}"에 해당하는 결과가 없습니다.
       </v-col>
     </v-row>
+    </v-card>
     <v-row>
         <v-col>
             <v-btn @click="goBack()" color="#356859" dark>
@@ -48,6 +62,8 @@
       </v-col>
     </v-row>
   </v-container>
+    </div>
+</div>
 </template>
 
 <script>
@@ -99,3 +115,13 @@ export default {
   },
 };
 </script>
+<style>
+.n_header_img {
+  background: url("../../assets/notice_hd.jpg") no-repeat;
+  width: 100%;
+  height: 20rem;
+  display: block;
+  background-position: center;
+  background-size: cover;
+}
+</style>

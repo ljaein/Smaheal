@@ -1,12 +1,24 @@
 <template>
+<div class="col-md-12 p-0">
+    <div class="n_header_img d-flex justify-content-center">
+      <div
+        style="color:white; position:absolute; top:200px; font-size:3rem;"
+      >
+        공지사항
+     </div>
+    </div>
+    <div
+      class="d-flex justify-content-center"
+      style="background-color:rgb(188,150,39)"
+    >
   <v-container class="col-md-11">
     <v-card color="#fffbe6">
-      <v-row style="color:#356859;font-size:1.3rem;" class="p-4">
+      <!-- <v-row style="color:#356859;font-size:1.3rem;" class="p-4">
         
         <span class="pl-5" style="display:inline-flex;vertical-align:middle"><v-icon class="mr-1" color="#356859"
           >mdi-clipboard-alert-outline</v-icon
         >공지사항</span>
-      </v-row>
+      </v-row> -->
       <v-row>
         <v-col>
           <v-spacer />
@@ -31,7 +43,7 @@
       </v-row>
     </v-card>
     <v-row>
-      <v-col>
+      <v-col class="pt-0">
         <v-simple-table>
           <template v-slot:default>
             <thead>
@@ -64,7 +76,7 @@
     </div>
     <v-row>
         <v-col>
-            <v-btn @click="goBack()" color="#356859" dark>
+            <v-btn @click="goBack()" class="green-mbtn">
                 전체 목록보기
             </v-btn>
         </v-col>
@@ -75,6 +87,8 @@
       </v-col>
     </v-row>
   </v-container>
+    </div>
+</div>
 </template>
 
 <script>
