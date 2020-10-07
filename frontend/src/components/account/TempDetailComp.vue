@@ -404,7 +404,6 @@ export default {
                           console.log(err);
                         });
                       }, 1500);
-                      console.log(res.data);
                     })
                     .catch(err => {
                       console.log(err);
@@ -435,14 +434,12 @@ export default {
                   console.log(err);
                 });
               }, 1500);
-              console.log(res.data);
             })
             .catch(err => {
               console.log(err);
             });
           return;
         }
-        console.log(this.inputFiles.length);
         for (var i = 0; i < this.inputFiles.length; i++) {
           var formData = new FormData();
           const file = this.inputFiles[i];
@@ -473,7 +470,6 @@ export default {
                           console.log(err);
                         });
                       }, 1500);
-                      console.log(res.data);
                     })
                     .catch(err => {
                       console.log(err);
