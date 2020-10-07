@@ -34,7 +34,7 @@ def main(argv):
         emotion_classifier = load_model('./backend/files/emotion_model.hdf5', compile=False)
     else:
         face_detection = cv2.CascadeClassifier('/var/lib/jenkins/workspace/maven-test/backend/files/haarcascade_frontalface_default.xml')
-        emotion_classifier = load_model('/var/lib/jenkins/workspace/maven-test//backend/files/emotion_model.hdf5', compile=False)
+        emotion_classifier = load_model('/var/lib/jenkins/workspace/maven-test/backend/files/emotion_model.hdf5', compile=False)
     
     EMOTIONS = ["Angry" ,"Disgusting","Fearful", "Happy", "Sad", "Surpring", "Neutral"]
 
@@ -82,7 +82,7 @@ def main(argv):
     if(socket.gethostname()[:7] == "DESKTOP"):
         cv2.imwrite("./frontend/public/images/" + filename, color)
     else:
-        cv2.imwrite("/var/lib/jenkins/workspace/maven-test/frontend/public/images/" + filename, color)
+        cv2.imwrite("/var/lib/jenkins/workspace/Gitlab/frontend/public/images/" + filename, color)
     
     print(filename)
 

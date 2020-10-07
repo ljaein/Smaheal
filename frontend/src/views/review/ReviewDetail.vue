@@ -24,7 +24,14 @@
               <v-btn icon @click="downLike()"><v-icon>mdi-hand-heart</v-icon></v-btn>
               {{ item.likeCnt }}
             </div>
-            <div style="font-size:1rem;font-weight:bold;letter-spacing:1px;word-spacing:2px;line-height:200%;">{{ item.content }}</div>
+            <v-textarea readonly auto-grow solo
+            flat
+            class="pa-3"
+            :value="item.content"
+            style="font-size:1rem;font-weight:bold;letter-spacing:1px;word-spacing:2px;line-height:200%;"
+            >
+            </v-textarea>
+            <!-- <div style="font-size:1rem;font-weight:bold;letter-spacing:1px;word-spacing:2px;line-height:200%;">{{ item.content }}</div> -->
           </v-card-text>
           <!-- 버튼 -->
           <v-divider class="mx-4 mb-2"></v-divider>
@@ -41,12 +48,12 @@
           </div>
         </v-card>
 
-        <v-dialog dark v-model="del" max-width="400">
+        <v-dialog v-model="del" max-width="400">
           <v-card>
             <v-card-title class="headline">정말 삭제하시겠습니까?</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn text @click="(del = false), deleteReview()">확인</v-btn>
+              <v-btn text @click="(del = false), deleteReview()" color="#DC143C">확인</v-btn>
               <v-btn text @click="del = false">취소</v-btn>
             </v-card-actions>
           </v-card>
@@ -177,7 +184,7 @@ export default {
         });
     },
     getImg(img) {
-      return "../../../reviewImage/" + img;
+      return "./../../../reviewImage/" + img;
     },
   },
 };
@@ -190,5 +197,6 @@ export default {
   font-size:1rem;
   word-spacing:2px;
   letter-spacing:2px;
+  color: #dc143c;
 }
 </style>

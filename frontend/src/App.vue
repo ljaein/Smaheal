@@ -311,7 +311,9 @@ export default {
     };
   },
   created() {
-    this.$store.dispatch(USER_UPDATE, this.getUserID).then(() => {});
+    if(this.getProfile){
+      this.$store.dispatch(USER_UPDATE, this.getUserID).then(() => {});
+    }
     http
       .get(`/smile/smileKing`)
       .then(res => {

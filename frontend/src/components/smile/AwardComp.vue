@@ -201,7 +201,7 @@ export default {
       }
     },
     getImg() {
-      return "../../../images/award.jpg"
+      return "./../../../images/award.jpg"
     },
   }
 };
