@@ -97,6 +97,25 @@
           <v-col cols="6" class="mt-1">
             이미지
             <v-file-input
+              v-if="!imgFlag"
+              ref="file"
+              accept="image/png, image/jpeg, image/bmp"
+              v-model="imagesFile"
+              color="#356859"
+              counter
+              multiple
+              prepend-icon
+              :rules="[value => !!value.length > 0 || '이미지를 선택하세요']"
+              outlined
+              placeholder="Click!"
+            >
+              <template v-slot:selection="{ text }">
+                <v-chip color="#356859" dark label small>{{ text }}</v-chip>
+              </template>
+            </v-file-input>
+
+            <v-file-input
+              v-if="imgFlag"
               ref="file"
               accept="image/png, image/jpeg, image/bmp"
               v-model="inputFiles"
@@ -328,7 +347,8 @@ export default {
       tempRejectFlag: false,
       donationid: "",
       images: [],
-      imgFlag: false
+      imgFlag: false,
+      imagesFile: [],
     };
   },
   created() {
@@ -340,6 +360,13 @@ export default {
         this.images = this.DonationCreate.img
           .substring(0, this.DonationCreate.img.length - 1)
           .split("|");
+        for (var i = 0; i < this.images.length; i++) {
+          let blob = fetch(this.getImg(this.images[i])).then(r => r.blob());
+          var newFile = new File([blob], this.images[i], {
+            type: blob.type,
+          });
+          this.imagesFile.push(newFile);
+        }
       })
       .catch(err => {
         console.log(err);
