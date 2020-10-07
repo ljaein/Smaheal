@@ -88,14 +88,14 @@
             <v-list-item-icon>
               <v-icon>mdi-clipboard-account</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>마이페이지</v-list-item-title>
+            <v-list-item-title style="font-weight:bold;">마이페이지</v-list-item-title>
           </v-list-item>
 
           <v-list-item v-if="getProfile == '관리자'" @click="goAdminPage">
             <v-list-item-icon>
               <v-icon>mdi-clipboard-account</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>관리자페이지</v-list-item-title>
+            <v-list-item-title style="font-weight:bold;">관리자페이지</v-list-item-title>
           </v-list-item>
 
           <!-- <v-list-item v-if="isSmileKing" @click="goAward()">
@@ -287,7 +287,7 @@
         </div>
       </v-container>
     </div>
-    <v-footer class="justify-center foot" color="#292929">
+    <v-footer class="justify-center" color="#292929">
       <div
         class="font-weight-light grey--text text--lighten-1 text-center"
       >
@@ -451,9 +451,5 @@ html {
   color:white;
   font-size:1rem;
   font-family: 'Nanum Gothic';
-}
-.foot{
-  position:absolute;
-  bottom:0px;
 }
 </style>
