@@ -10,7 +10,7 @@
           >
             <v-card
               class="rounded-lg"
-              max-width="400px"
+              width="300px"
               style="overflow:hidden;"
             >
               <div style="height:200px;width:100%;overflow:hidden;">
