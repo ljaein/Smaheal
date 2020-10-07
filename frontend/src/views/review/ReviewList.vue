@@ -19,7 +19,24 @@
           </template>
         </v-toolbar>
       </v-card>
+      <v-card class="mobileTopbar d-block d-md-none">
+        <v-toolbar color="#fffbe6" flat>
+          <v-toolbar-title class="pl-5 tab-text basil--text">후기 게시판</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn v-if="getProfile" class="green-mbtn" outlined>{{ tabTitle }}</v-btn>
 
+          <template v-slot:extension>
+            <v-tabs center-active color="basil" class="basil--text" grow>
+              <v-tab id="tab1" class="tab-text" @click="goTab(1)">아동/청소년</v-tab>
+              <v-tab id="tab2" class="tab-text" @click="goTab(2)">어르신</v-tab>
+              <v-tab id="tab3" class="tab-text" @click="goTab(3)">장애인</v-tab>
+              <v-tab id="tab4" class="tab-text" @click="goTab(4)">가족/여성</v-tab>
+              <v-tab id="tab5" class="tab-text" @click="goTab(5)">다문화</v-tab>
+              <v-tab id="tab6" class="tab-text" @click="goTab(6)">기타</v-tab>
+            </v-tabs>
+          </template>
+        </v-toolbar>
+      </v-card>
       <!-- 아동,청소년 -->
       <v-sheet class="col-12 mb-15 sheet" elevation="8">
         <v-slide-group v-model="model" center-active show-arrows>
@@ -363,8 +380,15 @@ export default {
 <style scoped>
 .topbar {
   z-index: 10;
+  position: -webkit-sticky;
   position: sticky;
-  top: 100px;
+  top: 91px;
+}
+.mobileTopbar {
+  z-index: 2;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 55px;
 }
 .tab-text {
   font-weight: bold;

@@ -6,7 +6,7 @@
     >
       <v-icon style="font-size:3rem;color:#356859;" class="mr-2"
         >mdi-party-popper</v-icon
-      >이달의 웃음왕<v-icon style="font-size:3rem;color:#356859" class="ml-2"
+      >{{lastMonth}}월의 웃음왕<v-icon style="font-size:3rem;color:#356859" class="ml-2"
         >mdi-party-popper</v-icon
       >
     </h2>
@@ -158,9 +158,11 @@ export default {
       no1cnt:0,
       no2cnt:0,
       no3cnt:0,
+      lastMonth: null,
     };
   },
   created() {
+    this.lastMonth = new Date().getMonth();
     http
       .get(`/smile/smileKing`)
       .then(res => {
