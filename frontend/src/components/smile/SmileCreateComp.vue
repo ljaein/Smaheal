@@ -289,7 +289,7 @@
                                 transition="fade-transition"
                               >
                                 <img
-                                  src="https://s-i.huffpost.com/gen/3948866/thumbs/o-PEPE-THE-FROG-570.jpg?3"
+                                  :src="getImg(this.funImg[this.lotto[0]].funimg)"
                                   style="max-width:100%;width:400px;height:65%;"
                                   alt
                                 />
@@ -299,7 +299,7 @@
                                 transition="fade-transition"
                               >
                                 <img
-                                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQaqQZ3o8bafo4ngTZFIM2vxkSXTBcSr_osfQ&usqp=CAU"
+                                  :src="getImg(this.funImg[this.lotto[1]].funimg)"
                                   style="max-width:100%;width:400px;height:65%;"
                                   alt
                                 />
@@ -309,7 +309,7 @@
                                 transition="fade-transition"
                               >
                                 <img
-                                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTCdSE06g-wWMbwV39-LgNCI23dcrefSkhosA&usqp=CAU"
+                                  :src="getImg(this.funImg[this.lotto[2]].funimg)"
                                   style="max-width:100%;width:400px;height:65%;"
                                   alt
                                 />
@@ -654,13 +654,14 @@
 
     <!-- 로딩 오버레이 -->
     <v-overlay :value="donationFlag">
-      <v-progress-circular
-        :size="70"
-        width="6"
-        indeterminate
-        color="amber"
-         style="margin:0 auto;text-align:center;position:relative;top:50%;"
-      ></v-progress-circular>
+      <div class="container" style="margin:0 auto;text-align:center;position:relative;top:50%;">
+        <v-progress-circular
+          :size="70"
+          width="6"
+          indeterminate
+          color="amber"
+        ></v-progress-circular>
+      </div>
     </v-overlay>
     
     <!-- alert -->
@@ -702,6 +703,7 @@ export default {
     this.donationid = this.$route.params.ID;
     this.uid = this.getUserID;
     this.getAge();
+    this.getFun();
   },
   data() {
     return {
@@ -757,6 +759,8 @@ export default {
       sloading: false,
       mloading: false,
       nowPer: 0,
+      funImg: [],
+      lotto: [],
     };
   },
   methods: {
@@ -865,7 +869,7 @@ export default {
       scroll(0, 920);
     },
     getImg(img) {
-      return "../../../images/" + img;
+      return "../../../images/funny/" + img;
     },
     makeUrl(url) {
       return "https://www.youtube.com/embed/" + url;
@@ -983,16 +987,20 @@ export default {
         }
     },
     donationContents() {
-      var myImage = document.querySelector("#autoCanvas").toDataURL();
-      http
-        .post(`/smile/autoCheck`, myImage)
-        .then(res => {
-          this.autoCapture.url = res.data;
-          this.doDonation();
-        })
-        .catch(err => {
-          console.log(err);
-      });
+      if (this.comment != "") {
+        var myImage = document.querySelector("#autoCanvas").toDataURL();
+        http
+          .post(`/smile/autoCheck`, myImage)
+          .then(res => {
+            this.autoCapture.url = res.data;
+            this.doDonation();
+          })
+          .catch(err => {
+            console.log(err);
+        });
+      } else {
+        this.noMsg = true;
+      }
     },
     selfieInit() {
       this.selfFlag = true;
@@ -1170,6 +1178,27 @@ export default {
       if(document.querySelector("iframe") != '' && document.querySelector("iframe") != null) {
         document.querySelectorAll("iframe").src = '';
       }
+    },
+    getFun() {
+      http
+        .get("/crawling/funImage")
+        .then(res => {
+          this.funImg = res.data;
+          for(var i=0; i<3; i++) {
+            let n = Math.floor(Math.random() * 10);
+            if (!this.sameNum(n)) {
+              this.lotto.push(n);
+            } else {
+              i--;
+            }
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    },
+    sameNum(n) {
+      return this.lotto.find((e) => (e === n));
     },
   },
   computed: {

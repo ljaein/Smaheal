@@ -43,7 +43,7 @@
         </v-toolbar>
       </v-card>
       <!-- 아동,청소년 -->
-      <v-sheet class="col-12 mb-15 sheet" elevation="8">
+      <v-sheet v-if="child.length != 0" class="col-12 mb-15 sheet" elevation="8">
         <v-slide-group v-model="model" center-active show-arrows>
           <v-slide-item v-for="(item, index) in child" :key="index">
             <v-card class="ma-4 " height="280" width="200">
@@ -61,8 +61,20 @@
           </v-slide-item>
         </v-slide-group>
       </v-sheet>
+      <v-sheet v-if="child.length == 0" class="col-12 mb-15 sheet" elevation="8">
+        <v-row class="text-center pt-10">
+          <v-col class="h3 pt-10">
+            👨‍🎓 아동/청소년에 관한 해당 후기글이 없습니다.
+          </v-col>
+        </v-row>
+        <v-row class="text-center">
+          <v-col class="text-subtitle-2">
+            후기를 남기고 사람들과 따뜻함을 공유하세요 :)
+          </v-col>
+        </v-row>
+      </v-sheet>
       <!-- 어르신 -->
-      <v-sheet class="col-12 mb-15 sheet" elevation="8">
+      <v-sheet v-if="senior.length != 0" class="col-12 mb-15 sheet" elevation="8">
         <v-slide-group v-model="model" center-active show-arrows>
           <v-slide-item v-for="(item, index) in senior" :key="index">
             <v-card class="ma-4 " height="280" width="200">
@@ -80,8 +92,20 @@
           </v-slide-item>
         </v-slide-group>
       </v-sheet>
+      <v-sheet v-if="senior.length == 0" class="col-12 mb-15 sheet" elevation="8">
+        <v-row class="text-center pt-10">
+          <v-col class="h3 pt-10">
+            👵 어르신에 관한 해당 후기글이 없습니다.
+          </v-col>
+        </v-row>
+        <v-row class="text-center">
+          <v-col class="text-subtitle-2">
+            후기를 남기고 사람들과 따뜻함을 공유하세요 :)
+          </v-col>
+        </v-row>
+      </v-sheet>
       <!-- 장애인 -->
-      <v-sheet class="col-12 mb-15 sheet" elevation="8">
+      <v-sheet v-if="disabled.length != 0" class="col-12 mb-15 sheet" elevation="8">
         <v-slide-group v-model="model" center-active show-arrows>
           <v-slide-item v-for="(item, index) in disabled" :key="index">
             <v-card class="ma-4 " height="280" width="200">
@@ -99,8 +123,20 @@
           </v-slide-item>
         </v-slide-group>
       </v-sheet>
+      <v-sheet v-if="disabled.length == 0" class="col-12 mb-15 sheet" elevation="8">
+        <v-row class="text-center pt-10">
+          <v-col class="h3 pt-10">
+            ♿ 장애인에 관한 해당 후기글이 없습니다.
+          </v-col>
+        </v-row>
+        <v-row class="text-center">
+          <v-col class="text-subtitle-2">
+            후기를 남기고 사람들과 따뜻함을 공유하세요 :)
+          </v-col>
+        </v-row>
+      </v-sheet>
       <!-- 가족,여성 -->
-      <v-sheet class="col-12 mb-15 sheet" elevation="8" >
+      <v-sheet v-if="family.length != 0" class="col-12 mb-15 sheet" elevation="8" >
         <v-slide-group v-model="model" center-active show-arrows>
           <v-slide-item v-for="(item, index) in family" :key="index">
             <v-card class="ma-4 " height="280" width="200">
@@ -118,8 +154,20 @@
           </v-slide-item>
         </v-slide-group>
       </v-sheet>
+      <v-sheet v-if="family.length == 0" class="col-12 mb-15 sheet" elevation="8">
+        <v-row class="text-center pt-10">
+          <v-col class="h3 pt-10">
+            👪 가족/여성에 관한 해당 후기글이 없습니다.
+          </v-col>
+        </v-row>
+        <v-row class="text-center">
+          <v-col class="text-subtitle-2">
+            후기를 남기고 사람들과 따뜻함을 공유하세요 :)
+          </v-col>
+        </v-row>
+      </v-sheet>
       <!-- 다문화 -->
-      <v-sheet class="col-12 mb-15 sheet" elevation="8">
+      <v-sheet v-if="cultural.length != 0" class="col-12 mb-15 sheet" elevation="8">
         <v-slide-group v-model="model" center-active show-arrows>
           <v-slide-item v-for="(item, index) in cultural" :key="index">
             <v-card class="ma-4 " height="280" width="200">
@@ -137,8 +185,20 @@
           </v-slide-item>
         </v-slide-group>
       </v-sheet>
+      <v-sheet v-if="cultural.length == 0" class="col-12 mb-15 sheet" elevation="8">
+        <v-row class="text-center pt-10">
+          <v-col class="h3 pt-10">
+            🌎 다문화에 관한 해당 후기글이 없습니다.
+          </v-col>
+        </v-row>
+        <v-row class="text-center">
+          <v-col class="text-subtitle-2">
+            후기를 남기고 사람들과 따뜻함을 공유하세요 :)
+          </v-col>
+        </v-row>
+      </v-sheet>
       <!-- 기타 -->
-      <v-sheet class="col-12 mb-15 sheet" elevation="8">
+      <v-sheet v-if="etc.length != 0" class="col-12 mb-15 sheet" elevation="8">
         <v-slide-group v-model="model" center-active show-arrows>
           <v-slide-item v-for="(item, index) in etc" :key="index">
             <v-card class="ma-4 " height="280" width="200">
@@ -155,6 +215,18 @@
             </v-card>
           </v-slide-item>
         </v-slide-group>
+      </v-sheet>
+      <v-sheet v-if="etc.length == 0" class="col-12 mb-15 sheet" elevation="8">
+        <v-row class="text-center pt-10">
+          <v-col class="h3 pt-10">
+            🎸 기타에 관한 해당 후기글이 없습니다.
+          </v-col>
+        </v-row>
+        <v-row class="text-center">
+          <v-col class="text-subtitle-2">
+            후기를 남기고 사람들과 따뜻함을 공유하세요 :)
+          </v-col>
+        </v-row>
       </v-sheet>
       <div style="height:340px;"></div>
     </v-container>
