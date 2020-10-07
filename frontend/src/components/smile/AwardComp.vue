@@ -201,7 +201,7 @@ export default {
       }
     },
     getImg() {
-      return "./../../../images/award.jpg"
+      return "/var/lib/jenkins/workspace/Gitlab/frontend/public/images/award.jpg"
     },
   }
 };

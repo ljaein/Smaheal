@@ -865,7 +865,7 @@ export default {
       scroll(0, 920);
     },
     getImg(img) {
-      return "./../../../images/" + img;
+      return "/var/lib/jenkins/workspace/Gitlab/frontend/public/images/" + img;
     },
     makeUrl(url) {
       return "https://www.youtube.com/embed/" + url;

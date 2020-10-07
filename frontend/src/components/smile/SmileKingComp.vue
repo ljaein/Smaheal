@@ -200,16 +200,16 @@ export default {
       
     },
     getImg(img) {
-      return "./../../../images/" + img;
+      return "/var/lib/jenkins/workspace/Gitlab/frontend/public/images/" + img;
     },
     getImg1() {
-      return "./../../../images/no1.png";
+      return "/var/lib/jenkins/workspace/Gitlab/frontend/public/images/no1.png";
     },
     getImg2() {
-      return "./../../../images/no2.png";
+      return "/var/lib/jenkins/workspace/Gitlab/frontend/public/images/no2.png";
     },
     getImg3() {
-      return "./../../../images/no3.png";
+      return "/var/lib/jenkins/workspace/Gitlab/frontend/public/images/no3.png";
     },
   }
 };

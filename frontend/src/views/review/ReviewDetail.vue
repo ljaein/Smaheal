@@ -184,7 +184,7 @@ export default {
         });
     },
     getImg(img) {
-      return "./../../../reviewImage/" + img;
+      return "/var/lib/jenkins/workspace/Gitlab/frontend/public/reviewImage/" + img;
     },
   },
 };
