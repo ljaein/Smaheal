@@ -10,6 +10,7 @@ import java.net.InetAddress;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -325,7 +326,20 @@ public class SmileController {
 			String no2 = null;
 
 			List<Smile> list = smileRepository.findByOrderBySmileperDesc();
+			YearMonth ym = YearMonth.from(LocalDate.now());
+			
+			LocalDate ldS = ym.minusMonths(2).atEndOfMonth();
+			LocalDate ldE = ym.atDay(1);
+			
+			List<Smile> lastMonthList = new ArrayList<Smile>();
+			
 			for (Smile smile : list) {
+				if(smile.getCreatedate().isAfter(ldS) && smile.getCreatedate().isBefore(ldE)) {
+					lastMonthList.add(smile);
+				}
+			}
+			
+			for (Smile smile : lastMonthList) {
 				if (no1 == null) {
 					no1 = smile.getUserId();
 					top3.add(smile);
