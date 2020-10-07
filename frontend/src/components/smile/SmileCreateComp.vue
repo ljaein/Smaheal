@@ -983,16 +983,20 @@ export default {
         }
     },
     donationContents() {
-      var myImage = document.querySelector("#autoCanvas").toDataURL();
-      http
-        .post(`/smile/autoCheck`, myImage)
-        .then(res => {
-          this.autoCapture.url = res.data;
-          this.doDonation();
-        })
-        .catch(err => {
-          console.log(err);
-      });
+      if (this.comment != "") {
+        var myImage = document.querySelector("#autoCanvas").toDataURL();
+        http
+          .post(`/smile/autoCheck`, myImage)
+          .then(res => {
+            this.autoCapture.url = res.data;
+            this.doDonation();
+          })
+          .catch(err => {
+            console.log(err);
+        });
+      } else {
+        this.noMsg = true;
+      }
     },
     selfieInit() {
       this.selfFlag = true;
