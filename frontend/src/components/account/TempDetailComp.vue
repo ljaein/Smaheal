@@ -106,7 +106,7 @@
               prepend-icon
               :rules="[value => !!value.length > 0 || '이미지를 선택하세요']"
               outlined
-              placeholder="Click!"
+              placeholder="Click! (복수 선택 가능)"
             >
               <template v-slot:selection="{ text }">
                 <v-chip color="#356859" dark label small>{{ text }}</v-chip>
