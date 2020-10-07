@@ -1,5 +1,6 @@
 <template>
   <div>
+      <div class="rd_header_img justify-content-center d-none d-md-block"></div>
       <ReviewWriteComp/>
   </div>
 </template>
@@ -16,5 +17,12 @@ export default {
 </script>
 
 <style>
-
+.rd_header_img {
+  background: url("../../assets/donation_hd.jpg") no-repeat;
+  width: 100%;
+  height: 5rem;
+  display: block;
+  background-position: center;
+  background-size: cover;
+}
 </style>

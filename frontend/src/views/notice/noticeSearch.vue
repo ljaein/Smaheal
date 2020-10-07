@@ -1,4 +1,6 @@
 <template>
+<div>
+  <div class="nd_header_img justify-content-center d-none d-md-block"></div>
   <div class="d-flex justify-content-center">
     <noticeSearchComp
     :propItems="items"
@@ -10,6 +12,7 @@
     :propKeyword="keyword"
     v-else/>
   </div>
+</div>
 </template>
 
 <script>
@@ -46,3 +49,14 @@ export default {
   }
 };
 </script>
+
+<style>
+.nd_header_img {
+  background: url("../../assets/notice_hd.jpg") no-repeat;
+  width: 100%;
+  height: 5rem;
+  display: block;
+  background-position: center;
+  background-size: cover;
+}
+</style>
