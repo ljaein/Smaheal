@@ -416,6 +416,8 @@ export default {
             this.multi = this.donationList[5];
             this.others = this.donationList[6];
             $state.loaded();
+
+            this.IsEndList();
           })
           .catch(err => {
             console.log(err);
@@ -432,6 +434,8 @@ export default {
                   this.all = this.all.concat(res.data);
                   $state.loaded();
                   this.page[curTab] += 1;
+
+                  this.IsEndList();
                   if (this.all.length / 8 < 1) {
                     $state.complete();
                   }
@@ -508,6 +512,21 @@ export default {
         name: "DonationRequestCreate"
       });
     },
+    IsEndList() {
+      for(var i = 0; i < this.all.length; i++) {
+        var now = this.all[i].nowcnt;
+        var max = this.all[i].maxcnt;
+        if (now == max) {
+          http.put(`/donation/template/${this.all[i].donationid}`)
+          .then(() => {
+            location.reload();
+          })
+          .catch(e => {
+            console.log(e)
+          })
+        }
+      }
+    }
   },
   watch: {
     searchTxt(req) {
