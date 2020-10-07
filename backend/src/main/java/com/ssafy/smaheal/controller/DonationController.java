@@ -373,5 +373,21 @@ public class DonationController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@GetMapping("/isDonateSelf/{donationid}/{nickname}")
+	@ApiOperation(value = "같은 게시물 기부 중복 체크")
+	public Object isDonateSelf(@PathVariable(value="donationid") Long donationid, @PathVariable(value="nickname") String nickname) throws SQLException, IOException {
+		try {
+			Donation donation = donationRepository.findByDonationid(donationid);
+
+			if (donation.getWriter().equals(nickname)) {
+				return new ResponseEntity<>(HttpStatus.OK, HttpStatus.OK);
+			}
+			return new ResponseEntity<>(HttpStatus.FOUND, HttpStatus.OK);
+
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
 }

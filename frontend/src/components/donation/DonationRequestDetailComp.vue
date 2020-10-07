@@ -723,10 +723,19 @@ export default {
     IsDonate() {
       http.get(`/donation/isDonate/${this.donationid}/${this.getUserID}`)
       .then(({data}) => {
-        if (data.length != 0) {
+        if (data == "OK") {
           var btn = document.getElementById('donation_btn');
           btn.disabled = true;
         }
+        http.get(`/donation/isDonateSelf/${this.donationid}/${this.getProfile}`)
+        .then(({data}) => {
+          if (data == "OK") {
+            var btn = document.getElementById('donation_btn');
+            btn.disabled = true;
+          }
+        }).catch(e => {
+          console.log(e)
+        })
       }).catch(e => {
         console.log(e)
       })
