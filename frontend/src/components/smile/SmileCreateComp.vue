@@ -1,4 +1,11 @@
 <template>
+<div class="col-12 p-0">
+    <div class="sc_header_img d-flex justify-content-center">
+    </div>
+    <div
+      class="d-flex justify-content-center"
+    >
+
   <div class="container col-11" style="height:2300px;">
     <!-- stepper -->
     <v-row>
@@ -29,7 +36,7 @@
                     <h3 style="font-weight:bold;margin-bottom:30px;"><v-icon large color="#356859">mdi-account-question-outline</v-icon> 스마힐 사용법에 대해 알아볼까요?</h3>
                     <h4 style="font-weight:bold;margin-bottom:30px;">웃음을 기부하는 방법은 크게 3가지가 있어요.</h4>
                     <ol style="font-size:1.1rem;">
-                      <li>재밌는 컨텐츠들을 보면서 웃는다.</li>
+                      <li>재밌는 컨텐츠를 즐기며 웃는다.</li>
                       <li>셀카모드로 직접 웃는 사진을 캡쳐한다.</li>
                       <li>웃는 사진을 업로드하여 기부한다.</li>
                       <li>원하는대로 Start~!!</li>
@@ -80,7 +87,7 @@
                     <ol style="font-size:1.1rem;">
                       <li>캡쳐된 사진이 보여요.</li>
                       <li>다시 찍거나 사진을 확정해주세요.</li>
-                      <li>웃음왕에 사용해도 될지 여부를 체크해주세요.</li>
+                      <li>웃음왕 참가 여부를 체크해주세요.(사진 사용 허용)</li>
                       <li>한 줄의 희망메세지를 작성합니다.
                         <ul>
                           <li>비속어를 사용하면 기부가 제한됩니다.</li>
@@ -621,7 +628,7 @@
       </v-row>
     </div>
     <div>
-      <v-row class="text-right">
+      <v-row class="text-left">
         <v-col>
           <v-btn class="mx-10" @click="goBack" icon fab large color="basil">
             <v-icon>mdi-undo</v-icon><span style="font-weight:bold;">뒤로</span>
@@ -682,6 +689,8 @@
     <v-snackbar v-model="noMsg" top right color="error" :timeout="2000"><p class="snackText">응원 메세지를 적어주세요.</p></v-snackbar>
     <v-snackbar v-model="ckMsg" top right color="#356859" :timeout="2000"><p class="snackText">{{tempMsg}}</p></v-snackbar>
   </div>
+    </div>
+</div>
 </template>
 
 <script>
@@ -1290,5 +1299,14 @@ export default {
   font-size:1rem;
   word-spacing:2px;
   letter-spacing:2px;
+}
+.sc_header_img {
+  background: url("../../assets/donation_hd2.jpg") no-repeat;
+  width: 100%;
+  height: 5rem;
+  display: block;
+  background-position: center;
+  background-size: cover;
+  filter:brightness(70%);
 }
 </style>

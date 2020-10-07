@@ -1,4 +1,6 @@
 <template>
+  <div class="col-md-12 p-0">
+    <div class="deault-header"></div>
   <v-container id="inspire" class="">
     <v-row class="pa-0 col-9" style="margin:0 auto;" no-gutters>
       <v-col class="py-15">
@@ -82,14 +84,14 @@
 
             <v-row justify="center">
               <v-col class="text-left pt-8 col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12">
-                * 별명
+                * 닉네임
               </v-col>
               <v-col class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12">
                 <v-text-field
                   v-model="nickName"
                   :counter="10"
                   :rules="nickNameRules"
-                  placeholder="사용할 별명을 입력해주세요.(10자 내외)"
+                  placeholder="사용할 닉네임을 입력해주세요.(10자 내외)"
                   color="#356859"
                   required
                   clearable
@@ -101,7 +103,7 @@
             </v-row>
             <v-row justify="center">
               <v-col class="text-left pt-8 col-12">
-                * 달력에서 생일을 선택하세요.
+                * 생년월일
               </v-col>
             </v-row>
             <v-col class="col-12">
@@ -151,6 +153,7 @@
       <p class="snackText">비밀번호는 숫자와 영문자를 혼용하여야 합니다.</p>
     </v-snackbar>
   </v-container>
+  </div>
 </template>
 
 <script>
@@ -283,5 +286,12 @@ export default {
   font-size:1rem;
   word-spacing:2px;
   letter-spacing:2px;
+}
+.deault-header {
+  height: 4.7rem;
+  width: 100%;
+  background-image: url("../../assets/main-smile.jpg");
+  background-size:cover;
+  /* filter:brightness(70%); */
 }
 </style>
