@@ -2,6 +2,7 @@ package com.ssafy.smaheal.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -115,10 +116,18 @@ public class ReviewController {
 		String realName = originalFileName.split("\\.")[0];
 		String extension = originalFileName.split("\\.")[1];
 		int index = 0;
+		
+		String hostname = InetAddress.getLocalHost().getHostName();
+		
 		while (dest.exists()) {
 			index++;
 			newName = realName + "(" + index + ")." + extension;
-			dest = new File(baseDir + newName);
+			
+			if (hostname.substring(0, 7).equals("DESKTOP")) {// local
+				dest = new File(baseDir + newName);
+	        } else {// aws
+	        	dest = new File("/var/lib/jenkins/workspace/Gitlab/frontend/public/reviewImage/" + newName);
+	        }
 		}
 
 		img.transferTo(dest);

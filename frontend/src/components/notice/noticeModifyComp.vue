@@ -1,17 +1,18 @@
 <template>
-  <v-container class="col-md-11">
-    <v-sheet class="pa-6 mt-4">
-      <v-icon class="mr-1" color="black">mdi-clipboard-edit-outline</v-icon>
+  <v-container class="pa-0">
+    <v-sheet class="pa-6 mt-4" color="#fffbe6">
+      <v-icon class="mr-2" color="#356859">mdi-clipboard-edit-outline</v-icon>
       공지사항 수정페이지
     </v-sheet>
     <!-- prepend-icon="mdi-lightbulb-on" -->
-    <v-sheet class="pa-5">
+    <v-sheet color="#fffbe6" class="pa-5 mb-5">
         <v-text-field
         outlined
         placeholder="제목을 입력하세요."
         color="#356859"
         v-model="title"
         ref="title"
+        prepend-inner-icon="mdi-lightbulb-on"
         :counter="20"
         :rules="titleRules"
         class="mb-3"
@@ -101,10 +102,11 @@ export default {
               title: this.title,
               content: this.content,
           })
-          .then(
-              this.regist = false,
-              this.$router.push('/notice')
-          )
+          .then(() => {
+              this.regist = false;
+              this.$router.push('/notice');
+              location.reload();
+          })
           .catch(e => {
               this.alertMsg = "등록 처리시 에러가 발생했습니다.";
               this.alert = true;
