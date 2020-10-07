@@ -211,7 +211,7 @@
       </template>
       <span>기부 사진 템플릿 찾기</span>
     </v-tooltip>
-    <div class=" d-flex justify-content center">
+    <div class=" d-flex justify-content center" v-show="show">
       <v-container
         class="modal fade mt-5"
         id="searchTemplate"
@@ -307,7 +307,8 @@ export default {
       isSmileKing: false,
       drawer: false,
       group: null,
-      keyword: ""
+      keyword: "",
+      show: true,
     };
   },
   created() {
@@ -368,10 +369,11 @@ export default {
       this.$router.push("/award").catch(() => {});
     },
     searchTemplate: function() {
-      if (this.keyword == "") {
-        this.$refs.search.focus();
-      } else {
-        this.$router.push(`/template/search?template=${this.keyword}`);
+      if (this.$router.currentRoute.fullPath.substring(0, 16) == "/template/search") {
+        this.$router.replace(`/template/search?template=${this.keyword}`).catch(() => {});
+        location.reload();
+        } else {
+        this.$router.push(`/template/search?template=${this.keyword}`).catch(() => {});
       }
     }
   },

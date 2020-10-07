@@ -150,11 +150,12 @@ export default {
     writeReview() {
       if (this.fileInfo != '') {
         var formData = new FormData();
-        formData.append('img', this.fileInfo);
+        const file = this.fileInfo;
+        formData.append("file", file);
         http3
-          .post(`/review/img`, formData)
-          .then(({ data }) => {
-            this.postReview(data);
+          .post("/makeImageSrc", formData)
+          .then(res => {
+            this.postReview(res.data);
           })
           .catch((e) => {
             if (e.request.status === 404) {

@@ -36,29 +36,23 @@
         color="basil"
         style="position:sticky;top:43px;z-index:3;"
       >
-        <v-tab>
+        <v-tab @click="$vuetify.goTo('#section1')">
           <a
             class="nav-link"
-            href=".section1"
-            @click="scrollSpy"
             style="color:black;font-weight:bold;"
             >상세내용</a
           >
         </v-tab>
-        <v-tab>
+        <v-tab @click="$vuetify.goTo('#section2')">
           <a
             class="nav-link"
-            href="#section2"
-            @click="scrollSpy"
             style="color:black;font-weight:bold;"
-            >주소 & 지도</a
+            >위치</a
           >
         </v-tab>
-        <v-tab>
+        <v-tab @click="$vuetify.goTo('#section3')">
           <a
             class="nav-link"
-            href="#section3"
-            @click="scrollSpy"
             style="color:black;font-weight:bold;"
             >응원메세지</a
           >
@@ -71,58 +65,60 @@
         color="basil"
         style="position:sticky;top:79px;z-index:3;"
       >
-        <v-tab>
+        <v-tab @click="$vuetify.goTo('#section1')">
           <a
             class="nav-link"
-            href=".section1"
-            @click="scrollSpy"
             style="color:black;font-weight:bold;"
             >상세내용</a
           >
         </v-tab>
-        <v-tab>
+        <v-tab @click="$vuetify.goTo('#section2')">
           <a
             class="nav-link"
-            href="#section2"
-            @click="scrollSpy"
             style="color:black;font-weight:bold;"
             >위치</a
           >
         </v-tab>
-        <v-tab>
+        <v-tab @click="$vuetify.goTo('#section3')">
           <a
             class="nav-link"
-            href="#section3"
-            @click="scrollSpy"
             style="color:black;font-weight:bold;"
             >응원메세지</a
           >
         </v-tab>
       </v-tabs>
-      <v-col>
-        <body data-spy="scroll" data-target=".navbar" data-offset="50">
-          <div class="section1 container-fluid">
+      <v-col cols="8">
+          <div class="container-fluid">
+          <div id="section1" style="height:50px;">
+          </div>
             <h3
               style="font-family: 'Nanum Gothic';font-weight:bold;"
               class="mb-5"
             >
               상세내용
             </h3>
-            <v-textarea readonly auto-grow solo
-            flat
-            class="pa-3"
-            :value="donation.content"
-            style="font-size:1rem;font-weight:bold;font-family: 'Nanum Gothic';">
+            <v-textarea
+              readonly
+              auto-grow
+              solo
+              flat
+              class="pa-3"
+              :value="donation.content"
+              style="font-size:1rem;font-weight:bold;font-family: 'Nanum Gothic';"
+            >
             </v-textarea>
           </div>
+          <div class="container-fluid">
+            <div id="section2" style="height:50px;">
+          </div>
           <v-divider></v-divider>
-          <div id="section2" class="container-fluid">
             <h3
               style="font-family: 'Nanum Gothic';font-weight:bold;"
               class="mb-5"
             >
               위치
             </h3>
+          <div v-if="donation.address">
             <div
               id="map"
               style="max-width: 100%; height:350px; z-index:0"
@@ -133,8 +129,14 @@
               >{{ donation.address }}</span
             >
           </div>
+          <div v-else>
+            <span style="font-size:1rem;">등록된 주소가 없습니다.</span>
+          </div>
+          </div>
+          <div class="container-fluid">
+            <div id="section3" style="height:50px;">
+          </div>
           <v-divider></v-divider>
-          <div id="section3" class="container-fluid">
             <h3
               style="font-family:'Nanum Gothic';font-weight:bold;"
               class="mb-5"
@@ -189,7 +191,7 @@
                 <v-divider class="p-0 m-0"></v-divider>
               </v-list-item-content>
             </v-list-item>
-            <div class="text-center ma-2">
+            <div class="text-center ma-2" v-if="msgs.length!=0">
               <v-pagination
                 v-model="limit"
                 :length="totalPage"
@@ -283,12 +285,11 @@
               </div>
             </v-row>
           </div>
-        </body>
         <v-btn class="mx-5" @click="goBack" icon fab large color="basil">
-              <v-icon>mdi-undo</v-icon>
-            </v-btn>
+          <v-icon>mdi-undo</v-icon><span style="font-weight:bold;">뒤로</span>
+        </v-btn>
       </v-col>
-      
+
       <!-- 플로팅 메뉴 -->
       <v-col cols="4" class="d-none d-md-block">
         <v-card
@@ -532,7 +533,7 @@ export default {
       temp: "",
       msgFlag: false,
       totalPage: 2,
-      limit: 1,
+      limit: 1
     };
   },
 
@@ -554,8 +555,10 @@ export default {
             .substring(0, this.donation.img.length - 1)
             .split("|");
           this.calDay();
-          this.addScript();
-          this.initMap();
+          if (this.donation.address != "") {
+            this.addScript();
+          }
+          // this.initMap();
         })
         .catch(err => {
           console.log(err);
@@ -563,18 +566,17 @@ export default {
     },
     getMsg() {
       http
-        .get(`/cheerup/getList/${this.donationid}/${this.limit-1}`)
+        .get(`/cheerup/getList/${this.donationid}/${this.limit - 1}`)
         .then(res => {
           this.msgs = res.data;
 
-          http.get(`/cheerup/getCount/${this.donationid}`)
-            .then(({data}) => {
-              if(data.length % 10 == 0) {
+          http.get(`/cheerup/getCount/${this.donationid}`).then(({ data }) => {
+            if (data.length % 10 == 0) {
               this.totalPage = Math.floor(data.length / 10);
             } else {
               this.totalPage = Math.floor(data.length / 10) + 1;
             }
-          })
+          });
         })
         .catch(err => {
           console.log(err);
@@ -602,7 +604,7 @@ export default {
             .post("/cheerup/writeMsg", {
               donationid: this.donationid,
               msg: this.cheerup,
-              userId: this.uid
+              userId: this.getUserID
             })
             .then(res => {
               this.log = res;
@@ -715,23 +717,20 @@ export default {
       document.head.appendChild(script);
     },
     goBack() {
-      window.history.back()
-    },
+      window.history.back();
+    }
   },
   watch: {
     limit() {
       this.getMsg();
     }
   },
-  // mounted() {
-  //   window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
-  // },
 
   computed: {
-    ...mapGetters(["getUserID","getProfile",]),
+    ...mapGetters(["getUserID", "getProfile"]),
     ...mapState({
       userID: state => `${state.user.getUserID}`,
-      uname: state => `${state.user.getProfile}`,
+      uname: state => `${state.user.getProfile}`
     })
   }
 };

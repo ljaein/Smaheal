@@ -6,12 +6,13 @@
     </v-sheet>
     <v-sheet color="#fffbe6" class="pa-5 mb-5">
         <v-text-field
+        outlined
         placeholder="제목을 입력하세요."
         color="#356859"
         v-model="title"
         ref="title"
         class="headline"
-        prepend-icon="mdi-lightbulb-on"
+        prepend-inner-icon="mdi-lightbulb-on"
         clearable
         :counter="20"
         :rules="titleRules"
@@ -132,10 +133,11 @@ export default {
               title: this.title,
               content: this.content,
           })
-          .then(
-              this.regist = false,
-              this.$router.push('/notice')
-          )
+          .then(() => {
+            this.regist = false;
+            this.$router.push('/notice');
+            location.reload();
+          })
           .catch(e => {
               this.alertMsg = "등록 처리시 에러가 발생했습니다.";
               this.alert = true;
