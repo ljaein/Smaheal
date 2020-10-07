@@ -361,10 +361,10 @@ public class DonationController {
 				for (Smile smile : list) {
 					String user = smile.getUserId();
 					if (user.equals(userId)) {
-						return new ResponseEntity<>(smile, HttpStatus.OK);
+						return new ResponseEntity<>(HttpStatus.OK, HttpStatus.OK);
 					}
 				}
-				return new ResponseEntity<>(null, HttpStatus.OK);
+				return new ResponseEntity<>(HttpStatus.FOUND, HttpStatus.OK);
 			} else {
 				return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 			}
