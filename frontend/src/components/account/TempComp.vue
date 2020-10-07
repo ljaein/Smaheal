@@ -79,6 +79,12 @@
     <!-- <div class="text-center pt-2">
       <v-pagination v-model="page" :length="pageCount"></v-pagination>
     </div> -->
+    <v-snackbar v-model="flag" top right :timeout="3000" color="#356859">
+      삭제되었습니다.
+      <template v-slot:action="{ attrs }">
+        <v-btn text v-bind="attrs" @click="flag = false">Close</v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -92,7 +98,8 @@ export default {
       dialog: false,
       deleteId: "",
       page: 1,
-      length: 0
+      length: 0,
+      flag: false,
     };
   },
   created() {
@@ -130,7 +137,7 @@ export default {
       http
         .delete(`/donation/delete/${this.deleteId}`)
         .then(() => {
-          alert("삭제되었습니다.");
+          this.flag=true;
           this.init();
         })
         .catch(err => {
