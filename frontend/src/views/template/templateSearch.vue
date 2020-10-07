@@ -56,7 +56,7 @@
       </v-tooltip>
     </v-row>
     </div>
-   
+   <!--타임라인-->
     <v-overlay
       :value="over1"
       :opacity="1"
@@ -68,14 +68,21 @@
       :opacity="1"
       :absolute="true"
     >
-    <v-col class="text-right">
-      <v-btn icon @click="over1=false" ><v-icon>mdi-close-circle</v-icon></v-btn>
+    <v-col class="text-right py-0">
+      <v-btn icon @click="over1=false"><v-icon>mdi-close-circle</v-icon></v-btn>
     </v-col>
       <v-col>
         <fallImageComp :propsItem="items" v-if="items.length !== 0" />
       </v-col>
     </v-overlay>
-    <v-overlay :value="over2" :opacity="1" class="col-12 p-0">
+    <!--플립북-->
+    <v-overlay
+      :value="over2"
+      :opacity="1"
+      class="col-12 p-0"
+    >
+    </v-overlay>
+    <v-overlay :value="over2" :opacity="1" :absolute="true" class="col-12 p-0">
       <v-col class="text-right">
         <v-btn icon @click="over2 = false"
           ><v-icon>mdi-close-circle</v-icon></v-btn
@@ -85,8 +92,14 @@
         <FlipBookComp :propsItem="items" v-if="items.length !== 0" />
       </div>
     </v-overlay>
-
-    <v-overlay :value="over3" :opacity="1" class="col-12 p-0">
+    <!--하트-->
+    <v-overlay
+      :value="over3"
+      :opacity="1"
+      class="col-12 p-0"
+    >
+    </v-overlay>
+    <v-overlay :value="over3" :opacity="1" :absolute="true" class="col-12 p-0">
       <v-col class="text-right">
         <v-btn icon @click="over3 = false"
           ><v-icon>mdi-close-circle</v-icon></v-btn
@@ -97,14 +110,19 @@
       </v-col>
     </v-overlay>
   </div>
-  <v-container v-else style="text-align: center;">
-    <v-row>
+  <div v-else style="text-align: center;" class="d-flex justify-content-center background">
+    <!-- <v-row>
       <v-col class="h1 font-weight-bold"> (*ㅠㅅㅠ*) </v-col>
+    </v-row> -->
+    <div class="mt-5 p-5">
+     <v-row class="text-center">
+      <v-col style="font-size :2rem;color:white;">
+        <v-icon style="font-size:7rem;color:white;">mdi-emoticon-cry</v-icon><br>
+      기부된 사진이 없습니다.
+      </v-col>
     </v-row>
-    <v-row>
-      <v-col>기부된 사진이 없습니다.</v-col>
-    </v-row>
-  </v-container>
+    </div>
+  </div>
 </template>
 
 <script>

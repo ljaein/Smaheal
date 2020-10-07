@@ -9,7 +9,7 @@
                 <v-card
                 color="amber lighten-4"
                 >
-                    <v-card-title class="title">
+                    <v-card-title class="title black--text">
                         🧡{{item.userId}}🧡
                     </v-card-title>
                     <v-img
