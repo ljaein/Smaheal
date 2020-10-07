@@ -80,7 +80,7 @@ export default {
         })
     },
     getImg(img) {
-      return "./var/lib/jenkins/workspace/Gitlab/frontend/public/reviewImage/" + img;
+      return "../../../reviewImage/" + img;
     },
   }
 };

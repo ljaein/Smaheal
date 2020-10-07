@@ -536,7 +536,7 @@ export default {
       this.$router.push("/login");
     },
     getImg(img) {
-      return "./var/lib/jenkins/workspace/Gitlab/frontend/public/contents/" + img;
+      return "../../../contents/" + img;
     },
     makedate(ndate) {
       if (ndate != null) {

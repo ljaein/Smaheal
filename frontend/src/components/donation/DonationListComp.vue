@@ -501,7 +501,7 @@ export default {
     },
     getImg(img) {
       img = img.split("|")[0];
-      return "./var/lib/jenkins/workspace/Gitlab/frontend/public/contents/" + img;
+      return "../../../contents/" + img;
     },
     goCreate() {
       this.$router.push({

@@ -150,7 +150,7 @@ export default {
       this.$router.push(`/reviewDetail/${num}`);
     },
     getImg(img) {
-      return "./var/lib/jenkins/workspace/Gitlab/frontend/public/reviewImage/" + img;
+      return "../../../reviewImage/" + img;
     },
     goReviewList: function() {
       this.$router.push('/reviewList');
