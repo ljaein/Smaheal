@@ -189,6 +189,13 @@
                 <v-divider class="p-0 m-0"></v-divider>
               </v-list-item-content>
             </v-list-item>
+            <div class="text-center ma-2">
+              <v-pagination
+                v-model="limit"
+                :length="totalPage"
+                color="#356859"
+              />
+            </div>
 
             <!-- 메세지 삭제 dialog -->
             <v-dialog v-model="deleteFlag" max-width="300">
@@ -433,7 +440,9 @@ export default {
       modifyFlag: false,
       tempMsg: [],
       temp: "",
-      msgFlag: false
+      msgFlag: false,
+      totalPage: 2,
+      limit: 1,
     };
   },
 
@@ -464,9 +473,18 @@ export default {
     },
     getMsg() {
       http
-        .get("/cheerup/getList/" + this.donationid)
+        .get(`/cheerup/getList/${this.donationid}/${this.limit-1}`)
         .then(res => {
           this.msgs = res.data;
+
+          http.get(`/cheerup/getCount/${this.donationid}`)
+            .then(({data}) => {
+              if(data.length % 10 == 0) {
+              this.totalPage = Math.floor(data.length / 10);
+            } else {
+              this.totalPage = Math.floor(data.length / 10) + 1;
+            }
+          })
         })
         .catch(err => {
           console.log(err);
@@ -610,7 +628,11 @@ export default {
       window.history.back()
     },
   },
-  watch: {},
+  watch: {
+    limit() {
+      this.getMsg();
+    }
+  },
   // mounted() {
   //   window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
   // },
