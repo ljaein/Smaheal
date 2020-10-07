@@ -37,23 +37,13 @@
         style="position:sticky;top:43px;z-index:3;"
       >
         <v-tab @click="$vuetify.goTo('#section1')">
-          <a
-            class="nav-link"
-            style="color:black;font-weight:bold;"
-            >상세내용</a
-          >
+          <a class="nav-link" style="color:black;font-weight:bold;">상세내용</a>
         </v-tab>
         <v-tab @click="$vuetify.goTo('#section2')">
-          <a
-            class="nav-link"
-            style="color:black;font-weight:bold;"
-            >위치</a
-          >
+          <a class="nav-link" style="color:black;font-weight:bold;">위치</a>
         </v-tab>
         <v-tab @click="$vuetify.goTo('#section3')">
-          <a
-            class="nav-link"
-            style="color:black;font-weight:bold;"
+          <a class="nav-link" style="color:black;font-weight:bold;"
             >응원메세지</a
           >
         </v-tab>
@@ -66,58 +56,46 @@
         style="position:sticky;top:-13px;z-index:3;"
       >
         <v-tab @click="$vuetify.goTo('#section1')">
-          <a
-            class="nav-link"
-            style="color:black;font-weight:bold;"
-            >상세내용</a
-          >
+          <a class="nav-link" style="color:black;font-weight:bold;">상세내용</a>
         </v-tab>
         <v-tab @click="$vuetify.goTo('#section2')">
-          <a
-            class="nav-link"
-            style="color:black;font-weight:bold;"
-            >위치</a
-          >
+          <a class="nav-link" style="color:black;font-weight:bold;">위치</a>
         </v-tab>
         <v-tab @click="$vuetify.goTo('#section3')">
-          <a
-            class="nav-link"
-            style="color:black;font-weight:bold;"
+          <a class="nav-link" style="color:black;font-weight:bold;"
             >응원메세지</a
           >
         </v-tab>
       </v-tabs>
       <v-col>
-          <div class="container-fluid">
-          <div id="section1" style="height:50px;">
-          </div>
-            <h3
-              style="font-family: 'Nanum Gothic';font-weight:bold;"
-              class="mb-5"
-            >
-              상세내용
-            </h3>
-            <v-textarea
-              readonly
-              auto-grow
-              solo
-              flat
-              class="pa-3"
-              :value="donation.content"
-              style="font-size:1rem;font-weight:bold;font-family: 'Nanum Gothic';"
-            >
-            </v-textarea>
-          </div>
-          <div class="container-fluid">
-            <div id="section2" style="height:50px;">
-          </div>
+        <div class="container-fluid">
+          <div id="section1" style="height:50px;"></div>
+          <h3
+            style="font-family: 'Nanum Gothic';font-weight:bold;"
+            class="mb-5"
+          >
+            상세내용
+          </h3>
+          <v-textarea
+            readonly
+            auto-grow
+            solo
+            flat
+            class="pa-3"
+            :value="donation.content"
+            style="font-size:1rem;font-weight:bold;font-family: 'Nanum Gothic';"
+          >
+          </v-textarea>
+        </div>
+        <div class="container-fluid">
+          <div id="section2" style="height:50px;"></div>
           <v-divider></v-divider>
-            <h3
-              style="font-family: 'Nanum Gothic';font-weight:bold;"
-              class="mb-5"
-            >
-              위치
-            </h3>
+          <h3
+            style="font-family: 'Nanum Gothic';font-weight:bold;"
+            class="mb-5"
+          >
+            위치
+          </h3>
           <div v-if="donation.address">
             <div
               id="map"
@@ -132,159 +110,151 @@
           <div v-else>
             <span style="font-size:1rem;">등록된 주소가 없습니다.</span>
           </div>
-          </div>
-          <div class="container-fluid">
-            <div id="section3" style="height:50px;">
-          </div>
+        </div>
+        <div class="container-fluid">
+          <div id="section3" style="height:50px;"></div>
           <v-divider></v-divider>
-            <h3
-              style="font-family:'Nanum Gothic';font-weight:bold;"
-              class="mb-5"
-            >
-              응원메세지
-            </h3>
+          <h3 style="font-family:'Nanum Gothic';font-weight:bold;" class="mb-5">
+            응원메세지
+          </h3>
 
-            <v-list-item v-for="(msg, i) in msgs" :key="i">
-              <v-list-item-content class="pb-0" style="display:block">
-                <v-row
-                  class="d-flex justify-content-between"
-                  style="font-size:1rem;"
-                >
-                  <v-col
-                    class="py-0 ml-2"
-                    style="color:#356859;font-weight:bold;font-family:'Nanum Gothic';"
-                    >{{ msg.userId }}</v-col
-                  ><v-col
-                    class="py-0 mr-2"
-                    align="right"
-                    style="font-family: 'Nanum Gothic';"
-                    >{{ msg.createdate }}</v-col
-                  >
-                </v-row>
-                <v-row>
-                  <v-col cols="10" class="my-auto ml-2">
-                    <h5
-                      style="font-family: 'Nanum Gothic';"
-                      v-text="msg.msg"
-                      class="m-0"
-                    ></h5>
-                  </v-col>
-                  <v-col class="d-flex justify-content-center p-0">
-                    <v-btn
-                      icon
-                      color="gray"
-                      v-if="uid == msg.userId"
-                      @click="clickModify(msg)"
-                    >
-                      <v-icon>mdi-pencil</v-icon>
-                    </v-btn>
-                    <v-btn
-                      icon
-                      color="red darken-3"
-                      v-if="uid == msg.userId"
-                      @click="clickDelete(msg.cheerupid)"
-                    >
-                      <v-icon>mdi-delete-outline</v-icon>
-                    </v-btn>
-                  </v-col>
-                </v-row>
-                <v-divider class="p-0 m-0"></v-divider>
-              </v-list-item-content>
-            </v-list-item>
-            <div class="text-center ma-2" v-if="msgs.length!=0">
-              <v-pagination
-                v-model="limit"
-                :length="totalPage"
-                color="#356859"
-              />
-            </div>
-
-            <!-- 메세지 삭제 dialog -->
-            <v-dialog v-model="deleteFlag" max-width="300">
-              <v-card>
-                <v-card-title>
-                  <span style="font-weight:bold;">
-                    메세지를 삭제하시겠습니까?
-                  </span>
-                </v-card-title>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn
-                    color="red darken-1"
-                    text
-                    style="font-weight:bold;"
-                    @click="deleteMsg(deleteIndex)"
-                    >삭제</v-btn
-                  >
-                  <v-btn
-                    text
-                    style="font-weight:bold;"
-                    @click="deleteFlag = false"
-                    >취소</v-btn
-                  >
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-
-            <!-- 메세지 수정 dialog -->
-            <v-dialog v-model="modifyFlag" max-width="450">
-              <v-card>
-                <v-card-title>
-                  <h5>
-                    <span style="font-weight:bold;"
-                      >수정할 메세지를 입력하세요.</span
-                    >
-                  </h5>
-                </v-card-title>
-                <v-card-text style="font-weight:bold;">
-                  <v-text-field
-                    v-model="tempMsg.msg"
-                    counter
-                    maxlength="50"
-                  ></v-text-field>
-                </v-card-text>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn
-                    text
-                    style="font-weight:bold;"
-                    @click="modifyMsg(tempMsg)"
-                    >수정</v-btn
-                  >
-                  <v-btn
-                    color="red darken-1"
-                    text
-                    style="font-weight:bold;"
-                    @click="(modifyFlag = false), (tempMsg.msg = temp)"
-                    >취소</v-btn
-                  >
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-
-            <!-- 메세지 입력 -->
-            <v-row class="d-flex align-items-center my-auto p-3 ">
-              <v-text-field
-                counter
-                maxlength="50"
-                prepend-icon="mdi-comment"
-                name="cheerup"
-                placeholder="응원의 메세지를 입력하세요"
-                v-model="cheerup"
-                color="lightgray"
-                style="font-family: 'Nanum Gothic';"
-              ></v-text-field>
-              <div>
-                <v-btn
-                  small
-                  class="green-mbtn ml-2"
+          <v-list-item v-for="(msg, i) in msgs" :key="i">
+            <v-list-item-content class="pb-0" style="display:block">
+              <v-row
+                class="d-flex justify-content-between"
+                style="font-size:1rem;"
+              >
+                <v-col
+                  class="py-0 ml-2"
+                  style="color:#356859;font-weight:bold;font-family:'Nanum Gothic';"
+                  >{{ msg.userId }}</v-col
+                ><v-col
+                  class="py-0 mr-2"
+                  align="right"
                   style="font-family: 'Nanum Gothic';"
-                  @click="msgSubmit"
-                  >등록</v-btn
+                  >{{ msg.createdate }}</v-col
                 >
-              </div>
-            </v-row>
+              </v-row>
+              <v-row>
+                <v-col cols="10" class="my-auto ml-2">
+                  <h5
+                    style="font-family: 'Nanum Gothic';"
+                    v-text="msg.msg"
+                    class="m-0"
+                  ></h5>
+                </v-col>
+                <v-col class="d-flex justify-content-center p-0">
+                  <v-btn
+                    icon
+                    color="gray"
+                    v-if="uid == msg.userId"
+                    @click="clickModify(msg)"
+                  >
+                    <v-icon>mdi-pencil</v-icon>
+                  </v-btn>
+                  <v-btn
+                    icon
+                    color="red darken-3"
+                    v-if="uid == msg.userId"
+                    @click="clickDelete(msg.cheerupid)"
+                  >
+                    <v-icon>mdi-delete-outline</v-icon>
+                  </v-btn>
+                </v-col>
+              </v-row>
+              <v-divider class="p-0 m-0"></v-divider>
+            </v-list-item-content>
+          </v-list-item>
+          <div class="text-center ma-2" v-if="msgs.length != 0">
+            <v-pagination v-model="limit" :length="totalPage" color="#356859" />
           </div>
+
+          <!-- 메세지 삭제 dialog -->
+          <v-dialog v-model="deleteFlag" max-width="300">
+            <v-card>
+              <v-card-title>
+                <span style="font-weight:bold;">
+                  메세지를 삭제하시겠습니까?
+                </span>
+              </v-card-title>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                  color="red darken-1"
+                  text
+                  style="font-weight:bold;"
+                  @click="deleteMsg(deleteIndex)"
+                  >삭제</v-btn
+                >
+                <v-btn
+                  text
+                  style="font-weight:bold;"
+                  @click="deleteFlag = false"
+                  >취소</v-btn
+                >
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+
+          <!-- 메세지 수정 dialog -->
+          <v-dialog v-model="modifyFlag" max-width="450">
+            <v-card>
+              <v-card-title>
+                <h5>
+                  <span style="font-weight:bold;"
+                    >수정할 메세지를 입력하세요.</span
+                  >
+                </h5>
+              </v-card-title>
+              <v-card-text style="font-weight:bold;">
+                <v-text-field
+                  v-model="tempMsg.msg"
+                  counter
+                  maxlength="50"
+                ></v-text-field>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                  text
+                  style="font-weight:bold;"
+                  @click="modifyMsg(tempMsg)"
+                  >수정</v-btn
+                >
+                <v-btn
+                  color="red darken-1"
+                  text
+                  style="font-weight:bold;"
+                  @click="(modifyFlag = false), (tempMsg.msg = temp)"
+                  >취소</v-btn
+                >
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+
+          <!-- 메세지 입력 -->
+          <v-row class="d-flex align-items-center my-auto p-3 ">
+            <v-text-field
+              counter
+              maxlength="50"
+              prepend-icon="mdi-comment"
+              name="cheerup"
+              placeholder="응원의 메세지를 입력하세요"
+              v-model="cheerup"
+              color="lightgray"
+              style="font-family: 'Nanum Gothic';"
+            ></v-text-field>
+            <div>
+              <v-btn
+                small
+                class="green-mbtn ml-2"
+                style="font-family: 'Nanum Gothic';"
+                @click="msgSubmit"
+                >등록</v-btn
+              >
+            </div>
+          </v-row>
+        </div>
         <v-btn class="mx-5" @click="goBack" icon fab large color="basil">
           <v-icon>mdi-undo</v-icon><span style="font-weight:bold;">뒤로</span>
         </v-btn>
@@ -374,13 +344,26 @@
             </v-row>
           </div>
           <div style="text-align:center" class="mb-3">
-            <v-btn v-if="!this.btnflag" id="donation_btn" rounded class="green-mbtn" @click="goDonation"
+            <v-btn
+              v-if="!this.btnflag"
+              id="donation_btn"
+              rounded
+              class="green-mbtn"
+              @click="goDonation"
               >웃음기부 GO</v-btn
             >
             <v-tooltip bottom v-else>
               <template v-slot:activator="{ on, attrs }">
                 <v-fab-transition>
-                  <v-btn rounded color="red" dark outlined class="font-weight-bold" v-on="on" v-bind="attrs">
+                  <v-btn
+                    rounded
+                    color="red"
+                    dark
+                    outlined
+                    class="font-weight-bold"
+                    v-on="on"
+                    v-bind="attrs"
+                  >
                     기부할 수 없습니다.
                   </v-btn>
                 </v-fab-transition>
@@ -475,13 +458,26 @@
             </v-row>
           </div>
           <div style="text-align:center" class="mb-3">
-            <v-btn v-if="!btnflag" id="donation_btn2" rounded class="green-mbtn" @click="goDonation"
+            <v-btn
+              v-if="!btnflag"
+              id="donation_btn2"
+              rounded
+              class="green-mbtn"
+              @click="goDonation"
               >웃음기부 GO</v-btn
             >
             <v-tooltip bottom v-else>
               <template v-slot:activator="{ on, attrs }">
                 <v-fab-transition>
-                  <v-btn rounded color="red" dark outlined class="font-weight-bold" v-on="on" v-bind="attrs">
+                  <v-btn
+                    rounded
+                    color="red"
+                    dark
+                    outlined
+                    class="font-weight-bold"
+                    v-on="on"
+                    v-bind="attrs"
+                  >
                     기부할 수 없습니다.
                   </v-btn>
                 </v-fab-transition>
@@ -554,7 +550,7 @@ export default {
       msgFlag: false,
       totalPage: 2,
       limit: 1,
-      btnflag: false,
+      btnflag: false
     };
   },
 
@@ -580,7 +576,9 @@ export default {
             this.addScript();
           }
           // this.initMap();
-          this.IsDonate();
+          if (this.getUserID != '') {
+            this.IsDonate();
+          }
         })
         .catch(err => {
           console.log(err);
@@ -742,32 +740,38 @@ export default {
       window.history.back();
     },
     IsDonate() {
-      http.get(`/donation/isDonate/${this.donationid}/${this.getUserID}`)
-      .then(({data}) => {
-        if (data == "OK") {
-          var btn = document.getElementById('donation_btn');
-          var btn2 = document.getElementById('donation_btn2');
-          btn.disabled = true;
-          btn2.disabled = true;
-          this.btnflag = true;
-        } else {
-          http.get(`/donation/isDonateSelf/${this.donationid}/${this.getProfile}`)
-          .then(({data}) => {
-            if (data == "OK") {
-              var btn = document.getElementById('donation_btn');
-              var btn2 = document.getElementById('donation_btn2');
-              btn.disabled = true;
-              btn2.disabled = true;
-              this.btnflag = true;
-            }
-          }).catch(e => {
-            console.log(e)
-          })
-        }
-      }).catch(e => {
-        console.log(e)
-      })
-    },
+      http
+        .get(`/donation/isDonate/${this.donationid}/${this.getUserID}`)
+        .then(({ data }) => {
+          if (data == "OK") {
+            var btn = document.getElementById("donation_btn");
+            var btn2 = document.getElementById("donation_btn2");
+            btn.disabled = true;
+            btn2.disabled = true;
+            this.btnflag = true;
+          } else {
+            http
+              .get(
+                `/donation/isDonateSelf/${this.donationid}/${this.getProfile}`
+              )
+              .then(({ data }) => {
+                if (data == "OK") {
+                  var btn = document.getElementById("donation_btn");
+                  var btn2 = document.getElementById("donation_btn2");
+                  btn.disabled = true;
+                  btn2.disabled = true;
+                  this.btnflag = true;
+                }
+              })
+              .catch(e => {
+                console.log(e);
+              });
+          }
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
   },
   watch: {
     limit() {

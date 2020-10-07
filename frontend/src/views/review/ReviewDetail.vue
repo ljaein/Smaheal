@@ -2,8 +2,8 @@
   <div>
     <div class="rd_header_img justify-content-center d-none d-md-block"></div>
     <div class="container d-flex justify-content-center col-12">
-      <div class="container mx-auto col-xl-7 col-lg-8 col-md-10 col-sm-11 col-12 d-flex justift-content-center">
-        <v-card class="mt-12 mb-3 col-xl-7 col-lg-8 col-md-10 col-sm-11 col-12">
+      <div class="container mx-auto col-10 d-flex justify-content-center">
+        <v-card class="mt-12 mb-3 col-10">
           <!-- 이미지 -->
           <img :src="image" width="100%" max-width="100%">
           <!-- 제목 -->
