@@ -291,7 +291,7 @@
       </v-col>
 
       <!-- 플로팅 메뉴 -->
-      <v-col cols="4">
+      <v-col cols="4" class="d-none d-md-block">
         <v-card
           class="mx-auto rounded-lg"
           max-width="344"
@@ -381,7 +381,97 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-row class="d-block d-md-none">
+      <v-col>
+        <v-card
+          class="mx-auto rounded-lg"
+          max-width="344"
+          height="auto"
+          outlined
+          elevation="2"
+          style="position:sticky;top:200px;z-index:2;background-color:#fffbe6; border:1px solid #fffbe6 "
+        >
+          <v-list-item three-line>
+            <v-list-item-content>
+              <div>
+                <p>To. {{ donation.receiver }}</p>
+              </div>
+              <v-divider class="m-0"></v-divider>
 
+              <v-list-item-title class="mb-1" style="font-size:1.3rem;"
+                >{{ slider }}%
+                <v-chip
+                  class="ma-2 font-weight-bold "
+                  color="black"
+                  small
+                  style="color:white;"
+                  >D - {{ this.Dday }}</v-chip
+                >
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <br />
+          <v-slider
+            class="mt-2 mx-2"
+            hide-details
+            v-model="slider"
+            :thumb-size="33"
+            thumb-label="always"
+            readonly
+            color="#356859"
+            track-color="lightgray"
+          >
+            <template v-slot:thumb-label="{ value }"
+              ><span style="font-size:1.2rem;">{{
+                satisfactionEmojis[Math.min(Math.floor(value / 8), 7)]
+              }}</span></template
+            >
+          </v-slider>
+
+          <div
+            class="m-3 px-3"
+            style="font-size:1rem; border:3px solid #356859; border-radius:15px; "
+          >
+            <!-- <v-col align="center" style="font-size:1.1rem;" class="pb-0"
+              ><v-icon style="color:black">mdi-approximately-equal</v-icon> 기부
+              현황
+              <v-icon style="color:black"
+                >mdi-approximately-equal</v-icon
+              ></v-col
+            > -->
+
+            <v-row cols="12">
+              <v-col cols="5" class="pr-0 pb-0"
+                ><v-icon style="font-size:1rem;color:black;"
+                  >mdi-check-box-outline</v-icon
+                >현재 웃음사진</v-col
+              ><v-col cols="7" class="pb-0"> {{ donation.nowcnt }}장</v-col>
+            </v-row>
+            <v-row cols="12">
+              <v-col cols="5" class="pr-0 pb-0"
+                ><v-icon style="font-size:1rem;color:black;"
+                  >mdi-check-box-outline</v-icon
+                >목표 웃음사진</v-col
+              ><v-col cols="7" class="pb-0"> {{ donation.maxcnt }}장</v-col>
+            </v-row>
+            <v-row cols="12">
+              <v-col cols="5" class="pr-0 pb-0"
+                ><v-icon style="font-size:1rem;color:black;"
+                  >mdi-check-box-outline</v-icon
+                >마감일자</v-col
+              ><v-col cols="7" class="pr-0">
+                {{ makedate(donation.edate) }}</v-col
+              >
+            </v-row>
+          </div>
+          <div style="text-align:center" class="mb-3">
+            <v-btn rounded class="green-mbtn" @click="goDonation"
+              >웃음기부 GO</v-btn
+            >
+          </div>
+        </v-card>
+      </v-col>
+    </v-row>
     <div class="text-center ma-2">
       <v-snackbar
         v-model="alertFlag"
