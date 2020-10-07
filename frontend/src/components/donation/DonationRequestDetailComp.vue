@@ -374,7 +374,7 @@
             </v-row>
           </div>
           <div style="text-align:center" class="mb-3">
-            <v-btn rounded class="green-mbtn" @click="goDonation"
+            <v-btn id="donation_btn" rounded class="green-mbtn" @click="goDonation"
               >웃음기부 GO</v-btn
             >
           </div>
@@ -559,6 +559,7 @@ export default {
             this.addScript();
           }
           // this.initMap();
+          this.IsDonate();
         })
         .catch(err => {
           console.log(err);
@@ -718,6 +719,17 @@ export default {
     },
     goBack() {
       window.history.back();
+    },
+    IsDonate() {
+      http.get(`/donation/isDonate/${this.donationid}/${this.getUserID}`)
+      .then(({data}) => {
+        if (data.length != 0) {
+          var btn = document.getElementById('donation_btn');
+          btn.disabled = true;
+        }
+      }).catch(e => {
+        console.log(e)
+      })
     }
   },
   watch: {
