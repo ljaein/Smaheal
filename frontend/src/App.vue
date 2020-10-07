@@ -158,6 +158,22 @@
     <v-snackbar
       style="font-family: 'Nanum Gothic';"
       shaped
+      color="error"
+      elevation="24"
+      v-model="loginCheck"
+      timeout="3000"
+    >
+      로그인이 필요합니다.
+      <template v-slot:action="{ attrs }">
+        <v-btn color="white" text v-bind="attrs" @click="loginCheck = false"
+          >Close</v-btn
+        >
+      </template>
+    </v-snackbar>
+
+    <v-snackbar
+      style="font-family: 'Nanum Gothic';"
+      shaped
       color="#356859"
       elevation="24"
       v-model="loginSuccess"
@@ -327,6 +343,7 @@ export default {
       keyword: "",
       show: true,
       fab: false,
+      loginCheck: false,
     };
   },
   created() {
@@ -372,7 +389,11 @@ export default {
       this.$router.push("/").catch(() => {});
     },
     goReviewList() {
-      this.$router.push("/reviewList").catch(() => {});
+      if (this.getProfile == '') {
+        this.loginCheck = true;
+      } else {
+        this.$router.push("/reviewList").catch(() => {});
+      }
     },
     goMyPage() {
       this.$router.push("/myPage").catch(() => {});
