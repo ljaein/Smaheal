@@ -1,6 +1,8 @@
 <template>
   <div class="col-md-12 p-0">
-    <div class="deault-header"></div>
+    <div class="deault-header d-none d-md-block"></div>
+        <div style="height:5rem;" class="d-block d-md-none"></div>
+
   <v-container id="inspire" class="">
     <v-row class="pa-0 col-9" style="margin:0 auto;" no-gutters>
       <v-col class="py-15">

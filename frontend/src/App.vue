@@ -287,7 +287,7 @@
         </div>
       </v-container>
     </div>
-    <v-footer class="justify-center" color="#292929">
+    <v-footer class="justify-center foot" color="#292929">
       <div
         class="font-weight-light grey--text text--lighten-1 text-center"
       >
@@ -451,5 +451,9 @@ html {
   color:white;
   font-size:1rem;
   font-family: 'Nanum Gothic';
+}
+.foot{
+  position:absolute;
+  bottom:0px;
 }
 </style>

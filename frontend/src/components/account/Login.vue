@@ -1,9 +1,10 @@
 <template>
   <div class="col-md-12 p-0">
-    <div class="deault-header"></div>
+    <div class="deault-header d-none d-md-block"></div>
+    <div style="height:5rem;" class="d-block d-md-none"></div>
     <v-container fluid class="pa-0">
       <v-row class="pa-0" no-gutters>
-        <v-col cols="6" class="pa-0 ma-0">
+        <v-col cols="6" class="pa-0 ma-0 d-none d-md-block">
           <v-img
             :src="require(`@/assets/login-smile.jpg`)"
             class="pa-0 ma-0 d-none d-md-block"
