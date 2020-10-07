@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     getImg(img) {
-      return "/var/lib/jenkins/workspace/Gitlab/frontend/public/images/" + img;
+      return "./var/lib/jenkins/workspace/Gitlab/frontend/public/images/" + img;
     }
   }
 };
