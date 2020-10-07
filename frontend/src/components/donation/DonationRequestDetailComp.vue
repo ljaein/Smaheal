@@ -34,39 +34,35 @@
         centered
         grow
         color="basil"
-        style="position:sticky;top:100px;z-index:5;"
+        style="position:sticky;top:78px;z-index:5;"
       >
-        <v-tab>
+        <v-tab id="navbar" @click="$vuetify.goTo('#section1')">
           <a
             class="nav-link"
-            href=".section1"
-            @click="scrollSpy"
             style="color:black;font-weight:bold;"
             >상세내용</a
           >
         </v-tab>
-        <v-tab>
+        <v-tab @click="$vuetify.goTo('#section2')">
           <a
             class="nav-link"
-            href="#section2"
-            @click="scrollSpy"
             style="color:black;font-weight:bold;"
-            >주소 & 지도</a
+            >위치</a
           >
         </v-tab>
-        <v-tab>
+        <v-tab @click="$vuetify.goTo('#section3')">
           <a
             class="nav-link"
-            href="#section3"
-            @click="scrollSpy"
             style="color:black;font-weight:bold;"
             >응원메세지</a
           >
         </v-tab>
       </v-tabs>
       <v-col cols="8">
-        <body data-spy="scroll" data-target=".navbar" data-offset="50">
-          <div class="section1 container-fluid">
+        <!-- <div data-spy="scroll" data-target="#navbar" data-offset="0"> -->
+          <div class="container-fluid">
+          <div id="section1" style="height:50px;">
+          </div>
             <h3
               style="font-family: 'Nanum Gothic';font-weight:bold;"
               class="mb-5"
@@ -78,14 +74,17 @@
               >{{ donation.content }}</span
             >
           </div>
+          <div  class="container-fluid">
+            <div id="section2" style="height:50px;">
+          </div>
           <v-divider></v-divider>
-          <div id="section2" class="container-fluid">
             <h3
               style="font-family: 'Nanum Gothic';font-weight:bold;"
               class="mb-5"
             >
-              주소
+              위치
             </h3>
+            <div v-if="donation.address">
             <div
               id="map"
               style="max-width: 100%; height:350px; z-index:0"
@@ -95,16 +94,30 @@
               style="font-size:1rem;font-weight:bold;font-family: 'Nanum Gothic';"
               >{{ donation.address }}</span
             >
+            </div>
+          <div v-else>
+            <span
+              style="font-size:1rem;font-weight:bold;font-family: 'Nanum Gothic';"
+              >주소가 등록되어 있지 않습니다.</span
+            >
+          </div>
+          </div>
+          <div class="container-fluid">
+            <div id="section3" style="height:50px;">
           </div>
           <v-divider></v-divider>
-          <div id="section3" class="container-fluid">
             <h3
               style="font-family:'Nanum Gothic';font-weight:bold;"
               class="mb-5"
             >
               응원메세지
             </h3>
-
+          <div v-if="msgs.length==0">
+            <span
+              style="font-size:1rem;font-weight:bold;font-family: 'Nanum Gothic';"
+              >등록된 메세지가 없습니다.</span
+            >
+          </div>
             <v-list-item v-for="(msg, i) in msgs" :key="i">
               <v-list-item-content class="pb-0" style="display:block">
                 <v-row
@@ -239,7 +252,7 @@
               </div>
             </v-row>
           </div>
-        </body>
+        <!-- </div> -->
       </v-col>
       <!-- 플로팅 메뉴 -->
       <v-col cols="4">
@@ -443,8 +456,11 @@ export default {
     scrollSpy(evt) {
       evt.preventDefault();
       const href = evt.target.getAttribute("href");
+      console.log(href)
+      var base = document.querySelector("#navbar").offsetTop;
       var location = document.querySelector(href).offsetTop;
-      window.scrollTo({ top: location + 300, behavior: "smooth" });
+      console.log(location)
+      window.scrollTo({ top: location+base, behavior: "smooth" });
     },
     msgSubmit() {
       if (this.uid != "") {
@@ -566,10 +582,11 @@ export default {
       document.head.appendChild(script);
     }
   },
+  mounted(){
+    // window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
+
+  },
   watch: {},
-  // mounted() {
-  //   window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
-  // },
 
   computed: {
     ...mapGetters(["getUserID"]),

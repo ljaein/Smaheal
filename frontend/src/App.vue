@@ -2,12 +2,24 @@
   <v-app>
     <v-app-bar app class="d-block d-md-none"
       ><v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-btn @click="goHome()" class="headline" color="amber accent-4" text align-center
+      <v-btn
+        @click="goHome()"
+        class="headline"
+        color="amber accent-4"
+        text
+        align-center
         >SmaHeal</v-btn
       >
     </v-app-bar>
-    
-    <v-navigation-drawer v-model="drawer" relative temporary app fixed style="overflow: auto;">
+
+    <v-navigation-drawer
+      v-model="drawer"
+      relative
+      temporary
+      app
+      fixed
+      style="overflow: auto;"
+    >
       <div v-if="getProfile" class="text-center">
         <v-btn block dark depressed color="amber" @click="logout">
           LOGOUT
@@ -68,7 +80,10 @@
             <v-list-item-title>공지사항</v-list-item-title>
           </v-list-item>
 
-          <v-list-item v-if="getProfile != '관리자' && getProfile" @click="goMyPage">
+          <v-list-item
+            v-if="getProfile != '관리자' && getProfile"
+            @click="goMyPage"
+          >
             <v-list-item-icon>
               <v-icon>mdi-clipboard-account</v-icon>
             </v-list-item-icon>
@@ -187,7 +202,8 @@
             fixed
             v-on="on"
             v-bind="attrs"
-            @click="goSearchTemplate()"
+            data-toggle="modal"
+            data-target="#searchTemplate"
           >
             <v-icon>mdi-table-search</v-icon>
           </v-btn>
@@ -195,16 +211,80 @@
       </template>
       <span>기부 사진 템플릿 찾기</span>
     </v-tooltip>
-    <v-footer class="justify-center" style="margin-top:50px;" color="#292929">
+    <div class=" d-flex justify-content center">
+      <v-container
+        class="modal fade mt-5"
+        id="searchTemplate"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+        style="color:black"
+      >
+        <div class="modal-dialog col-12  d-flex justify-content-center">
+          <div class="modal-content col-md-8">
+            <div class="modal-header ">
+              <p
+                class="modal-title my-auto ml-2"
+                id="exampleModalLabel"
+                style="font-weight:bold; font-size:1.3rem;text-align:center;"
+              >
+                <span
+                  >일련번호로 기부 사진 템플릿을 찾아보세요</span
+                >
+              </p>
+              <button
+                type="button"
+                class="close my-auto"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <v-form action="/template/search">
+                  <v-text-field
+                    placeholder="일련번호를 입력하세요."
+                    hide-details
+                    outlined
+                    color="#356859"
+                    clearable
+                    name="template"
+                    class="mr-2"
+                    background-color="white"
+                    v-model="keyword"
+                    ref="search"
+                  />
+                  <div align="center" class="my-3" style="font-size:1rem;">
+                  <span>당신을 위해 환한 웃음을 지은 사람들입니다.</span><br>
+                  <span>부여받은 일련번호로 검색하여 확인하실 수 있습니다.</span>
+                  </div>
+                  <v-col align="center">
+                  <v-btn @click="searchTemplate()" data-dismiss="modal" large class="green-mbtn" style="border-radius:25px;">
+                    GO
+                  </v-btn>
+                  </v-col>
+              </v-form>
+            </div>
+          </div>
+        </div>
+      </v-container>
+    </div>
+    <v-footer class="justify-center" color="#292929">
       <div
-        class="title font-weight-light grey--text text--lighten-1 text-center"
+        class="font-weight-light grey--text text--lighten-1 text-center"
       >
         <div class="py-5"></div>
-        &copy; {{ new Date().getFullYear() }} — SMAHEAL — Made with 💜 by 미찾사<br />
+        &copy; {{ new Date().getFullYear() }} — SMAHEAL — Made with 💜 by
+        미찾사<br />
         SMAHEAL 대전광역시 유성구 동서대로 98-39<br />
-        대표 이재인 | 사업자가짜번호 111-222-33333<br />
-        GitLab <a href="https://lab.ssafy.com/s03-ai-sub3/s03p23b108">https://lab.ssafy.com/s03-ai-sub3/s03p23b108</a><br />
-        제휴문의 ssafy@ssafy.com | 고객문의 ssafy@ssafy.com / 1111-2222 (09:00~18:00)
+        대표 이재인 | 사업자번호 111-222-33333<br />
+        GitLab
+        <a href="https://lab.ssafy.com/s03-ai-sub3/s03p23b108"
+          >https://lab.ssafy.com/s03-ai-sub3/s03p23b108</a
+        ><br />
+        제휴문의 ssafy@ssafy.com | 고객문의 ssafy@ssafy.com / 1111-2222
+        (09:00~18:00)
         <div class="py-5"></div>
       </div>
     </v-footer>
@@ -226,7 +306,8 @@ export default {
       loginSuccess: false,
       isSmileKing: false,
       drawer: false,
-      group: null
+      group: null,
+      keyword: ""
     };
   },
   created() {
@@ -279,10 +360,17 @@ export default {
       this.$router.push("/adminPage").catch(() => {});
     },
     goSearchTemplate() {
-      this.$router.push("/template").catch(() => {});
+      // this.$router.push("/template").catch(() => {});
     },
     goAward() {
       this.$router.push("/award").catch(() => {});
+    },
+    searchTemplate: function() {
+      if (this.keyword == "") {
+        this.$refs.search.focus();
+      } else {
+        this.$router.push(`/template/search?template=${this.keyword}`);
+      }
     }
   },
   computed: {

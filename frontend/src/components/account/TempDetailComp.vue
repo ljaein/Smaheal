@@ -55,6 +55,7 @@
       <v-form persistent ref="form">
         <v-row class="d-flex justify-content-center">
           <v-col cols="6">
+            <!-- 새로 등록하는 이미지-->
             <v-carousel
               v-if="inputFiles.length > 0"
               style="width:100%;height:23rem; border:1px solid lightgray; border-radius:5px;"
@@ -66,7 +67,26 @@
                 />
               </v-carousel-item>
             </v-carousel>
-            <div v-if="inputFiles.length == 0" style="width:100%;height:23rem;">
+
+            <!-- 처음 들어왔을 때 carousel-->
+            <v-carousel
+              v-if="!imgFlag"
+              style="width:100%;height:23rem; border:1px solid lightgray; border-radius:5px;"
+            >
+              <v-carousel-item
+                v-for="(item, i) in images"
+                :key="i"
+                reverse-transition="fade-transition"
+                transition="fade-transition"
+              >
+                <img :src="getImg(item)" style="height:23rem; width:100%;" />
+              </v-carousel-item>
+            </v-carousel>
+
+            <div
+              v-if="inputFiles.length == 0 && images.length == 0"
+              style="width:100%;height:23rem;"
+            >
               <img
                 :src="require(`@/assets/main-smile.jpg`)"
                 style="width:100%;height:23rem;border-radius:8px;"
@@ -300,13 +320,15 @@ export default {
       menu2: false,
       addr: "",
       addrDetail: "",
-      DonationCreate: [],
+      DonationCreate: {},
       dialog: false,
       rqFlag: false,
       rejectFlag: false,
       tempFlag: false,
       tempRejectFlag: false,
-      donationid: ""
+      donationid: "",
+      images: [],
+      imgFlag: false
     };
   },
   created() {
@@ -315,6 +337,9 @@ export default {
       .get(`/donation/getTempDetail/${this.$route.params.ID}`)
       .then(res => {
         this.DonationCreate = res.data;
+        this.images = this.DonationCreate.img
+          .substring(0, this.DonationCreate.img.length - 1)
+          .split("|");
       })
       .catch(err => {
         console.log(err);
@@ -343,6 +368,7 @@ export default {
       return URL.createObjectURL(file);
     },
     registDonation() {
+      this.DonationCreate.img = '';
       this.dialog = false;
       if (!this.$refs.form.validate()) {
         this.rejectFlag = true;
@@ -374,7 +400,7 @@ export default {
                     .then(res => {
                       this.rqFlag = true;
                       setTimeout(() => {
-                        this.$router.push("/donationList").catch(err => {
+                        this.$router.push("/myPage").catch(err => {
                           console.log(err);
                         });
                       }, 1500);
@@ -394,29 +420,107 @@ export default {
       }
     },
     saveDonation() {
+      this.DonationCreate.img = '';
       if (this.DonationCreate.title.length == 0) {
         this.tempRejectFlag = true;
         return;
       } else {
-        this.DonationCreate.address = this.addr + this.addrDetail;
-        http
-          .put("/donation/update", this.DonationCreate)
-          .then(res => {
-            this.tempFlag = true;
-            setTimeout(() => {
-              this.$router.push("/myPage").catch(err => {
-                console.log(err);
-              });
-            }, 1500);
-            console.log(res.data);
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        if (this.inputFiles.length == 0) {
+          http
+            .put("/donation/update", this.DonationCreate)
+            .then(res => {
+              this.tempFlag = true;
+              setTimeout(() => {
+                this.$router.push("/myPage").catch(err => {
+                  console.log(err);
+                });
+              }, 1500);
+              console.log(res.data);
+            })
+            .catch(err => {
+              console.log(err);
+            });
+          return;
+        }
+        console.log(this.inputFiles.length);
+        for (var i = 0; i < this.inputFiles.length; i++) {
+          var formData = new FormData();
+          const file = this.inputFiles[i];
+          if (file != null) {
+            if (i != this.inputFiles.length - 1) {
+              formData.append("file", file);
+              http3
+                .post("/makeImageSrc", formData)
+                .then(res => {
+                  this.DonationCreate.img += res.data + "|";
+                })
+                .catch(err => {
+                  console.log(err);
+                });
+            } else {
+              formData.append("file", file);
+              http3
+                .post("/makeImageSrc", formData)
+                .then(res => {
+                  this.DonationCreate.img += res.data + "|";
+                  this.DonationCreate.address = this.addr + this.addrDetail;
+                  http
+                    .put("/donation/update", this.DonationCreate)
+                    .then(res => {
+                      this.tempFlag = true;
+                      setTimeout(() => {
+                        this.$router.push("/myPage").catch(err => {
+                          console.log(err);
+                        });
+                      }, 1500);
+                      console.log(res.data);
+                    })
+                    .catch(err => {
+                      console.log(err);
+                    });
+                })
+                .catch(err => {
+                  console.log(err);
+                });
+            }
+          }
+        }
+        this.tempFlag = true;
+      }
+    },
+    // saveDonation() {
+    //   if (this.DonationCreate.title.length == 0) {
+    //     this.tempRejectFlag = true;
+    //     return;
+    //   } else {
+    //     this.DonationCreate.address = this.addr + this.addrDetail;
+    //     http
+    //       .put("/donation/update", this.DonationCreate)
+    //       .then(res => {
+    //         this.tempFlag = true;
+    //         setTimeout(() => {
+    //           this.$router.push("/myPage").catch(err => {
+    //             console.log(err);
+    //           });
+    //         }, 1500);
+    //         console.log(res.data);
+    //       })
+    //       .catch(err => {
+    //         console.log(err);
+    //       });
+    //   }
+    // },
+    getImg(img) {
+      return "../../../contents/" + img;
+    }
+  },
+  watch: {
+    inputFiles(v) {
+      if (v.length > 0) {
+        this.imgFlag = true;
       }
     }
   },
-  watch: {},
   computed: {
     ...mapGetters(["getProfile"]),
     ...mapState({
