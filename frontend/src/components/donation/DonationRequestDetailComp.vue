@@ -374,9 +374,19 @@
             </v-row>
           </div>
           <div style="text-align:center" class="mb-3">
-            <v-btn id="donation_btn" rounded class="green-mbtn" @click="goDonation"
+            <v-btn v-if="!this.btnflag" id="donation_btn" rounded class="green-mbtn" @click="goDonation"
               >웃음기부 GO</v-btn
             >
+            <v-tooltip bottom v-else>
+              <template v-slot:activator="{ on, attrs }">
+                <v-fab-transition>
+                  <v-btn rounded color="red" dark outlined class="font-weight-bold" v-on="on" v-bind="attrs">
+                    기부할 수 없습니다.
+                  </v-btn>
+                </v-fab-transition>
+              </template>
+              <span>본인이 쓴 게시물이거나 이미 기부한 게시물입니다.</span>
+            </v-tooltip>
           </div>
         </v-card>
       </v-col>
@@ -465,9 +475,19 @@
             </v-row>
           </div>
           <div style="text-align:center" class="mb-3">
-            <v-btn rounded class="green-mbtn" @click="goDonation"
+            <v-btn v-if="!btnflag" id="donation_btn2" rounded class="green-mbtn" @click="goDonation"
               >웃음기부 GO</v-btn
             >
+            <v-tooltip bottom v-else>
+              <template v-slot:activator="{ on, attrs }">
+                <v-fab-transition>
+                  <v-btn rounded color="red" dark outlined class="font-weight-bold" v-on="on" v-bind="attrs">
+                    기부할 수 없습니다.
+                  </v-btn>
+                </v-fab-transition>
+              </template>
+              <span>본인이 쓴 게시물이거나 이미 기부한 게시물입니다.</span>
+            </v-tooltip>
           </div>
         </v-card>
       </v-col>
@@ -533,7 +553,8 @@ export default {
       temp: "",
       msgFlag: false,
       totalPage: 2,
-      limit: 1
+      limit: 1,
+      btnflag: false,
     };
   },
 
@@ -725,21 +746,28 @@ export default {
       .then(({data}) => {
         if (data == "OK") {
           var btn = document.getElementById('donation_btn');
+          var btn2 = document.getElementById('donation_btn2');
           btn.disabled = true;
+          btn2.disabled = true;
+          this.btnflag = true;
+        } else {
+          http.get(`/donation/isDonateSelf/${this.donationid}/${this.getProfile}`)
+          .then(({data}) => {
+            if (data == "OK") {
+              var btn = document.getElementById('donation_btn');
+              var btn2 = document.getElementById('donation_btn2');
+              btn.disabled = true;
+              btn2.disabled = true;
+              this.btnflag = true;
+            }
+          }).catch(e => {
+            console.log(e)
+          })
         }
-        http.get(`/donation/isDonateSelf/${this.donationid}/${this.getProfile}`)
-        .then(({data}) => {
-          if (data == "OK") {
-            var btn = document.getElementById('donation_btn');
-            btn.disabled = true;
-          }
-        }).catch(e => {
-          console.log(e)
-        })
       }).catch(e => {
         console.log(e)
       })
-    }
+    },
   },
   watch: {
     limit() {
