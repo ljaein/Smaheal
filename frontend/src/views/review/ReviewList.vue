@@ -336,20 +336,20 @@ export default {
       if (num == 1) {
         scroll(0, 0);
       } else if (num == 2) {
-        scroll(0, 430);
+        scroll(0, 730);
       } else if (num == 3) {
-        scroll(0, 830);
+        scroll(0, 1130);
       } else if (num == 4) {
-        scroll(0, 1230);
+        scroll(0, 1530);
       } else if (num == 5) {
-        scroll(0, 1630);
+        scroll(0, 1930);
       } else if (num == 6) {
-        scroll(0, 2030);
+        scroll(0, 2330);
       }
     },
     handleScroll() {
       this.toTop = document.documentElement.scrollTop;
-      if (this.toTop >= 400 && this.toTop < 800) {
+      if (this.toTop >= 700 && this.toTop < 1100) {
         this.tabTitle = '어르신';
         document.getElementById('tab1').setAttribute('aria-selected', false);
         document.getElementById('tab1').classList.remove('v-tab--active');
@@ -363,7 +363,7 @@ export default {
         document.getElementById('tab5').classList.remove('v-tab--active');
         document.getElementById('tab6').setAttribute('aria-selected', false);
         document.getElementById('tab6').classList.remove('v-tab--active');
-      } else if (this.toTop >= 800 && this.toTop < 1200) {
+      } else if (this.toTop >= 1100 && this.toTop < 1500) {
         this.tabTitle = '장애인';
         document.getElementById('tab1').setAttribute('aria-selected', false);
         document.getElementById('tab1').classList.remove('v-tab--active');
@@ -377,7 +377,7 @@ export default {
         document.getElementById('tab5').classList.remove('v-tab--active');
         document.getElementById('tab6').setAttribute('aria-selected', false);
         document.getElementById('tab6').classList.remove('v-tab--active');
-      } else if (this.toTop >= 1200 && this.toTop < 1600) {
+      } else if (this.toTop >= 1500 && this.toTop < 1900) {
         this.tabTitle = '가족/여성';
         document.getElementById('tab1').setAttribute('aria-selected', false);
         document.getElementById('tab1').classList.remove('v-tab--active');
@@ -391,7 +391,7 @@ export default {
         document.getElementById('tab5').classList.remove('v-tab--active');
         document.getElementById('tab6').setAttribute('aria-selected', false);
         document.getElementById('tab6').classList.remove('v-tab--active');
-      } else if (this.toTop >= 1600 && this.toTop < 2000) {
+      } else if (this.toTop >= 1900 && this.toTop < 2300) {
         this.tabTitle = '다문화';
         document.getElementById('tab1').setAttribute('aria-selected', false);
         document.getElementById('tab1').classList.remove('v-tab--active');
@@ -405,7 +405,7 @@ export default {
         document.getElementById('tab5').classList.add('v-tab--active');
         document.getElementById('tab6').setAttribute('aria-selected', false);
         document.getElementById('tab6').classList.remove('v-tab--active');
-      } else if (this.toTop >= 2000) {
+      } else if (this.toTop >= 2300) {
         this.tabTitle = '기타';
         document.getElementById('tab1').setAttribute('aria-selected', false);
         document.getElementById('tab1').classList.remove('v-tab--active');
