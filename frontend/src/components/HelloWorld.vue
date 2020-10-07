@@ -14,7 +14,7 @@
                   class="white--text mx-auto"
                   justify="center"
                 >
-                  <v-col class="white--text text-center" cols="12">
+                  <v-col class="white--text text-center" cols="12"><br/>
                     <span
                       class=""
                       style="font-family: 'Gamja Flower',cursive;font-weight:bold; font-size:4rem;"
