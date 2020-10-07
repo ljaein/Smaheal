@@ -233,7 +233,6 @@
           <span>상세내용</span>
           <v-textarea
             v-model="DonationCreate.content"
-            auto-grow
             outlined
             rows="20"
             :rules="[v => !!v || '상세내용은 필수값입니다']"
