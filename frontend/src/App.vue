@@ -2,13 +2,14 @@
   <v-app>
     <v-app-bar app class="d-block d-md-none"
       ><v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      
       <v-btn
         @click="goHome()"
         class="headline"
         color="amber accent-4"
         text
         align-center
-        >SmaHeal</v-btn
+        ><img :src="require('@/assets/l1.png')" class="mr-2" height="40px" width="50px">SmaHeal</v-btn
       >
     </v-app-bar>
 
@@ -109,9 +110,8 @@
 
     <v-app-bar app color="white" height="90" class="d-none d-md-block">
       <v-btn @click="goHome()" class="headline" color="amber accent-4" text
-        >SmaHeal</v-btn
+        ><img :src="require('@/assets/l1.png')" class="mr-3" width="70px" height="60px">SmaHeal</v-btn
       >
-
       <v-spacer></v-spacer>
 
       <!-- <v-btn @click="goDonationBoardDetail()" text>
