@@ -30,11 +30,46 @@
     <!-- 내용 -->
     <v-row class="d-flex justify-content-center m-0">
       <v-tabs
-        class="col-md-12 col-sm-12 basil--text px-0"
+        class="col-md-12 col-sm-12 basil--text px-0 d-block d-md-none"
         centered
         grow
         color="basil"
-        style="position:sticky;top:100px;z-index:5;"
+        style="position:sticky;top:43px;z-index:3;"
+      >
+        <v-tab>
+          <a
+            class="nav-link"
+            href=".section1"
+            @click="scrollSpy"
+            style="color:black;font-weight:bold;"
+            >상세내용</a
+          >
+        </v-tab>
+        <v-tab>
+          <a
+            class="nav-link"
+            href="#section2"
+            @click="scrollSpy"
+            style="color:black;font-weight:bold;"
+            >주소 & 지도</a
+          >
+        </v-tab>
+        <v-tab>
+          <a
+            class="nav-link"
+            href="#section3"
+            @click="scrollSpy"
+            style="color:black;font-weight:bold;"
+            >응원메세지</a
+          >
+        </v-tab>
+      </v-tabs>
+      <v-tabs
+        class="col-md-12 col-sm-12 basil--text px-0 d-none d-md-block"
+        centered
+        grow
+        color="basil"
+        style="position:sticky;top:79px;z-index:3;"
       >
         <v-tab>
           <a
@@ -154,6 +189,13 @@
                 <v-divider class="p-0 m-0"></v-divider>
               </v-list-item-content>
             </v-list-item>
+            <div class="text-center ma-2">
+              <v-pagination
+                v-model="limit"
+                :length="totalPage"
+                color="#356859"
+              />
+            </div>
 
             <!-- 메세지 삭제 dialog -->
             <v-dialog v-model="deleteFlag" max-width="300">
@@ -255,7 +297,7 @@
           height="auto"
           outlined
           elevation="2"
-          style="position:sticky;top:200px;z-index:5;background-color:#fffbe6; border:1px solid #fffbe6 "
+          style="position:sticky;top:200px;z-index:2;background-color:#fffbe6; border:1px solid #fffbe6 "
         >
           <v-list-item three-line>
             <v-list-item-content>
@@ -398,7 +440,9 @@ export default {
       modifyFlag: false,
       tempMsg: [],
       temp: "",
-      msgFlag: false
+      msgFlag: false,
+      totalPage: 2,
+      limit: 1,
     };
   },
 
@@ -429,9 +473,18 @@ export default {
     },
     getMsg() {
       http
-        .get("/cheerup/getList/" + this.donationid)
+        .get(`/cheerup/getList/${this.donationid}/${this.limit-1}`)
         .then(res => {
           this.msgs = res.data;
+
+          http.get(`/cheerup/getCount/${this.donationid}`)
+            .then(({data}) => {
+              if(data.length % 10 == 0) {
+              this.totalPage = Math.floor(data.length / 10);
+            } else {
+              this.totalPage = Math.floor(data.length / 10) + 1;
+            }
+          })
         })
         .catch(err => {
           console.log(err);
@@ -575,7 +628,11 @@ export default {
       window.history.back()
     },
   },
-  watch: {},
+  watch: {
+    limit() {
+      this.getMsg();
+    }
+  },
   // mounted() {
   //   window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
   // },
