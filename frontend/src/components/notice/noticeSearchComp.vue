@@ -45,7 +45,7 @@
             <tbody>
               <tr v-for="(item, index) in items" :key="index">
                 <td class="text-center">{{item.noticeid}}</td>
-                <td class="text-center" @click="goDetail(item.noticeid)">{{item.title}}</td>
+                <td class="text-center" style="cursor:pointer;" @click="goDetail(item.noticeid)">{{item.title}}</td>
                 <td class="text-center">관리자</td>
                 <td class="text-center">{{getFormatDate(item.createdAt)}}</td>
               </tr>
