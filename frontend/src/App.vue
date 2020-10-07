@@ -9,7 +9,7 @@
         color="amber accent-4"
         text
         align-center
-        ><img :src="require('@/assets/l1.png')" class="mr-2" height="40px" width="50px">SmaHeal</v-btn
+        ><img :src="require('@/assets/l1.png')" class="mr-1" width="40px" height="35px"><h3 class="mb-1 mt-1" style="color:black;font-family:'Gamja Flower',cursive;font-weight:bold; font-size:2.2rem;">스마힐</h3></v-btn
       >
     </v-app-bar>
 
@@ -110,7 +110,7 @@
 
     <v-app-bar flat class="d-none d-md-block" style="position:absolute; z-index:5; background-color:transparent;">
       <v-btn @click="goHome()" class="headline" color="amber accent-4" text
-        ><img :src="require('@/assets/l1.png')" class="mr-3" width="70px" height="60px">SmaHeal</v-btn
+        ><img :src="require('@/assets/l1.png')" class="mr-1 mt-3" width="60px" height="50px"><h3 class="mb-1" style="color:white;font-family:'Gamja Flower',cursive;font-weight:bold; font-size:2.2rem;">스마힐</h3></v-btn
       >
       <v-spacer></v-spacer>
 
