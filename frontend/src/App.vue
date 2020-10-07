@@ -243,7 +243,7 @@
               </button>
             </div>
             <div class="modal-body">
-              <v-form action="/template/search">
+              <v-form action="/template/search" @submit="checkForm">
                   <v-text-field
                     placeholder="일련번호를 입력하세요."
                     hide-details
@@ -370,14 +370,20 @@ export default {
       this.$router.push("/award").catch(() => {});
     },
     searchTemplate: function() {
-      if (this.$router.currentRoute.fullPath.substring(0, 16) == "/template/search") {
+      if (this.$router.currentRoute.fullPath.substring(0, 16) == "/template/search" && this.keyword != "") {
         this.$router.replace(`/template/search?template=${this.keyword}`).catch(() => {});
         this.keyword = "";
         location.reload();
-        } else {
+        } else if (this.$router.currentRoute.fullPath.substring(0, 16) != "/template/search" && this.keyword != "") {
         this.$router.push(`/template/search?template=${this.keyword}`).catch(() => {});
         this.keyword = "";
       }
+    },
+    checkForm: function(e) {
+      if (this.keyword !== "") {
+        return true;
+      }
+      e.preventDefault();
     }
   },
   computed: {
