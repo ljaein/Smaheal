@@ -653,15 +653,16 @@
     </v-snackbar>
 
     <!-- 로딩 오버레이 -->
-    <v-overlay :value="donationFlag">
-      <v-progress-circular
-        :size="70"
-        width="6"
-        indeterminate
-        color="amber"
-         style="margin:0 auto;text-align:center;position:relative;top:50%;"
-      ></v-progress-circular>
-    </v-overlay>
+    <div class="container" style="margin:0 auto;text-align:center;position:relative;top:50%;">
+      <v-overlay :value="donationFlag">
+        <v-progress-circular
+          :size="70"
+          width="6"
+          indeterminate
+          color="amber"
+        ></v-progress-circular>
+      </v-overlay>
+    </div>
     
     <!-- alert -->
     <v-snackbar v-model="noFace" top right color="error" :timeout="2000"><p class="snackText">얼굴을 인식하지 못했습니다.</p></v-snackbar>

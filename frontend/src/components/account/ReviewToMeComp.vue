@@ -150,7 +150,7 @@ export default {
       this.$router.push(`/reviewDetail/${num}`);
     },
     getImg(img) {
-      return "../../../reviewImage/" + img;
+      return "../../../contents/" + img;
     },
     goReviewList: function() {
       this.$router.push('/reviewList');
