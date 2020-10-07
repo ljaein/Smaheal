@@ -1,4 +1,6 @@
 <template>
+<div>
+  <div class="d_header_img justify-content-center d-none d-md-block"></div>
   <div class="d-flex justify-content-center">
     <v-container fluid class="col-md-11" style="font-size:1rem;">
       <v-snackbar
@@ -302,6 +304,7 @@
       </v-row>
     </v-container>
   </div>
+</div>
 </template>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
