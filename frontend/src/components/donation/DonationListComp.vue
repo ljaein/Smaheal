@@ -434,6 +434,8 @@ export default {
                   this.IsEndList();
                   $state.loaded();
                   this.page[curTab] += 1;
+
+                  this.IsEndList();
                   if (this.all.length / 8 < 1) {
                     $state.complete();
                   }
@@ -516,7 +518,9 @@ export default {
         var max = this.all[i].maxcnt;
         if (now == max) {
           http.put(`/donation/template/${this.all[i].donationid}`)
-          .then()
+          .then(() => {
+            location.reload();
+          })
           .catch(e => {
             console.log(e)
           })

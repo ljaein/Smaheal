@@ -143,7 +143,7 @@
               <v-row cols="6" class="d-flex justify-content-center">
                 <div
                   class="text-center my-auto mr-10"
-                  style="font-size:5em;line-height:1.3em;"
+                  style="font-size:4em;line-height:1.3em;"
                 >
                   TODAY's <br />웃음기부
                 </div>
@@ -158,7 +158,7 @@
               <v-row cols="6" class="d-flex justify-content-center">
                 <div
                   class="text-center my-auto mr-10"
-                  style="font-size:5em; line-height:1.3em;"
+                  style="font-size:4em; line-height:1.3em;"
                 >
                   TOTAL's <br />웃음기부
                 </div>
@@ -347,7 +347,7 @@ export default {
 </script>
 <style scoped>
 .iCountUp {
-  font-size: 12em;
+  font-size: 10em;
   margin: 0;
   color: white;
 }
