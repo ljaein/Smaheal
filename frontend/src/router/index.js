@@ -28,7 +28,7 @@ import Award from "../views/smile/Award.vue"
 import TempDetailComp from "../components/account/TempDetailComp.vue"
 import ebookComp from "../components/template/ebookComp.vue"
 import HeartComp from "../components/template/HeartComp.vue"
-import error from "../views/error/error.vue"
+import NotFound from '../components/error/NotFound.vue'
 
 Vue.use(VueRouter);
 
@@ -178,9 +178,8 @@ const routes = [{
         component: HeartComp
     },
     {
-        path: "/**",
-        name: "error",
-        component: error
+        path: '*',
+        component: NotFound,
     },
 ];
 

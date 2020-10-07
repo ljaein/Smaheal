@@ -67,20 +67,22 @@
       </v-row>
     </div>
     <v-row justify="center">
-      <v-dialog v-model="dialog" persistent max-width="400">
+      <v-dialog v-model="dialog" persistent max-width="500">
         <v-card>
-          <v-card-title class="headline">
-            Serial Number
+          <v-card-title style="font-size:1.5rem; font-weight:bold;">
+            게시물 일련번호
           </v-card-title>
-          <v-card-text v-if="detailItem.template">
-            {{ detailItem.template }}
+          <v-card-text v-if="detailItem.template" class="py-3">
+           <p style="font-size:1.2rem; font-weight:bold; color:black;" class="m-0 mb-2">{{ detailItem.template }}</p>
+           <span style="font-weight:bold;">위 일련번호를 통해 기부된 웃음 사진으로 제작된 템플릿을 볼 수 있습니다.
+           아래 <v-btn icon class="v-btn--example orange" dark ><v-icon>mdi-table-search</v-icon></v-btn> 버튼을 눌러 검색하세요!</span>
           </v-card-text>
           <v-card-text v-if="!detailItem.template">
             게시물이 마감되면 일련번호가 부여됩니다.
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="#356859" dark @click="dialog = false">
+            <v-btn @click="dialog = false" text style="font-weight:bold;">
               확인
             </v-btn>
           </v-card-actions>

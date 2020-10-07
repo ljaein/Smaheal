@@ -22,6 +22,7 @@ export default {
   data() {
     return {
       pages: [null,'/images/firstpage.png'],
+      comments:[],
       el: [],
     };
   },
@@ -31,6 +32,7 @@ export default {
   created(){
     for(var i = 0;i<this.propsItem.length;i++){
       this.pages.push('/images/'+this.propsItem[i].photo);
+      this.comments.push(this.propsItem[i].comment);
     }
   },
   mounted() {
