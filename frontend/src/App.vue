@@ -189,6 +189,22 @@
       </template>
     </v-snackbar>
 
+    <v-flex xs12>
+      <v-btn
+        v-scroll="onScroll"
+        v-show="fab"
+        fab
+        dark
+        fixed
+        bottom
+        right
+        color="#356859"
+        @click="toTop"
+      >
+        <v-icon color="#fffbe6">mdi-apple-keyboard-control</v-icon>
+      </v-btn>
+    </v-flex>
+
     <v-tooltip top>
       <template v-slot:activator="{ on, attrs }">
         <v-fab-transition>
@@ -197,7 +213,7 @@
             large
             bottom
             dark
-            right
+            left
             class="v-btn--example orange"
             fixed
             v-on="on"
@@ -310,6 +326,7 @@ export default {
       group: null,
       keyword: "",
       show: true,
+      fab: false,
     };
   },
   created() {
@@ -378,6 +395,14 @@ export default {
         this.$router.push(`/template/search?template=${this.keyword}`).catch(() => {});
         this.keyword = "";
       }
+    },
+    onScroll (e) {
+      if (typeof window === 'undefined') return
+      const top = window.pageYOffset ||   e.target.scrollTop || 0
+      this.fab = top > 20
+    },
+    toTop () {
+      this.$vuetify.goTo(0)
     }
   },
   computed: {
