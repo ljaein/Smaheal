@@ -372,6 +372,7 @@ export default {
         this.$refs.search.focus();
       } else {
         this.$router.push(`/template/search?template=${this.keyword}`);
+        this.keyword=''
       }
     }
   },
