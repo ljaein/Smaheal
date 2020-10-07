@@ -29,6 +29,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.ssafy.smaheal.model.Youtube;
+import com.ssafy.smaheal.repository.FunnyRepository;
 import com.ssafy.smaheal.repository.YoutubeRepository;
 
 @CrossOrigin(origins = "*")
@@ -150,15 +151,17 @@ public class CrawlingController {
         }
     }
 
-    @GetMapping("/getVideoByAgeCnt/{age}")
-    @ApiOperation("연령별 동영상 개수")
-    public Object getVideoByAgeCnt(@PathVariable int age) throws SQLException, IOException {
+    @Autowired
+    FunnyRepository funnyRepo;
+
+    @GetMapping("/funImage")
+    @ApiOperation("재밌는 사진 가져오기")
+    public Object funImage() throws SQLException, IOException {
         try {
-            int cnt = youtubeRepository.findByAges(age).size();
-            return new ResponseEntity<>(cnt, HttpStatus.OK);
+            return new ResponseEntity<>(funnyRepo.findAll(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
 }

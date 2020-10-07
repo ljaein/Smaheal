@@ -169,7 +169,7 @@ export default {
       
     },
     getImg(img) {
-      return "/images/" + img;
+      return "../../../images/" + img;
     },
     goDetail(smile) {
       this.detailSmile = smile;

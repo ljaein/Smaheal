@@ -24,5 +24,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 	void deleteByNum(Long num);
 
 	@Query(nativeQuery = true, value = "SELECT * FROM review as R WHERE R.donationid IN (:donationIds)")
-    List<Review> findByDonationid(@Param("donationIds") List<Long> donationIds);
+	List<Review> findByDonationid(@Param("donationIds") List<Long> donationIds);
+	
+	List<Review> findAllByOrderByCreatedAtDesc();
 }
