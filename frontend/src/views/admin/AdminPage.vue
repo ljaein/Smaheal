@@ -1,5 +1,17 @@
 <template>
-  <v-container fluid class="mt-15 pl-15 pr-15">
+<div class="col-md-12 p-0">
+    <div class="a_header_img d-flex justify-content-center">
+      <div
+        style="z-index:5;color:white; position:absolute; top:200px; font-size:3rem;"
+      >
+        관리페이지
+     </div>
+    </div>
+    <div
+      class="d-flex justify-content-center"
+      style="background: linear-gradient(to right, rgb(124,119,128), rgb(147,140,146));"
+    >
+  <v-container fluid class="col-md-11">
     <!-- 카테고리 -->
     <v-card color="basil">
       <v-tabs v-model="tab" background-color="transparent" color="basil" class="basil--text" grow>
@@ -8,7 +20,7 @@
         <v-tab href="#tab-2" class="tab-text">영상 관리</v-tab>
       </v-tabs>
     </v-card>
-
+  <v-card>
     <v-tabs-items v-model="tab">
       <v-tab-item class="justify-content-left p-3" value="tab-1" v-if="waitList.length != 0">
         <v-row>
@@ -35,8 +47,8 @@
         </v-row>
       </v-tab-item>
       <v-tab-item value="tab-1" else>
-        <v-row class="text-center">
-          <v-col class="h1 pt-10">
+        <v-row class="text-center" style="min-height:500px;">
+          <v-col class=" pt-10" style="font-size:2rem;">
             💬 대기중인 기부요청이 없습니다.
           </v-col>
         </v-row>
@@ -115,8 +127,11 @@
         </v-dialog>
       </v-tab-item>
     </v-tabs-items>
+  </v-card>
     <WaitDetailComp :wait="this.goWaitDetail" :waitImages="this.goWaitImages" />
   </v-container>
+    </div>
+</div>
 </template>
 
 <script>
@@ -356,5 +371,15 @@ export default {
   /* object-fit: cover; */
   transform: scale(1);
   transition: all 0.3s ease-in-out;
+}
+.a_header_img {
+  background-image : linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ),url("../../assets/admin_hd.jpg");
+  /* background: url("../../assets/admin_hd.jpg") no-repeat; */
+  width: 100%;
+  height: 20rem;
+  display: block;
+  background-position: center;
+  background-size: cover;
+  /* backdrop-filter: brightness(70%); */
 }
 </style>

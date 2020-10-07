@@ -1,9 +1,14 @@
 <template>
-  <div class="d-flex justify-content-center">
-    <v-container fluid class="mt-0 col-md-11">
+<div>
+    <div class="r_header_img d-flex justify-content-center">
+                  <div style="z-index:5;color:white; position:absolute; top:200px; font-size:3rem;">감사게시판</div>
+
+    </div>
+  <div class="d-flex justify-content-center" style="background-color:rgb(60,79,86)">
+    <v-container fluid class="mt-0 col-md-11 p-0">
       <v-card class="topbar d-none d-md-block">
         <v-toolbar color="#fffbe6" flat>
-          <v-toolbar-title class="pl-5 tab-text basil--text">후기 게시판</v-toolbar-title>
+          <!-- <v-toolbar-title class="pl-5 tab-text basil--text">후기 게시판</v-toolbar-title> -->
           <v-spacer></v-spacer>
           <v-btn v-if="getProfile" class="green-mbtn" outlined>{{ tabTitle }}</v-btn>
 
@@ -227,6 +232,7 @@
     </v-container>
     <br />
   </div>
+</div>
 </template>
 
 <script>
@@ -449,12 +455,12 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .topbar {
   z-index: 10;
   position: -webkit-sticky;
   position: sticky;
-  top: 91px;
+  top: 0px;
 }
 .mobileTopbar {
   z-index: 2;
@@ -467,5 +473,13 @@ export default {
 }
 .sheet {
   height:340px;
+}
+.r_header_img {
+  background: url("../../assets/donation_hd.jpg") no-repeat;
+  width: 100%;
+  height: 20rem;
+  display: block;
+  background-position: center;
+  background-size:cover;
 }
 </style>
