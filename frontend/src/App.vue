@@ -2,13 +2,14 @@
   <v-app>
     <v-app-bar app class="d-block d-md-none" color="white"
       ><v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      
       <v-btn
         @click="goHome()"
         class="headline"
         color="amber accent-4"
         text
         align-center
-        >SmaHeal</v-btn
+        ><img :src="require('@/assets/l1.png')" class="mr-1" width="40px" height="35px"><h3 class="mb-1 mt-1" style="color:black;font-family:'Gamja Flower',cursive;font-weight:bold; font-size:2.2rem;">스마힐</h3></v-btn
       >
     </v-app-bar>
 
@@ -109,9 +110,8 @@
 
     <v-app-bar flat class="d-none d-md-block" style="position:absolute; z-index:5; background-color:transparent;">
       <v-btn @click="goHome()" class="headline" color="amber accent-4" text
-        >SmaHeal</v-btn
+        ><img :src="require('@/assets/l1.png')" class="mr-1 mt-3" width="60px" height="50px"><h3 class="mb-1" style="color:white;font-family:'Gamja Flower',cursive;font-weight:bold; font-size:2.2rem;">스마힐</h3></v-btn
       >
-
       <v-spacer></v-spacer>
 
       <!-- <v-btn @click="goDonationBoardDetail()" text>
@@ -189,6 +189,22 @@
       </template>
     </v-snackbar>
 
+    <v-flex xs12>
+      <v-btn
+        v-scroll="onScroll"
+        v-show="fab"
+        fab
+        dark
+        fixed
+        bottom
+        right
+        color="#356859"
+        @click="toTop"
+      >
+        <v-icon color="#fffbe6">mdi-apple-keyboard-control</v-icon>
+      </v-btn>
+    </v-flex>
+
     <v-tooltip top>
       <template v-slot:activator="{ on, attrs }">
         <v-fab-transition>
@@ -197,7 +213,7 @@
             large
             bottom
             dark
-            right
+            left
             class="v-btn--example orange"
             fixed
             v-on="on"
@@ -237,6 +253,7 @@
                 class="close my-auto"
                 data-dismiss="modal"
                 aria-label="Close"
+                @click="keyword = ''"
               >
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -309,6 +326,7 @@ export default {
       group: null,
       keyword: "",
       show: true,
+      fab: false,
     };
   },
   created() {
@@ -371,10 +389,20 @@ export default {
     searchTemplate: function() {
       if (this.$router.currentRoute.fullPath.substring(0, 16) == "/template/search") {
         this.$router.replace(`/template/search?template=${this.keyword}`).catch(() => {});
+        this.keyword = "";
         location.reload();
         } else {
         this.$router.push(`/template/search?template=${this.keyword}`).catch(() => {});
+        this.keyword = "";
       }
+    },
+    onScroll (e) {
+      if (typeof window === 'undefined') return
+      const top = window.pageYOffset ||   e.target.scrollTop || 0
+      this.fab = top > 20
+    },
+    toTop () {
+      this.$vuetify.goTo(0)
     }
   },
   computed: {

@@ -11,6 +11,8 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -223,7 +225,7 @@ public class ReviewController {
 		try {
 			List<Review> list = new LinkedList<>();
 			List<Review> review = new LinkedList<>();
-			review = reviewRepository.findAll();
+			review = reviewRepository.findAllByOrderByCreatedAtDesc();
 			for (Review r : review) {
 				String cat = donationRepo.findByDonationid(r.getDonationid()).getCategory();
 				if(cat.equals(category)) {

@@ -5,17 +5,17 @@
       <v-col cols="12">
         <v-stepper v-model="e1">
           <v-stepper-header>
-            <v-stepper-step :complete="e1 > 1" step="1">step 1</v-stepper-step>
+            <v-stepper-step :complete="e1 > 1" step="1" color="#356859">step 1</v-stepper-step>
             <v-divider></v-divider>
-            <v-stepper-step :complete="e1 > 2" step="2">step 2</v-stepper-step>
+            <v-stepper-step :complete="e1 > 2" step="2" color="#356859">step 2</v-stepper-step>
             <v-divider></v-divider>
-            <v-stepper-step :complete="e1 > 3" step="3">step 3</v-stepper-step>
+            <v-stepper-step :complete="e1 > 3" step="3" color="#356859">step 3</v-stepper-step>
             <v-divider></v-divider>
-            <v-stepper-step :complete="e1 > 4" step="4">step 4</v-stepper-step>
+            <v-stepper-step :complete="e1 > 4" step="4" color="#356859">step 4</v-stepper-step>
             <v-divider></v-divider>
-            <v-stepper-step :complete="e1 > 5" step="5">step 5</v-stepper-step>
+            <v-stepper-step :complete="e1 > 5" step="5" color="#356859">step 5</v-stepper-step>
             <v-divider></v-divider>
-            <v-stepper-step step="6">step 6</v-stepper-step>
+            <v-stepper-step step="6" color="#356859">step 6</v-stepper-step>
           </v-stepper-header>
 
           <v-stepper-items>
@@ -37,7 +37,7 @@
                   </v-col>
                 </v-row>
               </v-card>
-              <v-btn color="primary" @click="e1 = 2">Continue</v-btn>
+              <v-btn color="#356859" dark @click="e1 = 2">Continue</v-btn>
             </v-stepper-content>
 
             <v-stepper-content step="2">
@@ -64,8 +64,8 @@
                   </v-col>
                 </v-row>
               </v-card>
-              <v-btn color="primary" @click="e1 = 3">Continue</v-btn>
-              <v-btn text @click="e1 = 1">Back</v-btn>
+              <v-btn color="#356859" dark @click="e1 = 3">Continue</v-btn>
+              <v-btn color="#356859" dark class="font-weight-bold" text @click="e1 = 1">Back</v-btn>
             </v-stepper-content>
 
             <v-stepper-content step="3">
@@ -91,8 +91,8 @@
                   </v-col>
                 </v-row>
               </v-card>
-              <v-btn color="primary" @click="e1 = 4">Continue</v-btn>
-              <v-btn text @click="e1 = 1">Back</v-btn>
+              <v-btn color="#356859" dark @click="e1 = 4">Continue</v-btn>
+              <v-btn color="#356859" dark class="font-weight-bold" text @click="e1 = 1">Back</v-btn>
             </v-stepper-content>
 
             <v-stepper-content step="4">
@@ -122,8 +122,8 @@
                   </v-col>
                 </v-row>
               </v-card>
-              <v-btn color="primary" @click="e1 = 5">Continue</v-btn>
-              <v-btn text @click="e1 = 3">Back</v-btn>
+              <v-btn color="#356859" dark @click="e1 = 5">Continue</v-btn>
+              <v-btn color="#356859" dark class="font-weight-bold" text @click="e1 = 3">Back</v-btn>
             </v-stepper-content>
 
             <v-stepper-content step="5">
@@ -148,8 +148,8 @@
                   </v-col>
                 </v-row>
               </v-card>
-              <v-btn color="primary" @click="e1 = 6">Continue</v-btn>
-              <v-btn text @click="e1 = 4">Back</v-btn>
+              <v-btn color="#356859" dark @click="e1 = 6">Continue</v-btn>
+              <v-btn color="#356859" class="font-weight-bold" dark text @click="e1 = 4">Back</v-btn>
             </v-stepper-content>
 
             <v-stepper-content step="6">
@@ -173,8 +173,8 @@
                   </v-col>
                 </v-row>
               </v-card>
-              <v-btn color="primary" @click="stepEnd">Complete</v-btn>
-              <v-btn text @click="e1 = 5">Back</v-btn>
+              <v-btn color="#356859" dark @click="stepEnd">Complete</v-btn>
+              <v-btn color="#356859" dark class="font-weight-bold" text @click="e1 = 5">Back</v-btn>
             </v-stepper-content>
           </v-stepper-items>
         </v-stepper>
@@ -289,7 +289,7 @@
                                 transition="fade-transition"
                               >
                                 <img
-                                  src="https://s-i.huffpost.com/gen/3948866/thumbs/o-PEPE-THE-FROG-570.jpg?3"
+                                  :src="getImg(this.funImg[this.lotto[0]].funimg)"
                                   style="max-width:100%;width:400px;height:65%;"
                                   alt
                                 />
@@ -299,7 +299,7 @@
                                 transition="fade-transition"
                               >
                                 <img
-                                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQaqQZ3o8bafo4ngTZFIM2vxkSXTBcSr_osfQ&usqp=CAU"
+                                  :src="getImg(this.funImg[this.lotto[1]].funimg)"
                                   style="max-width:100%;width:400px;height:65%;"
                                   alt
                                 />
@@ -309,7 +309,7 @@
                                 transition="fade-transition"
                               >
                                 <img
-                                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTCdSE06g-wWMbwV39-LgNCI23dcrefSkhosA&usqp=CAU"
+                                  :src="getImg(this.funImg[this.lotto[2]].funimg)"
                                   style="max-width:100%;width:400px;height:65%;"
                                   alt
                                 />
@@ -620,6 +620,15 @@
         >
       </v-row>
     </div>
+    <div>
+      <v-row class="text-right">
+        <v-col>
+          <v-btn class="mx-10" @click="goBack" icon fab large color="basil">
+            <v-icon>mdi-undo</v-icon><span style="font-weight:bold;">뒤로</span>
+          </v-btn>
+        </v-col>
+      </v-row>
+    </div>
     <!-- 로딩 오버레이 -->
     <v-overlay :value="overlay">
       <div class="container" style="margin:0 auto;text-align:center;position:relative;top:50%;">
@@ -654,13 +663,14 @@
 
     <!-- 로딩 오버레이 -->
     <v-overlay :value="donationFlag">
-      <v-progress-circular
-        :size="70"
-        width="6"
-        indeterminate
-        color="amber"
-         style="margin:0 auto;text-align:center;position:relative;top:50%;"
-      ></v-progress-circular>
+      <div class="container" style="margin:0 auto;text-align:center;position:relative;top:50%;">
+        <v-progress-circular
+          :size="70"
+          width="6"
+          indeterminate
+          color="amber"
+        ></v-progress-circular>
+      </div>
     </v-overlay>
     
     <!-- alert -->
@@ -702,6 +712,7 @@ export default {
     this.donationid = this.$route.params.ID;
     this.uid = this.getUserID;
     this.getAge();
+    this.getFun();
   },
   data() {
     return {
@@ -757,6 +768,8 @@ export default {
       sloading: false,
       mloading: false,
       nowPer: 0,
+      funImg: [],
+      lotto: [],
     };
   },
   methods: {
@@ -865,7 +878,7 @@ export default {
       scroll(0, 920);
     },
     getImg(img) {
-      return "../../../images/" + img;
+      return "../../../images/funny/" + img;
     },
     makeUrl(url) {
       return "https://www.youtube.com/embed/" + url;
@@ -983,16 +996,20 @@ export default {
         }
     },
     donationContents() {
-      var myImage = document.querySelector("#autoCanvas").toDataURL();
-      http
-        .post(`/smile/autoCheck`, myImage)
-        .then(res => {
-          this.autoCapture.url = res.data;
-          this.doDonation();
-        })
-        .catch(err => {
-          console.log(err);
-      });
+      if (this.comment != "") {
+        var myImage = document.querySelector("#autoCanvas").toDataURL();
+        http
+          .post(`/smile/autoCheck`, myImage)
+          .then(res => {
+            this.autoCapture.url = res.data;
+            this.doDonation();
+          })
+          .catch(err => {
+            console.log(err);
+        });
+      } else {
+        this.noMsg = true;
+      }
     },
     selfieInit() {
       this.selfFlag = true;
@@ -1170,6 +1187,30 @@ export default {
       if(document.querySelector("iframe") != '' && document.querySelector("iframe") != null) {
         document.querySelectorAll("iframe").src = '';
       }
+    },
+    getFun() {
+      http
+        .get("/crawling/funImage")
+        .then(res => {
+          this.funImg = res.data;
+          for(var i=0; i<3; i++) {
+            let n = Math.floor(Math.random() * 10);
+            if (!this.sameNum(n)) {
+              this.lotto.push(n);
+            } else {
+              i--;
+            }
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    },
+    sameNum(n) {
+      return this.lotto.find((e) => (e === n));
+    },
+    goBack() {
+      window.history.back();
     },
   },
   computed: {

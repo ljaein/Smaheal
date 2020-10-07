@@ -4,7 +4,7 @@
       <div class="container mx-auto col-xl-7 col-lg-8 col-md-10 col-sm-11 col-12 d-flex justift-content-center">
         <v-card class="mt-12 mb-3 col-xl-7 col-lg-8 col-md-10 col-sm-11 col-12">
           <!-- 이미지 -->
-          <v-img :src="getImg(item.img)" width="100%" max-width="100%"></v-img>
+          <img :src="image" width="100%" max-width="100%">
           <!-- 제목 -->
           <v-card-title style="font-weight:bold" class="mt-2">{{ item.title }}</v-card-title>
           <!-- 내용 -->
@@ -80,6 +80,7 @@ export default {
       likeFlag: false,
       log: '',
       delFlag: false,
+      image: '',
     };
   },
   created() {
@@ -87,6 +88,7 @@ export default {
       .get(`/review/get/${this.$route.params.num}`)
       .then(({ data }) => {
         this.item = data;
+        this.image = this.getImg(this.item.img);
         if (this.getProfile == this.item.nickName) {
           this.isWriter = true;
         }
@@ -184,7 +186,7 @@ export default {
         });
     },
     getImg(img) {
-      return "../../../reviewImage/" + img;
+      return "../../../contents/" + img;
     },
   },
 };
