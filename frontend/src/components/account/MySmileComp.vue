@@ -142,7 +142,6 @@ export default {
   },
   created() {
     this.nickname = this.getProfile;
-    this.init();
     http
         .get(`/smile/getMySmileCnt/${this.getUserID}`)
         .then(res => {
@@ -155,6 +154,9 @@ export default {
         .catch(err => {
           console.log(err);
         });
+  },
+  mounted() {
+    this.init();
   },
   methods: {
     init() {
