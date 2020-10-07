@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     getImg(img) {
-      return "../../../images/" + img;
+      return "./../../../images/" + img;
     }
   }
 };

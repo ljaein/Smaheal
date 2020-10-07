@@ -200,16 +200,16 @@ export default {
       
     },
     getImg(img) {
-      return "../../../images/" + img;
+      return "./../../../images/" + img;
     },
     getImg1() {
-      return "../../../images/no1.png";
+      return "./../../../images/no1.png";
     },
     getImg2() {
-      return "../../../images/no2.png";
+      return "./../../../images/no2.png";
     },
     getImg3() {
-      return "../../../images/no3.png";
+      return "./../../../images/no3.png";
     },
   }
 };

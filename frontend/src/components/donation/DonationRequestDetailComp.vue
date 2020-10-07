@@ -536,7 +536,7 @@ export default {
       this.$router.push("/login");
     },
     getImg(img) {
-      return "../../../contents/" + img;
+      return "./../../../contents/" + img;
     },
     makedate(ndate) {
       if (ndate != null) {

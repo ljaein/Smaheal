@@ -184,7 +184,7 @@ export default {
         });
     },
     getImg(img) {
-      return "../../../reviewImage/" + img;
+      return "./../../../reviewImage/" + img;
     },
   },
 };

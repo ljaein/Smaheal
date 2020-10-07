@@ -501,7 +501,7 @@ export default {
     },
     getImg(img) {
       img = img.split("|")[0];
-      return "../../../contents/" + img;
+      return "./../../../contents/" + img;
     },
     goCreate() {
       this.$router.push({
