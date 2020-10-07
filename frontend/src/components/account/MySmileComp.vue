@@ -169,7 +169,8 @@ export default {
       
     },
     getImg(img) {
-      return "./../../../images/" + img;
+      var jbRandom = Math.random()*987654321;
+      return "./../../../images/" + img + "?" + Math.floor(jbRandom);
     },
     goDetail(smile) {
       this.detailSmile = smile;
