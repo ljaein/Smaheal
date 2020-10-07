@@ -409,7 +409,7 @@ public class SmileController {
 	@ApiOperation(value = "내 웃음사진")
 	public Object getMySmile(@PathVariable String userId, @PathVariable int page) throws SQLException, IOException {
 		try {
-			List<Smile> mySmileList = smileRepository.findByUserIdOrderByCreatedateDesc(userId, PageRequest.of(page, 8));
+			List<Smile> mySmileList = smileRepository.findByUserIdOrderBySmileidDesc(userId, PageRequest.of(page, 8));
 			if (mySmileList != null)
 				return new ResponseEntity<>(mySmileList, HttpStatus.OK);
 			else
