@@ -41,7 +41,7 @@ export default {
         cnt++;
         this.imgs.push(this.propsItem[idx].photo);
         idx++;
-        if (idx == len-1) {
+        if (idx == len) {
           idx = 0;
         }
       }
