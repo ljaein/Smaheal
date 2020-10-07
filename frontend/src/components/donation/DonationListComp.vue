@@ -416,7 +416,6 @@ export default {
             this.multi = this.donationList[5];
             this.others = this.donationList[6];
             $state.loaded();
-
             this.IsEndList();
           })
           .catch(err => {
@@ -432,6 +431,7 @@ export default {
               if (res.data.length != 0) {
                 if (curTab == 0) {
                   this.all = this.all.concat(res.data);
+                  this.IsEndList();
                   $state.loaded();
                   this.page[curTab] += 1;
 
@@ -554,7 +554,7 @@ export default {
     ...mapState({
       authLoading: state => state.auth.status === "loading",
     })
-  }
+  },
 };
 </script>
 <style scoped>

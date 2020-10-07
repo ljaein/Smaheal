@@ -323,8 +323,8 @@ public class DonationController {
     }
     
     @PutMapping("/template/{donationid}")
-    @ApiOperation(value = "게시물 마감 후 템플릿 부여")
-    public Object endList(@PathVariable Long donationid) throws SQLException, IOException {
+    @ApiOperation(value = "마감 후 템플릿 번호 부여")
+    public Object endListAndTemplate(@PathVariable Long donationid) throws SQLException, IOException {
         try {
             Donation donation = donationRepository.findByDonationid(donationid);
             if (donation != null) {
