@@ -23,7 +23,7 @@
               <v-card class="mb-8" height="400px" style="overflow-x:hidden">
                 <v-row>
                   <v-col class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-12">
-                    <img src="../../../public/images/step1.gif" height="100%" width="100%" max-height="80%">
+                    <img src="../../../public/images/step1.gif" height="90%" width="100%" max-height="80%">
                   </v-col>
                   <v-col class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 p-3" style="letter-spacing:1px;word-spacing:3px;line-height:250%;">
                     <h3 style="font-weight:bold;margin-bottom:30px;"><v-icon large color="#356859">mdi-account-question-outline</v-icon> 스마힐 사용법에 대해 알아볼까요?</h3>
@@ -44,7 +44,7 @@
               <v-card class="mb-8" height="400px" style="overflow-x:hidden">
                 <v-row>
                   <v-col class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-12">
-                    <img src="../../../public/images/step2.gif" height="100%" width="100%" max-height="80%">
+                    <img src="../../../public/images/step2.gif" height="90%" width="100%" max-height="80%">
                   </v-col>
                   <v-col class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 p-3" style="letter-spacing:1px;word-spacing:3px;line-height:220%;">
                     <h3 style="font-weight:bold;margin-bottom:30px;"><v-icon large color="#356859" class="mr-3">mdi-gamepad-variant-outline</v-icon>다양한 컨텐츠</h3>
@@ -72,7 +72,7 @@
               <v-card class="mb-8" height="400px" style="overflow-x:hidden">
                 <v-row>
                   <v-col class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-12">
-                    <img src="../../../public/images/step3.gif" height="100%" width="100%" max-height="80%">
+                    <img src="../../../public/images/step3.gif" height="90%" width="100%" max-height="80%">
                   </v-col>
                   <v-col class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 p-3" style="letter-spacing:1px;word-spacing:3px;line-height:250%;">
                     <h3 style="font-weight:bold;margin-bottom:30px;"><v-icon large color="#356859" class="mr-3">mdi-camera-wireless-outline</v-icon>자동캡쳐</h3>
@@ -99,7 +99,7 @@
               <v-card class="mb-8" height="400px" style="overflow-x:hidden">
                 <v-row>
                   <v-col class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-12">
-                    <img src="../../../public/images/step4.gif" height="100%" width="100%" max-height="80%">
+                    <img src="../../../public/images/step4.gif" height="90%" width="100%" max-height="80%">
                   </v-col>
                   <v-col class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 p-3" style="letter-spacing:1px;word-spacing:3px;line-height:220%;">
                     <h3 style="font-weight:bold;margin-bottom:30px;"><v-icon large color="#356859" class="mr-3">mdi-webcam</v-icon>셀카모드</h3>
@@ -109,6 +109,9 @@
                       <li>"CAPTURE"를 눌러 사진을 캡쳐합니다.</li>
                       <li>"STOP"을 눌러 정지시킬 수 있어요.</li>
                       <li>"CHECK"를 눌러 사진을 인식시켜 주세요.</li>
+                        <ul>
+                          <li>얼굴이 선명하게 나와야합니다.</li>
+                        </ul>
                       <li>완료되면 다음은 컨텐츠 모드와 동일해요.
                         <ul>
                           <li>비속어를 사용하면 기부가 제한됩니다.</li>
@@ -127,7 +130,7 @@
               <v-card class="mb-8" height="400px" style="overflow-x:hidden">
                 <v-row>
                   <v-col class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-12">
-                    <img src="../../../public/images/step5.gif" height="100%" width="100%" max-height="80%">
+                    <img src="../../../public/images/step5.gif" height="90%" width="100%" max-height="80%">
                   </v-col>
                   <v-col class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 p-3" style="letter-spacing:1px;word-spacing:3px;line-height:220%;">
                     <h3 style="font-weight:bold;margin-bottom:30px;"><v-icon large color="#356859" class="mr-3">mdi-cloud-upload-outline</v-icon>파일업로드 모드</h3>
@@ -153,7 +156,7 @@
               <v-card class="mb-8" height="400px" style="overflow-x:hidden">
                 <v-row>
                   <v-col class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-12">
-                    <img src="../../../public/images/step6.gif" height="100%" width="100%" max-height="80%">
+                    <img src="../../../public/images/step6.gif" height="90%" width="100%" max-height="80%">
                   </v-col>
                   <v-col class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 p-3" style="letter-spacing:1px;word-spacing:3px;line-height:220%;">
                     <h3 style="font-weight:bold;margin-bottom:30px;"><v-icon large color="#356859" class="mr-3">mdi-close-circle-outline</v-icon>주의사항</h3>
@@ -227,7 +230,7 @@
             <!-- 자동캡쳐 비디오 부분 -->
             <video id="videoTag" hidden width="720" height="560" muted @playing="addEventListener()"></video>
 
-            <v-tab-item v-if="contentsFlag" id="tab-contents">
+            <v-tab-item v-if="contentsFlag" id="tab-contents" style="margin-bottom:200px;">
               <v-row align="center" class="container m-0">
                 <v-item-group
                   v-model="window"
@@ -390,7 +393,7 @@
                   class="m-2 col-md-2 col-sm-4 col-10"
                   style="color:white;"
                   v-if="endFlag"
-                  @click="selfieStop(), this.mloading = false"
+                  @click="selfieStop(), mloading = false, nowPer = 0"
                   >stop</v-btn
                 >
                 <v-btn
@@ -413,11 +416,12 @@
 
               <div v-if="!startFlag">
                 <v-progress-linear color="deep-purple" :active="sloading" :indeterminate="sloading" rounded height="3"></v-progress-linear>
-                <div class="container" style="height:250px;text-align:center">
+                <div class="container pb-0" style="height:250px;text-align:center">
                   <canvas height="200%" width="200%"></canvas>
                   <!-- <img id="myImage" /> -->
                   <!-- {{ selfieCapture }} -->
                 </div>
+                <div v-if="nowPer > 0" class="d-flex justify-content-center my-3">웃음지수: {{nowPer}} %</div>
                 <div v-if="selCapFlag">
                   <!-- 사진 사용 여부 -->
                   <v-row>
@@ -510,6 +514,7 @@
                   >check</v-btn
                 >
               </v-row>
+              <div v-if="nowPer > 0" class="d-flex justify-content-center my-3">웃음지수: {{nowPer}} %</div>
               <div v-if="upFlag">
                 <!-- 사진 사용 여부 -->
                 <v-row>
@@ -550,17 +555,18 @@
       </v-col>
     </v-row>
 
-    <div class="d-flex justify-content-center" style="">
+    <div class="d-flex justify-content-center" style="margin-top: 200px;">
       <canvas v-if="contentsFlag" id="autoCanvas" height="200%" width="200%"></canvas>
     </div>
 
     <div v-if="autoFlag">
-      <v-row>
+      <!-- <v-row>
         <v-card style="">
+          asd -->
           <!-- <img :src="getImg(autoCapture[0])" alt="캡쳐된 이미지" /> -->
           <!-- <v-img src="../../../public/images/1600678282188.png" alt="autoCapture"></v-img> -->
-        </v-card>
-      </v-row>
+        <!-- </v-card>
+      </v-row> -->
       <v-row class="justify-content-center">
         <v-btn
           class="col-lg-2 col-md-2 col-sm-5 col-5 mx-10 my-5"
@@ -603,11 +609,12 @@
         </v-col>
       </v-row>
       <!-- 컨텐츠 기부하기 -->
-      <v-row class="col-4 mb-10" style="">
+      <v-row class="col-sx-12 col-4 d-flex justift-content-center mb-10" style="margin:0 auto;text-align:center;">
         <v-btn
           v-if="selectFlag"
           color="#356859"
           @click="donationContents"
+          class="col-12"
           style="color:white;"
           >기부하기</v-btn
         >
@@ -652,7 +659,7 @@
         width="6"
         indeterminate
         color="amber"
-        style="margin-left:50%"
+         style="margin:0 auto;text-align:center;position:relative;top:50%;"
       ></v-progress-circular>
     </v-overlay>
     
@@ -749,6 +756,7 @@ export default {
       uloading: false,
       sloading: false,
       mloading: false,
+      nowPer: 0,
     };
   },
   methods: {
@@ -805,6 +813,7 @@ export default {
             this.yesFace = true;
             this.uloading = false;
             this.sloading = false;
+            this.nowPer = this.selfieCapture[2];
           }
         })
         .catch(err => {
@@ -1038,6 +1047,7 @@ export default {
       this.sloading = false;
       this.mloading = false;
       this.comment = '';
+      this.nowPer = 0;
     },
     someContents() {
       this.selfFlag = false;
@@ -1053,6 +1063,7 @@ export default {
       this.sloading = false;
       this.mloading = false;
       this.comment = '';
+      this.nowPer = 0;
     },
     uploadInit() {
       this.selfFlag = false;
@@ -1065,6 +1076,7 @@ export default {
       this.sloading = false;
       this.mloading = false;
       this.comment = '';
+      this.nowPer = 0;
     },
     preImg(img) {
       if (img != null && img != '') {
@@ -1119,8 +1131,7 @@ export default {
         // faceapi.draw.drawDetections(canvas, resizedDetections);
         // faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
         // faceapi.draw.drawFaceExpressions(canvas, resizedDetections);
-        
-        if (detections[0].expressions.happy * 100 > 99.89) {
+        if (detections.length > 0 && detections[0].expressions.happy * 100 > 99.89) {
           this.autoCapture.per = Math.round(detections[0].expressions.happy * detections[0].detection.score * 97);
           this.captureComplete();
           this.autoFlag = true;
@@ -1144,7 +1155,7 @@ export default {
       this.captureFlag = true;
       this.autoCapFlag = true;
       this.camOff();
-      scroll(0, 1900);
+      scroll(0, 1700);
     },
     camOff() {
       if(this.videoTag.srcObject != null && this.videoTag.srcObject != '') {
@@ -1176,7 +1187,35 @@ export default {
         this.checkFlag = false;
       }
     },
-  }
+  },
+  updated() {
+    // console.log(this.videos)
+    // var el = document.querySelectorAll("iframe");
+    if(document.querySelector("iframe") != '' && document.querySelector("iframe") != null) {
+          // console.log(document.querySelectorAll("iframe"))
+      // console.log(document.querySelectorAll("iframe")[0].src.substring);
+        if(document.querySelectorAll("iframe").length == 1) {
+          // console.log(document.querySelectorAll("iframe")[0].src.split("/")[4].substring(0, document.querySelectorAll("iframe")[0].src.length - 11));
+          var str = document.querySelectorAll("iframe")[0].src.split("/")[4];
+          var len = str.length;
+          var vname;
+          if(len > 19) {
+            vname = str.substring(0, len - 11);
+          } else {
+            vname = str;
+          }
+          if(vname == this.videos.videoId) {
+            document.querySelectorAll("iframe")[0].src = this.makeUrl(this.videos.videoId);
+          } else if(vname == this.videosForChild.videoId) {
+            document.querySelectorAll("iframe")[0].src = this.makeUrl(this.videosForChild.videoId);
+          }
+          // if(str.substring(0, len - 11))
+        } else {
+          document.querySelectorAll("iframe")[0].src = this.makeUrl(this.videos.videoId);
+          document.querySelectorAll("iframe")[1].src = this.makeUrl(this.videosForChild.videoId);
+        }
+      }
+  },
 };
 </script>
 
