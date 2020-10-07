@@ -1,81 +1,100 @@
 <template>
-  <v-container class="col-md-11">
-    <v-card color="#fffbe6">
-      <v-row style="color:#356859;font-size:1.3rem;" class="p-4">
-        
+  <div class="col-md-12 p-0">
+    <div class="n_header_img d-flex justify-content-center">
+      <div
+        style="z-index:5;color:white; position:absolute; top:200px; font-size:3rem;"
+      >
+        공지사항
+     </div>
+    </div>
+    <div
+      class="d-flex justify-content-center"
+      style="background-color:rgb(188,150,39)"
+    >
+      <v-container class="col-md-11 p-0">
+        <v-card color="#fffbe6">
+          <!-- <v-row style="color:#356859;font-size:1.3rem;" class="p-4">
         <span class="pl-5" style="display:inline-flex;vertical-align:middle"><v-icon class="mr-1" color="#356859"
           >mdi-clipboard-alert-outline</v-icon
         >공지사항</span>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-spacer />
-        </v-col>
-        <v-col class="mr-2">
-          <v-form action="/notice/search" @submit="checkForm">
-            <v-row class="mr-1">
-              <v-text-field
-              hide-details
-                placeholder="제목으로 검색됩니다.. 검색어를 입력하세요."
-                outlined
-                color="#356859"
-                clearable
-                v-model="title"
-                ref="search"
-                name="title"
-                prepend-inner-icon="mdi-text-search"
-              />
-            </v-row>
-          </v-form>
-        </v-col>
-      </v-row>
-    </v-card>
-    <v-row>
-      <v-col>
-        <v-simple-table>
-          <template v-slot:default>
-            <thead>
-              <tr>
-                <th class="text-center">No</th>
-                <th class="text-center">제목</th>
-                <th class="text-center">작성자</th>
-                <th class="text-center">작성일자</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(item, index) in items" :key="index">
-                <td class="text-center">{{ item.noticeid }}</td>
-                <td class="text-center" style="cursor:pointer;" @click="goDetail(item.noticeid)">
-                  {{ item.title }}
-                </td>
-                <td class="text-center">관리자</td>
-                <td class="text-center">{{ getFormatDate(item.createdAt) }}</td>
-              </tr>
-            </tbody>
-          </template>
-        </v-simple-table>
-      </v-col>
-    </v-row>
-    <div class="text-center">
-      <v-pagination
-        v-model="currentPage"
-        :length="totalPage"
-        :total-visible="visibleCnt"
-        color="#356859"
-      />
+      </v-row> -->
+          <v-row>
+            <v-col>
+              <v-spacer />
+            </v-col>
+            <v-col class="mr-2">
+              <v-form action="/notice/search" @submit="checkForm">
+                <v-row class="mr-1">
+                  <v-text-field
+                    hide-details
+                    placeholder="제목으로 검색됩니다.. 검색어를 입력하세요."
+                    outlined
+                    color="#356859"
+                    clearable
+                    v-model="title"
+                    ref="search"
+                    name="title"
+                    prepend-inner-icon="mdi-text-search"
+                  />
+                </v-row>
+              </v-form>
+            </v-col>
+          </v-row>
+        </v-card>
+        <v-row>
+          <v-col class="pt-0">
+            <v-simple-table>
+              <template v-slot:default>
+                <thead>
+                  <tr>
+                    <th class="text-center">No</th>
+                    <th class="text-center">제목</th>
+                    <th class="text-center">작성자</th>
+                    <th class="text-center">작성일자</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(item, index) in items" :key="index">
+                    <td class="text-center">{{ item.noticeid }}</td>
+                    <td
+                      class="text-center"
+                      style="cursor:pointer;"
+                      @click="goDetail(item.noticeid)"
+                    >
+                      {{ item.title }}
+                    </td>
+                    <td class="text-center">관리자</td>
+                    <td class="text-center">
+                      {{ getFormatDate(item.createdAt) }}
+                    </td>
+                  </tr>
+                </tbody>
+              </template>
+            </v-simple-table>
+          </v-col>
+        </v-row>
+        <div class="text-center">
+          <v-pagination
+            v-model="currentPage"
+            :length="totalPage"
+            :total-visible="visibleCnt"
+            color="#356859"
+          />
+        </div>
+        <v-row>
+          <v-col class="text-right">
+            <v-btn
+              @click="goNoticeRegist()"
+              class="green-mbtn"
+              v-if="getUserID == 'admin'"
+            >
+              글 작성하기
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
     </div>
-    <v-row>
-      <v-col class="text-right">
-        <v-btn
-          @click="goNoticeRegist()"
-          class="green-mbtn"
-          v-if="getUserID == 'admin'"
-        >
-          글 작성하기
-        </v-btn>
-      </v-col>
-    </v-row>
-  </v-container>
+  </div>
 </template>
 
 <script>
@@ -96,7 +115,7 @@ export default {
       totalPage: this.propCount,
       visibleCnt: 5,
       limit: 0,
-      title: "",
+      title: ""
     };
   },
   methods: {
@@ -161,3 +180,13 @@ export default {
   }
 };
 </script>
+<style>
+.n_header_img {
+  background: url("../../assets/notice_hd.jpg") no-repeat;
+  width: 100%;
+  height: 20rem;
+  display: block;
+  background-position: center;
+  background-size: cover;
+}
+</style>

@@ -107,7 +107,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app color="white" height="90" class="d-none d-md-block">
+    <v-app-bar flat class="d-none d-md-block" style="position:absolute; z-index:5; background-color:transparent;">
       <v-btn @click="goHome()" class="headline" color="amber accent-4" text
         >SmaHeal</v-btn
       >
@@ -123,37 +123,37 @@
       </v-btn> -->
 
       <v-btn @click="goDonationList()" text>
-        <span class="mr-2 font-weight-bold">기부 게시판</span>
+        <span class="mr-2 nav">기부 게시판</span>
       </v-btn>
 
       <v-btn @click="goReviewList()" text>
-        <span class="mr-2 font-weight-bold">후기 게시판</span>
+        <span class="mr-2 nav">후기 게시판</span>
       </v-btn>
 
       <v-btn @click="goNotice()" text>
-        <span class="mr-2 font-weight-bold">공지사항</span>
+        <span class="mr-2 nav">공지사항</span>
       </v-btn>
 
       <v-btn v-if="getProfile != '관리자' && getProfile" @click="goMyPage" text>
-        <span class="mr-2 font-weight-bold">마이페이지</span>
+        <span class="mr-2 nav">마이페이지</span>
       </v-btn>
 
       <v-btn v-if="getProfile == '관리자'" @click="goAdminPage" text>
-        <span class="mr-2 font-weight-bold">관리자페이지</span>
+        <span class="mr-2 nav">관리페이지</span>
       </v-btn>
 
       <v-btn v-if="getProfile" @click="logout" text>
-        <span class="mr-2 font-weight-bold">LOGOUT</span>
+        <span class="mr-2 nav">LOGOUT</span>
       </v-btn>
 
       <v-btn v-else @click="goLogin" text>
-        <span class="mr-2 font-weight-bold">LOGIN</span>
+        <span class="mr-2 nav">LOGIN</span>
       </v-btn>
     </v-app-bar>
 
-    <v-main>
+    <!-- <v-main> -->
       <router-view />
-    </v-main>
+    <!-- </v-main> -->
 
     <v-snackbar
       style="font-family: 'Nanum Gothic';"
@@ -417,5 +417,11 @@ export default {
 }
 html {
   scroll-behavior: smooth;
+}
+.nav{
+  font-weight:bold;
+  color:white;
+  font-size:1rem;
+  font-family: 'Nanum Gothic';
 }
 </style>

@@ -14,29 +14,20 @@
                   class="white--text mx-auto"
                   justify="center"
                 >
-                  <v-col class="white--text text-center" cols="12" tag="h1">
+                  <v-col class="white--text text-center" cols="12">
                     <span
-                      :class="[
-                        $vuetify.breakpoint.smAndDown
-                          ? 'display-1'
-                          : 'display-2'
-                      ]"
-                      class="font-weight-light"
+                      class=""
+                      style="font-family: 'Gamja Flower',cursive;font-weight:bold; font-size:4rem;"
                     >
-                      WELCOME TO
+                      세상에서 가장 쉬운 기부, 웃음
                     </span>
 
                     <br />
 
                     <span
-                      :class="[
-                        $vuetify.breakpoint.smAndDown
-                          ? 'display-3'
-                          : 'display-4'
-                      ]"
-                      class="font-weight-black"
+                      style="font-family: 'Gamja Flower',cursive;font-weight:bold; font-size:6rem;"
                     >
-                      SMAHEAL
+                      Let's 스마힐
                     </span>
                   </v-col>
 
@@ -109,7 +100,11 @@
               cols="12"
               md="4"
             >
-              <v-card class="py-12 px-4 rounded-lg" flat style="background-color:#fffbe6; border:3px solid #356859">
+              <v-card
+                class="py-12 px-4 rounded-lg"
+                flat
+                style="background-color:#fffbe6; border:3px solid #356859"
+              >
                 <v-theme-provider dark>
                   <div>
                     <v-avatar color="#356859" size="88">
@@ -123,7 +118,12 @@
                   v-text="title"
                 ></v-card-title>
 
-                <v-card-text class="font-weight-black" style="font-size:1rem; line-height:2rem; word-spacing:2px; " v-text="text"> </v-card-text>
+                <v-card-text
+                  class="font-weight-black"
+                  style="font-size:1rem; line-height:2rem; word-spacing:2px; "
+                  v-text="text"
+                >
+                </v-card-text>
               </v-card>
             </v-col>
           </v-row>
@@ -351,5 +351,4 @@ export default {
   margin: 0;
   color: white;
 }
-
 </style>
