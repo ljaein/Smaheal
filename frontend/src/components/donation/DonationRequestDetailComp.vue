@@ -63,7 +63,7 @@
         centered
         grow
         color="basil"
-        style="position:sticky;top:79px;z-index:3;"
+        style="position:sticky;top:-13px;z-index:3;"
       >
         <v-tab @click="$vuetify.goTo('#section1')">
           <a
@@ -87,7 +87,7 @@
           >
         </v-tab>
       </v-tabs>
-      <v-col cols="8">
+      <v-col>
           <div class="container-fluid">
           <div id="section1" style="height:50px;">
           </div>
@@ -298,7 +298,7 @@
           height="auto"
           outlined
           elevation="2"
-          style="position:sticky;top:200px;z-index:2;background-color:#fffbe6; border:1px solid #fffbe6 "
+          style="position:sticky;top:100px;z-index:2;background-color:#fffbe6; border:1px solid #fffbe6 "
         >
           <v-list-item three-line>
             <v-list-item-content>
