@@ -4,27 +4,6 @@
         class="mx-auto"
         max-width="800"
       >
-        <!-- <h5>
-          * 넓이가 1300px 이상인 화면에서 보는 것을 추천드립니다.
-        </h5>
-        <v-card width="900" height="400"
-          class="mx-auto" :img="require(`@/assets/template/${imgsrc}`)"
-          dark
-          elevation="8"
-          >
-          <v-slide-group
-            class="pa-4"
-            prev-icon="mdi-code-less-than"
-            next-icon="mdi-code-greater-than"
-            :show-arrows="true"
-          >
-            <slideComp
-            v-for="(item, index) in items"
-            :key="index"
-            :propsitem="item"
-            />
-          </v-slide-group>
-        </v-card> -->
         <v-timeline align-top
         :dense="$vuetify.breakpoint.smAndDown"
         >
