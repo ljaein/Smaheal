@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 import com.ssafy.smaheal.model.Donation;
 import com.ssafy.smaheal.repository.DonationRepository;
@@ -319,6 +320,26 @@ public class DonationController {
         } catch (Exception e) {
     		return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     	}
+    }
+    
+    @PutMapping("/template/{donationid}")
+    @ApiOperation(value = "게시물 마감 후 템플릿 부여")
+    public Object endList(@PathVariable Long donationid) throws SQLException, IOException {
+        try {
+            Donation donation = donationRepository.findByDonationid(donationid);
+            if (donation != null) {
+                donation.setApproval(2);
+                String uid = UUID.randomUUID().toString();
+				donation.setTemplate(uid);
+                donationRepository.save(donation);
+                return new ResponseEntity<>(donation, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(donation, HttpStatus.BAD_REQUEST);
+            }
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
