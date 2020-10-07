@@ -86,11 +86,11 @@
                     <img class="youtube-img white--text" style="background-size:contain" :src="video.thumbnail" @click="overlay = true" />
                   </div>
                   <v-fade-transition>
-                    <v-overlay v-if="hover" absolute color="black" class="d-flex justify-content-between" style="padding: 20px;">
-                      <p style="color:white;font-size:1rem;">{{ video.title }}</p>
+                    <v-overlay v-if="hover" absolute color="black" style="padding: 20px;">
+                      <p style="color:white;font-size:1rem;margin-top:15%;">{{ video.title }}</p>
                       <div class="d-flex justify-content-center">
                         <v-btn class="mr-5 font-weight-bold" @click="(tempVid = video.videoId), (view = true)" color="#356859" dark>보기</v-btn>
-                        <v-btn @click="(tempId = video.youtubeid), (del = true)" outlined style="border:1.8px solid crimson; font-weight:bold;">삭제</v-btn>
+                        <v-btn @click="(tempId = video.youtubeid), (del = true)" color="error" style="font-weight:bold;">삭제</v-btn>
                       </div>
                     </v-overlay>
                   </v-fade-transition>
@@ -280,7 +280,9 @@ export default {
         });
     },
     stopVideo() {
-      document.querySelector("iframe").src = '';
+      if(document.querySelector("iframe") != null) {
+        document.querySelector("iframe").src = '';
+      }
     },
     getVideoCnt() {
       http
