@@ -86,7 +86,7 @@
             href="#section2"
             @click="scrollSpy"
             style="color:black;font-weight:bold;"
-            >주소 & 지도</a
+            >위치</a
           >
         </v-tab>
         <v-tab>
@@ -121,7 +121,7 @@
               style="font-family: 'Nanum Gothic';font-weight:bold;"
               class="mb-5"
             >
-              주소
+              위치
             </h3>
             <div
               id="map"
@@ -447,7 +447,7 @@ export default {
   },
 
   created() {
-    this.uid = this.getUserID;
+    this.uid = this.getProfile;
     this.donationid = this.$route.params.ID;
     this.init();
     this.getMsg();
@@ -638,9 +638,10 @@ export default {
   // },
 
   computed: {
-    ...mapGetters(["getUserID"]),
+    ...mapGetters(["getUserID","getProfile",]),
     ...mapState({
-      userID: state => `${state.user.getUserID}`
+      userID: state => `${state.user.getUserID}`,
+      uname: state => `${state.user.getProfile}`,
     })
   }
 };

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="this.items.length != 0" style="margin:0 0 !important; height:auto;">
+  <div v-if="this.items.length != 0">
     <v-row class="d-flex justify-content-center mt-10">
       <!-- <v-col> 총 {{ this.totalCnt }}개의 사진에 대한 결과입니다. </v-col> -->
         <v-btn class="tvtn mr-5" dark color="orange" @click="over1 = true"
@@ -13,7 +13,6 @@
         >
     </v-row>
     <v-overlay
-      :absolute="true"
       :value="over1"
       :opacity="1"
       class="col-12 p-0"
@@ -26,7 +25,6 @@
       </v-col>
     </v-overlay>
     <v-overlay
-      :absolute="true"
       :value="over2"
       :opacity="1"
       class="col-12 p-0"
@@ -34,13 +32,12 @@
     <v-col class="text-right">
       <v-btn icon @click="over2=false" ><v-icon>mdi-close-circle</v-icon></v-btn>
     </v-col>
-      <v-col class=" justify-content-center col-12">
+      <div class=" justify-content-center col-12">
         <FlipBookComp :propsItem="items" v-if="items.length !== 0" />
-      </v-col>
+      </div>
     </v-overlay>
 
     <v-overlay
-      :absolute="true"
       :value="over3"
       :opacity="1"
       class="col-12 p-0"
