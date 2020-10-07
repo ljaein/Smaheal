@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app class="d-block d-md-none"
+    <v-app-bar app class="d-block d-md-none" color="white"
       ><v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-btn
         @click="goHome()"
@@ -21,7 +21,7 @@
       style="overflow: auto;"
     >
       <div v-if="getProfile" class="text-center">
-        <v-btn block dark depressed color="amber" @click="logout">
+        <v-btn block large dark depressed class="green-mbtn" @click="logout">
           LOGOUT
         </v-btn>
         <v-list-item>
@@ -36,12 +36,12 @@
         </v-list-item>
       </div>
       <div v-else class="text-center">
-        <v-btn block dark depressed color="amber" @click="goLogin">
+        <v-btn block large dark depressed class="green-mbtn" @click="goLogin">
           LOGIN
         </v-btn>
         <v-list-item>
           <v-list-item-content>
-            <v-list-item-title class="title">
+            <v-list-item-title >
               로그인을 해주세요
             </v-list-item-title>
           </v-list-item-content>
@@ -56,28 +56,28 @@
             <v-list-item-icon>
               <v-icon>mdi-home</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>메인 화면</v-list-item-title>
+            <v-list-item-title style="font-weight:bold;">메인 화면</v-list-item-title>
           </v-list-item>
 
           <v-list-item @click="goDonationList()">
             <v-list-item-icon>
               <v-icon>mdi-clipboard-text</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>기부 게시판</v-list-item-title>
+            <v-list-item-title style="font-weight:bold;">기부게시판</v-list-item-title>
           </v-list-item>
 
           <v-list-item @click="goReviewList()">
             <v-list-item-icon>
               <v-icon>mdi-message-draw</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>후기 게시판</v-list-item-title>
+            <v-list-item-title style="font-weight:bold;">감사게시판</v-list-item-title>
           </v-list-item>
 
           <v-list-item @click="goNotice()">
             <v-list-item-icon>
               <v-icon>mdi-clipboard-alert</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>공지사항</v-list-item-title>
+            <v-list-item-title style="font-weight:bold;">공지사항</v-list-item-title>
           </v-list-item>
 
           <v-list-item
@@ -123,11 +123,11 @@
       </v-btn> -->
 
       <v-btn @click="goDonationList()" text>
-        <span class="mr-2 nav">기부 게시판</span>
+        <span class="mr-2 nav">기부게시판</span>
       </v-btn>
 
       <v-btn @click="goReviewList()" text>
-        <span class="mr-2 nav">후기 게시판</span>
+        <span class="mr-2 nav">감사게시판</span>
       </v-btn>
 
       <v-btn @click="goNotice()" text>

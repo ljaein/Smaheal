@@ -2,7 +2,7 @@
 <div class="col-md-12 p-0">
     <div class="a_header_img d-flex justify-content-center">
       <div
-        style="z-index:5;color:white; position:absolute; top:200px; font-size:3rem;"
+        style="color:white; position:absolute; top:200px; font-size:3rem;"
       >
         관리페이지
      </div>

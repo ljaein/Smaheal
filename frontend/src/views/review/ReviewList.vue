@@ -1,175 +1,205 @@
 <template>
-<div>
+  <div>
     <div class="r_header_img d-flex justify-content-center">
-                  <div style="z-index:5;color:white; position:absolute; top:200px; font-size:3rem;">감사게시판</div>
-
+      <div style="color:white; position:absolute; top:200px; font-size:3rem;">
+        감사게시판
+      </div>
     </div>
-  <div class="d-flex justify-content-center" style="background-color:rgb(60,79,86)">
-    <v-container fluid class="mt-0 col-md-11 p-0">
-      <v-card class="topbar d-none d-md-block">
-        <v-toolbar color="#fffbe6" flat>
-          <!-- <v-toolbar-title class="pl-5 tab-text basil--text">후기 게시판</v-toolbar-title> -->
-          <v-spacer></v-spacer>
-          <v-btn v-if="getProfile" class="green-mbtn" outlined>{{ tabTitle }}</v-btn>
+    <div
+      class="d-flex justify-content-center"
+      style="background-color:rgb(60,79,86)"
+    >
+      <v-container fluid class="mt-0 col-md-11 p-0">
+        <v-card class="topbar d-none d-md-block">
+          <v-toolbar color="#fffbe6" flat>
+            <!-- <v-toolbar-title class="pl-5 tab-text basil--text">후기 게시판</v-toolbar-title> -->
+            <v-spacer></v-spacer>
+            <v-btn v-if="getProfile" class="green-mbtn" outlined>{{
+              tabTitle
+            }}</v-btn>
 
-          <template v-slot:extension>
-            <v-tabs center-active color="basil" class="basil--text" grow>
-              <v-tab id="tab1" class="tab-text" @click="goTab(1)">아동/청소년</v-tab>
-              <v-tab id="tab2" class="tab-text" @click="goTab(2)">어르신</v-tab>
-              <v-tab id="tab3" class="tab-text" @click="goTab(3)">장애인</v-tab>
-              <v-tab id="tab4" class="tab-text" @click="goTab(4)">가족/여성</v-tab>
-              <v-tab id="tab5" class="tab-text" @click="goTab(5)">다문화</v-tab>
-              <v-tab id="tab6" class="tab-text" @click="goTab(6)">기타</v-tab>
-            </v-tabs>
-          </template>
-        </v-toolbar>
-      </v-card>
-      <v-card class="mobileTopbar d-block d-md-none">
-        <v-toolbar color="#fffbe6" flat>
-          <v-toolbar-title class="pl-5 tab-text basil--text">후기 게시판</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-btn v-if="getProfile" class="green-mbtn" outlined>{{ tabTitle }}</v-btn>
+            <template v-slot:extension>
+              <v-tabs center-active color="basil" class="basil--text" grow>
+                <v-tab id="tab1" class="tab-text" @click="goTab(1)"
+                  >아동/청소년</v-tab
+                >
+                <v-tab id="tab2" class="tab-text" @click="goTab(2)"
+                  >어르신</v-tab
+                >
+                <v-tab id="tab3" class="tab-text" @click="goTab(3)"
+                  >장애인</v-tab
+                >
+                <v-tab id="tab4" class="tab-text" @click="goTab(4)"
+                  >가족/여성</v-tab
+                >
+                <v-tab id="tab5" class="tab-text" @click="goTab(5)"
+                  >다문화</v-tab
+                >
+                <v-tab id="tab6" class="tab-text" @click="goTab(6)">기타</v-tab>
+              </v-tabs>
+            </template>
+          </v-toolbar>
+        </v-card>
+        <v-card class="mobileTopbar d-block d-md-none">
+          <v-toolbar color="#fffbe6" flat>
+            <v-toolbar-title class="pl-5 tab-text basil--text"
+              >후기 게시판</v-toolbar-title
+            >
+            <v-spacer></v-spacer>
+            <v-btn v-if="getProfile" class="green-mbtn" outlined>{{
+              tabTitle
+            }}</v-btn>
 
-          <template v-slot:extension>
-            <v-tabs center-active color="basil" class="basil--text" grow>
-              <v-tab id="tab1" class="tab-text" @click="goTab(1)">아동/청소년</v-tab>
-              <v-tab id="tab2" class="tab-text" @click="goTab(2)">어르신</v-tab>
-              <v-tab id="tab3" class="tab-text" @click="goTab(3)">장애인</v-tab>
-              <v-tab id="tab4" class="tab-text" @click="goTab(4)">가족/여성</v-tab>
-              <v-tab id="tab5" class="tab-text" @click="goTab(5)">다문화</v-tab>
-              <v-tab id="tab6" class="tab-text" @click="goTab(6)">기타</v-tab>
-            </v-tabs>
-          </template>
-        </v-toolbar>
-      </v-card>
-      <!-- 아동,청소년 -->
-      <v-sheet class="col-12 mb-15 sheet" elevation="8">
-        <v-slide-group v-model="model" center-active show-arrows>
-          <v-slide-item v-for="(item, index) in child" :key="index">
-            <v-card class="ma-4 " height="280" width="200">
-              <ReviewListComp
-                :num="item.num"
-                :nickName="item.nickName"
-                :title="item.title"
-                :content="item.content"
-                :img="item.img"
-                :likeCnt="item.likeCnt"
-                :visit="item.visit"
-                :createdAt="item.createdAt"
-              />
-            </v-card>
-          </v-slide-item>
-        </v-slide-group>
-      </v-sheet>
-      <!-- 어르신 -->
-      <v-sheet class="col-12 mb-15 sheet" elevation="8">
-        <v-slide-group v-model="model" center-active show-arrows>
-          <v-slide-item v-for="(item, index) in senior" :key="index">
-            <v-card class="ma-4 " height="280" width="200">
-              <ReviewListComp
-                :num="item.num"
-                :nickName="item.nickName"
-                :title="item.title"
-                :content="item.content"
-                :img="item.img"
-                :likeCnt="item.likeCnt"
-                :visit="item.visit"
-                :createdAt="item.createdAt"
-              />
-            </v-card>
-          </v-slide-item>
-        </v-slide-group>
-      </v-sheet>
-      <!-- 장애인 -->
-      <v-sheet class="col-12 mb-15 sheet" elevation="8">
-        <v-slide-group v-model="model" center-active show-arrows>
-          <v-slide-item v-for="(item, index) in disabled" :key="index">
-            <v-card class="ma-4 " height="280" width="200">
-              <ReviewListComp
-                :num="item.num"
-                :nickName="item.nickName"
-                :title="item.title"
-                :content="item.content"
-                :img="item.img"
-                :likeCnt="item.likeCnt"
-                :visit="item.visit"
-                :createdAt="item.createdAt"
-              />
-            </v-card>
-          </v-slide-item>
-        </v-slide-group>
-      </v-sheet>
-      <!-- 가족,여성 -->
-      <v-sheet class="col-12 mb-15 sheet" elevation="8" >
-        <v-slide-group v-model="model" center-active show-arrows>
-          <v-slide-item v-for="(item, index) in family" :key="index">
-            <v-card class="ma-4 " height="280" width="200">
-              <ReviewListComp
-                :num="item.num"
-                :nickName="item.nickName"
-                :title="item.title"
-                :content="item.content"
-                :img="item.img"
-                :likeCnt="item.likeCnt"
-                :visit="item.visit"
-                :createdAt="item.createdAt"
-              />
-            </v-card>
-          </v-slide-item>
-        </v-slide-group>
-      </v-sheet>
-      <!-- 다문화 -->
-      <v-sheet class="col-12 mb-15 sheet" elevation="8">
-        <v-slide-group v-model="model" center-active show-arrows>
-          <v-slide-item v-for="(item, index) in cultural" :key="index">
-            <v-card class="ma-4 " height="280" width="200">
-              <ReviewListComp
-                :num="item.num"
-                :nickName="item.nickName"
-                :title="item.title"
-                :content="item.content"
-                :img="item.img"
-                :likeCnt="item.likeCnt"
-                :visit="item.visit"
-                :createdAt="item.createdAt"
-              />
-            </v-card>
-          </v-slide-item>
-        </v-slide-group>
-      </v-sheet>
-      <!-- 기타 -->
-      <v-sheet class="col-12 mb-15 sheet" elevation="8">
-        <v-slide-group v-model="model" center-active show-arrows>
-          <v-slide-item v-for="(item, index) in etc" :key="index">
-            <v-card class="ma-4 " height="280" width="200">
-              <ReviewListComp
-                :num="item.num"
-                :nickName="item.nickName"
-                :title="item.title"
-                :content="item.content"
-                :img="item.img"
-                :likeCnt="item.likeCnt"
-                :visit="item.visit"
-                :createdAt="item.createdAt"
-              />
-            </v-card>
-          </v-slide-item>
-        </v-slide-group>
-      </v-sheet>
-      <div style="height:340px;"></div>
-    </v-container>
-    <br />
+            <template v-slot:extension>
+              <v-tabs center-active color="basil" class="basil--text" grow>
+                <v-tab id="tab1" class="tab-text" @click="goTab(1)"
+                  >아동/청소년</v-tab
+                >
+                <v-tab id="tab2" class="tab-text" @click="goTab(2)"
+                  >어르신</v-tab
+                >
+                <v-tab id="tab3" class="tab-text" @click="goTab(3)"
+                  >장애인</v-tab
+                >
+                <v-tab id="tab4" class="tab-text" @click="goTab(4)"
+                  >가족/여성</v-tab
+                >
+                <v-tab id="tab5" class="tab-text" @click="goTab(5)"
+                  >다문화</v-tab
+                >
+                <v-tab id="tab6" class="tab-text" @click="goTab(6)">기타</v-tab>
+              </v-tabs>
+            </template>
+          </v-toolbar>
+        </v-card>
+        <!-- 아동,청소년 -->
+        <v-sheet class="col-12 mb-15 sheet" elevation="8">
+          <v-slide-group v-model="model" center-active show-arrows>
+            <v-slide-item v-for="(item, index) in child" :key="index">
+              <v-card class="ma-4 " height="280" width="200">
+                <ReviewListComp
+                  :num="item.num"
+                  :nickName="item.nickName"
+                  :title="item.title"
+                  :content="item.content"
+                  :img="item.img"
+                  :likeCnt="item.likeCnt"
+                  :visit="item.visit"
+                  :createdAt="item.createdAt"
+                />
+              </v-card>
+            </v-slide-item>
+          </v-slide-group>
+        </v-sheet>
+        <!-- 어르신 -->
+        <v-sheet class="col-12 mb-15 sheet" elevation="8">
+          <v-slide-group v-model="model" center-active show-arrows>
+            <v-slide-item v-for="(item, index) in senior" :key="index">
+              <v-card class="ma-4 " height="280" width="200">
+                <ReviewListComp
+                  :num="item.num"
+                  :nickName="item.nickName"
+                  :title="item.title"
+                  :content="item.content"
+                  :img="item.img"
+                  :likeCnt="item.likeCnt"
+                  :visit="item.visit"
+                  :createdAt="item.createdAt"
+                />
+              </v-card>
+            </v-slide-item>
+          </v-slide-group>
+        </v-sheet>
+        <!-- 장애인 -->
+        <v-sheet class="col-12 mb-15 sheet" elevation="8">
+          <v-slide-group v-model="model" center-active show-arrows>
+            <v-slide-item v-for="(item, index) in disabled" :key="index">
+              <v-card class="ma-4 " height="280" width="200">
+                <ReviewListComp
+                  :num="item.num"
+                  :nickName="item.nickName"
+                  :title="item.title"
+                  :content="item.content"
+                  :img="item.img"
+                  :likeCnt="item.likeCnt"
+                  :visit="item.visit"
+                  :createdAt="item.createdAt"
+                />
+              </v-card>
+            </v-slide-item>
+          </v-slide-group>
+        </v-sheet>
+        <!-- 가족,여성 -->
+        <v-sheet class="col-12 mb-15 sheet" elevation="8">
+          <v-slide-group v-model="model" center-active show-arrows>
+            <v-slide-item v-for="(item, index) in family" :key="index">
+              <v-card class="ma-4 " height="280" width="200">
+                <ReviewListComp
+                  :num="item.num"
+                  :nickName="item.nickName"
+                  :title="item.title"
+                  :content="item.content"
+                  :img="item.img"
+                  :likeCnt="item.likeCnt"
+                  :visit="item.visit"
+                  :createdAt="item.createdAt"
+                />
+              </v-card>
+            </v-slide-item>
+          </v-slide-group>
+        </v-sheet>
+        <!-- 다문화 -->
+        <v-sheet class="col-12 mb-15 sheet" elevation="8">
+          <v-slide-group v-model="model" center-active show-arrows>
+            <v-slide-item v-for="(item, index) in cultural" :key="index">
+              <v-card class="ma-4 " height="280" width="200">
+                <ReviewListComp
+                  :num="item.num"
+                  :nickName="item.nickName"
+                  :title="item.title"
+                  :content="item.content"
+                  :img="item.img"
+                  :likeCnt="item.likeCnt"
+                  :visit="item.visit"
+                  :createdAt="item.createdAt"
+                />
+              </v-card>
+            </v-slide-item>
+          </v-slide-group>
+        </v-sheet>
+        <!-- 기타 -->
+        <v-sheet class="col-12 mb-15 sheet" elevation="8">
+          <v-slide-group v-model="model" center-active show-arrows>
+            <v-slide-item v-for="(item, index) in etc" :key="index">
+              <v-card class="ma-4 " height="280" width="200">
+                <ReviewListComp
+                  :num="item.num"
+                  :nickName="item.nickName"
+                  :title="item.title"
+                  :content="item.content"
+                  :img="item.img"
+                  :likeCnt="item.likeCnt"
+                  :visit="item.visit"
+                  :createdAt="item.createdAt"
+                />
+              </v-card>
+            </v-slide-item>
+          </v-slide-group>
+        </v-sheet>
+        <div style="height:340px;"></div>
+      </v-container>
+      <br />
+    </div>
   </div>
-</div>
 </template>
 
 <script>
-import http from '@/util/http-common.js';
-import ReviewListComp from '@/components/review/ReviewListComp.vue';
-import { mapGetters } from 'vuex';
+import http from "@/util/http-common.js";
+import ReviewListComp from "@/components/review/ReviewListComp.vue";
+import { mapGetters } from "vuex";
 
 export default {
-  name: 'ReviewList',
+  name: "ReviewList",
   data() {
     return {
       model: null,
@@ -181,11 +211,11 @@ export default {
       cultural: [],
       etc: [],
       toTop: 0,
-      tabTitle: '아동/청소년',
+      tabTitle: "아동/청소년"
     };
   },
   components: {
-    ReviewListComp,
+    ReviewListComp
   },
   created() {
     this.getChild();
@@ -194,69 +224,69 @@ export default {
     this.getFamily();
     this.getCultural();
     this.getEtc();
-    window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener("scroll", this.handleScroll);
   },
   computed: {
-    ...mapGetters(['getProfile']),
+    ...mapGetters(["getProfile"])
   },
   methods: {
     getChild() {
       http
-        .get('/review/categoryList/아동,청소년')
-        .then((res) => {
+        .get("/review/categoryList/아동,청소년")
+        .then(res => {
           this.child = res.data;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
     getSenior() {
       http
-        .get('/review/categoryList/어르신')
-        .then((res) => {
+        .get("/review/categoryList/어르신")
+        .then(res => {
           this.senior = res.data;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
     getDiabled() {
       http
-        .get('/review/categoryList/장애인')
-        .then((res) => {
+        .get("/review/categoryList/장애인")
+        .then(res => {
           this.disabled = res.data;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
     getFamily() {
       http
-        .get('/review/categoryList/가족,여성')
-        .then((res) => {
+        .get("/review/categoryList/가족,여성")
+        .then(res => {
           this.family = res.data;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
     getCultural() {
       http
-        .get('/review/categoryList/다문화')
-        .then((res) => {
+        .get("/review/categoryList/다문화")
+        .then(res => {
           this.cultural = res.data;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
     getEtc() {
       http
-        .get('/review/categoryList/기타')
-        .then((res) => {
+        .get("/review/categoryList/기타")
+        .then(res => {
           this.etc = res.data;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -278,94 +308,94 @@ export default {
     handleScroll() {
       this.toTop = document.documentElement.scrollTop;
       if (this.toTop >= 400 && this.toTop < 800) {
-        this.tabTitle = '어르신';
-        document.getElementById('tab1').setAttribute('aria-selected', false);
-        document.getElementById('tab1').classList.remove('v-tab--active');
-        document.getElementById('tab2').setAttribute('aria-selected', true);
-        document.getElementById('tab2').classList.add('v-tab--active');
-        document.getElementById('tab3').setAttribute('aria-selected', false);
-        document.getElementById('tab3').classList.remove('v-tab--active');
-        document.getElementById('tab4').setAttribute('aria-selected', false);
-        document.getElementById('tab4').classList.remove('v-tab--active');
-        document.getElementById('tab5').setAttribute('aria-selected', false);
-        document.getElementById('tab5').classList.remove('v-tab--active');
-        document.getElementById('tab6').setAttribute('aria-selected', false);
-        document.getElementById('tab6').classList.remove('v-tab--active');
+        this.tabTitle = "어르신";
+        document.getElementById("tab1").setAttribute("aria-selected", false);
+        document.getElementById("tab1").classList.remove("v-tab--active");
+        document.getElementById("tab2").setAttribute("aria-selected", true);
+        document.getElementById("tab2").classList.add("v-tab--active");
+        document.getElementById("tab3").setAttribute("aria-selected", false);
+        document.getElementById("tab3").classList.remove("v-tab--active");
+        document.getElementById("tab4").setAttribute("aria-selected", false);
+        document.getElementById("tab4").classList.remove("v-tab--active");
+        document.getElementById("tab5").setAttribute("aria-selected", false);
+        document.getElementById("tab5").classList.remove("v-tab--active");
+        document.getElementById("tab6").setAttribute("aria-selected", false);
+        document.getElementById("tab6").classList.remove("v-tab--active");
       } else if (this.toTop >= 800 && this.toTop < 1200) {
-        this.tabTitle = '장애인';
-        document.getElementById('tab1').setAttribute('aria-selected', false);
-        document.getElementById('tab1').classList.remove('v-tab--active');
-        document.getElementById('tab2').setAttribute('aria-selected', false);
-        document.getElementById('tab2').classList.remove('v-tab--active');
-        document.getElementById('tab3').setAttribute('aria-selected', true);
-        document.getElementById('tab3').classList.add('v-tab--active');
-        document.getElementById('tab4').setAttribute('aria-selected', false);
-        document.getElementById('tab4').classList.remove('v-tab--active');
-        document.getElementById('tab5').setAttribute('aria-selected', false);
-        document.getElementById('tab5').classList.remove('v-tab--active');
-        document.getElementById('tab6').setAttribute('aria-selected', false);
-        document.getElementById('tab6').classList.remove('v-tab--active');
+        this.tabTitle = "장애인";
+        document.getElementById("tab1").setAttribute("aria-selected", false);
+        document.getElementById("tab1").classList.remove("v-tab--active");
+        document.getElementById("tab2").setAttribute("aria-selected", false);
+        document.getElementById("tab2").classList.remove("v-tab--active");
+        document.getElementById("tab3").setAttribute("aria-selected", true);
+        document.getElementById("tab3").classList.add("v-tab--active");
+        document.getElementById("tab4").setAttribute("aria-selected", false);
+        document.getElementById("tab4").classList.remove("v-tab--active");
+        document.getElementById("tab5").setAttribute("aria-selected", false);
+        document.getElementById("tab5").classList.remove("v-tab--active");
+        document.getElementById("tab6").setAttribute("aria-selected", false);
+        document.getElementById("tab6").classList.remove("v-tab--active");
       } else if (this.toTop >= 1200 && this.toTop < 1600) {
-        this.tabTitle = '가족/여성';
-        document.getElementById('tab1').setAttribute('aria-selected', false);
-        document.getElementById('tab1').classList.remove('v-tab--active');
-        document.getElementById('tab2').setAttribute('aria-selected', false);
-        document.getElementById('tab2').classList.remove('v-tab--active');
-        document.getElementById('tab3').setAttribute('aria-selected', false);
-        document.getElementById('tab3').classList.remove('v-tab--active');
-        document.getElementById('tab4').setAttribute('aria-selected', true);
-        document.getElementById('tab4').classList.add('v-tab--active');
-        document.getElementById('tab5').setAttribute('aria-selected', false);
-        document.getElementById('tab5').classList.remove('v-tab--active');
-        document.getElementById('tab6').setAttribute('aria-selected', false);
-        document.getElementById('tab6').classList.remove('v-tab--active');
+        this.tabTitle = "가족/여성";
+        document.getElementById("tab1").setAttribute("aria-selected", false);
+        document.getElementById("tab1").classList.remove("v-tab--active");
+        document.getElementById("tab2").setAttribute("aria-selected", false);
+        document.getElementById("tab2").classList.remove("v-tab--active");
+        document.getElementById("tab3").setAttribute("aria-selected", false);
+        document.getElementById("tab3").classList.remove("v-tab--active");
+        document.getElementById("tab4").setAttribute("aria-selected", true);
+        document.getElementById("tab4").classList.add("v-tab--active");
+        document.getElementById("tab5").setAttribute("aria-selected", false);
+        document.getElementById("tab5").classList.remove("v-tab--active");
+        document.getElementById("tab6").setAttribute("aria-selected", false);
+        document.getElementById("tab6").classList.remove("v-tab--active");
       } else if (this.toTop >= 1600 && this.toTop < 2000) {
-        this.tabTitle = '다문화';
-        document.getElementById('tab1').setAttribute('aria-selected', false);
-        document.getElementById('tab1').classList.remove('v-tab--active');
-        document.getElementById('tab2').setAttribute('aria-selected', false);
-        document.getElementById('tab2').classList.remove('v-tab--active');
-        document.getElementById('tab3').setAttribute('aria-selected', false);
-        document.getElementById('tab3').classList.remove('v-tab--active');
-        document.getElementById('tab4').setAttribute('aria-selected', false);
-        document.getElementById('tab4').classList.remove('v-tab--active');
-        document.getElementById('tab5').setAttribute('aria-selected', true);
-        document.getElementById('tab5').classList.add('v-tab--active');
-        document.getElementById('tab6').setAttribute('aria-selected', false);
-        document.getElementById('tab6').classList.remove('v-tab--active');
+        this.tabTitle = "다문화";
+        document.getElementById("tab1").setAttribute("aria-selected", false);
+        document.getElementById("tab1").classList.remove("v-tab--active");
+        document.getElementById("tab2").setAttribute("aria-selected", false);
+        document.getElementById("tab2").classList.remove("v-tab--active");
+        document.getElementById("tab3").setAttribute("aria-selected", false);
+        document.getElementById("tab3").classList.remove("v-tab--active");
+        document.getElementById("tab4").setAttribute("aria-selected", false);
+        document.getElementById("tab4").classList.remove("v-tab--active");
+        document.getElementById("tab5").setAttribute("aria-selected", true);
+        document.getElementById("tab5").classList.add("v-tab--active");
+        document.getElementById("tab6").setAttribute("aria-selected", false);
+        document.getElementById("tab6").classList.remove("v-tab--active");
       } else if (this.toTop >= 2000) {
-        this.tabTitle = '기타';
-        document.getElementById('tab1').setAttribute('aria-selected', false);
-        document.getElementById('tab1').classList.remove('v-tab--active');
-        document.getElementById('tab2').setAttribute('aria-selected', false);
-        document.getElementById('tab2').classList.remove('v-tab--active');
-        document.getElementById('tab3').setAttribute('aria-selected', false);
-        document.getElementById('tab3').classList.remove('v-tab--active');
-        document.getElementById('tab4').setAttribute('aria-selected', false);
-        document.getElementById('tab4').classList.remove('v-tab--active');
-        document.getElementById('tab5').setAttribute('aria-selected', false);
-        document.getElementById('tab5').classList.remove('v-tab--active');
-        document.getElementById('tab6').setAttribute('aria-selected', true);
-        document.getElementById('tab6').classList.add('v-tab--active');
+        this.tabTitle = "기타";
+        document.getElementById("tab1").setAttribute("aria-selected", false);
+        document.getElementById("tab1").classList.remove("v-tab--active");
+        document.getElementById("tab2").setAttribute("aria-selected", false);
+        document.getElementById("tab2").classList.remove("v-tab--active");
+        document.getElementById("tab3").setAttribute("aria-selected", false);
+        document.getElementById("tab3").classList.remove("v-tab--active");
+        document.getElementById("tab4").setAttribute("aria-selected", false);
+        document.getElementById("tab4").classList.remove("v-tab--active");
+        document.getElementById("tab5").setAttribute("aria-selected", false);
+        document.getElementById("tab5").classList.remove("v-tab--active");
+        document.getElementById("tab6").setAttribute("aria-selected", true);
+        document.getElementById("tab6").classList.add("v-tab--active");
       } else {
-        this.tabTitle = '아동/청소년';
-        document.getElementById('tab1').setAttribute('aria-selected', true);
-        document.getElementById('tab1').classList.add('v-tab--active');
-        document.getElementById('tab2').setAttribute('aria-selected', false);
-        document.getElementById('tab2').classList.remove('v-tab--active');
-        document.getElementById('tab3').setAttribute('aria-selected', false);
-        document.getElementById('tab3').classList.remove('v-tab--active');
-        document.getElementById('tab4').setAttribute('aria-selected', false);
-        document.getElementById('tab4').classList.remove('v-tab--active');
-        document.getElementById('tab5').setAttribute('aria-selected', false);
-        document.getElementById('tab5').classList.remove('v-tab--active');
-        document.getElementById('tab6').setAttribute('aria-selected', false);
-        document.getElementById('tab6').classList.remove('v-tab--active');
+        this.tabTitle = "아동/청소년";
+        document.getElementById("tab1").setAttribute("aria-selected", true);
+        document.getElementById("tab1").classList.add("v-tab--active");
+        document.getElementById("tab2").setAttribute("aria-selected", false);
+        document.getElementById("tab2").classList.remove("v-tab--active");
+        document.getElementById("tab3").setAttribute("aria-selected", false);
+        document.getElementById("tab3").classList.remove("v-tab--active");
+        document.getElementById("tab4").setAttribute("aria-selected", false);
+        document.getElementById("tab4").classList.remove("v-tab--active");
+        document.getElementById("tab5").setAttribute("aria-selected", false);
+        document.getElementById("tab5").classList.remove("v-tab--active");
+        document.getElementById("tab6").setAttribute("aria-selected", false);
+        document.getElementById("tab6").classList.remove("v-tab--active");
       }
-    },
+    }
   },
   beforeDestroy: function() {
-    window.removeEventListener('scroll', this.handleScroll);
+    window.removeEventListener("scroll", this.handleScroll);
   },
   watch: {
     page(page) {
@@ -375,11 +405,11 @@ export default {
         .then(({ data }) => {
           this.items = data;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -400,7 +430,7 @@ export default {
   font-weight: bold;
 }
 .sheet {
-  height:340px;
+  height: 340px;
 }
 .r_header_img {
   background: url("../../assets/donation_hd.jpg") no-repeat;
@@ -408,6 +438,6 @@ export default {
   height: 20rem;
   display: block;
   background-position: center;
-  background-size:cover;
+  background-size: cover;
 }
 </style>

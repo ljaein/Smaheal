@@ -6,6 +6,9 @@
           <v-container fluid>
             <v-row justify="space-around">
               <v-col cols="12" md="9">
+                <div class="text-center">
+                <p style="font-size:2rem;"><v-icon class="mr-2" style="font-size:2rem;color:black;">mdi-account-heart-outline</v-icon>감사인사 남기기<v-icon class="ml-2" style="font-size:2rem;color:black;">mdi-account-heart-outline</v-icon></p>
+                </div>
                 <input ref="imageInput" type="file" hidden @change="onChangeImages" />
                 <v-btn
                   class="mb-2 green-mbtn"

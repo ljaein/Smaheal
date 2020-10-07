@@ -11,13 +11,7 @@
           :propsitem="items"
           />
         </v-timeline>
-        <v-row>
-          <v-col class="text-right">
-            <v-btn color="#356859" dark @click="goWriteReview">
-              후기 남기기
-            </v-btn>
-          </v-col>
-        </v-row>
+        
       </v-sheet>
     </div>
 </template>
@@ -59,9 +53,7 @@ export default {
           this.imgsrc = "seascape-background.jpg"
         }
       },
-      goWriteReview(){
-        this.$router.push(`/reviewWrite/${this.donationid}`);
-      },
+      
     },
     created() {
       this.fetchData();

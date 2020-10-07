@@ -4,15 +4,15 @@
       <v-col cols="6" class="pa-0 ma-0">
         <v-img
           :src="require(`@/assets/login-smile.jpg`)"
-          class="pa-0 ma-0"
+          class="pa-0 ma-0 d-none d-md-block"
           :max-height="'calc(100vh - ' + $vuetify.application.top + 'px)'"
         />
       </v-col>
-      <v-col class="pa-15 ma-15">
-        <v-sheet class="text-left text-h2 amber--text mb-7">
-          SMAHEAL
+      <v-col class="my-auto mx-auto col-md-6 col-sm-12">
+        <v-sheet class="text-center amber--text mb-7" style="font-size:3rem;font-family:Gamja Flower">
+          스마힐
         </v-sheet>
-        <v-col class="pr-10 pl-10">
+        <v-col cols="8">
           <v-form ref="form">
             <v-text-field
               class="mb-1"

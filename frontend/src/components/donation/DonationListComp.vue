@@ -2,7 +2,7 @@
   <div class="col-12 p-0">
     <div class="header_img d-flex justify-content-center">
 
-            <div style="z-index:5;color:white; position:absolute; top:200px; font-size:3rem;">기부게시판</div>
+            <div style="color:white; position:absolute; top:200px; font-size:3rem;">기부게시판</div>
 
     </div>
     <div class="d-flex justify-content-center" style="background: linear-gradient(to right,  rgb(183, 166, 141),  rgb(168, 147, 116));">
