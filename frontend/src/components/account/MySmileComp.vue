@@ -170,7 +170,8 @@ export default {
     },
     getImg(img) {
       var jbRandom = Math.random()*987654321;
-      return "../../frontend/public/images/" + img + "?" + Math.floor(jbRandom);
+      console.log(process.env.BASE_URL)
+      return "../../../images/" + img + "?" + Math.floor(jbRandom);
     },
     goDetail(smile) {
       this.detailSmile = smile;
