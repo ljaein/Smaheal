@@ -1,5 +1,4 @@
 <template>
-<div>
   <div
     v-if="this.items.length != 0"
     class="d-flex justify-content-center background"
@@ -103,7 +102,7 @@
     </v-overlay>
   </div>
   <div
-  v-if="this.items.length != 0"
+  v-else
     style="text-align: center;"
     class="d-flex justify-content-center background"
   >
@@ -119,7 +118,6 @@
         </v-col>
       </v-row>
     </div>
-  </div>
   </div>
 </template>
 

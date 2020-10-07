@@ -16,7 +16,7 @@
     </v-row>
     <!-- 사진 carousel -->
     <v-col cols="12" class="p-0">
-      <v-carousel width="100%">
+      <v-carousel width="100%" >
         <v-carousel-item
           v-for="(item, i) in images"
           :key="i"
@@ -69,8 +69,8 @@
       </v-tabs>
       <v-col>
         <div class="container-fluid">
-          <div id="section1" style="height:50px;"></div>
           <h3
+          id="section1"
             style="font-family: 'Nanum Gothic';font-weight:bold;"
             class="mb-5"
           >
@@ -87,10 +87,10 @@
           >
           </v-textarea>
         </div>
-        <div class="container-fluid">
-          <div id="section2" style="height:50px;"></div>
           <v-divider></v-divider>
+        <div class="container-fluid">
           <h3
+          id="section2"
             style="font-family: 'Nanum Gothic';font-weight:bold;"
             class="mb-5"
           >
@@ -111,10 +111,9 @@
             <span style="font-size:1rem;">등록된 주소가 없습니다.</span>
           </div>
         </div>
-        <div class="container-fluid">
-          <div id="section3" style="height:50px;"></div>
           <v-divider></v-divider>
-          <h3 style="font-family:'Nanum Gothic';font-weight:bold;" class="mb-5">
+        <div class="container-fluid">
+          <h3 id="section3" style="font-family:'Nanum Gothic';font-weight:bold;" class="mb-5">
             응원메세지
           </h3>
 
