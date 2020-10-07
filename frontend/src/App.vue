@@ -237,6 +237,7 @@
                 class="close my-auto"
                 data-dismiss="modal"
                 aria-label="Close"
+                @click="keyword = ''"
               >
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -371,9 +372,11 @@ export default {
     searchTemplate: function() {
       if (this.$router.currentRoute.fullPath.substring(0, 16) == "/template/search") {
         this.$router.replace(`/template/search?template=${this.keyword}`).catch(() => {});
+        this.keyword = "";
         location.reload();
         } else {
         this.$router.push(`/template/search?template=${this.keyword}`).catch(() => {});
+        this.keyword = "";
       }
     }
   },
