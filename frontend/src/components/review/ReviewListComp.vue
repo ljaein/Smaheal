@@ -2,7 +2,7 @@
   <div>
     <v-card max-width="400px" style="overflow:hidden;">
       <div style="height:200px;width:100%;">
-      <img @click="goDetail(), visitPlus()" class="review-img" :src="`${publicPath}reviewImage/${img}`">
+      <img @click="goDetail(), visitPlus()" class="review-img" :src="getImg(img)">
       </div>
     </v-card>
     <div class="aInfo p-2">
@@ -80,7 +80,7 @@ export default {
         })
     },
     getImg(img) {
-      return "../../../reviewImage/" + img;
+      return "../../../contents/" + img;
     },
   }
 };
