@@ -158,6 +158,22 @@
     <v-snackbar
       style="font-family: 'Nanum Gothic';"
       shaped
+      color="error"
+      elevation="24"
+      v-model="loginCheck"
+      timeout="3000"
+    >
+      로그인이 필요합니다.
+      <template v-slot:action="{ attrs }">
+        <v-btn color="white" text v-bind="attrs" @click="loginCheck = false"
+          >Close</v-btn
+        >
+      </template>
+    </v-snackbar>
+
+    <v-snackbar
+      style="font-family: 'Nanum Gothic';"
+      shaped
       color="#356859"
       elevation="24"
       v-model="loginSuccess"
@@ -259,7 +275,7 @@
               </button>
             </div>
             <div class="modal-body">
-              <v-form action="/template/search">
+              <v-form action="/template/search" @submit="checkForm">
                   <v-text-field
                     placeholder="일련번호를 입력하세요."
                     hide-details
@@ -327,6 +343,7 @@ export default {
       keyword: "",
       show: true,
       fab: false,
+      loginCheck: false,
     };
   },
   created() {
@@ -372,7 +389,11 @@ export default {
       this.$router.push("/").catch(() => {});
     },
     goReviewList() {
-      this.$router.push("/reviewList").catch(() => {});
+      if (this.getProfile == '') {
+        this.loginCheck = true;
+      } else {
+        this.$router.push("/reviewList").catch(() => {});
+      }
     },
     goMyPage() {
       this.$router.push("/myPage").catch(() => {});
@@ -387,14 +408,20 @@ export default {
       this.$router.push("/award").catch(() => {});
     },
     searchTemplate: function() {
-      if (this.$router.currentRoute.fullPath.substring(0, 16) == "/template/search") {
+      if (this.$router.currentRoute.fullPath.substring(0, 16) == "/template/search" && this.keyword != "") {
         this.$router.replace(`/template/search?template=${this.keyword}`).catch(() => {});
         this.keyword = "";
         location.reload();
-        } else {
+        } else if (this.$router.currentRoute.fullPath.substring(0, 16) != "/template/search" && this.keyword != "") {
         this.$router.push(`/template/search?template=${this.keyword}`).catch(() => {});
         this.keyword = "";
       }
+    },
+    checkForm: function(e) {
+      if (this.keyword !== "") {
+        return true;
+      }
+      e.preventDefault();
     },
     onScroll (e) {
       if (typeof window === 'undefined') return
