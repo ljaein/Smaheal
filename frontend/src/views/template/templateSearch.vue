@@ -17,6 +17,12 @@
       :opacity="1"
       class="col-12 p-0"
     >
+    </v-overlay>
+    <v-overlay
+      :value="over1"
+      :opacity="1"
+      :absolute="true"
+    >
     <v-col class="text-right">
       <v-btn icon @click="over1=false" ><v-icon>mdi-close-circle</v-icon></v-btn>
     </v-col>
