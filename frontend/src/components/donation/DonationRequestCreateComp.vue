@@ -80,7 +80,7 @@
             prepend-icon
             :rules="[v => !!v || '이미지를 선택하세요']"
             outlined
-            placeholder="Click!"
+            placeholder="Click! (복수 선택 가능)"
           >
             <template v-slot:selection="{ text }">
               <v-chip color="#356859" dark label small>{{ text }}</v-chip>
@@ -387,25 +387,90 @@ export default {
         this.rqFlag = true;
       }
     },
+    // saveDonation() {
+    //   if (this.DonationCreate.title.length == 0) {
+    //     this.tempRejectFlag = true;
+    //     return;
+    //   } else {
+    //     this.DonationCreate.address = this.addr + this.addrDetail;
+    //     http
+    //       .post("/donation/registTemp", this.DonationCreate)
+    //       .then(res => {
+    //         this.tempFlag = true;
+    //         setTimeout(() => {
+    //           this.$router.push("/donationList").catch(err => {
+    //             console.log(err);
+    //           });
+    //         }, 1500);
+    //       })
+    //       .catch(err => {
+    //         console.log(err);
+    //       });
+    //   }
+    // },
     saveDonation() {
       if (this.DonationCreate.title.length == 0) {
         this.tempRejectFlag = true;
         return;
       } else {
-        this.DonationCreate.address = this.addr + this.addrDetail;
-        http
-          .post("/donation/registTemp", this.DonationCreate)
-          .then(res => {
-            this.tempFlag = true;
-            setTimeout(() => {
-              this.$router.push("/donationList").catch(err => {
-                console.log(err);
-              });
-            }, 1500);
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        if (this.inputFiles.length == 0) {
+          http
+            .post("/donation/registTemp", this.DonationCreate)
+            .then(res => {
+              this.tempFlag = true;
+              setTimeout(() => {
+                this.$router.push("/donationList").catch(err => {
+                  console.log(err);
+                });
+              }, 1500);
+            })
+            .catch(err => {
+              console.log(err);
+            });
+          return;
+        }
+        for (var i = 0; i < this.inputFiles.length; i++) {
+          var formData = new FormData();
+          const file = this.inputFiles[i];
+          if (file != null) {
+            if (i != this.inputFiles.length - 1) {
+              formData.append("file", file);
+              http3
+                .post("/makeImageSrc", formData)
+                .then(res => {
+                  this.DonationCreate.img += res.data + "|";
+                })
+                .catch(err => {
+                  console.log(err);
+                });
+            } else {
+              formData.append("file", file);
+              http3
+                .post("/makeImageSrc", formData)
+                .then(res => {
+                  this.DonationCreate.img += res.data + "|";
+                  this.DonationCreate.address = this.addr + this.addrDetail;
+                  http
+                    .post("/donation/registTemp", this.DonationCreate)
+                    .then(res => {
+                      this.tempFlag = true;
+                      setTimeout(() => {
+                        this.$router.push("/donationList").catch(err => {
+                          console.log(err);
+                        });
+                      }, 1500);
+                    })
+                    .catch(err => {
+                      console.log(err);
+                    });
+                })
+                .catch(err => {
+                  console.log(err);
+                });
+            }
+          }
+        }
+        this.tempFlag = true;
       }
     },
     allowedDates (val) {

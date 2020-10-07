@@ -252,6 +252,7 @@
     </v-container>
     <br />
   </div>
+  </div>
 </template>
 
 <script>
