@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div class="rd_header_img justify-content-center d-none d-md-block"></div>
     <div class="container d-flex justify-content-center col-12">
       <div class="container mx-auto col-xl-7 col-lg-8 col-md-10 col-sm-11 col-12 d-flex justift-content-center">
         <v-card class="mt-12 mb-3 col-xl-7 col-lg-8 col-md-10 col-sm-11 col-12">
@@ -200,5 +201,13 @@ export default {
   word-spacing:2px;
   letter-spacing:2px;
   color: #dc143c;
+}
+.rd_header_img {
+  background: url("../../assets/donation_hd.jpg") no-repeat;
+  width: 100%;
+  height: 5rem;
+  display: block;
+  background-position: center;
+  background-size: cover;
 }
 </style>
