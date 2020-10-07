@@ -17,5 +17,5 @@ public interface SmileRepository extends JpaRepository<Smile, Long> {
     List<Smile> findByCreatedate(LocalDate createdate);
     List<Smile> findByDonationid(Long donationid);
     List<Smile> findByUserId(String userId);
-    List<Smile> findByUserIdOrderByCreatedateDesc(String userId, Pageable page);
+    List<Smile> findByUserIdOrderBySmileidDesc(String userId, Pageable page);
 }
