@@ -23,12 +23,13 @@ public class Smile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long smileid;
 
-    private String user_id;
+    private String userId;
     private Long donationid;
+    private String title;
     private String photo;
     private float smileper;
     private String comment;
     private int agreement;
     @Column(insertable = false, updatable = false)
-    private LocalDateTime createdate;
+    private LocalDate createdate;
 }

@@ -4,12 +4,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
-
-import com.ssafy.smaheal.model.Cheerup;
-import com.ssafy.smaheal.repository.CheerupRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,6 +18,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.smaheal.exception.ResourceNotFoundException;
+import com.ssafy.smaheal.model.Cheerup;
+import com.ssafy.smaheal.model.MemberUser;
+import com.ssafy.smaheal.repository.CheerupRepository;
+import com.ssafy.smaheal.repository.UserRepository;
+
 import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins = "*")
@@ -30,12 +32,24 @@ import io.swagger.annotations.ApiOperation;
 public class CheerupController {
     @Autowired
     private CheerupRepository cheerupRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-    @GetMapping("/getList/{donationid}")
+    @GetMapping("/getList/{donationid}/{limit}")
     @ApiOperation(value = "기부요청 디테일 응원메세지 리스트")
-    public Object getCheerUp(@PathVariable Long donationid) throws SQLException, IOException {
+    public Object getCheerUp(@PathVariable Long donationid, @PathVariable(value="limit") int limit) throws SQLException, IOException {
         try {
-            List<Cheerup> cheerupList = cheerupRepository.findByDonationid(donationid);
+            List<Cheerup> cheerupList = cheerupRepository.findByDonationid(donationid,PageRequest.of(limit, 10));
+            
+            // userid를 닉네임으로 바꿔서 받기 위함
+            for (Cheerup cheerup : cheerupList) {
+				String userId = cheerup.getUserId();
+				MemberUser user = userRepository.findByUserId(userId)
+		                .orElseThrow(() -> new ResourceNotFoundException("User", "UserId", userId));
+				String nickName = user.getNickName();
+				cheerup.setUserId(nickName);
+			}
+            
             if(cheerupList != null) {
                 return new ResponseEntity<>(cheerupList, HttpStatus.OK);
             } else {
@@ -43,6 +57,17 @@ public class CheerupController {
             }
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @GetMapping("/getCount/{donationid}")
+    @ApiOperation(value = "기부요청 디테일 응원메세지 총 개수")
+    public Object getCheerUpCount(@PathVariable Long donationid) throws SQLException, IOException {
+        try {
+        	List<Cheerup> list = cheerupRepository.findByDonationid(donationid); 
+            return list;
+        } catch (Exception e) {
+            return new ResponseEntity<>(0, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     

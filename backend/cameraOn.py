@@ -1,25 +1,21 @@
 import sys
 import cv2
-import datetime
+import time
 import numpy as np   
 from keras.preprocessing.image import img_to_array
 from keras.models import load_model
 
-# def sum(v1, v2):
-#     result = int(v1) + int(v2)
-#     print(result)
-
-
 def main(argv):
-    # sum(argv[1], argv[2])
-
     # Face detection XML load and trained model loading
-    face_detection = cv2.CascadeClassifier('C:/Users/multicampus/files/haarcascade_frontalface_default.xml')
-    emotion_classifier = load_model('C:/Users/multicampus/files/emotion_model.hdf5', compile=False)
+    # 경로 확인
+    face_detection = cv2.CascadeClassifier('./files/haarcascade_frontalface_default.xml')
+    emotion_classifier = load_model('./files/emotion_model.hdf5', compile=False)
+    # face_detection = cv2.CascadeClassifier(argv[1])
+    # emotion_classifier = load_model(argv[2], compile=False)
     EMOTIONS = ["Angry" ,"Disgusting","Fearful", "Happy", "Sad", "Surpring", "Neutral"]
 
     # Video capture using webcam
-    camera = cv2.VideoCapture(0)
+    camera = cv2.VideoCapture(0, cv2.CAP_V4L)
 
     while True:
         # Capture image from camera
@@ -67,17 +63,19 @@ def main(argv):
 
             # c or smile to capture
             if cv2.waitKey(33) & 0xFF == ord('c') or preds[3] > 0.6:
-                now = datetime.datetime.now().strftime("%y%m%d%H%M%S")
+                now = int(round(time.time() * 1000))
                 filename = str(now) + ".png"
                 cv2.imwrite("C:/image/" + filename, frame)
+                # 경로 확인
+                cv2.imwrite("./frontend/public/images/" + filename, frame)
                 print(filename)
                 print(round(emotion_probability * 100))
                 break
 
 
         # Open two windows
-        ## Display image ("Emotion Recognition")
-        ## Display probabilities of emotion
+        # Display image ("Emotion Recognition")
+        # Display probabilities of emotion
         cv2.imshow('Emotion Recognition', frame)
         cv2.imshow("Probabilities", canvas)
         
@@ -91,4 +89,5 @@ def main(argv):
     
 
 if __name__ == "__main__":
+    cv2.destroyAllWindows()
     main(sys.argv)

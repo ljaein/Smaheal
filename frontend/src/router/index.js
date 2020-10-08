@@ -19,6 +19,16 @@ import imageTest from "../views/donation/imagetest.vue"
 import noticeSearch from "../views/notice/noticeSearch.vue"
 import noticeModify from "../views/notice/noticeModify.vue"
 import signUp from "@/components/account/SignUp.vue"
+import fallImage from "../views/template/fallImage.vue"
+import AdminPage from "../views/admin/AdminPage.vue"
+import TestCount from "../views/smile/testCount.vue"
+import search from "../views/template/search.vue"
+import templateSearch from "../views/template/templateSearch.vue"
+import Award from "../views/smile/Award.vue"
+import TempDetailComp from "../components/account/TempDetailComp.vue"
+import ebookComp from "../components/template/ebookComp.vue"
+import HeartComp from "../components/template/HeartComp.vue"
+import NotFound from '../components/error/NotFound.vue'
 
 Vue.use(VueRouter);
 
@@ -74,7 +84,7 @@ const routes = [{
         component: ReviewList
     },
     {
-        path: "/reviewWrite",
+        path: "/reviewWrite/:donationid",
         name: "ReviewWrite",
         component: ReviewWrite
     },
@@ -121,6 +131,55 @@ const routes = [{
         path: "/signup",
         name: "signUp",
         component: signUp,
+    },
+    {
+        path: "/adminPage",
+        name: "AdminPage",
+        component: AdminPage,
+    },
+    {
+        path: "/testCount",
+        name: "TestCount",
+        component: TestCount,
+    },
+    {
+        path: "/fallImage",
+        name: "fallImage",
+        component: fallImage
+    },
+    {
+        path: "/template",
+        name: "search",
+        component: search
+    },
+    {
+        path: "/template/search",
+        name: "templateSearch",
+        component: templateSearch
+    },
+    {
+        path: "/award",
+        name: "Award",
+        component: Award
+    },
+    {
+        path: "/tempDetailComp/:ID",
+        name: "TempDetailComp",
+        component: TempDetailComp
+    },
+    {
+        path: "/ebook",
+        name: "ebookComp",
+        component: ebookComp
+    },
+    {
+        path: "/heart",
+        name: "HeartComp",
+        component: HeartComp
+    },
+    {
+        path: '*',
+        component: NotFound,
     },
 ];
 

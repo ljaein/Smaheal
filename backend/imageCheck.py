@@ -1,13 +1,18 @@
 import cv2, os, sys
 import numpy as np
-import datetime
+import time
 from keras.preprocessing.image import img_to_array
 from keras.models import load_model
 import base64
+import socket
 
 def main(argv):
     # 경로 정해주기
-    r = open('C:/textFile/' + argv[1], mode='rt', encoding='utf-8')
+    if(socket.gethostname()[:7] == "DESKTOP"):
+        r = open('./frontend/public/textFiles/' + argv[1], mode='rt', encoding='utf-8')
+    else:
+        r = open('/var/lib/jenkins/workspace/maven-test/frontend/public/textFiles/' + argv[1], mode='rt', encoding='utf-8')
+    
     raw = ""
     for line in r:
         raw += line
@@ -23,8 +28,14 @@ def main(argv):
     np_data = np.fromstring(decoded_data,np.uint8)
     color = cv2.imdecode(np_data,cv2.IMREAD_UNCHANGED)
 
-    face_detection = cv2.CascadeClassifier('C:/Users/multicampus/files/haarcascade_frontalface_default.xml')
-    emotion_classifier = load_model('C:/Users/multicampus/files/emotion_model.hdf5', compile=False)
+    # 경로 확인
+    if(socket.gethostname()[:7] == "DESKTOP"):
+        face_detection = cv2.CascadeClassifier('./backend/files/haarcascade_frontalface_default.xml')
+        emotion_classifier = load_model('./backend/files/emotion_model.hdf5', compile=False)
+    else:
+        face_detection = cv2.CascadeClassifier('/var/lib/jenkins/workspace/maven-test/backend/files/haarcascade_frontalface_default.xml')
+        emotion_classifier = load_model('/var/lib/jenkins/workspace/maven-test/backend/files/emotion_model.hdf5', compile=False)
+    
     EMOTIONS = ["Angry" ,"Disgusting","Fearful", "Happy", "Sad", "Surpring", "Neutral"]
 
     # Convert color to gray scale
@@ -58,15 +69,21 @@ def main(argv):
     print(str(format(round(preds[3] * 100),".0f")))
     print(label)
 
-    now = datetime.datetime.now().strftime("%y%m%d%H%M%S")
+    now = int(round(time.time() * 1000))
     filename = str(now) + '.png'
 
     # if(label == "Happy"):
     #     cv2.imwrite("C:/image/" + filename, color)
     #     print(filename)
     #     print("true")
+    # cv2.imwrite("C:/image/" + filename, frame)
 
-    cv2.imwrite("C:/image/" + filename, color)
+    # 경로 확인
+    if(socket.gethostname()[:7] == "DESKTOP"):
+        cv2.imwrite("./frontend/public/images/" + filename, color)
+    else:
+        cv2.imwrite("/var/lib/jenkins/workspace/Gitlab/frontend/public/images/" + filename, color)
+    
     print(filename)
 
     # cv2.imshow('Sample', color)
