@@ -38,9 +38,9 @@ public class ImageMultipart {
         // System.out.println(hostname);
         File file = null;
         if (hostname.substring(0, 7).equals("DESKTOP")) {// local
-            file = new File("C:\\AI108\\s03p22b108\\frontend\\public\\contents\\" + fileName);
+            file = new File("C:\\AI108\\s03p23b108\\frontend\\public\\contents\\" + fileName);
         } else {// aws
-            file = new File("/home/ubuntu/ssafy108/s03p22b108/frontend/public/contents/" + fileName);
+            file = new File("/var/lib/jenkins/workspace/Gitlab/frontend/public/contents/" + fileName);
         }
         if (!file.getParentFile().exists())
             file.getParentFile().mkdirs();

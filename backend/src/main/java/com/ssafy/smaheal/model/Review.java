@@ -23,14 +23,15 @@ public class Review {
 	private String img;
 	private Long likeCnt;
 	private Long visit;
-	private Date CreatedAt;
+	private Date createdAt;
+	private Long donationid;
 
 	public Review() {
 		super();
 	}
 
 	public Review(Long num, String nickName, String title, String content, String img, Long likeCnt, Long visit,
-			Date createdAt) {
+			Date createdAt, Long donationid) {
 		super();
 		this.num = num;
 		this.nickName = nickName;
@@ -39,7 +40,8 @@ public class Review {
 		this.img = img;
 		this.likeCnt = likeCnt;
 		this.visit = visit;
-		CreatedAt = createdAt;
+		this.createdAt = createdAt;
+		this.donationid = donationid;
 	}
 
 	public Long getNum() {
@@ -99,17 +101,26 @@ public class Review {
 	}
 
 	public Date getCreatedAt() {
-		return CreatedAt;
+		return createdAt;
 	}
 
 	public void setCreatedAt(Date createdAt) {
-		CreatedAt = createdAt;
+		this.createdAt = createdAt;
+	}
+
+	public Long getDonationid() {
+		return donationid;
+	}
+
+	public void setDonationid(Long donationid) {
+		this.donationid = donationid;
 	}
 
 	@Override
 	public String toString() {
 		return "Review [num=" + num + ", nickName=" + nickName + ", title=" + title + ", content=" + content + ", img="
-				+ img + ", likeCnt=" + likeCnt + ", visit=" + visit + ", CreatedAt=" + CreatedAt + "]";
+				+ img + ", likeCnt=" + likeCnt + ", visit=" + visit + ", CreatedAt=" + createdAt + ", donationid="
+				+ donationid + "]";
 	}
 
 }

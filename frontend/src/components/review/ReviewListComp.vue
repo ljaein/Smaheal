@@ -2,10 +2,10 @@
   <div>
     <v-card max-width="400px" style="overflow:hidden;">
       <div style="height:200px;width:100%;">
-      <img @click="goDetail" class="review-img" :src="`${publicPath}reviewImage/${img}`">
+      <img @click="goDetail(), visitPlus()" class="review-img" :src="getImg(img)">
       </div>
     </v-card>
-    <div class="aInfo">
+    <div class="aInfo p-2">
       <div class="review-title" @click="goDetail">{{title}}</div>
       <p class="m-0">{{visit}} views · {{setTime()}}</p>
     </div>
@@ -14,6 +14,7 @@
 
 <script>
 import moment from "moment";
+import http from "@/util/http-common.js";
 
 export default {
   name: "ReviewListComp",
@@ -70,7 +71,17 @@ export default {
         return `${betweenTimeDay}일전`;
       }
       return this.createdAt;
-    }
+    },
+    visitPlus() {
+      http
+        .get(`/review/visitPlus/${this.num}`)
+        .catch(err => {
+          console.log(err);
+        })
+    },
+    getImg(img) {
+      return "../../../contents/" + img;
+    },
   }
 };
 </script>
@@ -90,7 +101,7 @@ export default {
 }
 .review-title{
   cursor: pointer;
-  height: 50px;
+  height: 40px;
   align-items: baseline;
   text-overflow: ellipsis;
   overflow: hidden;
